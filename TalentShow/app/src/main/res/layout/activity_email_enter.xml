@@ -1,6 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/activity_email_enter_text1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="112dp"
+        android:layout_marginEnd="14dp"
+        android:textSize="28sp"
+        android:gravity="center"
+        android:textColor="@color/blackText"
+        android:text="@string/ur_mail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/activity_email_enter_text2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="23dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginTop="19dp"
+        android:textColor="@color/blackText"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:text="@string/leave_mail"
+        app:layout_constraintTop_toBottomOf="@id/activity_email_enter_text1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <EditText
+        android:id="@+id/activity_email_enter_mail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginTop="26dp"
+        android:paddingStart="29dp"
+        android:paddingEnd="10dp"
+        android:textSize="24sp"
+        android:paddingTop="11dp"
+        android:paddingBottom="11dp"
+        android:textColorHint="@color/hint_text_color"
+        android:hint="@string/enter_email"
+        android:inputType="textEmailAddress"
+        android:background="@drawable/email_activity_edittext_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activity_email_enter_text2"/>
+
+    <TextView
+        android:id="@+id/activity_email_enter_continue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="93dp"
+        android:background="@drawable/button_background"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:text="@string/recieve_letters"
+        android:textColor="@color/whiteText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

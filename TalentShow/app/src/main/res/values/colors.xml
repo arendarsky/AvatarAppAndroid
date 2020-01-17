@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="whiteText">#FFFFFF</color>
+    <color name="hint_text_color">#808080</color>
+    <color name="blueTextColor">#A32CCA</color>
+    <color name="activity_white_background">#E5E5E5</color>
+    <color name="blackText">#060606</color>
+    <color name="grayText">#808080</color>
+    <color name="red_text">#EE1E23</color>
+    <color name="lightGrayText">#ABABAB</color>
+    <color name="darkGrayText">#686868</color>
+</resources>

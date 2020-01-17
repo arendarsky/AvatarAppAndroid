@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Talent Show</string>
+    <string name="choose_role"><b>Выбери роль</b></string>
+    <string name="different_tasks_different_role">В зависимости от роли тебе предстоят\n разные задачи</string>
+    <string name="star"><b>Звезда</b></string>
+    <string name="become_a_star">Стань новой супер-звездой. Выкладывай\n видео со своим талантом и участвуй в шоу</string>
+    <string name="producer"><b>Продюсер</b></string>
+    <string name="feel_urself_producer">Почувствуй себя настоящим продюсером. Смотри и оценивай видео звёзд.</string>
+    <string name="ur_mail"><b>Ваша почта</b></string>
+    <string name="leave_mail">Оставь свою почту и мы будем держать\n тебя в курсе событий.</string>
+    <string name="enter_email">Введите почту</string>
+    <string name="recieve_letters">Получать письма</string>
+    <string name="enter_code"><b>Введите код</b></string>
+    <string name="code_sent_to_mail">Код проверки отправлен на указанную\n почту:</string>
+    <string name="email_code_hint">_ _ _ _ _ _</string>
+    <string name="didnt_get_code">Не получили код?</string>
+    <string name="wrong_mail">Ввели неправильную почту?</string>
+    <string name="next">Далее</string>
+</resources>
