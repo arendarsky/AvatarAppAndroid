@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ActivityProducerNameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/heading"
+        android:layout_width="167dp"
+        android:layout_height="40dp"
+
+        android:layout_marginTop="112dp"
+
+        android:gravity="center_horizontal|top"
+        android:lineSpacingExtra="0sp"
+        android:text="@string/heading"
+        android:textAppearance="@style/heading"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:layout_marginLeft="31dp"
+        android:layout_marginTop="171dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="452dp"
+        android:gravity="center_horizontal|top"
+        android:lineSpacingExtra="3sp"
+        android:text="@string/text"
+        android:textAppearance="@style/text"
+        android:translationY="-1.45sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <EditText
+        android:id="@+id/label"
+        android:layout_width="232dp"
+        android:layout_height="44dp"
+        android:background="@drawable/background"
+        android:gravity="center"
+        android:hint="@string/label"
+        android:lineSpacingExtra="1sp"
+        android:textAppearance="@style/label"
+        android:translationY="-0.26sp"
+        android:layout_marginTop="273dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="345dp"
+        android:layout_height="44dp"
+        android:background="@drawable/activity_producer_name_button_bg"
+        android:layout_marginBottom="59dp"
+        android:text="Далее"
+        android:textAppearance="@style/ActivityProducerNameButtonText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
