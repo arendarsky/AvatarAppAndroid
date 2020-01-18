@@ -1,8 +1,10 @@
-package com.example.avatar;
+package com.example.talentshow.producer;
+
+import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
+import com.example.talentshow.R;
 
 public class ActivityProducerYes extends AppCompatActivity {
 

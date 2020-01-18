@@ -31,7 +31,7 @@
         android:layout_marginBottom="452dp"
         android:gravity="center_horizontal|top"
         android:lineSpacingExtra="3sp"
-        android:text="@string/text"
+        android:text="@string/text_1"
         android:textAppearance="@style/text"
         android:translationY="-1.45sp"
         app:layout_constraintLeft_toLeftOf="parent"

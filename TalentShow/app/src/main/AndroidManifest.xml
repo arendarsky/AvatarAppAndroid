@@ -18,5 +18,8 @@
     </activity>
         <activity android:name=".presentation.EmailEnterActivity" />
         <activity android:name=".presentation.EmailSuccessCodeActivity" />
+
+        <activity android:name=".producer.ActivityProducerYes"></activity>
+        <activity android:name=".producer.ActivityProducerName"></activity>
     </application>
 </manifest>
