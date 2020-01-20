@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/heading"
+        android:id="@+id/activity_producer_yes_heading"
         android:layout_width="352dp"
         android:layout_height="80dp"
 
@@ -15,19 +15,19 @@
 
         android:gravity="center_horizontal|top"
         android:lineSpacingExtra="0sp"
-        android:text="Ура! Можно начинать"
+        android:text="@string/activity_producer_yes_heading"
         android:textAppearance="@style/heading"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/activity_producer_yes_text"
         android:layout_width="0dp"
         android:layout_height="44dp"
-        android:layout_marginLeft="31dp"
+        android:layout_marginStart="31dp"
         android:layout_marginTop="171dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginBottom="452dp"
         android:gravity="center_horizontal|top"
         android:lineSpacingExtra="3sp"
@@ -40,7 +40,7 @@
 
 
     <ImageView
-        android:id="@+id/image"
+        android:id="@+id/activity_producer_yes_image"
         android:layout_width="122dp"
         android:layout_height="122dp"
         android:gravity="center"
@@ -50,12 +50,12 @@
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/activity_producer_yes_button"
         android:layout_width="345dp"
         android:layout_height="44dp"
         android:background="@drawable/activity_producer_name_button_bg"
         android:layout_marginBottom="59dp"
-        android:text="Начать"
+        android:text="@string/activity_producer_yes_btn"
         android:textAppearance="@style/ActivityProducerNameButtonText"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

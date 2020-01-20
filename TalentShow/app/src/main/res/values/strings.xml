@@ -17,4 +17,9 @@
     <string name="wrong_mail">Ввели неправильную почту?</string>
     <string name="next">Далее</string>
     <string name="text_1">The concierge was rude and gave me attitude when I asked for information.</string>
+    <string name="activity_producer_name_heading">Ваше имя</string>
+    <string name="activity_producer_name_label">Введите имя</string>
+    <string name="activity_producer_name_btn">Далее</string>
+    <string name="activity_producer_yes_heading">Ура! Можно начинать</string>
+    <string name="activity_producer_yes_btn">Начать</string>
 </resources>

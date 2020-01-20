@@ -1,4 +1,4 @@
-package com.example.talentshow.producer;
+package com.example.talentshow.presentation;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.talentshow.App;
 import com.example.talentshow.R;
-
+import com.example.talentshow.presentation.ActivityProducerYes;
 
 import javax.inject.Inject;
 
@@ -18,14 +18,6 @@ import toothpick.Toothpick;
 
 public class ActivityProducerName extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_producer_name);
-        ButterKnife.bind(this);
-        Toothpick.inject(this, Toothpick.openScope(App.class));
-    }
-
     @Inject
     Context appContext;
 
@@ -34,4 +26,14 @@ public class ActivityProducerName extends AppCompatActivity {
     void producerButtonClicked(){
         startActivity(new Intent(appContext, ActivityProducerYes.class));
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_producer_name);
+        ButterKnife.bind(this);
+        Toothpick.inject(this, Toothpick.openScope(App.class));
+    }
+
+
 }

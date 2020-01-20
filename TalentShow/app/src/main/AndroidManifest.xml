@@ -19,7 +19,7 @@
         <activity android:name=".presentation.EmailEnterActivity" />
         <activity android:name=".presentation.EmailSuccessCodeActivity" />
 
-        <activity android:name=".producer.ActivityProducerYes"></activity>
-        <activity android:name=".producer.ActivityProducerName"></activity>
+        <activity android:name=".presentation.ActivityProducerYes"></activity>
+        <activity android:name=".presentation.ActivityProducerName"></activity>
     </application>
 </manifest>
