@@ -39,5 +39,65 @@
 
     </style>
 
+    <style name="activity_casting_heading">
+
+        <item name="android:textSize">
+            36sp
+        </item>
+
+        <item name="android:letterSpacing">
+            -0.01
+        </item>
+
+        <item name="android:textColor">
+            #060606
+        </item>
+
+    </style>
+
+    <style name="activity_casting_long_sample">
+
+        <item name="android:textSize">
+            14sp
+        </item>
+
+        <item name="android:letterSpacing">
+            -0.01
+        </item>
+
+        <item name="android:textColor">
+            #686868
+        </item>
+
+    </style>
+
+    <style name="activity_casting_tv1_text">
+
+        <item name="android:textSize">
+            14sp
+        </item>
+
+        <item name="android:textColor">
+            #ABABAB
+        </item>
+
+    </style>
+
+    <style name="activity_casting_name">
+
+        <item name="android:textSize">
+            24sp
+        </item>
+
+        <item name="android:letterSpacing">
+            -0.01
+        </item>
+
+        <item name="android:textColor">
+            #060606
+        </item>
+
+    </style>
+
 
 </resources>

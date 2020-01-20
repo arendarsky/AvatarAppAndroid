@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E5E5E5"
+    tools:context=".presentation.CastingActivity">
+
+    <TextView
+        android:layout_width="139dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="60dp"
+        android:text="@string/activity_casting_head"
+        android:id="@+id/activity_casting_head"
+        android:textAppearance="@style/activity_casting_heading"
+        android:lineSpacingExtra="0sp"
+        android:gravity="top"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:layout_width="334dp"
+        android:layout_height="18dp"
+        android:id="@+id/activity_casting_tv"
+        android:text="@string/activity_casting_tv"
+        android:textAppearance="@style/activity_casting_long_sample"
+        android:lineSpacingExtra="1sp"
+        android:translationY="-0.65sp"
+        android:gravity="top"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_casting_head"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="337dp"
+        android:layout_height="354dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginTop="149dp"
+        android:background="@drawable/activity_casting_block"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <VideoView
+        android:layout_width="337dp"
+        android:layout_height="248dp"
+        android:id="@+id/activity_casting_video"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginTop="21dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_casting_tv"
+        />
+
+    <TextView
+        android:layout_width="222dp"
+        android:layout_height="20dp"
+        android:id="@+id/activity_casting_tv1"
+        android:text="@string/activity_casting_tv1"
+        android:textAppearance="@style/activity_casting_tv1_text"
+        android:lineSpacingExtra="3sp"
+        android:translationY="-1.65sp"
+        android:gravity="center_horizontal|top"
+        android:layout_marginTop="400dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginEnd="95dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:text="@string/activity_casting_name"
+        android:id="@+id/activity_casting_name"
+        android:textAppearance="@style/activity_casting_name"
+        android:layout_marginTop="437dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="266dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <Button
+        android:layout_width="59dp"
+        android:layout_height="59dp"
+        android:id="@+id/activity_casting_btn_x"
+        android:background="@drawable/activity_casting_x"
+        android:layout_marginTop="531dp"
+        android:layout_marginStart="77dp"
+        android:layout_marginEnd="239dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <Button
+        android:layout_width="59dp"
+        android:layout_height="59dp"
+        android:id="@+id/activity_casting_btn_like"
+        android:background="@drawable/activity_casting_x"
+        android:layout_marginTop="531dp"
+        android:layout_marginStart="232dp"
+        android:layout_marginEnd="84dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

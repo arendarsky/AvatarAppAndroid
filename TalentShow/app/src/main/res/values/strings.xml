@@ -22,4 +22,8 @@
     <string name="activity_producer_name_btn">Далее</string>
     <string name="activity_producer_yes_heading">Ура! Можно начинать</string>
     <string name="activity_producer_yes_btn">Начать</string>
+    <string name="activity_casting_head">Кастинг</string>
+    <string name="activity_casting_tv">Лайкай звёзд, которые должны стать успеными</string>
+    <string name="activity_casting_tv1">Посмотреть видео полностью</string>
+    <string name="activity_casting_name">Роман</string>
 </resources>
