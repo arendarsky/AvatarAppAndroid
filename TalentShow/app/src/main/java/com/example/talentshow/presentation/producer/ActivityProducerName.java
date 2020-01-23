@@ -1,4 +1,4 @@
-package com.example.talentshow.presentation;
+package com.example.talentshow.presentation.producer;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.talentshow.App;
 import com.example.talentshow.R;
-import com.example.talentshow.presentation.ActivityProducerYes;
 
 import javax.inject.Inject;
 

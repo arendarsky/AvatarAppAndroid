@@ -1,4 +1,4 @@
-package com.example.talentshow.presentation;
+package com.example.talentshow.presentation.producer;
 
 import android.os.Bundle;
 

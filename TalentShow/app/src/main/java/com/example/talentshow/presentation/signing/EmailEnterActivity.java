@@ -1,4 +1,4 @@
-package com.example.talentshow.presentation;
+package com.example.talentshow.presentation.signing;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +18,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 import toothpick.Toothpick;
 
@@ -58,5 +57,12 @@ public class EmailEnterActivity extends AppCompatActivity {
                 mailEdit.setTextColor(getResources().getColor(R.color.red_text));
             } else mailEdit.setTextColor(getResources().getColor(R.color.blackText));
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(appContext, ChooseRoleActivity.class));
+        finish();
     }
 }
