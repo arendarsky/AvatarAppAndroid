@@ -1,4 +1,4 @@
-package com.example.talentshow.presentation;
+package com.example.talentshow.presentation.signing;
 
 import android.content.Context;
 import android.content.Intent;
@@ -46,5 +46,4 @@ public class ChooseRoleActivity extends AppCompatActivity {
     void producerButtonClicked(){
         startActivity(new Intent(appContext, EmailEnterActivity.class));
     }
-
 }

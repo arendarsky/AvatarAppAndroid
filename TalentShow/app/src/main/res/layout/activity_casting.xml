@@ -51,7 +51,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <life.knowledge4.videotrimmer.K4LVideoTrimmer
+    <View
         android:layout_width="337dp"
         android:layout_height="248dp"
         android:id="@+id/activity_casting_video"

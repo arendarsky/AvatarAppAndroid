@@ -26,4 +26,10 @@
     <string name="activity_casting_tv">Лайкай звёзд, которые должны стать успеными</string>
     <string name="activity_casting_tv1">Посмотреть видео полностью</string>
     <string name="activity_casting_name">Роман</string>
+    <string name="ur_name"><b>Ваше имя</b></string>
+    <string name="enter_name">Введите имя</string>
+    <string name="step_1">шаг 1 из 5</string>
+    <string name="talant_video"><b>Видео таланта</b></string>
+    <string name="step_4">Шаг 4 из 6</string>
+    <string name="add_ur_video">Добавте\nваше видео</string>
 </resources>

@@ -7,10 +7,6 @@ import android.os.Bundle;
 
 import com.example.talentshow.R;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import life.knowledge4.videotrimmer.K4LVideoTrimmer;
-import life.knowledge4.videotrimmer.interfaces.OnTrimVideoListener;
 
 public class CastingActivity extends AppCompatActivity {
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/activity_email_enter_text1"
+        android:id="@+id/activity_star_name_enter_text1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -15,13 +15,13 @@
         android:textSize="28sp"
         android:gravity="center"
         android:textColor="@color/blackText"
-        android:text="@string/ur_mail"
+        android:text="@string/ur_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
-        android:id="@+id/activity_email_enter_text2"
+        android:id="@+id/activity_star_name_enter_text2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="23dp"
@@ -31,16 +31,16 @@
         android:textSize="17sp"
         android:gravity="center"
         android:text="@string/leave_mail"
-        app:layout_constraintTop_toBottomOf="@id/activity_email_enter_text1"
+        app:layout_constraintTop_toBottomOf="@id/activity_star_name_enter_text1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <EditText
-        android:id="@+id/activity_email_enter_mail"
+        android:id="@+id/activity_star_name_enter_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="14dp"
+        android:layout_marginStart="75dp"
+        android:layout_marginEnd="68dp"
         android:layout_marginTop="26dp"
         android:paddingStart="29dp"
         android:paddingEnd="10dp"
@@ -48,15 +48,27 @@
         android:paddingTop="11dp"
         android:paddingBottom="11dp"
         android:textColorHint="@color/hint_text_color"
-        android:hint="@string/enter_email"
+        android:hint="@string/enter_name"
         android:inputType="textEmailAddress"
         android:background="@drawable/email_activity_edittext_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activity_email_enter_text2"/>
+        app:layout_constraintTop_toBottomOf="@id/activity_star_name_enter_text2"/>
 
     <TextView
-        android:id="@+id/activity_email_enter_continue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:textColor="@color/blackText"
+        android:layout_marginBottom="13dp"
+        android:text="@string/step_1"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/activity_star_name_enter_continue"/>
+
+    <TextView
+        android:id="@+id/activity_star_name_enter_continue"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -65,7 +77,7 @@
         android:background="@drawable/blue_button_background"
         android:textSize="17sp"
         android:gravity="center"
-        android:text="@string/recieve_letters"
+        android:text="@string/next"
         android:textColor="@color/whiteText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

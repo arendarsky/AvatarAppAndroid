@@ -1,5 +1,7 @@
-package com.example.talentshow.presentation;
+package com.example.talentshow.presentation.signing;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 
@@ -8,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.talentshow.App;
 import com.example.talentshow.R;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,6 +25,9 @@ import ru.tinkoff.decoro.watchers.MaskFormatWatcher;
 import toothpick.Toothpick;
 
 public class EmailSuccessCodeActivity extends AppCompatActivity {
+
+    @Inject
+    Context appContext;
 
     @BindView(R.id.activity_email_success_code)
     EditText codeEdit;
@@ -49,4 +56,9 @@ public class EmailSuccessCodeActivity extends AppCompatActivity {
         formatWatcher.installOn(codeEdit);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(appContext, EmailEnterActivity.class));
+    }
 }
