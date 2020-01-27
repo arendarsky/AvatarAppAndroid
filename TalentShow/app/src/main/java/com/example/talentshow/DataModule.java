@@ -1,5 +1,8 @@
 package com.example.talentshow;
 
+import com.example.talentshow.data.AuthRepository;
+import com.example.talentshow.domain.repository.IAuthRepository;
+
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -15,7 +18,7 @@ public class DataModule extends Module{
                         .addConverterFactory(GsonConverterFactory.create())
                         .build());
 
-
+        bind(IAuthRepository.class).to(AuthRepository.class);
 
     }
 }
