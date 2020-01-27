@@ -8,6 +8,7 @@ import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.example.talentshow.App;
 import com.example.talentshow.R;
 
@@ -21,7 +22,7 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import toothpick.Toothpick;
 
-public class EmailEnterActivity extends AppCompatActivity {
+public class EmailEnterActivity extends MvpAppCompatActivity implements EmailEnterView{
 
     @Inject
     Context appContext;
@@ -40,7 +41,7 @@ public class EmailEnterActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.activity_email_enter_continue)
-    void continueClicked(){
+    public void continueClicked(){
         buttonPressed = true;
         if(!Pattern.compile("\\w+@\\D+\\.\\D+")
                 .matcher(mailEdit.getText().toString()).find()){
@@ -50,7 +51,7 @@ public class EmailEnterActivity extends AppCompatActivity {
     }
 
     @OnTextChanged(R.id.activity_email_enter_mail)
-    void mailEdited(){
+    public void mailEdited(){
         if (buttonPressed) {
             if (!Pattern.compile("\\w+@\\D+\\.\\D+")
                     .matcher(mailEdit.getText().toString()).find()) {
