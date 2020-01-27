@@ -44,7 +44,7 @@ public class ChooseRoleActivity extends AppCompatActivity {
 
     @OnClick(R.id.role_choice_producer_button)
     void producerButtonClicked(){
-        startActivity(new Intent(appContext, EmailEnterActivity.class));
+        startActivity(new Intent(appContext, ActivityProducerName.class));
     }
 
 }
