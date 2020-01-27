@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".presentation.CastingActivity"/>
+        <activity android:name=".presentation.CastingActivity"></activity>
         <activity
             android:name=".presentation.signing.ChooseRoleActivity"
             android:theme="@style/AppTheme">
