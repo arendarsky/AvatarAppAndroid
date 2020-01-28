@@ -10,6 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.talentshow.App;
 import com.example.talentshow.R;
+import com.example.talentshow.presentation.producer.ActivityProducerName;
 
 import javax.inject.Inject;
 

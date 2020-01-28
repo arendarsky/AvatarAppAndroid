@@ -24,6 +24,8 @@ public class ActivityStarFileLoad extends AppCompatActivity {
     @Inject
     Context appContext;
 
+    String link = "";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,21 +34,27 @@ public class ActivityStarFileLoad extends AppCompatActivity {
         Toothpick.inject(this, Toothpick.openScope(App.class));
     }
 
-    @OnClick
+    @OnClick(R.id.activity_star_load_file_circle)
     void loadFileClicked(){
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(Intent.createChooser(intent, "Select video"), 1);
     }
 
-    @OnClick
-    void continueClicked(){}
+    @OnClick(R.id.activity_star_load_file_continue)
+    void continueClicked(){
+        Intent intent = new Intent(appContext, ActivityStarVideoBest.class);
+        intent.putExtra("VideoLink", link);
+        startActivity(intent);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("resultCodeVideo", resultCode + "");
         if (resultCode == RESULT_OK && data != null){
             Uri selectedVideo = data.getData();
             Log.d("Video link", selectedVideo.toString());
+            link = selectedVideo.toString();
         }
     }
 
