@@ -88,7 +88,10 @@ public class EmailEnterActivity extends MvpAppCompatActivity implements EmailEnt
 
     public void sendingSuccess(){
         progressBar.setVisibility(View.INVISIBLE);
-        startActivity(new Intent(appContext, EmailSuccessCodeActivity.class));
+        Intent intent = new Intent(appContext, EmailSuccessCodeActivity.class);
+        intent.putExtra("mail", mailEdit.getText().toString());
+        intent.putExtra("role", getIntent().getBooleanExtra("role", true));
+        startActivity(intent);
     }
 
     public void sendingFailure(){
