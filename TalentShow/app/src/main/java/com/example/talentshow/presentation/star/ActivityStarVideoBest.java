@@ -47,6 +47,8 @@ public class ActivityStarVideoBest extends AppCompatActivity {
 
     int duration = 0;
 
+    MediaController mc;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,13 +60,13 @@ public class ActivityStarVideoBest extends AppCompatActivity {
         String link = intent.getStringExtra("VideoLink");
         Log.d("Video linkk", link);
 
-        String url = "http://techslides.com/demos/sample-videos/small.mp4";
+        String url = "https://youtu.be/69FMw5OykjQ";
 
-        MediaController controls = new MediaController(this);
-        controls.setAnchorView(video);
-        video.setMediaController(controls);
+        //MediaController controls = new MediaController(this);
+        //controls.setAnchorView(video);
+        //video.setMediaController(controls);
         video.setVideoURI(Uri.parse(link));
-
+        //video.setVideoURI(Uri.parse(url));
         //video.setVideoPath(videoName1);
         video.start();
 
@@ -72,6 +74,23 @@ public class ActivityStarVideoBest extends AppCompatActivity {
         video.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
+
+                mp.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
+                    @Override
+                    public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
+                        /*
+                         * add media controller
+                         */
+                        mc = new MediaController(ActivityStarVideoBest.this);
+                        video.setMediaController(mc);
+                        /*
+                         * and set its position on screen
+                         */
+                        mc.setAnchorView(video);
+                    }
+                });
+
+
                 duration = video.getDuration();
                 Log.d("duration", duration + "");
                 rangeSeekbar.setMinValue(0);

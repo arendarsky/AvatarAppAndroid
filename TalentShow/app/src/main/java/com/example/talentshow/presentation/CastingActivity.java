@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.VideoView;
 
 import com.example.talentshow.App;
 import com.example.talentshow.R;
+import com.example.talentshow.presentation.star.ActivityStarVideoBest;
 import com.google.android.material.snackbar.Snackbar;
 
 import javax.inject.Inject;
@@ -40,6 +42,8 @@ public class CastingActivity extends AppCompatActivity {
     @BindView(R.id.activity_casting_video)
     VideoView video;
 
+    MediaController mc;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +53,32 @@ public class CastingActivity extends AppCompatActivity {
 
         String url = "http://techslides.com/demos/sample-videos/small.mp4";
 
-        MediaController controls = new MediaController(this);
-        controls.setAnchorView(video);
-        video.setMediaController(controls);
+
         video.setVideoURI(Uri.parse(url));
         //video.setVideoPath(videoName1);
         video.start();
+
+
+        video.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+
+                mp.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
+                    @Override
+                    public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
+                        /*
+                         * add media controller
+                         */
+                        mc = new MediaController(CastingActivity.this);
+                        video.setMediaController(mc);
+                        /*
+                         * and set its position on screen
+                         */
+                        mc.setAnchorView(video);
+                    }
+                });
+            }
+        });
     }
 
 
