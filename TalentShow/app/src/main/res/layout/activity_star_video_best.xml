@@ -48,6 +48,7 @@
         android:id="@+id/activity_star_video_best_video"
         android:layout_marginTop="232dp"
         android:layout_marginBottom="139dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
