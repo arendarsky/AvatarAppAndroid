@@ -21,9 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".presentation.star.ActivityStarVideoBest">
-
-        </activity>
+        <activity android:name=".presentation.star.ActivityStarStatistics"></activity>
+        <activity android:name=".presentation.star.ActivityStarVideoBest"></activity>
         <activity android:name=".presentation.CastingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,20 +32,13 @@
         </activity>
         <activity
             android:name=".presentation.signing.ChooseRoleActivity"
-            android:theme="@style/AppTheme">
-
-        </activity>
+            android:theme="@style/AppTheme"></activity>
         <activity android:name=".presentation.signing.EmailEnterActivity" />
         <activity android:name=".presentation.signing.EmailSuccessCodeActivity" />
-        <activity android:name=".presentation.producer.ActivityProducerYes" >
-
-        </activity>
+        <activity android:name=".presentation.producer.ActivityProducerYes"></activity>
         <activity android:name=".presentation.producer.ActivityProducerName" />
-        <activity android:name=".presentation.star.ActivityStarNameEnter" >
-
-        </activity>
-        <activity android:name=".presentation.star.ActivityStarFileLoad"/>
-
+        <activity android:name=".presentation.star.ActivityStarNameEnter"></activity>
+        <activity android:name=".presentation.star.ActivityStarFileLoad" />
     </application>
 
 </manifest>

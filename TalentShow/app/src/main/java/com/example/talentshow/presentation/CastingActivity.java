@@ -1,11 +1,13 @@
 package com.example.talentshow.presentation;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
@@ -15,6 +17,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -26,7 +29,10 @@ import android.widget.VideoView;
 
 import com.example.talentshow.App;
 import com.example.talentshow.R;
+import com.example.talentshow.presentation.producer.ActivityProducerYes;
+import com.example.talentshow.presentation.star.ActivityStarStatistics;
 import com.example.talentshow.presentation.star.ActivityStarVideoBest;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import javax.inject.Inject;
@@ -53,6 +59,9 @@ public class CastingActivity extends AppCompatActivity {
 
     @BindView(R.id.activity_casting_tv1)
     TextView tv;
+
+    @BindView(R.id.casting_activity_menu)
+    BottomNavigationView menu;
 
     VideoView video_fullscreen;
 
@@ -127,6 +136,7 @@ public class CastingActivity extends AppCompatActivity {
             Toothpick.inject(this, Toothpick.openScope(App.class));
             String url = "http://techslides.com/demos/sample-videos/small.mp4";
 
+            menu.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
             video.setVideoURI(Uri.parse(source));
             //video.setVideoPath(videoName1);
@@ -194,5 +204,19 @@ public class CastingActivity extends AppCompatActivity {
             }
         }).start();
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_rating:
+                    //startActivity(new Intent(appContext, ActivityStarStatistics.class));
+                    break;
+            }
+            return false;
+        }
+    };
 
 }
