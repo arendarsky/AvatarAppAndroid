@@ -24,17 +24,17 @@
         <activity android:name=".presentation.star.ActivityStarVideoBest">
 
         </activity>
-        <activity android:name=".presentation.CastingActivity"
-
-            />
-        <activity
-            android:name=".presentation.signing.ChooseRoleActivity"
-            android:theme="@style/AppTheme">
+        <activity android:name=".presentation.CastingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".presentation.signing.ChooseRoleActivity"
+            android:theme="@style/AppTheme">
+
         </activity>
         <activity android:name=".presentation.signing.EmailEnterActivity" />
         <activity android:name=".presentation.signing.EmailSuccessCodeActivity" />
