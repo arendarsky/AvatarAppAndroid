@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/star_nav_casting"
+        android:icon="@drawable/heart"
+        android:title="@string/casting"/>
+
+    <item
+        android:id="@+id/star_nav_rating"
+        android:icon="@drawable/star"
+        android:title="@string/rating"/>
+
+    <item
+        android:title="@string/statistics"
+        android:icon="@drawable/statistic_icon"
+        android:id="@+id/star_nav_statistics"/>
+</menu>

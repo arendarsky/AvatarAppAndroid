@@ -11,6 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.talentshow.App;
 import com.example.talentshow.R;
 import com.example.talentshow.presentation.producer.ActivityProducerName;
+import com.example.talentshow.presentation.star.mainscreen.StarMainScreenActivity;
 
 import javax.inject.Inject;
 
@@ -40,7 +41,7 @@ public class ChooseRoleActivity extends AppCompatActivity {
 
     @OnClick(R.id.role_choice_star_button)
     void starButtonClicked(){
-        Intent intent = new Intent(appContext, EmailEnterActivity.class);
+        Intent intent = new Intent(appContext, StarMainScreenActivity.class);
         intent.putExtra("role", true);
         startActivity(intent);
     }

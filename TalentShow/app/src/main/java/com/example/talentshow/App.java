@@ -12,6 +12,7 @@ public class App extends Application {
         Scope appScope = Toothpick.openScope(App.class);
         appScope.installModules(new PresentationModule(getApplicationContext()));
         appScope.installModules(new DataModule());
+        appScope.installModules(new NavigationModule());
     }
 
 }
