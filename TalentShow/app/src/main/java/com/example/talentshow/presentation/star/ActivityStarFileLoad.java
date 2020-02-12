@@ -25,6 +25,7 @@ public class ActivityStarFileLoad extends AppCompatActivity {
     Context appContext;
 
     String link = "";
+    int REQUEST_ID_VIDEO_CAPTURE = 100;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,8 +37,13 @@ public class ActivityStarFileLoad extends AppCompatActivity {
 
     @OnClick(R.id.activity_star_load_file_circle)
     void loadFileClicked(){
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(Intent.createChooser(intent, "Select video"), 1);
+        //Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+        //startActivityForResult(Intent.createChooser(intent, "Select video"), 1);
+        Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+
+
+        // Start camera and wait for the results.
+        startActivityForResult(intent, REQUEST_ID_VIDEO_CAPTURE);
     }
 
     @OnClick(R.id.activity_star_load_file_continue)
@@ -52,6 +58,11 @@ public class ActivityStarFileLoad extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d("resultCodeVideo", resultCode + "");
         if (resultCode == RESULT_OK && data != null){
+            Uri selectedVideo = data.getData();
+            Log.d("Video link", selectedVideo.toString());
+            link = selectedVideo.toString();
+        }
+        if(requestCode == REQUEST_ID_VIDEO_CAPTURE && data != null){
             Uri selectedVideo = data.getData();
             Log.d("Video link", selectedVideo.toString());
             link = selectedVideo.toString();
