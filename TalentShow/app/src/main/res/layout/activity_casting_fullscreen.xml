@@ -19,7 +19,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:id="@+id/activity_casting_btn_fullscreen"
-        android:src="@drawable/activity_casting_imagebtn" />
+        android:background="@drawable/close_fullscreen" />
 
 
 </RelativeLayout>

@@ -9,7 +9,6 @@
         android:id="@+id/activity_email_enter_progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@android:style/Widget.ProgressBar.Inverse"
         android:visibility="invisible"
         android:layout_marginTop="15dp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -1,5 +1,8 @@
 package com.example.talentshow.presentation.signing;
 
+import android.util.Log;
+
+import androidx.annotation.LongDef;
 import androidx.annotation.MainThread;
 
 import com.arellomobile.mvp.InjectViewState;
@@ -27,7 +30,10 @@ public class EmailEnterPresenter extends MvpPresenter<EmailEnterView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(()->getViewState().sendingSuccess(),
-                        e -> getViewState().sendingFailure());
+                        e -> {
+                            Log.d("Auth", e.toString());
+                    getViewState().sendingFailure();
+                        });
     }
 
 }

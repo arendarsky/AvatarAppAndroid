@@ -1,23 +1,22 @@
 package com.example.talentshow.data;
 
 import com.example.talentshow.data.api.AuthAPI;
-import com.example.talentshow.domain.entities.ConfirmationDTO;
-import com.example.talentshow.domain.entities.ConfirmationDTO;
 import com.example.talentshow.domain.repository.IAuthRepository;
 
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
-import io.reactivex.Single;
 import retrofit2.Retrofit;
 
 public class AuthRepository implements IAuthRepository {
 
     private AuthAPI authAPI;
+    private SharedPreferencesRepository preferencesRepository;
 
     @Inject
-    AuthRepository(Retrofit retrofit){
+    AuthRepository(Retrofit retrofit, SharedPreferencesRepository preferencesRepository){
         this.authAPI = retrofit.create(AuthAPI.class);
+        this.preferencesRepository = preferencesRepository;
     }
 
     @Override
@@ -26,7 +25,8 @@ public class AuthRepository implements IAuthRepository {
     }
 
     @Override
-    public Single<ConfirmationDTO> confirmMail(String mail, String code) {
-        return authAPI.confirmEmail(mail, code);
+    public Completable confirmMail(String mail, String code) {
+        return authAPI.confirmEmail(mail, code).doAfterSuccess(confirmationDTO ->
+                preferencesRepository.saveToken(confirmationDTO.getKey())).ignoreElement();
     }
 }

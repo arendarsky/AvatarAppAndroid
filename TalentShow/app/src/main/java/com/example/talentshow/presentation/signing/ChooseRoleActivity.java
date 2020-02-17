@@ -10,15 +10,16 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.talentshow.App;
 import com.example.talentshow.R;
-import com.example.talentshow.presentation.producer.ActivityProducerName;
-import com.example.talentshow.presentation.star.ActivityStarFileLoad;
+import com.example.talentshow.presentation.star.fileload.ActivityStarFileLoad;
 import com.example.talentshow.presentation.star.mainscreen.StarMainScreenActivity;
+import com.example.talentshow.presentation.star.rating.StarRatingFragment;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import ru.terrakok.cicerone.Router;
 import toothpick.Toothpick;
 
 public class ChooseRoleActivity extends AppCompatActivity {
@@ -32,6 +33,9 @@ public class ChooseRoleActivity extends AppCompatActivity {
     @Inject
     Context appContext;
 
+    @Inject
+    Router router;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +46,7 @@ public class ChooseRoleActivity extends AppCompatActivity {
 
     @OnClick(R.id.role_choice_star_button)
     void starButtonClicked(){
-        Intent intent = new Intent(appContext, ActivityStarFileLoad.class);
+        Intent intent = new Intent(appContext, StarMainScreenActivity.class);
         intent.putExtra("role", true);
         startActivity(intent);
     }

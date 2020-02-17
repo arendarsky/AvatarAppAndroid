@@ -2,18 +2,15 @@ package com.example.talentshow.presentation.star;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.talentshow.App;
 import com.example.talentshow.R;
+import com.example.talentshow.presentation.star.fileload.ActivityStarFileLoad;
 
 import javax.inject.Inject;
 

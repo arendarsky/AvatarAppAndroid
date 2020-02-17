@@ -77,4 +77,9 @@ dependencies {
 
     //Cicerone
     implementation 'ru.terrakok.cicerone:cicerone:5.0.0'
+
+    //Logging Interceptor
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
+
+    implementation 'org.apache.commons:commons-io:1.3.2'
 }

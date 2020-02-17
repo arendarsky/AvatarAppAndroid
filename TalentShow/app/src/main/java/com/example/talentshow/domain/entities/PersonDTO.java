@@ -17,6 +17,8 @@ public class PersonDTO {
         this.photo = photo;
     }
 
+    public PersonDTO(){}
+
     public String getName() {
         return name;
     }

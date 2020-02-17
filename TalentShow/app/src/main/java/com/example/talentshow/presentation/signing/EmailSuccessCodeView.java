@@ -4,7 +4,7 @@ import com.arellomobile.mvp.MvpView;
 
 public interface EmailSuccessCodeView extends MvpView {
 
-    void codeConfirmed(String token);
+    void codeConfirmed();
     void codeDiffers();
     void continueClicked();
 

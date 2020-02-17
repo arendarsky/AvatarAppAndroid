@@ -1,20 +1,24 @@
 package com.example.talentshow.domain;
 
-import com.example.talentshow.domain.entities.ConfirmationDTO;
+import android.net.Uri;
+
 import com.example.talentshow.domain.repository.IAuthRepository;
+import com.example.talentshow.domain.repository.IVideoRepository;
 
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
-import io.reactivex.Single;
 
 public class Interactor {
 
     private IAuthRepository authRepository;
+    private IVideoRepository videoRepository;
+
 
     @Inject
-    public Interactor(IAuthRepository authRepository){
+    public Interactor(IAuthRepository authRepository, IVideoRepository videoRepository){
         this.authRepository = authRepository;
+        this.videoRepository = videoRepository;
     }
 
 
@@ -22,7 +26,11 @@ public class Interactor {
         return this.authRepository.sendCodeToMail(mail);
     }
 
-    public Single<ConfirmationDTO> confirmEmail(String mail, String code){
-        return this.authRepository.confirmMail(mail, code);
+    public Completable confirmEmail(String mail, String code){
+        return this.authRepository.confirmMail(mail, code.replaceAll(" ", ""));
+    }
+
+    public Completable uploadVideo(Uri videoUri){
+        return this.videoRepository.uploadVideo(videoUri);
     }
 }

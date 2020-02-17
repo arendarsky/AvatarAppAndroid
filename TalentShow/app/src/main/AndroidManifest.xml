@@ -19,6 +19,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -39,7 +40,7 @@
         <activity android:name=".presentation.producer.ActivityProducerYes"></activity>
         <activity android:name=".presentation.producer.ActivityProducerName" />
         <activity android:name=".presentation.star.ActivityStarNameEnter"></activity>
-        <activity android:name=".presentation.star.ActivityStarFileLoad" />
+        <activity android:name=".presentation.star.fileload.ActivityStarFileLoad" />
         <activity android:name=".presentation.star.mainscreen.StarMainScreenActivity" />
     </application>
 

@@ -17,6 +17,7 @@ import com.example.talentshow.App;
 import com.example.talentshow.R;
 import com.example.talentshow.presentation.producer.ActivityProducerName;
 import com.example.talentshow.presentation.star.ActivityStarNameEnter;
+import com.example.talentshow.presentation.star.fileload.ActivityStarFileLoad;
 
 import javax.inject.Inject;
 
@@ -87,10 +88,10 @@ public class EmailSuccessCodeActivity extends MvpAppCompatActivity implements Em
     }
 
     @Override
-    public void codeConfirmed(String token) {
+    public void codeConfirmed() {
         progressBar.setVisibility(View.INVISIBLE);
         boolean role = getIntent().getBooleanExtra("role", true);
-        if (role) startActivity(new Intent(appContext, ActivityStarNameEnter.class));
+        if (role) startActivity(new Intent(appContext, ActivityStarFileLoad.class));
         else startActivity(new Intent(appContext, ActivityProducerName.class));
     }
 

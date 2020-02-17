@@ -62,6 +62,7 @@ public class EmailEnterActivity extends MvpAppCompatActivity implements EmailEnt
         if(!Pattern.compile("\\w+@\\D+\\.\\D+")
                 .matcher(mailEdit.getText().toString()).find()){
             mailEdit.setTextColor(getResources().getColor(R.color.red_text));
+            Toast.makeText(appContext, "", Toast.LENGTH_SHORT);
         }
         else {
             progressBar.setVisibility(View.VISIBLE);

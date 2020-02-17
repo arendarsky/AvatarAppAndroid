@@ -1,4 +1,4 @@
-package com.example.talentshow.presentation.star.rating.viewpager;
+package com.example.talentshow.presentation.star.rating;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,11 +35,11 @@ public class StarRatingAdapter extends RecyclerView.Adapter<StarRatingAdapter.Vi
         PersonDTO personDTO = data.get(position);
         String name = personDTO.getName() + " " + personDTO.getSurname();
         holder.personName.setText(name);
-        holder.personNumber.setText(position + 1);
-//        Glide.with(holder.itemView.getContext())
-//                .load(personDTO.getPhoto())
-//                .circleCrop()
-//                .into(holder.personAvatar);
+        holder.personNumber.setText(String.valueOf(position + 1));
+        Glide.with(holder.itemView.getContext())
+                .load(personDTO.getPhoto())
+                .circleCrop()
+                .into(holder.personAvatar);
 
     }
 

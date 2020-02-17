@@ -27,7 +27,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginStart="80dp"
         android:layout_marginEnd="80dp"
-        android:background="@drawable/star_rating_rectangle"
+        android:background="@drawable/star_rating_viewpager_star"
         app:layout_constraintTop_toBottomOf="@id/star_rating_text1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

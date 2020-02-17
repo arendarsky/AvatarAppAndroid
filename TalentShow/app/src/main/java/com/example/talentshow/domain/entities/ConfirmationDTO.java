@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class ConfirmationDTO {
 
-    @SerializedName("session_guide")
+    @SerializedName("token")
     private String key;
 
     public String getKey() {
