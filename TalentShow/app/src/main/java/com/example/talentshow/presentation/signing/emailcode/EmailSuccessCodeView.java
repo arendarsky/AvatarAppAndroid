@@ -1,4 +1,4 @@
-package com.example.talentshow.presentation.signing;
+package com.example.talentshow.presentation.signing.emailcode;
 
 import com.arellomobile.mvp.MvpView;
 

@@ -9,7 +9,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -17,7 +16,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.talentshow.App;
 import com.example.talentshow.R;
 import com.example.talentshow.presentation.CastingActivity;
-import com.example.talentshow.presentation.star.ActivityStarNameEnter;
+import com.example.talentshow.presentation.signing.nameenter.ActivityStarNameEnter;
 import com.example.talentshow.presentation.star.ActivityStarVideoBest;
 
 import javax.inject.Inject;

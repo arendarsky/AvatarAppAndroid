@@ -1,4 +1,4 @@
-package com.example.talentshow.presentation.signing;
+package com.example.talentshow.presentation.signing.emailenter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,13 +9,14 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.talentshow.App;
 import com.example.talentshow.R;
+import com.example.talentshow.presentation.signing.emailcode.EmailSuccessCodeActivity;
+import com.example.talentshow.presentation.signing.rolechoice.ChooseRoleActivity;
 
 import java.util.regex.Pattern;
 
@@ -80,19 +81,19 @@ public class EmailEnterActivity extends MvpAppCompatActivity implements EmailEnt
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(new Intent(appContext, ChooseRoleActivity.class));
-        finish();
-    }
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        startActivity(new Intent(appContext, ChooseRoleActivity.class));
+//        finish();
+//    }
 
     public void sendingSuccess(){
         progressBar.setVisibility(View.INVISIBLE);
-        Intent intent = new Intent(appContext, EmailSuccessCodeActivity.class);
-        intent.putExtra("mail", mailEdit.getText().toString());
-        intent.putExtra("role", getIntent().getBooleanExtra("role", true));
-        startActivity(intent);
+//        Intent intent = new Intent(appContext, EmailSuccessCodeActivity.class);
+//        intent.putExtra("mail", mailEdit.getText().toString());
+//        intent.putExtra("role", getIntent().getBooleanExtra("role", true));
+//        startActivity(intent);
     }
 
     public void sendingFailure(){
