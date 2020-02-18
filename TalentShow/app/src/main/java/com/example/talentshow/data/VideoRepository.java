@@ -56,8 +56,14 @@ public class VideoRepository implements IVideoRepository {
         MultipartBody.Part body =
                 MultipartBody.Part.createFormData("picture", file.getName(), requestFile);
         Log.d("Token", preferencesRepository.getToken());
-        return videoAPI.uploadVideo(preferencesRepository.getToken(), body);
+        return videoAPI.uploadVideo("Bearer "+preferencesRepository.getToken(), body);
     }
+
+    @Override
+    public Single<ArrayList<String>> getUnwatcedVideos(int number) {
+        return videoAPI.getUnwatched("Bearer "+preferencesRepository.getToken(), number);
+    }
+
 
     public static String getFilePathFromUri(Context context, Uri uri) {
         if (uri == null) return null;

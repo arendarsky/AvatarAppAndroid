@@ -24,10 +24,10 @@ public class StarFileLoadPresenter extends MvpPresenter<StarFileLoadView> {
     }
 
     void uploadVideoToServer(Uri videoUri){
-        Disposable disposable = interactor.uploadVideo(videoUri)
+        Disposable disposable = interactor.getUnwatchedVideos(1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> getViewState().startingNextActivity(),
+                .subscribe(arrayList -> getViewState().startingNextActivity(),
                         e -> getViewState().showingError());
     }
 }

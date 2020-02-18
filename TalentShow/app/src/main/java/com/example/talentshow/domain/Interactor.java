@@ -5,9 +5,12 @@ import android.net.Uri;
 import com.example.talentshow.domain.repository.IAuthRepository;
 import com.example.talentshow.domain.repository.IVideoRepository;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import io.reactivex.Single;
 
 public class Interactor {
 
@@ -32,5 +35,9 @@ public class Interactor {
 
     public Completable uploadVideo(Uri videoUri){
         return this.videoRepository.uploadVideo(videoUri);
+    }
+
+    public Single<ArrayList<String>> getUnwatchedVideos(int number){
+        return this.videoRepository.getUnwatcedVideos(number);
     }
 }
