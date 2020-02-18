@@ -1,8 +1,10 @@
 package com.example.talentshow;
 
 import com.example.talentshow.data.AuthRepository;
+import com.example.talentshow.data.SharedPreferencesRepository;
 import com.example.talentshow.data.VideoRepository;
 import com.example.talentshow.domain.repository.IAuthRepository;
+import com.example.talentshow.domain.repository.ISharedPreferemcesRepository;
 import com.example.talentshow.domain.repository.IVideoRepository;
 
 import okhttp3.OkHttpClient;
@@ -32,6 +34,7 @@ public class DataModule extends Module{
 
         bind(IAuthRepository.class).to(AuthRepository.class);
         bind(IVideoRepository.class).to(VideoRepository.class);
+        bind(ISharedPreferemcesRepository.class).to(SharedPreferencesRepository.class);
 
     }
 }

@@ -56,7 +56,7 @@ public class VideoRepository implements IVideoRepository {
         MultipartBody.Part body =
                 MultipartBody.Part.createFormData("picture", file.getName(), requestFile);
         Log.d("Token", preferencesRepository.getToken());
-        return videoAPI.uploadVideo(preferencesRepository.getToken(), body);
+        return videoAPI.uploadVideo("Bearer "+preferencesRepository.getToken(), body);
     }
 
     public static String getFilePathFromUri(Context context, Uri uri) {
