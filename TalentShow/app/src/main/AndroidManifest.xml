@@ -30,17 +30,20 @@
         <activity
             android:name=".presentation.signing.ChooseRoleActivity"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter></activity>
+        </activity>
         <activity android:name=".presentation.signing.EmailEnterActivity" />
         <activity android:name=".presentation.signing.EmailSuccessCodeActivity" />
         <activity android:name=".presentation.producer.ActivityProducerYes"></activity>
         <activity android:name=".presentation.producer.ActivityProducerName" />
         <activity android:name=".presentation.star.ActivityStarNameEnter"></activity>
-        <activity android:name=".presentation.star.fileload.ActivityStarFileLoad" />
+        <activity android:name=".presentation.star.fileload.ActivityStarFileLoad" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".presentation.star.mainscreen.StarMainScreenActivity" />
     </application>
 
