@@ -65,20 +65,20 @@ public class ActivityStarFileLoad extends MvpAppCompatActivity implements StarFi
 
     @OnClick(R.id.activity_star_load_file_circle)
     void loadFileClicked(){
-        //Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
-        //startActivityForResult(Intent.createChooser(intent, "Select video"), 1);
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(Intent.createChooser(intent, "Select video"), 1);
 //        Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
 
 
         // Start camera and wait for the results.
 //        startActivityForResult(intent, REQUEST_ID_VIDEO_CAPTURE);
 
-        if (permissionAlreadyGranted()) {
-            Intent intentС = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-            startActivityForResult(intentС, REQUEST_ID_VIDEO_CAPTURE);
-            return;
-        }
-
+//        if (permissionAlreadyGranted()) {
+//            Intent intentС = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+//            startActivityForResult(intentС, REQUEST_ID_VIDEO_CAPTURE);
+//            return;
+//        }
+//
         requestPermission();
     }
 
@@ -99,12 +99,12 @@ public class ActivityStarFileLoad extends MvpAppCompatActivity implements StarFi
             link = selectedVideo.toString();
             presenter.uploadVideoToServer(selectedVideo);
         }
-        if(requestCode == REQUEST_ID_VIDEO_CAPTURE && data != null){
-            Uri selectedVideo = data.getData();
-            Log.d("Video link", selectedVideo.toString());
-            link = selectedVideo.toString();
-            presenter.uploadVideoToServer(selectedVideo);
-        }
+//        if(requestCode == REQUEST_ID_VIDEO_CAPTURE && data != null){
+//            Uri selectedVideo = data.getData();
+//            Log.d("Video link", selectedVideo.toString());
+//            link = selectedVideo.toString();
+//            presenter.uploadVideoToServer(selectedVideo);
+//        }
     }
 
     @Override
