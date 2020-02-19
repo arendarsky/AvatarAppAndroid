@@ -51,16 +51,20 @@ public class VideoRepository implements IVideoRepository {
 
     public Completable uploadVideo(Uri fileURI){
         File file = new File(getFilePathFromUri(appContext, fileURI));
+
         RequestBody requestFile =
-                RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                RequestBody.create(file, MediaType.parse("multipart/form-data"));
+
         MultipartBody.Part body =
-                MultipartBody.Part.createFormData("picture", file.getName(), requestFile);
-        Log.d("Token", preferencesRepository.getToken());
-        return videoAPI.uploadVideo("Bearer "+preferencesRepository.getToken(), body);
+                        MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+
+        return videoAPI.uploadVideo("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjdkMWYzZTYwLTU4MjUtNDI3NC04OWFlLTMyNDMwNDgxOWVhOCIsImlzcyI6IkF2YXRhckFwcCIsImF1ZCI6IkF2YXRhckFwcENsaWVudCJ9.izjDevXXplhlNSifE_OBE8V3xHfh02T83ysATVgYCAo",
+                body);
+//        return videoAPI.uploadVideo("Bearer "+preferencesRepository.getToken(), requestFile);
     }
 
     @Override
-    public Single<ArrayList<String>> getUnwatcedVideos(int number) {
+    public Single<ArrayList<String>> getUnwatchedVideos(int number) {
         return videoAPI.getUnwatched("Bearer "+preferencesRepository.getToken(), number);
     }
 
@@ -78,7 +82,7 @@ public class VideoRepository implements IVideoRepository {
             FileDescriptor fd = pfd.getFileDescriptor();
             input = new FileInputStream(fd);
             File outputDir = context.getCacheDir();
-            File outputFile = File.createTempFile("image", "tmp", outputDir);
+            File outputFile = File.createTempFile("image", ".tmp", outputDir);
             String tempFilename = outputFile.getAbsolutePath();
             output = new FileOutputStream(tempFilename);
             int read;

@@ -10,5 +10,5 @@ import io.reactivex.Single;
 public interface IVideoRepository {
     Completable uploadVideo(Uri videoUri);
 
-    Single<ArrayList<String>> getUnwatcedVideos(int number);
+    Single<ArrayList<String>> getUnwatchedVideos(int number);
 }

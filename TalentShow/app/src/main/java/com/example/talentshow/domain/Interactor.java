@@ -38,6 +38,6 @@ public class Interactor {
     }
 
     public Single<ArrayList<String>> getUnwatchedVideos(int number){
-        return this.videoRepository.getUnwatcedVideos(number);
+        return this.videoRepository.getUnwatchedVideos(number);
     }
 }
