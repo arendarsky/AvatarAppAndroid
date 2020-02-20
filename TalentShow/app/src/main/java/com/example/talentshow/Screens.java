@@ -6,10 +6,10 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.talentshow.presentation.signing.nameenter.FragmentRegistration;
 import com.example.talentshow.presentation.signing.rolechoice.ChooseRoleActivity;
 import com.example.talentshow.presentation.signing.emailenter.EmailEnterActivity;
 import com.example.talentshow.presentation.signing.emailcode.EmailSuccessCodeActivity;
-import com.example.talentshow.presentation.signing.nameenter.ActivityStarNameEnter;
 import com.example.talentshow.presentation.star.ActivityStarStatistics;
 import com.example.talentshow.presentation.star.ActivityStarVideoBest;
 import com.example.talentshow.presentation.star.fileload.ActivityStarFileLoad;
@@ -63,7 +63,7 @@ public class Screens {
     public static final class StarNameEnterScreen extends SupportAppScreen{
         @Override
         public Intent getActivityIntent(Context context) {
-            return new Intent(context, ActivityStarNameEnter.class);
+            return new Intent(context, FragmentRegistration.class);
         }
     }
 

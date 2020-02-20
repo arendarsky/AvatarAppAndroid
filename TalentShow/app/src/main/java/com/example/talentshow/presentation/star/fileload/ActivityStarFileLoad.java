@@ -1,4 +1,4 @@
-﻿package com.example.talentshow.presentation.star.fileload;
+package com.example.talentshow.presentation.star.fileload;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -18,10 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.widget.ContentLoadingProgressBar;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -29,7 +27,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.talentshow.App;
 import com.example.talentshow.R;
 import com.example.talentshow.presentation.CastingActivity;
-import com.example.talentshow.presentation.signing.nameenter.ActivityStarNameEnter;
+import com.example.talentshow.presentation.signing.nameenter.FragmentRegistration;
 import com.example.talentshow.presentation.star.ActivityStarVideoBest;
 
 import javax.inject.Inject;
@@ -111,7 +109,7 @@ public class ActivityStarFileLoad extends MvpAppCompatActivity implements StarFi
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(appContext, ActivityStarNameEnter.class));
+        startActivity(new Intent(appContext, FragmentRegistration.class));
     }
 
 

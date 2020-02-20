@@ -10,13 +10,13 @@ import javax.inject.Inject;
 import ru.terrakok.cicerone.Router;
 
 @InjectViewState
-public class StarNameEnterPresenter extends MvpPresenter<StarNameEnterView> {
+public class RegistrationPresenter extends MvpPresenter<RegistrationView> {
 
     private Interactor interactor;
     private Router router;
 
     @Inject
-    public StarNameEnterPresenter(Interactor interactor, Router router) {
+    public RegistrationPresenter(Interactor interactor, Router router) {
         this.interactor = interactor;
         this.router = router;
     }
