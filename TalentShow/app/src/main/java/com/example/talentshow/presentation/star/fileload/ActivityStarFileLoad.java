@@ -65,7 +65,7 @@ public class ActivityStarFileLoad extends MvpAppCompatActivity implements StarFi
 
     @OnClick(R.id.activity_star_load_file_circle)
     void loadFileClicked(){
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(Intent.createChooser(intent, "Select video"), 1);
 //        Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
 
