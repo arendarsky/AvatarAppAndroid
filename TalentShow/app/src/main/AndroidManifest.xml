@@ -26,6 +26,11 @@
         <activity android:name=".presentation.star.ActivityStarStatistics"></activity>
         <activity android:name=".presentation.star.ActivityStarVideoBest"></activity>
         <activity android:name=".presentation.CastingActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".presentation.signing.ChooseRoleActivity"
@@ -38,11 +43,7 @@
         <activity android:name=".presentation.producer.ActivityProducerName" />
         <activity android:name=".presentation.star.ActivityStarNameEnter"></activity>
         <activity android:name=".presentation.star.fileload.ActivityStarFileLoad" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".presentation.star.mainscreen.StarMainScreenActivity" />
     </application>

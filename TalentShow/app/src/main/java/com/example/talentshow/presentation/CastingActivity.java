@@ -1,6 +1,7 @@
 package com.example.talentshow.presentation;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
@@ -17,11 +18,14 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.MediaController;
 import android.widget.TextView;
@@ -33,6 +37,7 @@ import com.example.talentshow.presentation.producer.ActivityProducerYes;
 import com.example.talentshow.presentation.star.ActivityStarStatistics;
 import com.example.talentshow.presentation.star.ActivityStarVideoBest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.snackbar.Snackbar;
 
 import javax.inject.Inject;
@@ -49,7 +54,7 @@ import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 
-public class CastingActivity extends AppCompatActivity {
+public class CastingActivity extends AppCompatActivity implements CastingDialogFragment.ItemClickListener {
 
     @Inject
     Context appContext;
@@ -57,7 +62,7 @@ public class CastingActivity extends AppCompatActivity {
     @BindView(R.id.activity_casting_video)
     VideoView video;
 
-    @BindView(R.id.activity_casting_tv1)
+    @BindView(R.id.activity_casting_head)
     TextView tv;
 
     @BindView(R.id.casting_activity_menu)
@@ -219,4 +224,21 @@ public class CastingActivity extends AppCompatActivity {
         }
     };
 
+
+
+    CastingDialogFragment castingDialogFragment;
+    public void showBottomSheetCasting(View view){
+        castingDialogFragment =
+                CastingDialogFragment.newInstance();
+        castingDialogFragment.show(getSupportFragmentManager(),
+                CastingDialogFragment.TAG);
+    }
+
+    @Override
+    public void onItemClick(int item) {
+        if(item == R.id.casting_dialog_btn){
+            String text = castingDialogFragment.getText();
+            Log.d("castingText", text);
+        }
+    }
 }

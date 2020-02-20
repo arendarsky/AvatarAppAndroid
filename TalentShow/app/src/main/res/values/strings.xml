@@ -25,7 +25,7 @@
     <string name="activity_casting_head">Кастинг</string>
     <string name="activity_casting_tv">Лайкай звёзд, которые должны стать успеными</string>
     <string name="activity_casting_tv1">Посмотреть видео полностью</string>
-    <string name="activity_casting_name">Роман</string>
+    <string name="activity_casting_name">Елизоветта Гранова</string>
     <string name="ur_name"><b>Ваше имя</b></string>
     <string name="enter_name">Введите имя</string>
     <string name="step_1">шаг 1 из 5</string>
@@ -40,4 +40,5 @@
     <string name="number_hint">1</string>
     <string name="casting">Кастинг</string>
     <string name="statistics">Статистика</string>
+    <string name="casting_dialog_text">Напишите Елизавете Грановой несколько хороших слов. Если ей понравится твоё сообщение, ты получишь её контакты.</string>
 </resources>
