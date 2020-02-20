@@ -1,4 +1,4 @@
-package com.example.talentshow.presentation.star;
+package com.example.talentshow.presentation.signing.nameenter;
 
 import android.content.Context;
 import android.content.Intent;

@@ -3,6 +3,7 @@ package com.example.talentshow.domain;
 import android.net.Uri;
 
 import com.example.talentshow.domain.repository.IAuthRepository;
+import com.example.talentshow.domain.repository.ISharedPreferemcesRepository;
 import com.example.talentshow.domain.repository.IVideoRepository;
 
 import java.util.ArrayList;
@@ -16,12 +17,13 @@ public class Interactor {
 
     private IAuthRepository authRepository;
     private IVideoRepository videoRepository;
-
+    private ISharedPreferemcesRepository preferemcesRepository;
 
     @Inject
-    public Interactor(IAuthRepository authRepository, IVideoRepository videoRepository){
+    public Interactor(IAuthRepository authRepository, IVideoRepository videoRepository, ISharedPreferemcesRepository preferemcesRepository){
         this.authRepository = authRepository;
         this.videoRepository = videoRepository;
+        this.preferemcesRepository = preferemcesRepository;
     }
 
 
@@ -37,7 +39,24 @@ public class Interactor {
         return this.videoRepository.uploadVideo(videoUri);
     }
 
+<<<<<<< HEAD
     public Single<ArrayList<String>> getUnwatchedVideos(int number){
         return this.videoRepository.getUnwatchedVideos(number);
+=======
+    public boolean checkAuth(){
+        return this.preferemcesRepository.checkAuth();
+    }
+
+    public void saveRole(String role){
+        this.preferemcesRepository.saveRole(role);
+    }
+
+    public String getRole(){
+        return this.preferemcesRepository.getRole();
+    }
+
+    public void saveName(String name){
+        this.preferemcesRepository.saveName(name);
+>>>>>>> 52abc7cc13b0179a3dd7ef71ccf15dfd877d591f
     }
 }

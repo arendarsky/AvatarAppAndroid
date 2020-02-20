@@ -61,6 +61,7 @@ public class VideoRepository implements IVideoRepository {
                 RequestBody.create(file, MediaType.parse("multipart/form-data"));
 
         MultipartBody.Part body =
+<<<<<<< HEAD
                         MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
         return videoAPI.uploadVideo("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjdkMWYzZTYwLTU4MjUtNDI3NC04OWFlLTMyNDMwNDgxOWVhOCIsImlzcyI6IkF2YXRhckFwcCIsImF1ZCI6IkF2YXRhckFwcENsaWVudCJ9.izjDevXXplhlNSifE_OBE8V3xHfh02T83ysATVgYCAo",
@@ -71,6 +72,11 @@ public class VideoRepository implements IVideoRepository {
     @Override
     public Single<ArrayList<String>> getUnwatchedVideos(int number) {
         return videoAPI.getUnwatched("Bearer "+preferencesRepository.getToken(), number);
+=======
+                MultipartBody.Part.createFormData("picture", file.getName(), requestFile);
+        Log.d("Token", preferencesRepository.getToken());
+        return videoAPI.uploadVideo("Bearer "+preferencesRepository.getToken(), body);
+>>>>>>> 52abc7cc13b0179a3dd7ef71ccf15dfd877d591f
     }
 
 

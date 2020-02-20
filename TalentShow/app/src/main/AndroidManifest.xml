@@ -33,9 +33,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.signing.ChooseRoleActivity"
+            android:name=".presentation.signing.rolechoice.ChooseRoleActivity"
             android:theme="@style/AppTheme">
 
+<<<<<<< HEAD
         </activity>
         <activity android:name=".presentation.signing.EmailEnterActivity" />
         <activity android:name=".presentation.signing.EmailSuccessCodeActivity" />
@@ -45,6 +46,16 @@
         <activity android:name=".presentation.star.fileload.ActivityStarFileLoad" >
 
         </activity>
+=======
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter></activity>
+        <activity android:name=".presentation.signing.emailenter.EmailEnterActivity" />
+        <activity android:name=".presentation.signing.emailcode.EmailSuccessCodeActivity" />
+        <activity android:name=".presentation.producer.ActivityProducerYes"></activity>
+        <activity android:name=".presentation.producer.ActivityProducerName" />
+        <activity android:name=".presentation.signing.nameenter.ActivityStarNameEnter"></activity>
+        <activity android:name=".presentation.star.fileload.ActivityStarFileLoad" />
+>>>>>>> 52abc7cc13b0179a3dd7ef71ccf15dfd877d591f
         <activity android:name=".presentation.star.mainscreen.StarMainScreenActivity" />
     </application>
 

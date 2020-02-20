@@ -16,11 +16,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+<<<<<<< HEAD
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.ContentLoadingProgressBar;
+=======
+>>>>>>> 52abc7cc13b0179a3dd7ef71ccf15dfd877d591f
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -28,7 +31,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.talentshow.App;
 import com.example.talentshow.R;
 import com.example.talentshow.presentation.CastingActivity;
-import com.example.talentshow.presentation.star.ActivityStarNameEnter;
+import com.example.talentshow.presentation.signing.nameenter.ActivityStarNameEnter;
 import com.example.talentshow.presentation.star.ActivityStarVideoBest;
 
 import javax.inject.Inject;
