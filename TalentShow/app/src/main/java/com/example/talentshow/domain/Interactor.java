@@ -6,9 +6,12 @@ import com.example.talentshow.domain.repository.IAuthRepository;
 import com.example.talentshow.domain.repository.ISharedPreferemcesRepository;
 import com.example.talentshow.domain.repository.IVideoRepository;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import io.reactivex.Single;
 
 public class Interactor {
 
@@ -50,5 +53,9 @@ public class Interactor {
 
     public void saveName(String name){
         this.preferemcesRepository.saveName(name);
+    }
+
+    public Single<ArrayList<String>> getUnwatchedVideos(int number){
+        return this.videoRepository.getUnwatchedVideos(number);
     }
 }
