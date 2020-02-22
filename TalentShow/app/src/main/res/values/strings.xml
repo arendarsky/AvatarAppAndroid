@@ -8,7 +8,7 @@
     <string name="feel_urself_producer">Почувствуй себя настоящим продюсером. Смотри и оценивай видео звёзд.</string>
     <string name="ur_mail"><b>Ваша почта</b></string>
     <string name="leave_mail">Оставь свою почту и мы будем держать\n тебя в курсе событий.</string>
-    <string name="enter_email">Введите почту</string>
+    <string name="email">Email</string>
     <string name="recieve_letters">Получать письма</string>
     <string name="enter_code"><b>Введите код</b></string>
     <string name="code_sent_to_mail">Код проверки отправлен на указанную\n почту:</string>
@@ -45,4 +45,7 @@
     <string name="sing_in">Войти</string>
     <string name="sign_up">Регистрация</string>
     <string name="skip_auth">Пропустить</string>
+    <string name="auth"><b>Авторизация</b></string>
+    <string name="password">Пароль</string>
+    <string name="fields_empty">Поля не должны быть пустыми</string>
 </resources>

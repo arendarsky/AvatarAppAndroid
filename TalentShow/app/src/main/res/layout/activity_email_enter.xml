@@ -58,7 +58,7 @@
         android:paddingTop="11dp"
         android:paddingBottom="11dp"
         android:textColorHint="@color/hint_text_color"
-        android:hint="@string/enter_email"
+        android:hint="@string/email"
         android:inputType="textEmailAddress"
         android:background="@drawable/email_activity_edittext_background"
         app:layout_constraintStart_toStartOf="parent"
