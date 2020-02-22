@@ -1,7 +1,6 @@
 package com.example.talentshow.presentation.signing.emailenter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -15,8 +14,6 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.talentshow.App;
 import com.example.talentshow.R;
-import com.example.talentshow.presentation.signing.emailcode.EmailSuccessCodeActivity;
-import com.example.talentshow.presentation.signing.rolechoice.ChooseRoleActivity;
 
 import java.util.regex.Pattern;
 
@@ -84,7 +81,7 @@ public class EmailEnterActivity extends MvpAppCompatActivity implements EmailEnt
 //    @Override
 //    public void onBackPressed() {
 //        super.onBackPressed();
-//        startActivity(new Intent(appContext, ChooseRoleActivity.class));
+//        startActivity(new Intent(appContext, ChooseAuthFragment.class));
 //        finish();
 //    }
 

@@ -1,7 +1,6 @@
-package com.example.talentshow.presentation.signing.nameenter;
+package com.example.talentshow.presentation.signing.registration;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,6 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.talentshow.App;
 import com.example.talentshow.R;
-import com.example.talentshow.presentation.star.fileload.ActivityStarFileLoad;
 
 import javax.inject.Inject;
 
@@ -26,13 +24,13 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import toothpick.Toothpick;
 
-public class FragmentRegistration extends MvpAppCompatFragment {
+public class FragmentRegistration extends MvpAppCompatFragment implements RegistrationView {
 
     public static FragmentRegistration newInstance(){
         return new FragmentRegistration();
     }
 
-    FragmentRegistration(){}
+    public FragmentRegistration(){}
 
     @Inject
     Context appContext;

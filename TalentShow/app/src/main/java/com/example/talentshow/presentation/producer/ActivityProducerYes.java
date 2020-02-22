@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.talentshow.App;
 import com.example.talentshow.R;
-import com.example.talentshow.presentation.CastingActivity;
+import com.example.talentshow.presentation.CastingFragment;
 
 import javax.inject.Inject;
 
@@ -24,7 +24,7 @@ public class ActivityProducerYes extends AppCompatActivity {
 
     @OnClick(R.id.activity_producer_yes_button)
     void producerButtonClicked(){
-        startActivity(new Intent(appContext, CastingActivity.class));
+        startActivity(new Intent(appContext, CastingFragment.class));
     }
 
     @Override

@@ -26,8 +26,8 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.talentshow.App;
 import com.example.talentshow.R;
-import com.example.talentshow.presentation.CastingActivity;
-import com.example.talentshow.presentation.signing.nameenter.FragmentRegistration;
+import com.example.talentshow.presentation.CastingFragment;
+import com.example.talentshow.presentation.signing.registration.FragmentRegistration;
 import com.example.talentshow.presentation.star.ActivityStarVideoBest;
 
 import javax.inject.Inject;
@@ -115,7 +115,7 @@ public class ActivityStarFileLoad extends MvpAppCompatActivity implements StarFi
 
     @Override
     public void startingNextActivity() {
-        startActivity(new Intent(appContext, CastingActivity.class));
+        startActivity(new Intent(appContext, CastingFragment.class));
     }
 
     @Override

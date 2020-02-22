@@ -1,4 +1,4 @@
-package com.example.talentshow.presentation.signing.nameenter;
+package com.example.talentshow.presentation.signing.registration;
 
 import com.arellomobile.mvp.MvpView;
 

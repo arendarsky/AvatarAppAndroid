@@ -42,15 +42,15 @@
     <style name="activity_casting_heading">
 
         <item name="android:textSize">
-            36sp
+            34sp
         </item>
 
         <item name="android:letterSpacing">
-            -0.01
+            0.01
         </item>
 
         <item name="android:textColor">
-            #060606
+            #000000
         </item>
 
     </style>
@@ -86,15 +86,33 @@
     <style name="activity_casting_name">
 
         <item name="android:textSize">
-            24sp
+            20sp
         </item>
 
         <item name="android:letterSpacing">
-            -0.01
+            0.02
         </item>
 
         <item name="android:textColor">
-            #060606
+            #000000
+        </item>
+
+    </style>
+
+
+
+    <style name="activity_casting_video_description">
+
+        <item name="android:textSize">
+            15sp
+        </item>
+
+        <item name="android:letterSpacing">
+            -0.02
+        </item>
+
+        <item name="android:textColor">
+            #000000
         </item>
 
     </style>
@@ -184,6 +202,55 @@
 
         <item name="android:textColor">
             #FFFFFF
+        </item>
+
+    </style>
+
+
+    <style name="casting_dialog_tv1">
+
+        <item name="android:textSize">
+            21sp
+        </item>
+
+        <item name="android:letterSpacing">
+            0.02
+        </item>
+
+        <item name="android:textColor">
+            #000000
+        </item>
+
+    </style>
+
+    <style name="casting_dialog_cancel">
+
+        <item name="android:textSize">
+            17sp
+        </item>
+
+        <item name="android:letterSpacing">
+            -0.02
+        </item>
+
+        <item name="android:textColor">
+            #007AFF
+        </item>
+
+    </style>
+
+    <style name="casting_dialog_description">
+
+        <item name="android:textSize">
+            11sp
+        </item>
+
+        <item name="android:letterSpacing">
+            0.01
+        </item>
+
+        <item name="android:textColor">
+            #50555C
         </item>
 
     </style>

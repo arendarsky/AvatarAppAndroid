@@ -18,6 +18,9 @@ public interface VideoAPI {
     @POST("api/video/upload")
     Completable uploadVideo(@Header("Authorization") String token, @Part  MultipartBody.Part file);
 
-    @GET("api/video/get_unwatched")
+//    @GET("api/video/get_unwatched")
+//    Single<ArrayList<String>> getUnwatched(@Header("Authorization") String token, @Query("number") int number);
+
+    @GET("api/admin/get_videos")
     Single<ArrayList<String>> getUnwatched(@Header("Authorization") String token, @Query("number") int number);
 }

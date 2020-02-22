@@ -70,9 +70,8 @@ public class VideoRepository implements IVideoRepository {
 
     @Override
     public Single<ArrayList<String>> getUnwatchedVideos(int number) {
-        return videoAPI.getUnwatched("Bearer "+preferencesRepository.getToken(), number);
+        return videoAPI.getUnwatched("Bearer " + preferencesRepository.getToken(), number);
     }
-
 
     public static String getFilePathFromUri(Context context, Uri uri) {
         if (uri == null) return null;

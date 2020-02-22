@@ -6,8 +6,10 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.talentshow.presentation.signing.nameenter.FragmentRegistration;
-import com.example.talentshow.presentation.signing.rolechoice.ChooseRoleActivity;
+import com.example.talentshow.presentation.CastingFragment;
+import com.example.talentshow.presentation.signing.authorisation.AuthorisationFragment;
+import com.example.talentshow.presentation.signing.registration.FragmentRegistration;
+import com.example.talentshow.presentation.signing.chooseauth.ChooseAuthFragment;
 import com.example.talentshow.presentation.signing.emailenter.EmailEnterActivity;
 import com.example.talentshow.presentation.signing.emailcode.EmailSuccessCodeActivity;
 import com.example.talentshow.presentation.star.ActivityStarStatistics;
@@ -18,6 +20,28 @@ import com.example.talentshow.presentation.star.rating.StarRatingFragment;
 import ru.terrakok.cicerone.android.support.SupportAppScreen;
 
 public class Screens {
+
+    public static final class AuthorisationScreen extends SupportAppScreen{
+        @Override
+        public Fragment getFragment() {
+            Bundle bundle = new Bundle();
+            AuthorisationFragment fragment = AuthorisationFragment.newInstance();
+            fragment.setArguments(bundle);
+            return fragment;
+        }
+    }
+
+    public static final class RegistrationScreen extends SupportAppScreen{
+
+        @Override
+        public Fragment getFragment() {
+            Bundle bundle = new Bundle();
+            FragmentRegistration fragmentRegistration = FragmentRegistration.newInstance();
+            fragmentRegistration.setArguments(bundle);
+            return fragmentRegistration;
+        }
+    }
+
     public static final class StarRatingScreen extends SupportAppScreen {
 
         @Override
@@ -29,10 +53,10 @@ public class Screens {
         }
     }
 
-    public static final class ChooseRoleScreen extends SupportAppScreen{
+    public static final class ChooseAuthScreen extends SupportAppScreen{
         @Override
         public Intent getActivityIntent(Context context) {
-            return new Intent(context, ChooseRoleActivity.class);
+            return new Intent(context, ChooseAuthFragment.class);
         }
     }
 
@@ -77,7 +101,7 @@ public class Screens {
     public static final class StarMainScreen extends SupportAppScreen{
         @Override
         public Intent getActivityIntent(Context context) {
-            return new Intent(context, StarMainScreen.class);
+            return new Intent(context, CastingFragment.class);
         }
     }
 

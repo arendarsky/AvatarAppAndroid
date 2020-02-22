@@ -1,4 +1,4 @@
-package com.example.talentshow.presentation.star.mainscreen;
+package com.example.talentshow.presentation.star.maincontainer;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;

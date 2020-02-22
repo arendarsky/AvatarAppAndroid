@@ -1,4 +1,4 @@
-package com.example.talentshow.presentation.star.mainscreen;
+package com.example.talentshow.presentation.star.maincontainer;
 
 import android.content.Context;
 import android.os.Bundle;
