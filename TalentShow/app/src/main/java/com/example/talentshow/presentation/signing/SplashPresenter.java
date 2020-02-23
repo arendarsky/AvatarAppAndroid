@@ -21,6 +21,7 @@ public class SplashPresenter extends MvpPresenter<SplashView> {
     private final int SKIP_AUTH = 2;
     private final int LOAD_FILE = 3;
     private final int AUTH_FINISHED = 4;
+    private final int LOAD_AVATAR = 5;
 
 
     @Inject
@@ -32,7 +33,7 @@ public class SplashPresenter extends MvpPresenter<SplashView> {
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
-        router.navigateTo(new Screens.ChooseAuthScreen());
+        router.newRootScreen(new Screens.ChooseAuthScreen());
     }
 
     void checkAuth(){
@@ -43,10 +44,21 @@ public class SplashPresenter extends MvpPresenter<SplashView> {
         switch (code){
             case START_AUTH:
                 router.navigateTo(new Screens.AuthorisationScreen());
+                break;
             case START_REG:
                 router.navigateTo(new Screens.RegistrationScreen());
+                break;
             case SKIP_AUTH:
+            case AUTH_FINISHED:
                 getViewState().startMain();
+                break;
+            case LOAD_AVATAR:
+                getViewState().loadPhotoForAvatar();
+                break;
         }
+    }
+
+    void backPressed(){
+//        router.backTo();
     }
 }

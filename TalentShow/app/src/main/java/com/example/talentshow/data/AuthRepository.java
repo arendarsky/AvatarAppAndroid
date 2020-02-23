@@ -29,4 +29,11 @@ public class AuthRepository implements IAuthRepository {
         return authAPI.confirmEmail(mail, code).doAfterSuccess(confirmationDTO ->
                 preferencesRepository.saveToken(confirmationDTO.getKey())).ignoreElement();
     }
+
+    @Override
+    public Completable auth(String mail, String password) {
+        //TODO Добавить авторизацию, проверить методы на валидность
+        return null;
+    }
+
 }

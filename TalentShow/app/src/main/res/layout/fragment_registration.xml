@@ -7,38 +7,45 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/fragment_auth_text1"
+        android:id="@+id/fragment_reg_text1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="14dp"
-        android:textSize="41sp"
+        android:textSize="34sp"
         android:gravity="center"
         android:textColor="@color/blackText"
-        android:text="@string/auth"
+        android:text="@string/sign_up"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <ImageView
+        android:id="@+id/reg_load_photo"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        app:layout_constraintTop_toBottomOf="@id/fragment_reg_text1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/fragment_auth_field_1"
+        android:id="@+id/fragment_reg_field_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/auth_filed_backgroud"
-        app:layout_constraintTop_toBottomOf="@id/fragment_auth_text1"
+        app:layout_constraintTop_toBottomOf="@id/reg_load_photo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
-
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/hint_text_color"
             android:textSize="17sp"
-            android:text="@string/email"
+            android:text="@string/name"
             android:layout_marginStart="12dp"
             android:layout_marginBottom="14dp"
             android:layout_marginTop="14dp"
@@ -56,28 +63,28 @@
             app:layout_constraintGuide_percent="0.4" />
 
         <EditText
-            android:id="@+id/auth_email_edit"
+            android:id="@+id/reg_name_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
             android:textSize="17sp"
             android:textColor="@color/blackText"
-            android:inputType="textEmailAddress"
             app:layout_constraintStart_toEndOf="@id/fragment_filed1_guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    s<androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/fragment_auth_field_2"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_reg_field_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/auth_filed_backgroud"
         android:layout_marginTop="14dp"
-        app:layout_constraintTop_toBottomOf="@id/fragment_auth_field_1"
+        android:background="@drawable/auth_filed_backgroud"
+        app:layout_constraintTop_toBottomOf="@id/fragment_reg_field_1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
         <TextView
@@ -85,7 +92,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/hint_text_color"
             android:textSize="17sp"
-            android:text="@string/password"
+            android:text="@string/email"
             android:layout_marginStart="12dp"
             android:layout_marginBottom="14dp"
             android:layout_marginTop="14dp"
@@ -103,31 +110,89 @@
             app:layout_constraintGuide_percent="0.4" />
 
         <EditText
-            android:id="@+id/auth_password_edit"
+            android:id="@+id/reg_email_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
             android:textSize="17sp"
             android:textColor="@color/blackText"
-            android:inputType="textPassword"
+            android:inputType="textEmailAddress"
             app:layout_constraintStart_toEndOf="@id/fragment_filed2_guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_reg_field_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/auth_filed_backgroud"
+        android:layout_marginTop="14dp"
+        app:layout_constraintTop_toBottomOf="@id/fragment_reg_field_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/hint_text_color"
+        android:textSize="17sp"
+        android:text="@string/password"
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="14dp"
+        android:layout_marginTop="14dp"
+        android:gravity="start"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/fragment_filed3_guideline"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/fragment_filed3_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <EditText
+        android:id="@+id/reg_password_edit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:textSize="17sp"
+        android:textColor="@color/blackText"
+        android:inputType="textPassword"
+        app:layout_constraintStart_toEndOf="@id/fragment_filed3_guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/fragment_auth_continue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginEnd="45dp"
+        android:gravity="center"
+        android:text="@string/i_accept_terms"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_reg_field_3"/>
+
+    <TextView
+        android:id="@+id/fragment_reg_continue"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="14dp"
-        android:layout_marginBottom="93dp"
+        android:layout_marginBottom="50dp"
         android:background="@drawable/blue_button_background"
         android:textSize="17sp"
         android:gravity="center"
-        android:text="@string/sing_in"
+        android:text="@string/to_sign_in"
         android:textColor="@color/whiteText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

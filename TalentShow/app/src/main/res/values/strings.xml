@@ -41,11 +41,14 @@
     <string name="casting">Кастинг</string>
     <string name="statistics">Статистика</string>
     <string name="casting_dialog_text">Напишите Елизавете Грановой несколько хороших слов. Если ей понравится твоё сообщение, ты получишь её контакты.</string>
-    <string name="sing_or_log"><b>Войдите или\n зарегистрируйтесь</b></string>
+    <string name="sing_or_log"><b>Войдите или зарегистрируйтесь</b></string>
     <string name="sing_in">Войти</string>
     <string name="sign_up">Регистрация</string>
     <string name="skip_auth">Пропустить</string>
     <string name="auth"><b>Авторизация</b></string>
     <string name="password">Пароль</string>
     <string name="fields_empty">Поля не должны быть пустыми</string>
+    <string name="name">Имя</string>
+    <string name="i_accept_terms">Регистрируясь, я принимаю условия использования</string>
+    <string name="to_sign_in">Зарегистрироваться</string>
 </resources>

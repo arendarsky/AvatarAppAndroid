@@ -36,9 +36,9 @@ public class ChooseAuthFragment extends Fragment {
 
 
     private Activity activity;
+    private int START_REG = 0;
+    private int START_AUTH = 1;
     private int SKIP_AUTH = 2;
-    private int START_AUTH = 2;
-    private int START_REG = 1;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

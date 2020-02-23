@@ -54,9 +54,13 @@ public class Screens {
     }
 
     public static final class ChooseAuthScreen extends SupportAppScreen{
+
         @Override
-        public Intent getActivityIntent(Context context) {
-            return new Intent(context, ChooseAuthFragment.class);
+        public Fragment getFragment() {
+            Bundle bundle = new Bundle();
+            ChooseAuthFragment chooseAuthFragment = new ChooseAuthFragment();
+            chooseAuthFragment.setArguments(bundle);
+            return chooseAuthFragment;
         }
     }
 

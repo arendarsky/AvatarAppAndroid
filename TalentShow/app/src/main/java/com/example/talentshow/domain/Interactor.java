@@ -58,4 +58,8 @@ public class Interactor {
     public Single<ArrayList<String>> getUnwatchedVideos(int number){
         return this.videoRepository.getUnwatchedVideos(number);
     }
+
+    public Completable authUser(String mail, String password){
+        return this.authRepository.auth(mail, password);
+    }
 }
