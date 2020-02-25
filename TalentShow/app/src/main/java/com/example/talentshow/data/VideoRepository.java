@@ -70,7 +70,7 @@ public class VideoRepository implements IVideoRepository {
 
     @Override
     public Single<ArrayList<String>> getUnwatchedVideos(int number) {
-        return videoAPI.getUnwatched("Bearer " + preferencesRepository.getToken(), number);
+        return videoAPI.getUnwatched("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjdkMWYzZTYwLTU4MjUtNDI3NC04OWFlLTMyNDMwNDgxOWVhOCIsImlzcyI6IkF2YXRhckFwcCIsImF1ZCI6IkF2YXRhckFwcENsaWVudCJ9.izjDevXXplhlNSifE_OBE8V3xHfh02T83ysATVgYCAo", number);
     }
 
     public static String getFilePathFromUri(Context context, Uri uri) {

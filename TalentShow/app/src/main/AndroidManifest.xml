@@ -26,7 +26,10 @@
         <activity android:name=".presentation.star.ActivityStarStatistics"></activity>
         <activity android:name=".presentation.star.ActivityStarVideoBest"></activity>
         <activity android:name=".presentation.CastingFragment">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".presentation.signing.emailenter.EmailEnterActivity" />
         <activity android:name=".presentation.signing.emailcode.EmailSuccessCodeActivity" />
@@ -35,10 +38,7 @@
         <activity android:name=".presentation.star.fileload.ActivityStarFileLoad" />
         <activity android:name=".presentation.star.maincontainer.StarMainScreenActivity" />
         <activity android:name=".presentation.signing.SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
     </application>
 

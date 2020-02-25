@@ -18,7 +18,10 @@ import android.widget.VideoView;
 
 import com.example.talentshow.App;
 import com.example.talentshow.R;
+import com.example.talentshow.domain.Interactor;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -26,6 +29,9 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import toothpick.Toothpick;
 
 
@@ -33,6 +39,12 @@ public class CastingFragment extends AppCompatActivity implements CastingDialogF
 
     @Inject
     Context appContext;
+
+
+    //TODO Временный кусок
+    @Inject
+    Interactor interactor;
+    private List<String> list;
 
     @BindView(R.id.activity_casting_video)
     VideoView video;
@@ -61,9 +73,13 @@ public class CastingFragment extends AppCompatActivity implements CastingDialogF
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        Toothpick.inject(this, Toothpick.openScope(App.class));
         String source = "android.resource://" + getPackageName() +"/"+R.raw.example;
 
-
+        Disposable disposable = interactor.getUnwatchedVideos(15).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(list -> this.list = list,
+                        e -> {
+                        });
 
         if(getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE){
             setContentView(R.layout.activity_casting_fullscreen);
@@ -102,7 +118,7 @@ public class CastingFragment extends AppCompatActivity implements CastingDialogF
 
 
             ButterKnife.bind(this);
-            Toothpick.inject(this, Toothpick.openScope(App.class));
+//            Toothpick.inject(this, Toothpick.openScope(App.class));
             String url = "http://techslides.com/demos/sample-videos/small.mp4";
 
             menu.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -188,12 +204,19 @@ public class CastingFragment extends AppCompatActivity implements CastingDialogF
         }
     }
 
+    //TODO такую реализацию точно убираем позже
     @OnClick(R.id.activity_casting_btn_like)
     void likeClicked(){
-        video.setVideoPath("https://avatarapp.yambr.ru/api/video/qmxicx0h.24p.mp4");
+        video.setVideoPath("https://avatarapp.yambr.ru/api/video/"
+                                +list.get((int)(Math.random()*16)));
+//          video.setVideoPath("https://avatarapp.yambr.ru/api/video/qmxicx0h.24p.mp4");
     }
 
     @OnClick(R.id.activity_casting_btn_x)
-    void dislikeClicked(){
-        video.setVideoPath("https://avatarapp.yambr.ru/api/video/qmxicx0h.24p.mp4");}
+    void dislikeClicked() {
+        video.setVideoPath("https://avatarapp.yambr.ru/api/video/"
+                +list.get((int)(Math.random()*16)));
+
+//        video.setVideoPath("https://avatarapp.yambr.ru/api/video/qmxicx0h.24p.mp4");}
+    }
 }

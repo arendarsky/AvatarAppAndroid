@@ -21,7 +21,7 @@ public class DataModule extends Module{
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.level(BuildConfig.DEBUG ?
-                HttpLoggingInterceptor.Level.HEADERS : HttpLoggingInterceptor.Level.NONE);
+                HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
         httpClient.addInterceptor(loggingInterceptor);
 
         bind(Retrofit.class).toInstance(
