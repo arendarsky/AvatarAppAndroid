@@ -31,6 +31,7 @@ public class AuthorisationFragment extends MvpAppCompatFragment implements Autho
 
     private Activity activity;
     private final int AUTH_FINISHED = 4;
+    private final int BACK = 7;
 
     @BindView(R.id.auth_email_edit)
     EditText mailEdit;
@@ -97,13 +98,30 @@ public class AuthorisationFragment extends MvpAppCompatFragment implements Autho
 
         if (mailEdit.getText().length() > 0 && passwordEdit.getText().length() > 0) {
             presenter.auth(mailEdit.getText().toString(), passwordEdit.getText().toString());
-            //TODO Перенести код внутри try/cath в отдельную функцию
-            try {
-                ((RegAuthPostman) activity).fragmentMessage(AUTH_FINISHED);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
+    }
+
+    @Override
+    public void nextScreen() {
+        try {
+            ((RegAuthPostman) activity).fragmentMessage(AUTH_FINISHED);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @OnClick(R.id.fragment_auth_back)
+    void backClicked(){
+        try {
+            ((RegAuthPostman) activity).fragmentMessage(BACK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void showError(String error) {
+        Toast.makeText(appContext, error, Toast.LENGTH_SHORT).show();
     }
 
     @OnTextChanged(R.id.auth_email_edit)
@@ -117,5 +135,5 @@ public class AuthorisationFragment extends MvpAppCompatFragment implements Autho
         if (passwordEdit.getText().toString().length() >= 1)
             passwordEdit.setTextColor(getResources().getColor(R.color.blackText));
     }
-}
 
+}

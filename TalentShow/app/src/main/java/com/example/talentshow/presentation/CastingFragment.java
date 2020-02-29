@@ -208,14 +208,14 @@ public class CastingFragment extends AppCompatActivity implements CastingDialogF
     @OnClick(R.id.activity_casting_btn_like)
     void likeClicked(){
         video.setVideoPath("https://avatarapp.yambr.ru/api/video/"
-                                +list.get((int)(Math.random()*16)));
+                                +list.get((int)(Math.random()*2)));
 //          video.setVideoPath("https://avatarapp.yambr.ru/api/video/qmxicx0h.24p.mp4");
     }
 
     @OnClick(R.id.activity_casting_btn_x)
     void dislikeClicked() {
         video.setVideoPath("https://avatarapp.yambr.ru/api/video/"
-                +list.get((int)(Math.random()*16)));
+                +list.get((int)(Math.random()*2)));
 
 //        video.setVideoPath("https://avatarapp.yambr.ru/api/video/qmxicx0h.24p.mp4");}
     }

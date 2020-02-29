@@ -14,7 +14,7 @@ import com.example.talentshow.presentation.signing.emailenter.EmailEnterActivity
 import com.example.talentshow.presentation.signing.emailcode.EmailSuccessCodeActivity;
 import com.example.talentshow.presentation.star.ActivityStarStatistics;
 import com.example.talentshow.presentation.star.ActivityStarVideoBest;
-import com.example.talentshow.presentation.star.fileload.ActivityStarFileLoad;
+import com.example.talentshow.presentation.signing.fileload.FragmentFileLoad;
 import com.example.talentshow.presentation.star.rating.StarRatingFragment;
 
 import ru.terrakok.cicerone.android.support.SupportAppScreen;
@@ -95,10 +95,13 @@ public class Screens {
         }
     }
 
-    public static final class StarFileLoadScreen extends SupportAppScreen{
+    public static final class FileLoadScreen extends SupportAppScreen{
         @Override
-        public Intent getActivityIntent(Context context) {
-            return new Intent(context, ActivityStarFileLoad.class);
+        public Fragment getFragment() {
+            Bundle bundle = new Bundle();
+            FragmentFileLoad fragment = new FragmentFileLoad();
+            fragment.setArguments(bundle);
+            return fragment;
         }
     }
 

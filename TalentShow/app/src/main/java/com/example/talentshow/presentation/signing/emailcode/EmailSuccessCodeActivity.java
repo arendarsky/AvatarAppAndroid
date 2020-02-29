@@ -1,7 +1,6 @@
 package com.example.talentshow.presentation.signing.emailcode;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -15,9 +14,6 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.talentshow.App;
 import com.example.talentshow.R;
-import com.example.talentshow.presentation.producer.ActivityProducerName;
-import com.example.talentshow.presentation.signing.emailenter.EmailEnterActivity;
-import com.example.talentshow.presentation.star.fileload.ActivityStarFileLoad;
 
 import javax.inject.Inject;
 
@@ -91,7 +87,7 @@ public class EmailSuccessCodeActivity extends MvpAppCompatActivity implements Em
     public void codeConfirmed() {
         progressBar.setVisibility(View.INVISIBLE);
         boolean role = getIntent().getBooleanExtra("role", true);
-//        if (role) startActivity(new Intent(appContext, ActivityStarFileLoad.class));
+//        if (role) startActivity(new Intent(appContext, FragmentFileLoad.class));
 //        else startActivity(new Intent(appContext, ActivityProducerName.class));
     }
 

@@ -6,7 +6,7 @@
     <color name="darkBackground">#282828</color>
     <color name="whiteText">#FFFFFF</color>
     <color name="hint_text_color">#808080</color>
-    <color name="blueTextColor">#A32CCA</color>
+    <color name="blueTextColor">#007AFF</color>
     <color name="whiteBackground">#FFFFFF</color>
     <color name="blackText">#060606</color>
     <color name="grayText">#808080</color>
@@ -16,5 +16,6 @@
     <color name="medium_gray_text">#C4CACC</color>
     <color name="greyText">#ABABAB</color>
     <color name="hintTextColor">#000000</color>
+
 
 </resources>

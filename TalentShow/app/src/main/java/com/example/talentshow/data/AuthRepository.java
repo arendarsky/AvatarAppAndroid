@@ -1,11 +1,18 @@
 package com.example.talentshow.data;
 
 import com.example.talentshow.data.api.AuthAPI;
+import com.example.talentshow.domain.entities.AuthResponse;
+import com.example.talentshow.domain.entities.RegisterDTO;
 import com.example.talentshow.domain.repository.IAuthRepository;
+
 
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import io.reactivex.Single;
+import io.reactivex.SingleSource;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 import retrofit2.Retrofit;
 
 public class AuthRepository implements IAuthRepository {
@@ -31,9 +38,33 @@ public class AuthRepository implements IAuthRepository {
     }
 
     @Override
-    public Completable auth(String mail, String password) {
-        //TODO Добавить авторизацию, проверить методы на валидность
-        return null;
+    public Single<Object> auth(String mail, String password) {
+        return authAPI.authUser(mail, password).flatMap(s -> {
+            if (s.getToken().isEmpty()) return Single.just(false);
+            else{
+                preferencesRepository.saveToken(s.getToken());
+                return Single.just(true);
+            }
+        });
     }
 
+    //TODO Изменить код в сооьветствии с правками Влада
+    @Override
+    public Single<Object> registerUser(String name, String mail, String password) {
+
+        return authAPI.registerUser(new RegisterDTO(name, mail, password))
+                .flatMap(aBoolean -> {
+                    if (aBoolean){
+                        return authAPI.authUser(mail, password)
+                                .flatMap((Function<AuthResponse, SingleSource<?>>) s -> {
+                            if (s.getToken().isEmpty()) return Single.just(false);
+                            else{
+                                preferencesRepository.saveToken(s.getToken());
+                                return Single.just(true);
+                            }
+                        });
+                    }
+                    else return Single.just(false);
+                    });
+                }
 }

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -55,6 +56,9 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
     @BindView(R.id.reg_load_photo)
     ImageView addAvatarButton;
 
+    @BindView(R.id.fragment_registration_progressbar)
+    ProgressBar progressBar;
+
     @InjectPresenter
     RegistrationPresenter presenter;
 
@@ -65,8 +69,9 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
 
     private boolean continuePressed = false;
     private Activity activity;
-    private final int AUTH_FINISHED = 4;
+    private final int VIDEO_SCREEN = 6;
     private final int LOAD_AVATAR = 5;
+    private final int BACK = 7;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,11 +101,12 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
     }
 
     @OnClick(R.id.fragment_reg_continue)
-    void continueClicked(){
+    public void continueClicked(){
         continuePressed = true;
         boolean flag = true;
         if (nameEdit.getText().toString().length() < 2){
             nameEdit.setTextColor(getResources().getColor(R.color.red_text));
+
             Toast.makeText(appContext,
                     "Имя должно быть длиннее 1 символа", Toast.LENGTH_SHORT).show();
             flag = false;
@@ -109,6 +115,7 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
         if (!Pattern.compile("\\w+@\\D+\\.\\D+")
                 .matcher(emailEdit.getText().toString()).find()){
             emailEdit.setTextColor(getResources().getColor(R.color.red_text));
+
             if (flag) Toast.makeText(appContext,
                     "Почта введена некорректно", Toast.LENGTH_SHORT).show();
             flag = false;
@@ -116,22 +123,23 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
 
         if (passwordEdit.getText().length() < 6){
             passwordEdit.setTextColor(getResources().getColor(R.color.red_text));
+
             if (flag) Toast.makeText(appContext,
                     "Пароль должен быть длиннее 5 символов", Toast.LENGTH_SHORT).show();
         }
         if (nameEdit.getText().toString().length() >= 2
                 && Pattern.compile("\\w+@\\D+\\.\\D+")
                         .matcher(emailEdit.getText().toString()).find()
-                && passwordEdit.getText().length() >= 6)
-            try {
-                ((RegAuthPostman) activity).fragmentMessage(AUTH_FINISHED);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                && passwordEdit.getText().length() >= 6){
+
+            progressBar.setVisibility(View.VISIBLE);
+            presenter.registerUser(nameEdit.getText().toString(), emailEdit.getText().toString(),
+                    passwordEdit.getText().toString());
+        }
     }
 
     @OnClick(R.id.reg_load_photo)
-    void loadAvatarClicked(){
+    public void loadAvatarClicked(){
         try {
             ((RegAuthPostman) activity).fragmentMessage(LOAD_AVATAR);
         } catch (Exception e) {
@@ -139,14 +147,37 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
         }
     }
 
+    @Override
+    public void nextScreen() {
+        try {
+            ((RegAuthPostman) activity).fragmentMessage(VIDEO_SCREEN);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @OnClick(R.id.fragment_reg_back)
+    void backPressed(){
+        try {
+            ((RegAuthPostman) activity).fragmentMessage(BACK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void showError(String error) {
+        Toast.makeText(appContext, error, Toast.LENGTH_SHORT).show();
+    }
+
     @OnTextChanged(R.id.reg_name_edit)
-    void nameChanged(){
+    public void nameChanged(){
         if (nameEdit.getText().toString().length() >= 2)
             nameEdit.setTextColor(getResources().getColor(R.color.blackText));
     }
 
     @OnTextChanged(R.id.reg_email_edit)
-    void mailChanged(){
+    public void mailChanged(){
         if (continuePressed) {
             if (!Pattern.compile("\\w+@\\D+\\.\\D+")
                     .matcher(emailEdit.getText().toString()).find()) {
@@ -156,7 +187,7 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
     }
 
     @OnTextChanged(R.id.reg_password_edit)
-    void passwordChanged(){
+    public void passwordChanged(){
         if (passwordEdit.getText().toString().length() >= 6)
             passwordEdit.setTextColor(getResources().getColor(R.color.blackText));
     }

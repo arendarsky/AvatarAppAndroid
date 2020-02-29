@@ -51,4 +51,6 @@
     <string name="name">Имя</string>
     <string name="i_accept_terms">Регистрируясь, я принимаю условия использования</string>
     <string name="to_sign_in">Зарегистрироваться</string>
+    <string name="back">Назад</string>
+    <string name="want_load_video"><b>Хочешь загрузить видео?</b></string>
 </resources>
