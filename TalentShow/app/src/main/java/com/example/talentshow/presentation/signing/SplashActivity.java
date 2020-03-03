@@ -26,8 +26,8 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.talentshow.App;
 import com.example.talentshow.R;
-import com.example.talentshow.presentation.CastingFragment;
-import com.example.talentshow.presentation.signing.fileload.FragmentFileLoad;
+import com.example.talentshow.presentation.main.MainScreenActivity;
+import com.example.talentshow.presentation.signing.fragments.FragmentFileLoad;
 
 import javax.inject.Inject;
 
@@ -68,7 +68,7 @@ public class SplashActivity extends MvpAppCompatActivity implements SplashView, 
 
     @Override
     public void startMain() {
-        startActivity(new Intent(appContext, CastingFragment.class));
+        startActivity(new Intent(appContext, MainScreenActivity.class));
         finish();
     }
 

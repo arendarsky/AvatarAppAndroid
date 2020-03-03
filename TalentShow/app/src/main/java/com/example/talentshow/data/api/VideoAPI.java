@@ -25,4 +25,7 @@ public interface VideoAPI {
 
     @GET("api/admin/get_videos")
     Single<ArrayList<String>> getUnwatched(@Header("Authorization") String token, @Query("number") int number);
+
+    @GET("api/video/set_like")
+    Completable setLiked(@Header("Authorization") String token, @Query("name") String name, @Query("isLike") boolean liked);
 }

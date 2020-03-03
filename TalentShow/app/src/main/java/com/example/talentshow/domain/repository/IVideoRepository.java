@@ -9,6 +9,7 @@ import io.reactivex.Single;
 
 public interface IVideoRepository {
     Completable uploadVideo(Uri videoUri);
-
+    String getNewVideoLink();
     Single<ArrayList<String>> getUnwatchedVideos(int number);
+    Completable setLiked(boolean liked);
 }

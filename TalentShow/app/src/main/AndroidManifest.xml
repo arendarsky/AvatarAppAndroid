@@ -23,15 +23,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".presentation.star.ActivityStarStatistics"></activity>
-        <activity android:name=".presentation.star.ActivityStarVideoBest"></activity>
-        <activity android:name=".presentation.CastingFragment">
+        <activity android:name=".presentation.main.ActivityStarStatistics"></activity>
+        <activity android:name=".presentation.main.ActivityStarVideoBest"></activity>
+        <activity android:name=".presentation.main.fragments.casting.CastingFragment">
         </activity>
         <activity android:name=".presentation.signing.emailenter.EmailEnterActivity" />
         <activity android:name=".presentation.signing.emailcode.EmailSuccessCodeActivity" />
         <activity android:name=".presentation.producer.ActivityProducerYes"></activity>
         <activity android:name=".presentation.producer.ActivityProducerName" />
-        <activity android:name=".presentation.star.maincontainer.StarMainScreenActivity" />
+        <activity android:name=".presentation.main.MainScreenActivity" />
         <activity android:name=".presentation.signing.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

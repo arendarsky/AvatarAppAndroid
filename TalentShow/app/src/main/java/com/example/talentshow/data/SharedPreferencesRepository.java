@@ -25,7 +25,9 @@ public class SharedPreferencesRepository implements ISharedPreferemcesRepository
     void saveToken(String personToken){
         Log.d("Token", personToken);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(token, personToken);
+        editor.putString(token, "Bearer " + personToken);
+        this.setAuthed();
+
         editor.apply();
     }
 

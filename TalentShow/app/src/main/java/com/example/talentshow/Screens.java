@@ -6,16 +6,15 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.talentshow.presentation.CastingFragment;
-import com.example.talentshow.presentation.signing.authorisation.AuthorisationFragment;
-import com.example.talentshow.presentation.signing.registration.FragmentRegistration;
-import com.example.talentshow.presentation.signing.chooseauth.ChooseAuthFragment;
-import com.example.talentshow.presentation.signing.emailenter.EmailEnterActivity;
-import com.example.talentshow.presentation.signing.emailcode.EmailSuccessCodeActivity;
-import com.example.talentshow.presentation.star.ActivityStarStatistics;
-import com.example.talentshow.presentation.star.ActivityStarVideoBest;
-import com.example.talentshow.presentation.signing.fileload.FragmentFileLoad;
-import com.example.talentshow.presentation.star.rating.StarRatingFragment;
+import com.example.talentshow.presentation.main.MainScreenActivity;
+import com.example.talentshow.presentation.main.fragments.casting.CastingFragment;
+import com.example.talentshow.presentation.signing.fragments.authorisation.AuthorisationFragment;
+import com.example.talentshow.presentation.signing.fragments.registration.FragmentRegistration;
+import com.example.talentshow.presentation.signing.fragments.ChooseAuthFragment;
+import com.example.talentshow.presentation.main.ActivityStarStatistics;
+import com.example.talentshow.presentation.main.ActivityStarVideoBest;
+import com.example.talentshow.presentation.signing.fragments.FragmentFileLoad;
+import com.example.talentshow.presentation.main.fragments.rating.RatingFragment;
 
 import ru.terrakok.cicerone.android.support.SupportAppScreen;
 
@@ -47,9 +46,9 @@ public class Screens {
         @Override
         public Fragment getFragment() {
             Bundle bundle = new Bundle();
-            StarRatingFragment starRatingFragment = new StarRatingFragment();
-            starRatingFragment.setArguments(bundle);
-            return starRatingFragment;
+            RatingFragment ratingFragment = new RatingFragment();
+            ratingFragment.setArguments(bundle);
+            return ratingFragment;
         }
     }
 
@@ -61,30 +60,6 @@ public class Screens {
             ChooseAuthFragment chooseAuthFragment = new ChooseAuthFragment();
             chooseAuthFragment.setArguments(bundle);
             return chooseAuthFragment;
-        }
-    }
-
-    public static final class EmailEnterScreen extends SupportAppScreen{
-
-        @Override
-        public Intent getActivityIntent(Context context) {
-            return new Intent(context, EmailEnterActivity.class);
-        }
-    }
-
-    public static final class EmailSuccessCodeScreen extends SupportAppScreen{
-        private String mail;
-
-        public EmailSuccessCodeScreen(String mail) {
-            super();
-            this.mail = mail;
-        }
-
-        @Override
-        public Intent getActivityIntent(Context context) {
-            Intent intent = new Intent(context, EmailSuccessCodeActivity.class);
-            intent.putExtra("mail", mail);
-            return intent;
         }
     }
 
@@ -105,10 +80,20 @@ public class Screens {
         }
     }
 
-    public static final class StarMainScreen extends SupportAppScreen{
+    public static final class MainScreen extends SupportAppScreen{
         @Override
         public Intent getActivityIntent(Context context) {
-            return new Intent(context, CastingFragment.class);
+            return new Intent(context, MainScreenActivity.class);
+        }
+    }
+
+    public static final class CastingScreen extends SupportAppScreen{
+        @Override
+        public Fragment getFragment() {
+            Bundle bundle = new Bundle();
+            CastingFragment fragment = new CastingFragment();
+            fragment.setArguments(bundle);
+            return fragment;
         }
     }
 

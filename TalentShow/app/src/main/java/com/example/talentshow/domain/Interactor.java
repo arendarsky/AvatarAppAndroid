@@ -66,4 +66,12 @@ public class Interactor {
     public Single<Object> registerUser(String name, String mail, String password){
         return this.authRepository.registerUser(name, mail, password);
     }
+
+    public String getNewVideoLink(){
+        return this.videoRepository.getNewVideoLink();
+    }
+
+    public Completable setLiked(boolean like){
+        return this.videoRepository.setLiked(like);
+    }
 }

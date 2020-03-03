@@ -11,7 +11,6 @@ import javax.inject.Inject;
 import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.SingleSource;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import retrofit2.Retrofit;
 
@@ -39,13 +38,16 @@ public class AuthRepository implements IAuthRepository {
 
     @Override
     public Single<Object> auth(String mail, String password) {
-        return authAPI.authUser(mail, password).flatMap(s -> {
-            if (s.getToken().isEmpty()) return Single.just(false);
-            else{
-                preferencesRepository.saveToken(s.getToken());
-                return Single.just(true);
-            }
-        });
+        return authAPI.authUser(mail, password)
+                .flatMap(s -> {
+                    if (s.getToken() == null) return Single.just(false);
+                    else
+                        {
+                            preferencesRepository.saveToken(s.getToken());
+                            return Single.just(true);
+                        }
+                }
+                );
     }
 
     //TODO Изменить код в сооьветствии с правками Влада
@@ -57,14 +59,17 @@ public class AuthRepository implements IAuthRepository {
                     if (aBoolean){
                         return authAPI.authUser(mail, password)
                                 .flatMap((Function<AuthResponse, SingleSource<?>>) s -> {
-                            if (s.getToken().isEmpty()) return Single.just(false);
-                            else{
-                                preferencesRepository.saveToken(s.getToken());
-                                return Single.just(true);
-                            }
-                        });
+                                    if (s.getToken().isEmpty()) return Single.just(false);
+                                    else
+                                        {
+                                            preferencesRepository.saveToken(s.getToken());
+                                            return Single.just(true);
+                                        }
+                                }
+                                );
                     }
                     else return Single.just(false);
-                    });
                 }
+                );
+    }
 }
