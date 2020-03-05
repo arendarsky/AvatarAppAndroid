@@ -93,6 +93,11 @@ public class SplashActivity extends MvpAppCompatActivity implements SplashView, 
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(Intent.createChooser(intent, "Select video"), REQUEST_PICK_IMAGE);
         }
+        else{
+            requestPermission();
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(Intent.createChooser(intent, "Select video"), REQUEST_PICK_IMAGE);
+        }
     }
 
     @Override

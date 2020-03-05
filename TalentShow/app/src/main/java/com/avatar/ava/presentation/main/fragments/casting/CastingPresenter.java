@@ -30,16 +30,19 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
         Disposable disposable = interactor.setLiked(true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> getViewState().loadNewVideo(interactor.getNewVideoLink()),
-                throwable ->{
-                    Log.d("Casting presenter", throwable.getMessage());
-//                    if (throwable.getMessage()) getViewState().showError(
-//                            "Ошибка на сервере. Повторите попытку позднее"
-//                    );
-//                    else if (throwable.getMessage().contains("401")) getViewState().showError(
-//                            "Чтобы оценивать видео необходима регистрация"
-//                    );
-                });
+                .subscribe(
+
+//                .subscribe(() -> getViewState().loadNewVideo(interactor.getNewVideoLink()),
+//                throwable ->{
+//                    Log.d("Casting presenter", throwable.getMessage());
+////                    if (throwable.getMessage()) getViewState().showError(
+////                            "Ошибка на сервере. Повторите попытку позднее"
+////                    );
+////                    else if (throwable.getMessage().contains("401")) getViewState().showError(
+////                            "Чтобы оценивать видео необходима регистрация"
+////                    );
+//                }
+                );
     }
 
     void dislikeVideo(){

@@ -26,16 +26,16 @@
         android:theme="@style/AppTheme">
         <activity android:name="com.avatar.ava.presentation.main.ActivityStarStatistics"></activity>
         <activity android:name="com.avatar.ava.presentation.main.ActivityStarVideoBest">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity android:name="com.avatar.ava.presentation.main.fragments.casting.CastingFragment">
         </activity>
         <activity android:name="com.avatar.ava.presentation.main.MainScreenActivity" />
         <activity android:name="com.avatar.ava.presentation.signing.SplashActivity">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
