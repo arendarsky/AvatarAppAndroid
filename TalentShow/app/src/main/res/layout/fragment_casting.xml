@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#E5E5E5"
     android:id="@+id/activity_casting_layout"
-    tools:context=".presentation.main.fragments.casting.CastingFragment">
+    tools:context="com.avatar.ava.presentation.main.fragments.casting.CastingFragment">
 
 
     <TextView
