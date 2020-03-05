@@ -95,8 +95,6 @@ public class SplashActivity extends MvpAppCompatActivity implements SplashView, 
         }
         else{
             requestPermission();
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(Intent.createChooser(intent, "Select video"), REQUEST_PICK_IMAGE);
         }
     }
 
@@ -178,6 +176,8 @@ public class SplashActivity extends MvpAppCompatActivity implements SplashView, 
 
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(appContext, "Permission granted successfully", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(Intent.createChooser(intent, "Select video"), REQUEST_PICK_IMAGE);
             } else {
                 Toast.makeText(appContext, "Permission is denied!", Toast.LENGTH_SHORT).show();
                 boolean showRationale = shouldShowRequestPermissionRationale( Manifest.permission.CAMERA );

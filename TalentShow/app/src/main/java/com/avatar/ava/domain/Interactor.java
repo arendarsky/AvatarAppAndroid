@@ -78,4 +78,8 @@ public class Interactor {
     public Completable setLiked(boolean like){
         return this.videoRepository.setLiked(like);
     }
+
+    public Single<ArrayList<String>> getVideoLinkOnCreate(){
+        return this.videoRepository.getVideoLinkOnCreate();
+    }
 }

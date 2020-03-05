@@ -13,4 +13,5 @@ public interface IVideoRepository {
     Single<ArrayList<String>> getUnwatchedVideos(int number);
     Completable setLiked(boolean liked);
     Completable setInterval(String fileName, int startTime, int endTime);
+    Single<ArrayList<String>> getVideoLinkOnCreate();
 }

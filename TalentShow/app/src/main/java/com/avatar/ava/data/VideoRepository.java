@@ -65,12 +65,8 @@ public class VideoRepository implements IVideoRepository {
             Disposable disposable = videoAPI.getUnwatched(preferencesRepository.getToken(), 20)
                     .observeOn(Schedulers.io())
                     .subscribeOn(AndroidSchedulers.mainThread())
-                    .subscribe(arrayList -> {
-                        this.videoNames.addAll(arrayList);
-                        video.set(videoNames.get(0));
-                        currentVideo = videoNames.get(0);
-                        videoNames.remove(0);
-                    });
+                    .subscribe(arrayList -> this.videoNames.addAll(arrayList),
+                            error -> {});
         }
         else{
             video.set(videoNames.get(0));
@@ -78,7 +74,11 @@ public class VideoRepository implements IVideoRepository {
             videoNames.remove(0);
         }
         return "https://avatarapp.yambr.ru/api/video/" + video.get();
+
+//        return "https://avatarapp.yambr.ru/api/video/" + this.videoNames.remove(0);
     }
+
+
 
     @Override
     public Single<ArrayList<String>> getUnwatchedVideos(int number) {
@@ -101,6 +101,12 @@ public class VideoRepository implements IVideoRepository {
     @Override
     public Completable setInterval(String fileName, int startTime, int endTime) {
         return videoAPI.setInterval(preferencesRepository.getToken(), fileName, startTime, endTime);
+    }
+
+    @Override
+    public Single<ArrayList<String>> getVideoLinkOnCreate() {
+        return videoAPI.getUnwatched(preferencesRepository.getToken(), 10)
+                .doOnSuccess(arrayList -> this.videoNames = arrayList);
     }
 
 

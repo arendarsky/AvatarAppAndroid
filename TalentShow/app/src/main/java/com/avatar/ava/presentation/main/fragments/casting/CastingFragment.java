@@ -97,6 +97,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
                 }));
 
         trackProgress();
+        video.setVideoPath(presenter.getNewVideoLink());
     }
 //
 //    }
