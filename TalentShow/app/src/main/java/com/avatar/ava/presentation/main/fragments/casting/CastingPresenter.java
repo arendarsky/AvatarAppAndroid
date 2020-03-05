@@ -26,22 +26,30 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
         return interactor.getNewVideoLink();
     }
 
+    void getFirstVideo(){
+        Disposable disposable = interactor.getVideoLinkOnCreate()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(arrayList -> getViewState().loadNewVideo(arrayList.get(0)),
+                        error -> {});
+    }
+
     void likeVideo(){
         Disposable disposable = interactor.setLiked(true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
+//                .subscribe(
 
-//                .subscribe(() -> getViewState().loadNewVideo(interactor.getNewVideoLink()),
-//                throwable ->{
-//                    Log.d("Casting presenter", throwable.getMessage());
-////                    if (throwable.getMessage()) getViewState().showError(
-////                            "Ошибка на сервере. Повторите попытку позднее"
-////                    );
-////                    else if (throwable.getMessage().contains("401")) getViewState().showError(
-////                            "Чтобы оценивать видео необходима регистрация"
-////                    );
-//                }
+                .subscribe(() -> getViewState().loadNewVideo(interactor.getNewVideoLink()),
+                throwable ->{
+                    Log.d("Casting presenter", throwable.getMessage());
+//                    if (throwable.getMessage()) getViewState().showError(
+//                            "Ошибка на сервере. Повторите попытку позднее"
+//                    );
+//                    else if (throwable.getMessage().contains("401")) getViewState().showError(
+//                            "Чтобы оценивать видео необходима регистрация"
+//                    );
+                }
                 );
     }
 

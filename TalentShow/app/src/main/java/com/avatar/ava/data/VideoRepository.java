@@ -63,19 +63,19 @@ public class VideoRepository implements IVideoRepository {
         AtomicReference<String> video = new AtomicReference<>();
         if (videoNames.size() <= 10){
             Disposable disposable = videoAPI.getUnwatched(preferencesRepository.getToken(), 20)
-                    .observeOn(Schedulers.io())
-                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(arrayList -> this.videoNames.addAll(arrayList),
                             error -> {});
         }
         else{
             video.set(videoNames.get(0));
-            currentVideo = videoNames.get(0);
-            videoNames.remove(0);
+//            currentVideo = videoNames.get(0);
+//            videoNames.remove(0);
         }
-        return "https://avatarapp.yambr.ru/api/video/" + video.get();
+//        return "https://avatarapp.yambr.ru/api/video/" + video.get();
 
-//        return "https://avatarapp.yambr.ru/api/video/" + this.videoNames.remove(0);
+        return "https://avatarapp.yambr.ru/api/video/" + this.videoNames.remove(0);
     }
 
 
@@ -84,9 +84,10 @@ public class VideoRepository implements IVideoRepository {
     public Single<ArrayList<String>> getUnwatchedVideos(int number) {
 
         Disposable disposable = videoAPI.getUnwatched(preferencesRepository.getToken(), 30)
-        .observeOn(Schedulers.io())
-        .subscribeOn(AndroidSchedulers.mainThread())
-        .subscribe(arrayList -> this.videoNames.addAll(arrayList));
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(arrayList -> this.videoNames.addAll(arrayList),
+                error -> {});
 
 
 
