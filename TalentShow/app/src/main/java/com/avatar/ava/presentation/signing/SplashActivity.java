@@ -63,6 +63,7 @@ public class SplashActivity extends MvpAppCompatActivity implements SplashView, 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        presenter.checkAuth();
         setContentView(R.layout.activity_splash);
         Toothpick.inject(this, Toothpick.openScope(App.class));
     }

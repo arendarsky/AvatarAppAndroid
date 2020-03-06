@@ -15,6 +15,8 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
 
     private Router router;
 
+    private final int LOAD_NEW_VIDEO = 0;
+
     @Inject
     MainScreenPresenter(Router router){
         this.router = router;
@@ -33,5 +35,13 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                 return true;
         }
         return false;
+    }
+
+    void changeFragment(int code){
+        switch (code){
+            case LOAD_NEW_VIDEO:
+                router.navigateTo(new Screens.FileLoadScreen());
+                break;
+        }
     }
 }

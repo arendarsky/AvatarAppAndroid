@@ -119,7 +119,7 @@ public class FragmentFileLoad extends MvpAppCompatFragment implements MvpView {
 
 //    @OnClick(R.id.activity_star_load_file_continue)
 //    void continueClicked(){
-//        Intent intent = new Intent(appContext, ActivityStarVideoBest.class);
+//        Intent intent = new Intent(appContext, FragmentChooseVideoBest.class);
 //        intent.putExtra("VideoLink", link);
 //        startActivity(intent);
 //    }

@@ -25,7 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="com.avatar.ava.presentation.main.ActivityStarStatistics"></activity>
-        <activity android:name="com.avatar.ava.presentation.main.ActivityStarVideoBest">
+        <activity android:name="com.avatar.ava.presentation.main.FragmentChooseVideoBest">
 
         </activity>
         <activity android:name="com.avatar.ava.presentation.main.fragments.casting.CastingFragment">

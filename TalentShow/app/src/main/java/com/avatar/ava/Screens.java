@@ -12,7 +12,7 @@ import com.avatar.ava.presentation.signing.fragments.authorisation.Authorisation
 import com.avatar.ava.presentation.signing.fragments.registration.FragmentRegistration;
 import com.avatar.ava.presentation.signing.fragments.ChooseAuthFragment;
 import com.avatar.ava.presentation.main.ActivityStarStatistics;
-import com.avatar.ava.presentation.main.ActivityStarVideoBest;
+import com.avatar.ava.presentation.main.FragmentChooseVideoBest;
 import com.avatar.ava.presentation.signing.fragments.FragmentFileLoad;
 import com.avatar.ava.presentation.main.fragments.rating.RatingFragment;
 
@@ -97,10 +97,21 @@ public class Screens {
         }
     }
 
-    public static final class StarVideoBestScreen extends SupportAppScreen{
+    public static final class ChooseBestScreen extends SupportAppScreen{
+
+        //TODO раскоменить и удалить незакоменченное
+
+//        @Override
+//        public Fragment getFragment() {
+//            Bundle bundle = new Bundle();
+//            FragmentChooseVideoBest fragment = new FragmentChooseVideoBest();
+//            fragment.setArguments(bundle);
+//            return fragment;
+//        }
+
         @Override
         public Intent getActivityIntent(Context context) {
-            return new Intent(context, ActivityStarVideoBest.class);
+            return new Intent(context, FragmentChooseVideoBest.class);
         }
     }
 

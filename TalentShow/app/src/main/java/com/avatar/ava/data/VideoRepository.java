@@ -107,7 +107,12 @@ public class VideoRepository implements IVideoRepository {
     @Override
     public Single<ArrayList<String>> getVideoLinkOnCreate() {
         return videoAPI.getUnwatched(preferencesRepository.getToken(), 10)
-                .doOnSuccess(arrayList -> this.videoNames = arrayList);
+                .doOnSuccess(
+                        arrayList -> {
+                            this.videoNames = arrayList;
+                            this.currentVideo = arrayList.get(0);
+                        }
+                );
     }
 
 

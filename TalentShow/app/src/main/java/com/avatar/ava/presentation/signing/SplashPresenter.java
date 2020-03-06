@@ -29,7 +29,7 @@ public class SplashPresenter extends MvpPresenter<SplashView> {
     private final int LOAD_AVATAR = 5;
     private final int VIDEO_SCREEN = 6;
     private final int BACK = 7;
-
+    private final int CHOOSE_SECONDS = 8;
 
     @Inject
     public SplashPresenter(Interactor interactor, Router router) {
@@ -72,6 +72,10 @@ public class SplashPresenter extends MvpPresenter<SplashView> {
             case BACK:
                 router.backTo(null);
                 break;
+            case CHOOSE_SECONDS:
+                router.navigateTo(new Screens.ChooseBestScreen());
+                break;
+
         }
     }
 

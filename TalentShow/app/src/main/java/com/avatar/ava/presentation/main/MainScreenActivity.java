@@ -25,7 +25,7 @@ import ru.terrakok.cicerone.NavigatorHolder;
 import ru.terrakok.cicerone.android.support.SupportAppNavigator;
 import toothpick.Toothpick;
 
-public class MainScreenActivity extends MvpAppCompatActivity implements MainScreenView {
+public class MainScreenActivity extends MvpAppCompatActivity implements MainScreenView, MainScreenPostman {
 
     @BindView(R.id.bottom_nav_bar)
     BottomNavigationView bottomNavigationView;
@@ -80,5 +80,12 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     @Override
     public void showMessage(String message) {
         Toast.makeText(appContext, message, Toast.LENGTH_SHORT).show();
+    }
+
+    //TODO вызов метода ниже из фрагмента кастинга с нужным кодом. Все коды будут указаны в презентере
+
+    @Override
+    public void fragmentAction(int code) {
+        presenter.changeFragment(code);
     }
 }

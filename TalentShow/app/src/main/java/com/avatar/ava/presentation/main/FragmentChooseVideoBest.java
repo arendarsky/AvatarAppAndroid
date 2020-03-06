@@ -40,7 +40,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import toothpick.Toothpick;
 
-public class ActivityStarVideoBest extends AppCompatActivity implements OnRangeSeekBarListener {
+public class FragmentChooseVideoBest extends AppCompatActivity implements OnRangeSeekBarListener {
 
     @Inject
     Interactor interactor;
@@ -134,7 +134,7 @@ public class ActivityStarVideoBest extends AppCompatActivity implements OnRangeS
                     public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
 
 
-                        mc = new MediaController(ActivityStarVideoBest.this);
+                        mc = new MediaController(FragmentChooseVideoBest.this);
                         video.setMediaController(mc);
 
                         mc.setAnchorView(video);

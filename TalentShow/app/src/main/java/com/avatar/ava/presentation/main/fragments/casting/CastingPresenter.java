@@ -30,7 +30,7 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
         Disposable disposable = interactor.getVideoLinkOnCreate()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(arrayList -> getViewState().loadNewVideo(arrayList.get(0)),
+                .subscribe(arrayList -> getViewState().loadNewVideo("https://avatarapp.yambr.ru/api/video/" + arrayList.get(0)),
                         error -> {});
     }
 
@@ -40,7 +40,9 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
                 .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(
 
-                .subscribe(() -> getViewState().loadNewVideo(interactor.getNewVideoLink()),
+                .subscribe(
+                        () ->
+                                getViewState().loadNewVideo(interactor.getNewVideoLink()),
                 throwable ->{
                     Log.d("Casting presenter", throwable.getMessage());
 //                    if (throwable.getMessage()) getViewState().showError(
@@ -56,16 +58,16 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
     void dislikeVideo(){
 
         Disposable disposable = interactor.setLiked(false)
-                .observeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> getViewState().loadNewVideo(interactor.getNewVideoLink()),
                         throwable ->{
-                            if (throwable.getMessage().contains("500")) getViewState().showError(
-                                    "Ошибка на сервере. Повторите попытку позднее"
-                            );
-                            else if (throwable.getMessage().contains("401")) getViewState().showError(
-                                    "Чтобы оценивать видео необходима регистрация"
-                            );
+//                            if (throwable.getMessage().contains("500")) getViewState().showError(
+//                                    "Ошибка на сервере. Повторите попытку позднее"
+//                            );
+//                            else if (throwable.getMessage().contains("401")) getViewState().showError(
+//                                    "Чтобы оценивать видео необходима регистрация"
+//                            );
                         });
     }
 }

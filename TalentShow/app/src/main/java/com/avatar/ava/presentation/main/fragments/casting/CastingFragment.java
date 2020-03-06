@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,20 +84,20 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         video.start();
 
 
-        video.setOnPreparedListener(mp -> mp.setOnVideoSizeChangedListener(
-                (mp12, width, height) -> {
-                    /*
-                     * add media controller
-                     */
-                    mc = new MediaController(appContext);
-                    video.setMediaController(mc);
-                    /*
-                     * and set its position on screen
-                     */
-                    mc.setAnchorView(video);
-                }));
-
-        trackProgress();
+//        video.setOnPreparedListener(mp -> mp.setOnVideoSizeChangedListener(
+//                (mp12, width, height) -> {
+//                    /*
+//                     * add media controller
+//                     */
+//                    mc = new MediaController(appContext);
+//                    video.setMediaController(mc);
+//                    /*
+//                     * and set its position on screen
+//                     */
+//                    mc.setAnchorView(video);
+//                }));
+//
+//        trackProgress();
         presenter.getFirstVideo();
     }
 //
@@ -216,6 +217,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     }
 
     public void loadNewVideo(String videoLink){
+        Log.d("Casting link", videoLink);
         video.setVideoPath(videoLink);
     }
 }
