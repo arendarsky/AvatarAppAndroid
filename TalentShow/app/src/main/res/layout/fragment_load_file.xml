@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@color/darkBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -34,7 +35,7 @@
             app:layout_constraintStart_toStartOf="parent"/>
 
         <TextView
-            android:textColor="@color/blueTextColor"
+            android:textColor="@color/whiteText"
             android:textSize="17sp"
             android:text="@string/back"
             android:gravity="center|top"
@@ -52,26 +53,25 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="112dp"
+        android:layout_marginTop="17dp"
         android:layout_marginEnd="14dp"
-        android:textSize="28sp"
-        android:gravity="center"
-        android:textColor="@color/blackText"
-        android:text="@string/want_load_video"
+        android:textSize="20sp"
+        android:gravity="start"
+        android:textColor="@color/whiteText"
+        android:text="@string/load_new_video"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_video_load_back"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_video_load_rectangle"
         android:layout_width="0dp"
         android:layout_height="180dp"
-        android:layout_marginTop="53dp"
+        android:layout_marginTop="13dp"
         android:layout_marginBottom="182dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/rounded_white_square"
+        android:background="@drawable/file_load_button_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fragment_load_file_text1">
@@ -82,7 +82,16 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:padding="15dp"
-            android:background="@drawable/add_file_blue_button"
+            android:background="@drawable/add_video_circle_blue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <View
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:background="@drawable/white_cross"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -90,22 +99,52 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
     <TextView
-        android:id="@+id/fragment_load_file_skip"
+        android:id="@+id/fragment_video_load_text2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="14dp"
-        android:layout_marginBottom="93dp"
-        android:padding="10dp"
-        android:textSize="17sp"
-        android:gravity="center"
-        android:text="@string/skip_auth"
-        android:textColor="@color/blackText"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="17dp"
+        android:textColor="@color/whiteText"
+        android:textSize="20sp"
+        android:text="@string/profile_description"
+        app:layout_constraintTop_toBottomOf="@id/fragment_video_load_rectangle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <EditText
+        android:id="@+id/fragment_video_load_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:paddingTop="16dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="15dp"
+        android:maxLength="280"
+        android:background="@drawable/edit_text_rectangle_with_border"
+        android:textColorHint="@color/hint_text_color"
+        android:textSize="15sp"
+        android:hint="@string/tell_about_urself"
+        android:textColor="@color/whiteEditableText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/fragment_video_load_text2"/>
 
+    <TextView
+        android:id="@+id/fragment_video_load_text3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:textSize="12sp"
+        android:textColor="@color/grayText"
+        android:text="@string/text_for_casting"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_video_load_description"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
