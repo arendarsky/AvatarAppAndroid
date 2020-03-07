@@ -88,7 +88,7 @@ public class SplashPresenter extends MvpPresenter<SplashView> {
         Disposable disposable = interactor.uploadVideo(videoUri)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> getViewState().startMain(),
+                .subscribe(() -> startFragment(CHOOSE_SECONDS),
                         e -> getViewState().showingError(""));
     }
 

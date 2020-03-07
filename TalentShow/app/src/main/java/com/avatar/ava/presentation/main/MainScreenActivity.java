@@ -14,18 +14,20 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
 
+import com.avatar.ava.presentation.main.fragments.casting.CastingDialogFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import ru.terrakok.cicerone.Navigator;
 import ru.terrakok.cicerone.NavigatorHolder;
 import ru.terrakok.cicerone.android.support.SupportAppNavigator;
 import toothpick.Toothpick;
 
-public class MainScreenActivity extends MvpAppCompatActivity implements MainScreenView, MainScreenPostman {
+public class MainScreenActivity extends MvpAppCompatActivity implements MainScreenView, MainScreenPostman, CastingDialogFragment.ItemClickListener {
 
     @BindView(R.id.bottom_nav_bar)
     BottomNavigationView bottomNavigationView;
@@ -87,5 +89,12 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     @Override
     public void fragmentAction(int code) {
         presenter.changeFragment(code);
+    }
+
+
+
+    @Override
+    public void onItemClick(int item) {
+
     }
 }

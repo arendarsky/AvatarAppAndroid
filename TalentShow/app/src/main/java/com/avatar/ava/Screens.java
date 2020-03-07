@@ -101,18 +101,18 @@ public class Screens {
 
         //TODO раскоменить и удалить незакоменченное
 
-//        @Override
-//        public Fragment getFragment() {
-//            Bundle bundle = new Bundle();
-//            FragmentChooseVideoBest fragment = new FragmentChooseVideoBest();
-//            fragment.setArguments(bundle);
-//            return fragment;
-//        }
+           @Override
+           public Fragment getFragment() {
+               Bundle bundle = new Bundle();
+               FragmentChooseVideoBest fragment = new FragmentChooseVideoBest();
+               fragment.setArguments(bundle);
+               return fragment;
+           }
 
-        @Override
-        public Intent getActivityIntent(Context context) {
-            return new Intent(context, FragmentChooseVideoBest.class);
-        }
+     //   @Override
+     //   public Intent getActivityIntent(Context context) {
+     //       return new Intent(context, FragmentChooseVideoBest.class);
+     //   }
     }
 
     public static final class StarStatisticsScreen extends SupportAppScreen{
