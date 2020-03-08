@@ -55,12 +55,11 @@ public class VideoRepository implements IVideoRepository {
 
         MultipartBody.Part body =
                         MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-        return videoAPI.uploadVideo(preferencesRepository.getToken(), body);
+        return videoAPI.uploadVideo(preferencesRepository.getToken(), body).ignoreElement();
     }
 
     @Override
     public String getNewVideoLink() {
-        AtomicReference<String> video = new AtomicReference<>();
         if (videoNames.size() <= 10){
             Disposable disposable = videoAPI.getUnwatched(preferencesRepository.getToken(), 20)
                     .subscribeOn(Schedulers.io())
@@ -68,12 +67,6 @@ public class VideoRepository implements IVideoRepository {
                     .subscribe(arrayList -> this.videoNames.addAll(arrayList),
                             error -> {});
         }
-        else{
-            video.set(videoNames.get(0));
-//            currentVideo = videoNames.get(0);
-//            videoNames.remove(0);
-        }
-//        return "https://avatarapp.yambr.ru/api/video/" + video.get();
 
         return "https://avatarapp.yambr.ru/api/video/" + this.videoNames.remove(0);
     }
@@ -110,7 +103,7 @@ public class VideoRepository implements IVideoRepository {
                 .doOnSuccess(
                         arrayList -> {
                             this.videoNames = arrayList;
-                            this.currentVideo = arrayList.get(0);
+                            this.currentVideo = arrayList.remove(0);
                         }
                 );
     }

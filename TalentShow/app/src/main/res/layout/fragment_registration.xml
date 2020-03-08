@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@color/whiteBackground"
+    android:background="@color/darkBackground"
     android:layout_height="match_parent">
 
     <ProgressBar
@@ -35,7 +35,7 @@
             app:layout_constraintStart_toStartOf="parent"/>
 
         <TextView
-            android:textColor="@color/blueTextColor"
+            android:textColor="@color/whiteText"
             android:textSize="17sp"
             android:text="@string/back"
             android:gravity="center|top"
@@ -47,29 +47,30 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <View
+        android:id="@+id/fragment_reg_logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="69dp"
+        android:background="@drawable/logo"
+        app:layout_constraintTop_toBottomOf="@id/fragment_reg_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
         android:id="@+id/fragment_reg_text1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="14dp"
         android:textSize="34sp"
         android:gravity="center"
-        android:textColor="@color/blackText"
+        android:textColor="@color/whiteText"
         android:text="@string/sign_up"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_reg_logo"
         app:layout_constraintEnd_toEndOf="parent"/>
-
-    <ImageView
-        android:id="@+id/reg_load_photo"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        app:layout_constraintTop_toBottomOf="@id/fragment_reg_text1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_reg_field_1"
@@ -77,9 +78,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/auth_filed_backgroud"
-        app:layout_constraintTop_toBottomOf="@id/reg_load_photo"
+        app:layout_constraintTop_toBottomOf="@id/fragment_reg_text1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
         <TextView
@@ -110,7 +111,10 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
             android:textSize="17sp"
-            android:textColor="@color/blackText"
+            android:paddingTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/whiteText"
+            android:background="@color/none_color"
             app:layout_constraintStart_toEndOf="@id/fragment_filed1_guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -157,8 +161,11 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
             android:textSize="17sp"
-            android:textColor="@color/blackText"
+            android:textColor="@color/whiteText"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:inputType="textEmailAddress"
+            android:background="@color/none_color"
             app:layout_constraintStart_toEndOf="@id/fragment_filed2_guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -204,7 +211,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="12dp"
         android:textSize="17sp"
-        android:textColor="@color/blackText"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:background="@color/none_color"
+        android:textColor="@color/whiteText"
         android:inputType="textPassword"
         app:layout_constraintStart_toEndOf="@id/fragment_filed3_guideline"
         app:layout_constraintEnd_toEndOf="parent"
@@ -220,6 +230,7 @@
         android:layout_marginEnd="45dp"
         android:gravity="center"
         android:text="@string/i_accept_terms"
+        android:textColor="@color/regGrayColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fragment_reg_field_3"/>
@@ -228,10 +239,10 @@
         android:id="@+id/fragment_reg_continue"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="14dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="50dp"
-        android:background="@drawable/blue_button_background"
+        android:background="@drawable/buttons_background"
         android:textSize="17sp"
         android:gravity="center"
         android:text="@string/to_sign_in"

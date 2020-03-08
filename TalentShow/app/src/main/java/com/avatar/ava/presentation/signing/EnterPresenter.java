@@ -16,7 +16,7 @@ import ru.terrakok.cicerone.Router;
 
 
 @InjectViewState
-public class SplashPresenter extends MvpPresenter<SplashView> {
+public class EnterPresenter extends MvpPresenter<EnterView> {
 
     private Interactor interactor;
     private Router router;
@@ -32,7 +32,7 @@ public class SplashPresenter extends MvpPresenter<SplashView> {
     private final int CHOOSE_SECONDS = 8;
 
     @Inject
-    public SplashPresenter(Interactor interactor, Router router) {
+    public EnterPresenter(Interactor interactor, Router router) {
         this.interactor = interactor;
         this.router = router;
     }

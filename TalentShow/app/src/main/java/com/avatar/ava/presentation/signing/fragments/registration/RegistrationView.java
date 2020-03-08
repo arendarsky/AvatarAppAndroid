@@ -4,7 +4,6 @@ import com.arellomobile.mvp.MvpView;
 
 public interface RegistrationView extends MvpView{
 
-    void loadAvatarClicked();
     void nameChanged();
     void mailChanged();
     void passwordChanged();

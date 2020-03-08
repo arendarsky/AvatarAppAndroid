@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@color/whiteBackground"
+    android:background="@color/darkBackground"
     android:layout_height="match_parent">
 
     <ProgressBar
@@ -35,7 +35,7 @@
             app:layout_constraintStart_toStartOf="parent"/>
 
         <TextView
-            android:textColor="@color/blueTextColor"
+            android:textColor="@color/whiteText"
             android:textSize="17sp"
             android:text="@string/back"
             android:gravity="center|top"
@@ -47,19 +47,29 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <View
+        android:id="@+id/fragment_auth_logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="69dp"
+        android:background="@drawable/logo"
+        app:layout_constraintTop_toBottomOf="@id/fragment_auth_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
     <TextView
         android:id="@+id/fragment_auth_text1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="14dp"
         android:textSize="41sp"
         android:gravity="center"
-        android:textColor="@color/blackText"
+        android:textColor="@color/whiteText"
         android:text="@string/auth"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_auth_logo"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -68,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/auth_filed_backgroud"
         app:layout_constraintTop_toBottomOf="@id/fragment_auth_text1"
         app:layout_constraintStart_toStartOf="parent"
@@ -104,6 +114,9 @@
             android:textSize="17sp"
             android:textColor="@color/blackText"
             android:inputType="textEmailAddress"
+            android:background="@color/none_color"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             app:layout_constraintStart_toEndOf="@id/fragment_filed1_guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -151,6 +164,9 @@
             android:textSize="17sp"
             android:textColor="@color/blackText"
             android:inputType="textPassword"
+            android:background="@color/none_color"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
             app:layout_constraintStart_toEndOf="@id/fragment_filed2_guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -162,10 +178,10 @@
         android:id="@+id/fragment_auth_continue"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="14dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="93dp"
-        android:background="@drawable/blue_button_background"
+        android:background="@drawable/buttons_background"
         android:textSize="17sp"
         android:gravity="center"
         android:text="@string/sing_in"

@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,9 +47,6 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
     @BindView(R.id.activity_casting_video)
     VideoView video;
-
-    @BindView(R.id.activity_casting_head)
-    TextView tv;
 
     @BindView(R.id.activity_casting_layout)
     ConstraintLayout layout;
@@ -203,21 +201,18 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         Toast.makeText(appContext, error, Toast.LENGTH_SHORT).show();
     }
 
-    //TODO такую реализацию точно убираем позже
     @OnClick(R.id.activity_casting_btn_like)
     public void likeClicked(){
         presenter.likeVideo();
-//        video.setVideoPath(presenter.getNewVideoLink());
     }
 
     @OnClick(R.id.activity_casting_btn_x)
     public void dislikeClicked() {
         presenter.dislikeVideo();
-//        video.setVideoPath(presenter.getNewVideoLink());
     }
 
     public void loadNewVideo(String videoLink){
         Log.d("Casting link", videoLink);
-        video.setVideoPath(videoLink);
+        video.setVideoURI(Uri.parse(videoLink));
     }
 }

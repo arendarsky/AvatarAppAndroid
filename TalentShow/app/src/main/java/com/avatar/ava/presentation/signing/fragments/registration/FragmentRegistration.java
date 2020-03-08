@@ -53,9 +53,6 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
     @BindView(R.id.reg_password_edit)
     EditText passwordEdit;
 
-    @BindView(R.id.reg_load_photo)
-    ImageView addAvatarButton;
-
     @BindView(R.id.fragment_registration_progressbar)
     ProgressBar progressBar;
 
@@ -95,9 +92,6 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        Glide.with(view.getContext())
-                .load(R.drawable.reg_load_avatar)
-                .into(addAvatarButton);
     }
 
     @OnClick(R.id.fragment_reg_continue)
@@ -135,15 +129,6 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
             progressBar.setVisibility(View.VISIBLE);
             presenter.registerUser(nameEdit.getText().toString(), emailEdit.getText().toString(),
                     passwordEdit.getText().toString());
-        }
-    }
-
-    @OnClick(R.id.reg_load_photo)
-    public void loadAvatarClicked(){
-        try {
-            ((RegAuthPostman) activity).fragmentMessage(LOAD_AVATAR);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

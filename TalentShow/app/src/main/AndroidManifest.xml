@@ -31,7 +31,10 @@
         <activity android:name="com.avatar.ava.presentation.main.fragments.casting.CastingFragment">
         </activity>
         <activity android:name="com.avatar.ava.presentation.main.MainScreenActivity" />
-        <activity android:name="com.avatar.ava.presentation.signing.SplashActivity">
+        <activity android:name="com.avatar.ava.presentation.signing.EnterActivity">
+
+        </activity>
+        <activity android:name=".presentation.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER" />

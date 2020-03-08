@@ -37,7 +37,7 @@ import ru.terrakok.cicerone.NavigatorHolder;
 import ru.terrakok.cicerone.android.support.SupportAppNavigator;
 import toothpick.Toothpick;
 
-public class SplashActivity extends MvpAppCompatActivity implements SplashView, RegAuthPostman {
+public class EnterActivity extends MvpAppCompatActivity implements EnterView, RegAuthPostman {
 
     @Inject
     NavigatorHolder navigatorHolder;
@@ -46,11 +46,11 @@ public class SplashActivity extends MvpAppCompatActivity implements SplashView, 
     Context appContext;
 
     @InjectPresenter
-    SplashPresenter presenter;
+    EnterPresenter presenter;
 
     @ProvidePresenter
-    SplashPresenter getPresenter(){
-        return Toothpick.openScope(App.class).getInstance(SplashPresenter.class);
+    EnterPresenter getPresenter(){
+        return Toothpick.openScope(App.class).getInstance(EnterPresenter.class);
     }
 
     private Navigator navigator = new SupportAppNavigator(this, R.id.splash_container);
@@ -64,7 +64,7 @@ public class SplashActivity extends MvpAppCompatActivity implements SplashView, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter.checkAuth();
-        setContentView(R.layout.activity_splash);
+        setContentView(R.layout.enter_activty);
         Toothpick.inject(this, Toothpick.openScope(App.class));
     }
 
