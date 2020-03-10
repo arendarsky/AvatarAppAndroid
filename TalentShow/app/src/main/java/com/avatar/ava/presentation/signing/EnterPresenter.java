@@ -30,6 +30,7 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
     private final int VIDEO_SCREEN = 6;
     private final int BACK = 7;
     private final int CHOOSE_SECONDS = 8;
+    private final int VIDEO_SCREEN_JUST = 9;
 
     @Inject
     public EnterPresenter(Interactor interactor, Router router) {
@@ -74,6 +75,9 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
                 break;
             case CHOOSE_SECONDS:
                 router.navigateTo(new Screens.ChooseBestScreen());
+                break;
+            case VIDEO_SCREEN_JUST:
+                router.navigateTo(new Screens.FileLoadJustScreen());
                 break;
 
         }

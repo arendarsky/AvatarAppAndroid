@@ -26,7 +26,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.presentation.main.MainScreenActivity;
-import com.avatar.ava.presentation.signing.fragments.FragmentFileLoad;
+import com.avatar.ava.presentation.signing.fragments.FragmentEnterFileLoad;
 import com.avatar.ava.R;
 
 
@@ -108,10 +108,6 @@ public class EnterActivity extends MvpAppCompatActivity implements EnterView, Re
         if (requestCode == REQUEST_PICK_IMAGE && data != null){
             Log.d("Video", data.getData().toString());
             presenter.uploadVideoToServer(data.getData());
-            Fragment f = getSupportFragmentManager().findFragmentById(R.id.splash_container);
-            if (f instanceof FragmentFileLoad){
-                ((FragmentFileLoad) f).setSkipDisabled();
-            }
         }
 
     }
@@ -210,9 +206,5 @@ public class EnterActivity extends MvpAppCompatActivity implements EnterView, Re
     @Override
     public void showingError(String error) {
         Toast.makeText(appContext, "Loading error. Try again later", Toast.LENGTH_SHORT).show();
-        Fragment f = getSupportFragmentManager().findFragmentById(R.id.splash_container);
-        if (f instanceof FragmentFileLoad){
-            ((FragmentFileLoad) f).setProgressBarInvisible();
-        }
     }
 }

@@ -9,24 +9,21 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
-import com.arellomobile.mvp.MvpAppCompatFragment;
-import com.arellomobile.mvp.MvpView;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
 
 import com.avatar.ava.presentation.signing.RegAuthPostman;
 
-import javax.inject.Inject;
-
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import toothpick.Toothpick;
 
-public class FragmentFileLoad extends MvpAppCompatFragment implements MvpView {
+public class FragmentEnterFileLoad extends Fragment{
 
-    @Inject
-    Context appContext;
+//    @Inject
+//    Context appContext;
 
     private Activity activity;
     private final int LOAD_VIDEO = 3;
@@ -61,7 +58,6 @@ public class FragmentFileLoad extends MvpAppCompatFragment implements MvpView {
     void loadFileClicked(){
         try {
             ((RegAuthPostman) activity).fragmentMessage(LOAD_VIDEO);
-//            skip.setEnabled(false);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -80,7 +76,7 @@ public class FragmentFileLoad extends MvpAppCompatFragment implements MvpView {
 //        requestPermission();
     }
 
-    @OnClick(R.id.main_frame_back)
+    @OnClick(R.id.file_load__back)
     void backPressed(){
         try {
             ((RegAuthPostman) activity).fragmentMessage(BACK);
@@ -88,13 +84,6 @@ public class FragmentFileLoad extends MvpAppCompatFragment implements MvpView {
             e.printStackTrace();
         }
     }
-
-    public void setProgressBarInvisible(){
-    }
-
-    public void setSkipDisabled(){
-    }
-
 //    @OnClick(R.id.activity_star_load_file_continue)
 //    void continueClicked(){
 //        Intent intent = new Intent(appContext, FragmentChooseVideoBest.class);

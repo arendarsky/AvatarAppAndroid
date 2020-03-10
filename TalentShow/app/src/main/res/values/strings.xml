@@ -62,4 +62,6 @@
     <string name="tell_about_urself">Расскажите о себе (максимум 280 символов)</string>
     <string name="text_for_casting">Это тот текст, который люди увидят в разделе кастинга</string>
     <string name="xce_factor">XCE FACTOR</string>
+    <string name="want_load_video"><b>Хочешь загрузить видео?</b></string>
+    <string name="add_video">Добавить видео</string>
 </resources>
