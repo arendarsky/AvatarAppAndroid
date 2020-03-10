@@ -4,20 +4,43 @@ import org.parceler.ParcelConstructor;
 
 public class PersonDTO {
 
+    private int pos = 0;
+
+    private String video = "";
+
     private String name = "";
 
-    private String surname = "";
+    private String description = "";
 
-    private String photo = "";
+    private String ava = "";
 
     @ParcelConstructor
-    public PersonDTO(String name, String surname, String photo){
+    public PersonDTO(int pos, String video, String name, String description, String ava){
+        this.pos = pos;
+        this.video = video;
         this.name = name;
-        this.surname = surname;
-        this.photo = photo;
+        this.description = description;
+        this.ava = ava;
     }
 
     public PersonDTO(){}
+
+
+    public int getPos() {
+        return pos;
+    }
+
+    public void setPos(int pos) {
+        this.pos = pos;
+    }
+
+    public String getVideo() {
+        return video;
+    }
+
+    public void setVideo(String video) {
+        this.video = video;
+    }
 
     public String getName() {
         return name;
@@ -27,19 +50,19 @@ public class PersonDTO {
         this.name = name;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getDescription() {
+        return description;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getPhoto() {
-        return photo;
+    public String getAva() {
+        return ava;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setAva(String ava) {
+        this.ava = ava;
     }
 }

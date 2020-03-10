@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,13 +36,13 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PersonDTO personDTO = data.get(position);
-        String name = personDTO.getName() + " " + personDTO.getSurname();
-        holder.personName.setText(name);
-        holder.personNumber.setText(String.valueOf(position + 1));
+        String name = personDTO.getName();
+        holder.name.setText(name);
+        holder.pos.setText(String.valueOf(position + 1) + " место");
         Glide.with(holder.itemView.getContext())
-                .load(personDTO.getPhoto())
+                .load(personDTO.getAva())
                 .circleCrop()
-                .into(holder.personAvatar);
+                .into(holder.ava);
 
     }
 
@@ -62,15 +63,17 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView personNumber;
-        ImageView personAvatar;
-        TextView personName;
+        VideoView video;
+        TextView pos, name, description;
+        ImageView ava;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            personNumber = itemView.findViewById(R.id.star_rating_recycler_item_number);
-            personAvatar = itemView.findViewById(R.id.star_rating_recycler_item_avatar);
-            personName = itemView.findViewById(R.id.star_rating_recycler_item_name);
+            video = itemView.findViewById(R.id.rating_item_video);
+            pos = itemView.findViewById(R.id.rating_item_pos);
+            name = itemView.findViewById(R.id.rating_item_name);
+            description = itemView.findViewById(R.id.rating_item_description);
+            ava = itemView.findViewById(R.id.rating_item_ava);
         }
     }
 }

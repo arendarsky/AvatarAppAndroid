@@ -9,6 +9,7 @@ import com.avatar.ava.R;
 import javax.inject.Inject;
 
 import ru.terrakok.cicerone.Router;
+import ru.terrakok.cicerone.Screen;
 
 @InjectViewState
 public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
@@ -28,6 +29,8 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                 router.newRootScreen(new Screens.CastingScreen());
                 return true;
             case R.id.nav_rating:
+                router.newRootScreen(new Screens.StarRatingScreen());
+                return true;
             case R.id.nav_notify:
             case R.id.nav_contacts:
             case R.id.nav_profile:
