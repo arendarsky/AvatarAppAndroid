@@ -1,20 +1,28 @@
 package com.avatar.ava.presentation.main;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.arellomobile.mvp.MvpAppCompatFragment;
+import com.arellomobile.mvp.MvpView;
 import com.avatar.ava.App;
 import com.avatar.ava.data.AuthRepository;
 import com.avatar.ava.domain.Interactor;
@@ -40,12 +48,12 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import toothpick.Toothpick;
 
-public class FragmentChooseVideoBest extends AppCompatActivity implements OnRangeSeekBarListener {
+public class FragmentChooseVideoBest extends MvpAppCompatFragment implements MvpView, OnRangeSeekBarListener {
 
     @Inject
     Interactor interactor;
 
-
+    private Activity activity;
 
 
     @BindView(R.id.video_loader)
@@ -74,6 +82,58 @@ public class FragmentChooseVideoBest extends AppCompatActivity implements OnRang
     String fileName = "filename";
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Toothpick.inject(this, Toothpick.openScope(App.class));
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
+        String url = "https://youtu.be/69FMw5OykjQ";
+
+
+
+        String fileName = "android.resource://"+ getActivity().getPackageName()+"/raw/example";
+
+        Uri uri = Uri.parse(fileName);
+
+        //video.setVideoURI(Uri.parse(link));
+        //video.setVideoURI(uri);
+
+
+        videoTrimmer.setMaxDuration(30);
+        videoTrimmer.setVideoURI(uri);
+
+
+
+        rangeSeekBarView.addOnRangeSeekBarListener(this);
+
+        btn.setOnClickListener(v -> {
+            List<Thumb> thums = rangeSeekBarView.getThumbs();
+            float value1 = thums.get(0).getVal() / 100 * video.getDuration();
+            float value2 = thums.get(1).getVal() / 100 * video.getDuration();
+            Log.d("videoTrimmerLog", value1 + " " + value2);
+            setInterval(fileName, (int)value1, (int)value2);
+            startActivity(new Intent(getContext(), MainScreenActivity.class));
+        });
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.activity_star_video_best, container, false);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof Activity) activity = (Activity) context;
+    }
+/*
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_star_video_best);
@@ -88,9 +148,7 @@ public class FragmentChooseVideoBest extends AppCompatActivity implements OnRang
 
         String url = "https://youtu.be/69FMw5OykjQ";
 
-        //MediaController controls = new MediaController(this);
-        //controls.setAnchorView(video);
-        //video.setMediaController(controls);
+
 
         String fileName = "android.resource://"+ getPackageName()+"/raw/example";
 
@@ -118,106 +176,13 @@ public class FragmentChooseVideoBest extends AppCompatActivity implements OnRang
             }
         });
 
-        //videoTrimmer.setVideoURI(uri);
 
-        //video.setVideoURI(Uri.parse(url));
-        //video.setVideoPath(videoName1);
-        //video.start();
-
-        /*
-        video.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-
-                mp.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
-                    @Override
-                    public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
-
-
-                        mc = new MediaController(FragmentChooseVideoBest.this);
-                        video.setMediaController(mc);
-
-                        mc.setAnchorView(video);
-                    }
-                });
-
-
-
-
-
-                duration = video.getDuration();
-                Log.d("duration", duration + "");
-                /*rangeSeekbar.setMinValue(0);
-                rangeSeekbar.setMaxValue(duration);
-                rangeSeekbar.apply();
-                tvMin.setText("0:00");
-                int sec = duration / 1000;
-                int minute = 0;
-                if(sec >= 60){
-                    minute = sec / 60;
-                    sec = sec % 60;
-                }
-                if(sec < 10){
-                    tvMax.setText(minute + ":0" + sec);
-                }else{
-                    tvMax.setText(minute + ":" + sec);
-                }
-
-
-
-
-                rangeSeekbar.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
-                    @Override
-                    public void valueChanged(Number minValue, Number maxValue) {
-                        video.pause();
-                        video.seekTo(Integer.parseInt(String.valueOf(minValue)));
-                        video.start();
-                        Log.d("videoR", minValue + " " + maxValue);
-                        int sec = Integer.parseInt(String.valueOf(minValue)) / 1000;
-                        int minute = 0;
-                        if(sec >= 60){
-                            minute = sec / 60;
-                            sec = sec % 60;
-                        }
-                        if(sec < 10){
-                            tvMin.setText(minute + ":0" + sec);
-                        }else{
-                            tvMin.setText(minute + ":" + sec);
-                        }
-                        int sec1 = Integer.parseInt(String.valueOf(minValue)) / 1000;
-                        sec = Integer.parseInt(String.valueOf(maxValue)) / 1000;
-                        if(sec - sec1 > 30){
-                            sec = sec1 + 30;
-                            Log.d("videoR", (sec1 * 1000) + " " + (sec * 1000));
-
-                            rangeSeekbar.setRight(sec * 1000);
-                            //rangeSeekbar.apply();
-                        }
-                        minute = 0;
-                        if(sec >= 60){
-                            minute = sec / 60;
-                            sec = sec % 60;
-                        }
-                        if(sec < 10){
-                            tvMax.setText(minute + ":0" + sec);
-                        }else{
-                            tvMax.setText(minute + ":" + sec);
-                        }
-                    }
-                });
-
-
-
-
-            }
-
-        });*/
 
 
 
 
     }
-
+*/
     @Override
     public void onCreate(RangeSeekBarView rangeSeekBarView, int index, float value) {
 
@@ -239,10 +204,11 @@ public class FragmentChooseVideoBest extends AppCompatActivity implements OnRang
 
     }
 
-    private void setIntervak(String name, int startTime, int endTime){
+    private void setInterval(String name, int startTime, int endTime){
         Disposable disposable = interactor.setInterval(name, startTime, endTime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
+                .subscribe(() -> startActivity(new Intent(getContext(), MainScreenActivity.class)),
+                        e -> Log.d("Error", "error"));
     }
 }
