@@ -18,12 +18,12 @@ public interface VideoAPI {
     @Headers({"CONNECT_TIMEOUT:10000", "READ_TIMEOUT:10000", "WRITE_TIMEOUT:10000"})
     @Multipart
     @POST("api/video/upload")
-    Completable uploadVideo(@Header("Authorization") String token, @Part  MultipartBody.Part file);
+    Single<String> uploadVideo(@Header("Authorization") String token, @Part  MultipartBody.Part file);
 
 //    @GET("api/video/get_unwatched")
 //    Single<ArrayList<String>> getUnwatched(@Header("Authorization") String token, @Query("number") int number);
 
-    @GET("api/admin/get_videos")
+    @GET("api/video/get_unwatched")
     Single<ArrayList<String>> getUnwatched(@Header("Authorization") String token, @Query("number") int number);
 
     @GET("api/video/set_like")

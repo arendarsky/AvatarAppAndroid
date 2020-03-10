@@ -85,13 +85,4 @@ public class ChooseAuthFragment extends Fragment {
             e.printStackTrace();
         }
     }
-
-    @OnClick(R.id.choose_auth_skip)
-    public void skip() {
-        try {
-            ((RegAuthPostman) activity).fragmentMessage(SKIP_AUTH);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

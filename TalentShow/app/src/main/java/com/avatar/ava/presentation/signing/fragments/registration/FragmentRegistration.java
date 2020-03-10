@@ -53,9 +53,6 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
     @BindView(R.id.reg_password_edit)
     EditText passwordEdit;
 
-    @BindView(R.id.reg_load_photo)
-    ImageView addAvatarButton;
-
     @BindView(R.id.fragment_registration_progressbar)
     ProgressBar progressBar;
 
@@ -69,9 +66,9 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
 
     private boolean continuePressed = false;
     private Activity activity;
-    private final int VIDEO_SCREEN = 6;
     private final int LOAD_AVATAR = 5;
     private final int BACK = 7;
+    private final int VIDEO_SCREEN_JUST = 9;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,9 +92,6 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        Glide.with(view.getContext())
-                .load(R.drawable.reg_load_avatar)
-                .into(addAvatarButton);
     }
 
     @OnClick(R.id.fragment_reg_continue)
@@ -138,19 +132,10 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
         }
     }
 
-    @OnClick(R.id.reg_load_photo)
-    public void loadAvatarClicked(){
-        try {
-            ((RegAuthPostman) activity).fragmentMessage(LOAD_AVATAR);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void nextScreen() {
         try {
-            ((RegAuthPostman) activity).fragmentMessage(VIDEO_SCREEN);
+            ((RegAuthPostman) activity).fragmentMessage(VIDEO_SCREEN_JUST);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -174,7 +159,7 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
     @OnTextChanged(R.id.reg_name_edit)
     public void nameChanged(){
         if (nameEdit.getText().toString().length() >= 2)
-            nameEdit.setTextColor(getResources().getColor(R.color.blackText));
+            nameEdit.setTextColor(getResources().getColor(R.color.whiteText));
     }
 
     @OnTextChanged(R.id.reg_email_edit)
@@ -183,13 +168,13 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
             if (!Pattern.compile("\\w+@\\D+\\.\\D+")
                     .matcher(emailEdit.getText().toString()).find()) {
                 emailEdit.setTextColor(getResources().getColor(R.color.red_text));
-            } else emailEdit.setTextColor(getResources().getColor(R.color.blackText));
+            } else emailEdit.setTextColor(getResources().getColor(R.color.whiteText));
         }
     }
 
     @OnTextChanged(R.id.reg_password_edit)
     public void passwordChanged(){
         if (passwordEdit.getText().toString().length() >= 6)
-            passwordEdit.setTextColor(getResources().getColor(R.color.blackText));
+            passwordEdit.setTextColor(getResources().getColor(R.color.whiteText));
     }
 }

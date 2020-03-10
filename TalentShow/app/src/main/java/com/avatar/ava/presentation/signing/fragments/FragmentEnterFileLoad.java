@@ -6,36 +6,24 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
-import com.arellomobile.mvp.MvpAppCompatFragment;
-import com.arellomobile.mvp.MvpView;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
 
 import com.avatar.ava.presentation.signing.RegAuthPostman;
 
-import javax.inject.Inject;
-
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import toothpick.Toothpick;
 
-public class FragmentFileLoad extends MvpAppCompatFragment implements MvpView {
+public class FragmentEnterFileLoad extends Fragment{
 
-    @Inject
-    Context appContext;
-
-    @BindView(R.id.fragment_file_load_progressbar)
-    ProgressBar progressBar;
-
-    @BindView(R.id.fragment_load_file_skip)
-    TextView skip;
+//    @Inject
+//    Context appContext;
 
     private Activity activity;
     private final int LOAD_VIDEO = 3;
@@ -70,8 +58,6 @@ public class FragmentFileLoad extends MvpAppCompatFragment implements MvpView {
     void loadFileClicked(){
         try {
             ((RegAuthPostman) activity).fragmentMessage(LOAD_VIDEO);
-            progressBar.setVisibility(View.VISIBLE);
-//            skip.setEnabled(false);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -90,16 +76,7 @@ public class FragmentFileLoad extends MvpAppCompatFragment implements MvpView {
 //        requestPermission();
     }
 
-    @OnClick(R.id.fragment_load_file_skip)
-    void skipLoad(){
-        try {
-            ((RegAuthPostman) activity).fragmentMessage(SKIP_AUTH);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @OnClick(R.id.fragment_video_load_back)
+    @OnClick(R.id.file_load__back)
     void backPressed(){
         try {
             ((RegAuthPostman) activity).fragmentMessage(BACK);
@@ -107,16 +84,6 @@ public class FragmentFileLoad extends MvpAppCompatFragment implements MvpView {
             e.printStackTrace();
         }
     }
-
-    public void setProgressBarInvisible(){
-        progressBar.setVisibility(View.INVISIBLE);
-        skip.setVisibility(View.VISIBLE);
-    }
-
-    public void setSkipDisabled(){
-        skip.setVisibility(View.INVISIBLE);
-    }
-
 //    @OnClick(R.id.activity_star_load_file_continue)
 //    void continueClicked(){
 //        Intent intent = new Intent(appContext, FragmentChooseVideoBest.class);

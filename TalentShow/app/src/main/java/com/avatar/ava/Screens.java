@@ -7,13 +7,15 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import com.avatar.ava.presentation.main.MainScreenActivity;
+import com.avatar.ava.presentation.main.fragments.FragmentFileLoadMain;
 import com.avatar.ava.presentation.main.fragments.casting.CastingFragment;
+import com.avatar.ava.presentation.signing.fragments.FragmentFileLoadJust;
 import com.avatar.ava.presentation.signing.fragments.authorisation.AuthorisationFragment;
 import com.avatar.ava.presentation.signing.fragments.registration.FragmentRegistration;
 import com.avatar.ava.presentation.signing.fragments.ChooseAuthFragment;
 import com.avatar.ava.presentation.main.ActivityStarStatistics;
 import com.avatar.ava.presentation.main.FragmentChooseVideoBest;
-import com.avatar.ava.presentation.signing.fragments.FragmentFileLoad;
+import com.avatar.ava.presentation.signing.fragments.FragmentEnterFileLoad;
 import com.avatar.ava.presentation.main.fragments.rating.RatingFragment;
 
 import ru.terrakok.cicerone.android.support.SupportAppScreen;
@@ -74,7 +76,7 @@ public class Screens {
         @Override
         public Fragment getFragment() {
             Bundle bundle = new Bundle();
-            FragmentFileLoad fragment = new FragmentFileLoad();
+            FragmentEnterFileLoad fragment = new FragmentEnterFileLoad();
             fragment.setArguments(bundle);
             return fragment;
         }
@@ -119,6 +121,27 @@ public class Screens {
         @Override
         public Intent getActivityIntent(Context context) {
             return new Intent(context, ActivityStarStatistics.class);
+        }
+    }
+
+    public static final class FileLoadMainScreen extends SupportAppScreen{
+        @Override
+        public Fragment getFragment() {
+            Bundle bundle = new Bundle();
+            FragmentFileLoadMain fragment = new FragmentFileLoadMain();
+            fragment.setArguments(bundle);
+            return fragment;
+        }
+    }
+
+    public static final class FileLoadJustScreen extends SupportAppScreen{
+
+        @Override
+        public Fragment getFragment() {
+            Bundle bundle = new Bundle();
+            FragmentFileLoadJust fragment = new FragmentFileLoadJust();
+            fragment.setArguments(bundle);
+            return fragment;
         }
     }
 }

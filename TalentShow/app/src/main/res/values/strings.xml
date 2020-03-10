@@ -52,8 +52,16 @@
     <string name="i_accept_terms">Регистрируясь, я принимаю условия использования</string>
     <string name="to_sign_in">Зарегистрироваться</string>
     <string name="back">Назад</string>
-    <string name="want_load_video"><b>Хочешь загрузить видео?</b></string>
+    <string name="load_new_video"><b>Загрузка нового видео</b></string>
     <string name="notifications">Уведомления</string>
     <string name="contacts">Контакты</string>
     <string name="profile">Профиль</string>
+    <string name="new_video"><b>Новое видео</b></string>
+    <string name="save"><b>Сохранить</b></string>
+    <string name="profile_description">Описание для профиля</string>
+    <string name="tell_about_urself">Расскажите о себе (максимум 280 символов)</string>
+    <string name="text_for_casting">Это тот текст, который люди увидят в разделе кастинга</string>
+    <string name="xce_factor">XCE FACTOR</string>
+    <string name="want_load_video"><b>Хочешь загрузить видео?</b></string>
+    <string name="add_video">Добавить видео</string>
 </resources>

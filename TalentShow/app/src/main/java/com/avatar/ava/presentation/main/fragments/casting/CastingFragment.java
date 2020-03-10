@@ -5,7 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
-import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,9 +22,6 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
-import com.avatar.ava.presentation.main.MainScreenActivity;
-import com.avatar.ava.presentation.main.MainScreenPresenter;
-import com.avatar.ava.presentation.main.loadNewFile.AddNewVideoActivity;
 
 import javax.inject.Inject;
 
@@ -35,7 +32,7 @@ import butterknife.OnClick;
 import toothpick.Toothpick;
 
 
-public class CastingFragment extends MvpAppCompatFragment implements CastingView, CastingDialogFragment.ItemClickListener {
+public class CastingFragment extends MvpAppCompatFragment implements CastingView {
 
     @Inject
     Context appContext;
@@ -50,9 +47,6 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
     @BindView(R.id.activity_casting_video)
     VideoView video;
-
-    @BindView(R.id.activity_casting_head)
-    TextView tv;
 
     @BindView(R.id.activity_casting_layout)
     ConstraintLayout layout;
@@ -187,56 +181,38 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         }).start();
     }
 
-       CastingDialogFragment castingDialogFragment;
-       public void showBottomSheetCasting(View view){
-           castingDialogFragment =
-                   CastingDialogFragment.newInstance();
-           castingDialogFragment.show(getFragmentManager(),
-                   CastingDialogFragment.TAG);
-       }
+//    CastingDialogFragment castingDialogFragment;
+//    public void showBottomSheetCasting(View view){
+//        castingDialogFragment =
+//                CastingDialogFragment.newInstance();
+//        castingDialogFragment.show(getSupportFragmentManager(),
+//                CastingDialogFragment.TAG);
+//    }
 
-       @Override
-       public void onItemClick(int item) {
-           if(item == R.id.casting_dialog_btn){
-               String text = castingDialogFragment.getText();
-               Log.d("castingText", text);
-           }
-       }
+//    @Override
+//    public void onItemClick(int item) {
+//        if(item == R.id.casting_dialog_btn){
+//            String text = castingDialogFragment.getText();
+//            Log.d("castingText", text);
+//        }
+//    }
 
     public void showError(String error){
         Toast.makeText(appContext, error, Toast.LENGTH_SHORT).show();
     }
 
-    //TODO такую реализацию точно убираем позже
     @OnClick(R.id.activity_casting_btn_like)
     public void likeClicked(){
         presenter.likeVideo();
-//        video.setVideoPath(presenter.getNewVideoLink());
     }
 
     @OnClick(R.id.activity_casting_btn_x)
     public void dislikeClicked() {
         presenter.dislikeVideo();
-//        video.setVideoPath(presenter.getNewVideoLink());
-    }
-
-    @OnClick(R.id.activity_casting_btn_comment)
-    public void makeComment(){
-        castingDialogFragment =
-                CastingDialogFragment.newInstance();
-        castingDialogFragment.show(getFragmentManager(),
-                CastingDialogFragment.TAG);
-    }
-
-    @OnClick(R.id.fragment_casting_btn_add_new_video)
-    public void addNewVideo(){
-        //MainScreenActivity activity = (MainScreenActivity)this.getActivity();
-        //activity.fragmentAction(0);
-        startActivity(new Intent(getContext(), AddNewVideoActivity.class));
     }
 
     public void loadNewVideo(String videoLink){
         Log.d("Casting link", videoLink);
-        video.setVideoPath(videoLink);
+        video.setVideoURI(Uri.parse(videoLink));
     }
 }

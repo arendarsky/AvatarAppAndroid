@@ -26,7 +26,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.presentation.main.MainScreenActivity;
-import com.avatar.ava.presentation.signing.fragments.FragmentFileLoad;
+import com.avatar.ava.presentation.signing.fragments.FragmentEnterFileLoad;
 import com.avatar.ava.R;
 
 
@@ -37,7 +37,7 @@ import ru.terrakok.cicerone.NavigatorHolder;
 import ru.terrakok.cicerone.android.support.SupportAppNavigator;
 import toothpick.Toothpick;
 
-public class SplashActivity extends MvpAppCompatActivity implements SplashView, RegAuthPostman {
+public class EnterActivity extends MvpAppCompatActivity implements EnterView, RegAuthPostman {
 
     @Inject
     NavigatorHolder navigatorHolder;
@@ -46,11 +46,11 @@ public class SplashActivity extends MvpAppCompatActivity implements SplashView, 
     Context appContext;
 
     @InjectPresenter
-    SplashPresenter presenter;
+    EnterPresenter presenter;
 
     @ProvidePresenter
-    SplashPresenter getPresenter(){
-        return Toothpick.openScope(App.class).getInstance(SplashPresenter.class);
+    EnterPresenter getPresenter(){
+        return Toothpick.openScope(App.class).getInstance(EnterPresenter.class);
     }
 
     private Navigator navigator = new SupportAppNavigator(this, R.id.splash_container);
@@ -64,7 +64,7 @@ public class SplashActivity extends MvpAppCompatActivity implements SplashView, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter.checkAuth();
-        setContentView(R.layout.activity_splash);
+        setContentView(R.layout.enter_activty);
         Toothpick.inject(this, Toothpick.openScope(App.class));
     }
 
@@ -108,10 +108,6 @@ public class SplashActivity extends MvpAppCompatActivity implements SplashView, 
         if (requestCode == REQUEST_PICK_IMAGE && data != null){
             Log.d("Video", data.getData().toString());
             presenter.uploadVideoToServer(data.getData());
-            Fragment f = getSupportFragmentManager().findFragmentById(R.id.splash_container);
-            if (f instanceof FragmentFileLoad){
-                ((FragmentFileLoad) f).setSkipDisabled();
-            }
         }
 
     }
@@ -210,9 +206,5 @@ public class SplashActivity extends MvpAppCompatActivity implements SplashView, 
     @Override
     public void showingError(String error) {
         Toast.makeText(appContext, "Loading error. Try again later", Toast.LENGTH_SHORT).show();
-        Fragment f = getSupportFragmentManager().findFragmentById(R.id.splash_container);
-        if (f instanceof FragmentFileLoad){
-            ((FragmentFileLoad) f).setProgressBarInvisible();
-        }
     }
 }

@@ -3,10 +3,13 @@ package com.avatar.ava.presentation.main;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -14,7 +17,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
 
-import com.avatar.ava.presentation.main.fragments.casting.CastingDialogFragment;
+import com.avatar.ava.presentation.main.fragments.FragmentFileLoadMain;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import javax.inject.Inject;
@@ -27,10 +30,25 @@ import ru.terrakok.cicerone.NavigatorHolder;
 import ru.terrakok.cicerone.android.support.SupportAppNavigator;
 import toothpick.Toothpick;
 
-public class MainScreenActivity extends MvpAppCompatActivity implements MainScreenView, MainScreenPostman, CastingDialogFragment.ItemClickListener {
+public class MainScreenActivity extends MvpAppCompatActivity implements MainScreenView, MainScreenPostman {
 
     @BindView(R.id.bottom_nav_bar)
     BottomNavigationView bottomNavigationView;
+
+    @BindView(R.id.main_frame_text1)
+    TextView fragmentHeader;
+
+    @BindView(R.id.main_frame_save)
+    TextView saveButton;
+
+    @BindView(R.id.main_frame_add)
+    View addButton;
+
+    @BindView(R.id.main_frame_menu_points)
+    View menuPoints;
+
+    @BindView(R.id.main_frame_back)
+    ConstraintLayout backButton;
 
     @Inject
     NavigatorHolder navigatorHolder;
@@ -40,6 +58,8 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
 
     @InjectPresenter
     MainScreenPresenter presenter;
+
+    private final int LOAD_NEW_VIDEO = 0;
 
     @ProvidePresenter
     MainScreenPresenter providePresenter(){
@@ -91,10 +111,77 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         presenter.changeFragment(code);
     }
 
+    @Override
+    public void changeTitle(String title) {
+        fragmentHeader.setText(title);
+    }
+
+    @Override
+    public void showBackButton() {
+        backButton.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showMenuPoints() {
+        menuPoints.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showSaveButton() {
+        saveButton.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showAddButton() {
+        addButton.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void clearTopView() {
+        backButton.setVisibility(View.INVISIBLE);
+        menuPoints.setVisibility(View.INVISIBLE);
+        saveButton.setVisibility(View.INVISIBLE);
+        addButton.setVisibility(View.INVISIBLE);
+    }
+
+    @OnClick(R.id.main_frame_add)
+    public void addButtonClicked(){
+        presenter.changeFragment(LOAD_NEW_VIDEO);
+    }
+
+    @Override
+    public void hideBottomNavBar() {
+        bottomNavigationView.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void showBottomNavBar() {
+        bottomNavigationView.setVisibility(View.VISIBLE);
+    }
+
+    @OnClick(R.id.main_frame_back)
+    public void backButtonClicked(){
+        presenter.backButtonPressed(
+                getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_container)
+                        instanceof FragmentFileLoadMain
+        );
+    }
+
+//    @Override
+//    public void onBackPressed() {
+//        presenter.backButtonPressed(
+//                getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_container)
+//                        instanceof FragmentFileLoadMain
+//        );
+//    }
 
 
     @Override
-    public void onItemClick(int item) {
-
+    public void onBackPressed() {
+        boolean closeApp = presenter.backButtonPressed(
+                getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_container)
+                        instanceof FragmentFileLoadMain
+        );
+        if (closeApp) super.onBackPressed();
     }
 }
