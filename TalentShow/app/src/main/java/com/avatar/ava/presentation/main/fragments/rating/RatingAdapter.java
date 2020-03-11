@@ -35,7 +35,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PersonDTO personDTO = data.get(position);
-        String name = personDTO.getName() + " " + personDTO.getSurname();
+        String name = personDTO.getName() + " " + personDTO.getDescription();
         holder.personName.setText(name);
         holder.personNumber.setText(String.valueOf(position + 1));
         Glide.with(holder.itemView.getContext())

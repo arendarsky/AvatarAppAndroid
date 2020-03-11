@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -50,11 +51,13 @@ public class DataModule extends Module{
                 writeTimeout = Integer.valueOf(writeNew);
             }
 
-            return chain
+            Response response = chain
                     .withConnectTimeout(connectTimeout, TimeUnit.SECONDS)
                     .withReadTimeout(readTimeout, TimeUnit.SECONDS)
                     .withWriteTimeout(writeTimeout, TimeUnit.SECONDS)
                     .proceed(request);
+            if (response.code() != 200) throw new IllegalStateException(String.valueOf(response.code()));
+            return response;
         };
 
 

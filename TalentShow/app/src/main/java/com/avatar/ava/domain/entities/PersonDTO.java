@@ -13,7 +13,7 @@ public class PersonDTO {
     private String name = "";
 
     @SerializedName("description")
-    private String surname = "";
+    private String description = "";
 
     @SerializedName("profilePhoto")
     private String photo = "";
@@ -24,16 +24,16 @@ public class PersonDTO {
     private VideoDTO usedVideo;
 
     @ParcelConstructor
-    public PersonDTO(String name, String surname, String photo, List<VideoDTO> videos){
+    public PersonDTO(String name, String description, String photo, List<VideoDTO> videos){
         this.name = name;
-        this.surname = surname;
+        this.description = description;
         this.photo = photo;
         this.videos = videos;
     }
 
-    public PersonDTO(String name, String surname, String photo){
+    public PersonDTO(String name, String description, String photo){
         this.name = name;
-        this.surname = surname;
+        this.description = description;
         this.photo = photo;
     }
 
@@ -48,12 +48,12 @@ public class PersonDTO {
         this.name = name;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getDescription() {
+        return description;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getPhoto() {

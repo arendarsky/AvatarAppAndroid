@@ -5,6 +5,7 @@ import android.util.Log;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.avatar.ava.domain.Interactor;
+import com.avatar.ava.domain.entities.PersonDTO;
 
 import javax.inject.Inject;
 
@@ -30,54 +31,86 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
         Disposable disposable = interactor.getVideoLinkOnCreate()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(arrayList -> getViewState().loadNewVideo(
+                .subscribe(person -> {
+                    this.loadNewPerson(person);
+                    getViewState().loadNewVideo(
                         "https://avatarapp.yambr.ru/api/video/"
-                                + arrayList.getUsedVideo().getName()
-                        ),
-                        error -> {});
+                                + person.getUsedVideo().getName());
+                },
+                        error -> {
+                    Log.d("Casting presenter", error.getMessage());
+                        });
     }
 
     void likeVideo(){
         Disposable disposable = interactor.setLiked(true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(
-
-                .subscribe(
-                        () ->
-                                getViewState().loadNewVideo(
-                                        "https://avatarapp.yambr.ru/api/video/" +
-                                                interactor.getNewVideoLink().getUsedVideo().getName()
-                                ),
-                throwable ->{
-                    Log.d("Casting presenter", throwable.getMessage());
-//                    if (throwable.getMessage()) getViewState().showError(
-//                            "Ошибка на сервере. Повторите попытку позднее"
-//                    );
-//                    else if (throwable.getMessage().contains("401")) getViewState().showError(
-//                            "Чтобы оценивать видео необходима регистрация"
-//                    );
-                }
+                .andThen(interactor.getNewVideoLink()).subscribe(
+                        personDTO -> {
+                            this.loadNewPerson(personDTO);
+                            getViewState().loadNewVideo(
+                                    "https://avatarapp.yambr.ru/api/video/" +
+                                            personDTO.getUsedVideo().getName()
+                            );
+                        },
+                        throwable -> Log.d("Casting presenter", throwable.toString())
                 );
+//                .subscribe(
+//                .subscribe(
+//                        () ->
+//                        {
+//                            PersonDTO person = interactor.getNewVideoLink();
+//                            this.loadNewPerson(person);
+//                            getViewState().loadNewVideo(
+//                                    "https://avatarapp.yambr.ru/api/video/" +
+//                                            person.getUsedVideo().getName()
+//                            );
+//                        },
+//                throwable ->{
+//                }
+//                );
     }
 
     void dislikeVideo(){
-
-        Disposable disposable = interactor.setLiked(false)
+        Disposable disposable = interactor.setLiked(true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> getViewState().loadNewVideo(
-                        "https://avatarapp.yambr.ru/api/video/" +
-                                interactor.getNewVideoLink().getUsedVideo().getName()
-                        ),
-                        throwable ->{
-//                            if (throwable.getMessage().contains("500")) getViewState().showError(
-//                                    "Ошибка на сервере. Повторите попытку позднее"
+                .andThen(interactor.getNewVideoLink()).subscribe(
+                        personDTO -> {
+                            this.loadNewPerson(personDTO);
+                            getViewState().loadNewVideo(
+                                    "https://avatarapp.yambr.ru/api/video/" +
+                                            personDTO.getUsedVideo().getName()
+                            );
+                        },
+                        throwable -> Log.d("Casting presenter", throwable.toString())
+                );
+//        Disposable disposable = interactor.setLiked(false)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(() -> {
+//                            PersonDTO person = interactor.getNewVideoLink();
+//                            this.loadNewPerson(person);
+//                            getViewState().loadNewVideo(
+//                                    "https://avatarapp.yambr.ru/api/video/" +
+//                                            person.getUsedVideo().getName()
 //                            );
-//                            else if (throwable.getMessage().contains("401")) getViewState().showError(
-//                                    "Чтобы оценивать видео необходима регистрация"
-//                            );
-                        });
+//                        },
+//                        throwable ->{
+////                            if (throwable.getMessage().contains("500")) getViewState().showError(
+////                                    "Ошибка на сервере. Повторите попытку позднее"
+////                            );
+////                            else if (throwable.getMessage().contains("401")) getViewState().showError(
+////                                    "Чтобы оценивать видео необходима регистрация"
+////                            );
+//                        });
+    }
+
+    void loadNewPerson(PersonDTO person){
+        getViewState().setAvatar(person.getPhoto());
+        getViewState().setName(person.getName());
+        getViewState().setDescription(person.getDescription());
     }
 }
 

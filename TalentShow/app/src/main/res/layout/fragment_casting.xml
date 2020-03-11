@@ -8,26 +8,23 @@
     android:id="@+id/activity_casting_layout"
     tools:context="com.avatar.ava.presentation.main.fragments.casting.CastingFragment">
 
-
-
-    <androidx.cardview.widget.CardView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/activity_casting_card"
         android:layout_width="0dp"
-        android:layout_height="398dp"
+        android:layout_height="0dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="17dp"
         android:layout_marginEnd="17dp"
-        android:layout_marginBottom="188dp"
-        app:cardCornerRadius="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/casting_video_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/guideline">
 
         <VideoView
             android:id="@+id/activity_casting_video"
             android:layout_width="match_parent"
-            android:layout_height="207dp"
+            android:layout_height="match_parent"
             android:layout_marginStart="0dp"
             android:layout_marginEnd="0dp"
             android:clickable="false"/>
@@ -37,11 +34,9 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="224dp"
+            android:layout_marginTop="19dp"
             android:layout_marginEnd="293dp"
-            android:layout_marginBottom="144dp"
             android:src="@drawable/casting_activity_ava"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -51,67 +46,84 @@
             android:layout_width="wrap_content"
             android:layout_height="28dp"
             android:layout_marginStart="66dp"
-            android:layout_marginTop="226dp"
+            android:layout_marginTop="19dp"
             android:layout_marginEnd="57dp"
-            android:layout_marginBottom="144dp"
             android:gravity="center_vertical"
             android:lineSpacingExtra="1sp"
             android:text="@string/activity_casting_name"
             android:textAppearance="@style/activity_casting_name"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/activity_casting_description"
             android:layout_width="303dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="272dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="45dp"
-            android:gravity="top"
+            android:gravity="start"
             android:lineSpacingExtra="2sp"
             android:text="Это описание к видео, которое написал автор, чтобы было понятно, что он хочет сказать своим творчеством. Наверное, тут очень ограничен обхем текста."
             android:textAppearance="@style/activity_casting_video_description"
             android:translationY="-1.05sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.cardview.widget.CardView>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <ImageButton
+    <View
+        android:id="@+id/activity_casting_btn_x"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:id="@+id/activity_casting_btn_x"
-        android:background="@drawable/casting_activity_btn_dislike"
-        android:layout_marginTop="599dp"
+        android:background="@drawable/red_circle"
         android:layout_marginStart="36dp"
         android:layout_marginEnd="289dp"
-        android:layout_marginBottom="163dp"
+        android:layout_marginBottom="28dp"
         android:elevation="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <ImageButton
+    <View
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/white_cross_x"
+        android:elevation="10dp"
+        app:layout_constraintStart_toStartOf="@id/activity_casting_btn_x"
+        app:layout_constraintEnd_toEndOf="@id/activity_casting_btn_x"
+        app:layout_constraintTop_toTopOf="@id/activity_casting_btn_x"
+        app:layout_constraintBottom_toBottomOf="@id/activity_casting_btn_x"/>
+
+    <View
+        android:id="@+id/activity_casting_btn_like"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:id="@+id/activity_casting_btn_like"
-        android:background="@drawable/casting_activity_btn_like"
-        android:layout_marginTop="599dp"
+        android:background="@drawable/green_circle"
         android:layout_marginStart="288dp"
         android:layout_marginEnd="37dp"
-        android:layout_marginBottom="163dp"
+        android:layout_marginBottom="28dp"
         android:elevation="10dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <View
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:elevation="10dp"
+        android:background="@drawable/white_heart"
+        app:layout_constraintTop_toTopOf="@id/activity_casting_btn_like"
+        app:layout_constraintBottom_toBottomOf="@id/activity_casting_btn_like"
+        app:layout_constraintEnd_toEndOf="@id/activity_casting_btn_like"
+        app:layout_constraintStart_toStartOf="@id/activity_casting_btn_like"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

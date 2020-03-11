@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
+import com.bumptech.glide.Glide;
 
 import javax.inject.Inject;
 
@@ -47,6 +49,15 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
     @BindView(R.id.activity_casting_video)
     VideoView video;
+
+    @BindView(R.id.activity_casting_name)
+    TextView name;
+
+    @BindView(R.id.casting_activity_avatar)
+    ImageView avatar;
+
+    @BindView(R.id.activity_casting_description)
+    TextView description;
 
     @BindView(R.id.activity_casting_layout)
     ConstraintLayout layout;
@@ -211,8 +222,27 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         presenter.dislikeVideo();
     }
 
+    @Override
     public void loadNewVideo(String videoLink){
         Log.d("Casting link", videoLink);
         video.setVideoURI(Uri.parse(videoLink));
+    }
+
+    @Override
+    public void setAvatar(String avatarLink) {
+        Glide.with(getView())
+                .load(avatarLink)
+                .circleCrop()
+                .into(avatar);
+    }
+
+    @Override
+    public void setDescription(String description) {
+        this.description.setText(description);
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name.setText(name);
     }
 }

@@ -11,7 +11,7 @@ import io.reactivex.Single;
 
 public interface IVideoRepository {
     Completable uploadVideo(Uri videoUri);
-    PersonDTO getNewVideoLink();
+    Single<PersonDTO> getNewVideoLink();
     Single<ArrayList<PersonDTO>> getUnwatchedVideos(int number);
     Completable setLiked(boolean liked);
     Completable setInterval(String fileName, int startTime, int endTime);

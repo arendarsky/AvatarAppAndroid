@@ -1,14 +1,11 @@
 package com.avatar.ava.data;
 
-import android.app.Notification;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
-
-import androidx.annotation.NonNull;
 
 import com.avatar.ava.data.api.VideoAPI;
 import com.avatar.ava.domain.entities.PersonDTO;
@@ -20,7 +17,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -28,8 +24,6 @@ import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -56,7 +50,7 @@ public class VideoRepository implements IVideoRepository {
         File file = new File(getFilePathFromUri(appContext, fileURI));
 
         String extension = appContext.getContentResolver().getType(fileURI);
-        Log.d("Extension", extension);
+        Log.d("Extension", file.getPath());
         RequestBody requestFile =
                 RequestBody.create(file, MediaType.parse("multipart/form-data"));
 
@@ -68,7 +62,7 @@ public class VideoRepository implements IVideoRepository {
     }
 
     @Override
-    public PersonDTO getNewVideoLink() {
+    public Single<PersonDTO> getNewVideoLink() {
         if (castingPersons.size() <= 10){
             Disposable disposable = videoAPI.getUnwatched(preferencesRepository.getToken(), 20)
                     .subscribeOn(Schedulers.io())
@@ -77,7 +71,7 @@ public class VideoRepository implements IVideoRepository {
                             error -> {});
         }
 
-        return this.castingPersons.remove(0);
+        return Single.just(this.castingPersons.remove(0));
     }
 
 
@@ -107,7 +101,8 @@ public class VideoRepository implements IVideoRepository {
 
     @Override
     public Completable setLiked(boolean liked) {
-        return videoAPI.setLiked(preferencesRepository.getToken(), currentPerson.getUsedVideo().getName(), liked);
+        return videoAPI.setLiked(preferencesRepository.getToken(), currentPerson.getUsedVideo().getName(), liked)
+                ;
     }
 
     @Override
@@ -161,6 +156,8 @@ public class VideoRepository implements IVideoRepository {
             if (extension == null || extension == ""){
                 extension = URLConnection.guessContentTypeFromStream(input);
             }
+            if (extension.equals(".quicktime")) extension = ".mov";
+            Log.d("extension", extension);
             File outputDir = context.getCacheDir();
             File outputFile = File.createTempFile("video",
                     extension, outputDir);

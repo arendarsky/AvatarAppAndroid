@@ -72,7 +72,7 @@ public class Interactor {
         return this.authRepository.registerUser(name, mail, password);
     }
 
-    public PersonDTO getNewVideoLink(){
+    public Single<PersonDTO> getNewVideoLink(){
         return this.videoRepository.getNewVideoLink();
     }
 

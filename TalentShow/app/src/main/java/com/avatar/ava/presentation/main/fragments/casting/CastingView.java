@@ -8,4 +8,7 @@ public interface CastingView extends MvpView {
     void dislikeClicked();
     void loadNewVideo(String videoLink);
     void showError(String error);
+    void setAvatar(String avatarLink);
+    void setDescription(String description);
+    void setName(String name);
 }
