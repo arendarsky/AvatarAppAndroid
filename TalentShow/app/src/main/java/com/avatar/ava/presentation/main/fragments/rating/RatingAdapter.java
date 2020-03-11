@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.avatar.ava.domain.entities.PersonDTO;
+import com.avatar.ava.domain.entities.PersonRatingDTO;
 import com.bumptech.glide.Glide;
 import com.avatar.ava.R;
 
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder> {
 
-    private List<PersonDTO> data = new ArrayList<>();
+    private List<PersonRatingDTO> data = new ArrayList<>();
 
     @NonNull
     @Override
@@ -35,12 +36,12 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        PersonDTO personDTO = data.get(position);
-        String name = personDTO.getName();
+        PersonRatingDTO personRatingDTO = data.get(position);
+        String name = personRatingDTO.getPersonDTO().getName();
         holder.name.setText(name);
         holder.pos.setText(String.valueOf(position + 1) + " место");
         Glide.with(holder.itemView.getContext())
-                .load(personDTO.getPhoto())
+                .load(personRatingDTO.getPersonDTO().getPhoto())
                 .circleCrop()
                 .into(holder.ava);
 
@@ -51,12 +52,12 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         return data.size();
     }
 
-    public void setItems(List<PersonDTO> newData){
+    public void setItems(List<PersonRatingDTO> newData){
         data.addAll(newData);
         notifyDataSetChanged();
     }
 
-    public void addItem(PersonDTO p){
+    public void addItem(PersonRatingDTO p){
         data.add(p);
         notifyDataSetChanged();
     }
