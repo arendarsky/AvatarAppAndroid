@@ -3,6 +3,7 @@ package com.avatar.ava.domain;
 import android.net.Uri;
 
 import com.avatar.ava.domain.entities.PersonDTO;
+import com.avatar.ava.domain.entities.PersonRatingDTO;
 import com.avatar.ava.domain.repository.IAuthRepository;
 import com.avatar.ava.domain.repository.ISharedPreferemcesRepository;
 import com.avatar.ava.domain.repository.IVideoRepository;
@@ -31,7 +32,7 @@ public class Interactor {
 
     }
 
-    public Single<ArrayList<String>> getRating(int number){
+    public Single<ArrayList<PersonRatingDTO>> getRating(int number){
         return this.ratingRepository.getRating(number);
     }
 

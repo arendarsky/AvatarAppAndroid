@@ -6,14 +6,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -21,8 +18,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
 import com.avatar.ava.domain.entities.PersonDTO;
-import com.avatar.ava.presentation.main.fragments.casting.CastingPresenter;
-import com.avatar.ava.presentation.main.fragments.rating.producers.StarRatingProducersFragment;
+import com.avatar.ava.domain.entities.PersonRatingDTO;
 
 import java.util.ArrayList;
 
@@ -30,7 +26,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import toothpick.Toothpick;
 
 public class RatingFragment extends MvpAppCompatFragment implements RatingView {
@@ -51,7 +46,7 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
     RecyclerView recycler;
 
 
-    private ArrayList<String> data;
+    private ArrayList<PersonRatingDTO> data;
 
     private RatingAdapter adapter;
 
@@ -85,12 +80,12 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
         adapter.addItem(person);
         makeResponse();
         if(data != null)
-        for(String el : data){
-            Log.d("RatingFragmentLog", el);
+        for(PersonRatingDTO el : data){
+            Log.d("RatingFragmentLog", el.getLikesNumber() + "");
         }
     }
 
-    public void setData(ArrayList<String> data){
+    public void setData(ArrayList<PersonRatingDTO> data){
         this.data = data;
     }
 

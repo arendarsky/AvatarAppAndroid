@@ -3,6 +3,7 @@ package com.avatar.ava.data;
 import android.content.Context;
 
 import com.avatar.ava.data.api.RatingAPI;
+import com.avatar.ava.domain.entities.PersonRatingDTO;
 import com.avatar.ava.domain.repository.IRatingRepository;
 
 
@@ -31,11 +32,11 @@ public class RatingRepository implements IRatingRepository {
     }
 
     @Override
-    public Single<ArrayList<String>> getRating(int number) {
+    public Single<ArrayList<PersonRatingDTO>> getRating(int number) {
         Disposable disposable = ratingAPI.getRating(preferencesRepository.getToken(), number)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(arrayList -> this.videoNames.addAll(arrayList),
+                .subscribe(arrayList -> {},
                         error -> {});
 
 
