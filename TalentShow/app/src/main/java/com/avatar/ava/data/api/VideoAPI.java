@@ -1,8 +1,11 @@
 package com.avatar.ava.data.api;
 
 
+import com.avatar.ava.domain.entities.PersonDTO;
+
 import java.util.ArrayList;
 import io.reactivex.Completable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import okhttp3.MultipartBody;
 import retrofit2.http.GET;
@@ -24,7 +27,7 @@ public interface VideoAPI {
 //    Single<ArrayList<String>> getUnwatched(@Header("Authorization") String token, @Query("number") int number);
 
     @GET("api/video/get_unwatched")
-    Single<ArrayList<String>> getUnwatched(@Header("Authorization") String token, @Query("number") int number);
+    Single<ArrayList<PersonDTO>> getUnwatched(@Header("Authorization") String token, @Query("number") int number);
 
     @GET("api/video/set_like")
     Completable setLiked(@Header("Authorization") String token, @Query("name") String name, @Query("isLike") boolean liked);

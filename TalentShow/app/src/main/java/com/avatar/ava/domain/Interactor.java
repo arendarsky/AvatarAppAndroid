@@ -2,6 +2,7 @@ package com.avatar.ava.domain;
 
 import android.net.Uri;
 
+import com.avatar.ava.domain.entities.PersonDTO;
 import com.avatar.ava.domain.repository.IAuthRepository;
 import com.avatar.ava.domain.repository.ISharedPreferemcesRepository;
 import com.avatar.ava.domain.repository.IVideoRepository;
@@ -17,13 +18,13 @@ public class Interactor {
 
     private IAuthRepository authRepository;
     private IVideoRepository videoRepository;
-    private ISharedPreferemcesRepository preferemcesRepository;
+    private ISharedPreferemcesRepository preferencesRepository;
 
     @Inject
-    public Interactor(IAuthRepository authRepository, IVideoRepository videoRepository, ISharedPreferemcesRepository preferemcesRepository){
+    public Interactor(IAuthRepository authRepository, IVideoRepository videoRepository, ISharedPreferemcesRepository preferencesRepository){
         this.authRepository = authRepository;
         this.videoRepository = videoRepository;
-        this.preferemcesRepository = preferemcesRepository;
+        this.preferencesRepository = preferencesRepository;
     }
 
 
@@ -44,22 +45,22 @@ public class Interactor {
     }
 
     public boolean checkAuth(){
-        return this.preferemcesRepository.checkAuth();
+        return this.preferencesRepository.checkAuth();
     }
 
     public void saveRole(String role){
-        this.preferemcesRepository.saveRole(role);
+        this.preferencesRepository.saveRole(role);
     }
 
     public String getRole(){
-        return this.preferemcesRepository.getRole();
+        return this.preferencesRepository.getRole();
     }
 
     public void saveName(String name){
-        this.preferemcesRepository.saveName(name);
+        this.preferencesRepository.saveName(name);
     }
 
-    public Single<ArrayList<String>> getUnwatchedVideos(int number){
+    public Single<ArrayList<PersonDTO>> getUnwatchedVideos(int number){
         return this.videoRepository.getUnwatchedVideos(number);
     }
 
@@ -71,7 +72,7 @@ public class Interactor {
         return this.authRepository.registerUser(name, mail, password);
     }
 
-    public String getNewVideoLink(){
+    public PersonDTO getNewVideoLink(){
         return this.videoRepository.getNewVideoLink();
     }
 
@@ -79,7 +80,7 @@ public class Interactor {
         return this.videoRepository.setLiked(like);
     }
 
-    public Single<ArrayList<String>> getVideoLinkOnCreate(){
+    public Single<PersonDTO> getVideoLinkOnCreate(){
         return this.videoRepository.getVideoLinkOnCreate();
     }
 }

@@ -22,15 +22,18 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
         this.interactor = interactor;
     }
 
-    String getNewVideoLink(){
-        return interactor.getNewVideoLink();
-    }
+//    String getNewVideoLink(){
+//        return interactor.getNewVideoLink();
+//    }
 
     void getFirstVideo(){
         Disposable disposable = interactor.getVideoLinkOnCreate()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(arrayList -> getViewState().loadNewVideo("https://avatarapp.yambr.ru/api/video/" + arrayList.get(0)),
+                .subscribe(arrayList -> getViewState().loadNewVideo(
+                        "https://avatarapp.yambr.ru/api/video/"
+                                + arrayList.getUsedVideo().getName()
+                        ),
                         error -> {});
     }
 
@@ -42,7 +45,10 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
 
                 .subscribe(
                         () ->
-                                getViewState().loadNewVideo(interactor.getNewVideoLink()),
+                                getViewState().loadNewVideo(
+                                        "https://avatarapp.yambr.ru/api/video/" +
+                                                interactor.getNewVideoLink().getUsedVideo().getName()
+                                ),
                 throwable ->{
                     Log.d("Casting presenter", throwable.getMessage());
 //                    if (throwable.getMessage()) getViewState().showError(
@@ -60,7 +66,10 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
         Disposable disposable = interactor.setLiked(false)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> getViewState().loadNewVideo(interactor.getNewVideoLink()),
+                .subscribe(() -> getViewState().loadNewVideo(
+                        "https://avatarapp.yambr.ru/api/video/" +
+                                interactor.getNewVideoLink().getUsedVideo().getName()
+                        ),
                         throwable ->{
 //                            if (throwable.getMessage().contains("500")) getViewState().showError(
 //                                    "Ошибка на сервере. Повторите попытку позднее"
