@@ -1,13 +1,10 @@
 package com.avatar.ava.domain.entities;
 
-import com.google.gson.annotations.SerializedName;
-
 import org.parceler.ParcelConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class PersonDTO {
+
+    private int pos = 0;
 
     @SerializedName("name")
     private String name = "";
@@ -37,8 +34,22 @@ public class PersonDTO {
         this.photo = photo;
     }
 
+    public PersonDTO(int pos, String video, String name, String description, String ava) {
+        this.pos = pos;
+        this.name = name;
+        this.description = description;
+    }
+
 
     public PersonDTO(){}
+
+    public int getPos() {
+        return pos;
+    }
+
+    public void setPos(int pos) {
+        this.pos = pos;
+    }
 
     public String getName() {
         return name;
@@ -48,12 +59,12 @@ public class PersonDTO {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getPhoto() {

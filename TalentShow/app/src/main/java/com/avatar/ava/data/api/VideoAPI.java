@@ -34,4 +34,6 @@ public interface VideoAPI {
 
     @GET("/api/video/set_interval")
     Completable setInterval(@Header("Authorization") String token, @Query("fileName") String fileName, @Query("startTime") int startTime, @Query("endTime") int endTime);
+
+
 }

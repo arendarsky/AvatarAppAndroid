@@ -2,7 +2,8 @@ package com.avatar.ava.presentation.main.fragments.rating;
 
 import com.arellomobile.mvp.MvpView;
 
+import java.util.ArrayList;
+
 public interface RatingView extends MvpView {
-    void starButtonClicked();
-    void producerButtonClicked();
+    void setData(ArrayList<String> data);
 }

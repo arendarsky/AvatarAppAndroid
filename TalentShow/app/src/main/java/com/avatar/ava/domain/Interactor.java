@@ -6,6 +6,7 @@ import com.avatar.ava.domain.entities.PersonDTO;
 import com.avatar.ava.domain.repository.IAuthRepository;
 import com.avatar.ava.domain.repository.ISharedPreferemcesRepository;
 import com.avatar.ava.domain.repository.IVideoRepository;
+import com.avatar.ava.domain.repository.IRatingRepository;
 
 import java.util.ArrayList;
 
@@ -18,15 +19,21 @@ public class Interactor {
 
     private IAuthRepository authRepository;
     private IVideoRepository videoRepository;
+    private IRatingRepository ratingRepository;
     private ISharedPreferemcesRepository preferencesRepository;
 
     @Inject
-    public Interactor(IAuthRepository authRepository, IVideoRepository videoRepository, ISharedPreferemcesRepository preferencesRepository){
+    public Interactor(IAuthRepository authRepository, IVideoRepository videoRepository, ISharedPreferemcesRepository preferencesRepository, IRatingRepository ratingRepository){
         this.authRepository = authRepository;
         this.videoRepository = videoRepository;
         this.preferencesRepository = preferencesRepository;
+        this.ratingRepository = ratingRepository;
+
     }
 
+    public Single<ArrayList<String>> getRating(int number){
+        return this.ratingRepository.getRating(number);
+    }
 
     public Completable sendCodeToMail(String mail){
         return this.authRepository.sendCodeToMail(mail);

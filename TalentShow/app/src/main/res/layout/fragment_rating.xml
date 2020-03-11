@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/darkBackground">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Топ-20"
+        android:textSize="20sp"
+        android:textColor="@color/whiteText"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="105dp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rating_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="13dp"/>
+
+
+</LinearLayout>

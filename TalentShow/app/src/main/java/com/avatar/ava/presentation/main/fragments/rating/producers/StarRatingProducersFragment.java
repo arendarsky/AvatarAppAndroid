@@ -49,7 +49,7 @@ public class StarRatingProducersFragment extends MvpAppCompatFragment
         adapter = new RatingAdapter();
         recycler.setAdapter(adapter);
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        PersonDTO person = new PersonDTO("Ivan", "Ivanov",
+        PersonDTO person = new PersonDTO(0 , "Ivan", "Ivanov", "",
                 "https://i.pinimg.com/originals/c6/e4/ff/c6e4ff2696c7e51ae4e2ffddceb80fef.jpg");
         adapter.addItem(person);
         adapter.addItem(person);
