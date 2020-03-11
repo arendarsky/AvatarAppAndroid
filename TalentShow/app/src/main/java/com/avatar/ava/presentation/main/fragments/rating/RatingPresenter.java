@@ -27,12 +27,12 @@ public class RatingPresenter extends MvpPresenter<RatingView> {
     public void getRating(){
 
 
-        Disposable disposable = interactor.getVideoLinkOnCreate()
+        Disposable disposable = interactor.getRating(10)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(arrayList -> {
-                            Log.d("RatingFragmentLog", arrayList.size() + "");
-                    getViewState().setData(arrayList);
+                            Log.d("RatingFragmentLog", arrayList + "");
+//                    getViewState().setData(arrayList);
                     },
                         error -> {
                             Log.d("RatingFragmentLog", "error");});

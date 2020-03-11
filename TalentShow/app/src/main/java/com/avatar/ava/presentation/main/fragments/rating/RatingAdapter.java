@@ -40,7 +40,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         holder.name.setText(name);
         holder.pos.setText(String.valueOf(position + 1) + " место");
         Glide.with(holder.itemView.getContext())
-                .load(personDTO.getAva())
+                .load(personDTO.getPhoto())
                 .circleCrop()
                 .into(holder.ava);
 
