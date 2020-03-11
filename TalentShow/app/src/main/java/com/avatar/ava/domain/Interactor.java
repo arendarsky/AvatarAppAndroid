@@ -3,6 +3,7 @@ package com.avatar.ava.domain;
 import android.net.Uri;
 
 import com.avatar.ava.domain.repository.IAuthRepository;
+import com.avatar.ava.domain.repository.IRatingRepository;
 import com.avatar.ava.domain.repository.ISharedPreferemcesRepository;
 import com.avatar.ava.domain.repository.IVideoRepository;
 
@@ -17,13 +18,19 @@ public class Interactor {
 
     private IAuthRepository authRepository;
     private IVideoRepository videoRepository;
+    private IRatingRepository ratingRepository;
     private ISharedPreferemcesRepository preferemcesRepository;
 
     @Inject
-    public Interactor(IAuthRepository authRepository, IVideoRepository videoRepository, ISharedPreferemcesRepository preferemcesRepository){
+    public Interactor(IAuthRepository authRepository, IVideoRepository videoRepository, IRatingRepository ratingRepository, ISharedPreferemcesRepository preferemcesRepository){
         this.authRepository = authRepository;
         this.videoRepository = videoRepository;
+        this.ratingRepository = ratingRepository;
         this.preferemcesRepository = preferemcesRepository;
+    }
+
+    public Single<ArrayList<String>> getRating(int number){
+        return this.ratingRepository.getRating(number);
     }
 
 

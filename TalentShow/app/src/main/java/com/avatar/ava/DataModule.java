@@ -4,9 +4,11 @@ import android.text.TextUtils;
 
 
 import com.avatar.ava.data.AuthRepository;
+import com.avatar.ava.data.RatingRepository;
 import com.avatar.ava.data.SharedPreferencesRepository;
 import com.avatar.ava.data.VideoRepository;
 import com.avatar.ava.domain.repository.IAuthRepository;
+import com.avatar.ava.domain.repository.IRatingRepository;
 import com.avatar.ava.domain.repository.ISharedPreferemcesRepository;
 import com.avatar.ava.domain.repository.IVideoRepository;
 
@@ -78,6 +80,7 @@ public class DataModule extends Module{
 
         bind(IAuthRepository.class).to(AuthRepository.class);
         bind(IVideoRepository.class).to(VideoRepository.class).singletonInScope();
+        bind(IRatingRepository.class).to(RatingRepository.class).singletonInScope();
         bind(ISharedPreferemcesRepository.class).to(SharedPreferencesRepository.class);
 
     }

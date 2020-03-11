@@ -28,13 +28,14 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="400dp"
+            android:layout_marginTop="405dp"
             android:layout_marginEnd="293dp"
 
             android:src="@drawable/casting_activity_ava"
 
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
+
 
         <TextView
             android:id="@+id/rating_item_pos"
@@ -43,21 +44,20 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="57dp"
-            android:gravity="center_vertical"
+            android:background="@drawable/rating_item_pos_bg"
+            android:gravity="center"
             android:lineSpacingExtra="1sp"
             android:text="1 место"
             android:textColor="@color/whiteText"
-
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
-
 
         <TextView
             android:id="@+id/rating_item_name"
             android:layout_width="wrap_content"
             android:layout_height="28dp"
             android:layout_marginStart="66dp"
-            android:layout_marginTop="400dp"
+            android:layout_marginTop="405dp"
             android:layout_marginEnd="57dp"
             android:gravity="center_vertical"
             android:lineSpacingExtra="1sp"
@@ -71,7 +71,7 @@
             android:layout_width="291dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="430dp"
+            android:layout_marginTop="440dp"
             android:layout_marginEnd="20dp"
 
             android:gravity="top"

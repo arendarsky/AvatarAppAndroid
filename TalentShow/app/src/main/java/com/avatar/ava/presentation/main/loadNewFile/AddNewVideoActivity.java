@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import com.avatar.ava.App;
 import com.avatar.ava.R;
-import com.avatar.ava.presentation.signing.fragments.FragmentFileLoad;
+import com.avatar.ava.presentation.signing.fragments.FragmentFileLoadJust;
 
 import javax.inject.Inject;
 
