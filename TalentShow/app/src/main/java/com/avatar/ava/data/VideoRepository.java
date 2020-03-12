@@ -17,6 +17,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
 import javax.inject.Inject;
 
@@ -24,6 +25,7 @@ import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.exceptions.Exceptions;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -67,11 +69,25 @@ public class VideoRepository implements IVideoRepository {
             Disposable disposable = videoAPI.getUnwatched(preferencesRepository.getToken(), 20)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(arrayList -> this.castingPersons.addAll(arrayList),
+                    .subscribe(list -> {
+                                ArrayList<PersonDTO> persons = new ArrayList<>();
+                                for (PersonDTO person:
+                                        list) {
+                                    person.prepareInfo();
+                                    persons.add(person);
+                                }
+                                this.castingPersons = persons;
+
+                            },
                             error -> {});
         }
-
-        return Single.just(this.castingPersons.remove(0));
+        return  Single.fromCallable(() -> {
+            if (castingPersons.isEmpty()) throw new Exception("Empty list");
+            else return castingPersons.remove(0);
+        });
+//        if (castingPersons.isEmpty())
+//            throw new IllegalStateException("Empty list");
+//        return Single.just(this.castingPersons.remove(0));
     }
 
 
@@ -101,8 +117,7 @@ public class VideoRepository implements IVideoRepository {
 
     @Override
     public Completable setLiked(boolean liked) {
-        return videoAPI.setLiked(preferencesRepository.getToken(), currentPerson.getUsedVideo().getName(), liked)
-                ;
+        return videoAPI.setLiked(preferencesRepository.getToken(), currentPerson.getUsedVideo().getName(), liked);
     }
 
     @Override
@@ -121,6 +136,7 @@ public class VideoRepository implements IVideoRepository {
 //                );
         return videoAPI.getUnwatched(preferencesRepository.getToken(), 10)
                 .flatMap(list -> {
+                    if (list.size() == 0) throw new IllegalStateException("Empty list");
                     ArrayList<PersonDTO> persons = new ArrayList<>();
                     for (PersonDTO person:
                          list) {

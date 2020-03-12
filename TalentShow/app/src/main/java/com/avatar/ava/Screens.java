@@ -43,7 +43,7 @@ public class Screens {
         }
     }
 
-    public static final class StarRatingScreen extends SupportAppScreen {
+    public static final class RatingScreen extends SupportAppScreen {
 
         @Override
         public Fragment getFragment() {

@@ -27,6 +27,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="0dp"
             android:layout_marginEnd="0dp"
+            android:background="@drawable/casting_video_background"
             android:clickable="false"/>
 
         <ImageView
@@ -37,42 +38,59 @@
             android:layout_marginTop="19dp"
             android:layout_marginEnd="293dp"
             android:src="@drawable/casting_activity_ava"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/activity_casting_name"
-            android:layout_width="wrap_content"
-            android:layout_height="28dp"
-            android:layout_marginStart="66dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="19dp"
-            android:layout_marginEnd="57dp"
+            android:layout_marginEnd="20dp"
             android:gravity="center_vertical"
             android:lineSpacingExtra="1sp"
             android:text="@string/activity_casting_name"
-            android:textAppearance="@style/activity_casting_name"
-            app:layout_constraintLeft_toLeftOf="parent"
+            android:textSize="20sp"
+            android:textColor="@color/whiteText"
+            app:layout_constraintStart_toEndOf="@id/casting_activity_avatar"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/activity_casting_description"
-            android:layout_width="303dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="45dp"
+            android:fontFamily="@font/roboto"
             android:gravity="start"
             android:lineSpacingExtra="2sp"
             android:text="Это описание к видео, которое написал автор, чтобы было понятно, что он хочет сказать своим творчеством. Наверное, тут очень ограничен обхем текста."
-            android:textAppearance="@style/activity_casting_video_description"
+            android:textColor="@color/whiteText"
+            android:textSize="13sp"
             android:translationY="-1.05sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <TextView
+        android:id="@+id/casting_no_more_videos"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:textColor="@color/whiteText"
+        android:textSize="18sp"
+        android:text="@string/no_more_videos"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <View
         android:id="@+id/activity_casting_btn_x"
@@ -88,6 +106,7 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <View
+        android:id="@+id/casting_view_x"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:background="@drawable/white_cross_x"
@@ -110,6 +129,7 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <View
+        android:id="@+id/casting_view_heart"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:elevation="10dp"

@@ -12,7 +12,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import ru.terrakok.cicerone.Router;
-import ru.terrakok.cicerone.Screen;
 
 @InjectViewState
 public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
@@ -23,6 +22,8 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
 
     private final String new_video = "Новое видео";
     private final String casting = "Кастинг";
+    private final String rating = "Рейтинг";
+
     private final int SAVE_BUTTON = 0;
     private final int ADD_BUTTON = 1;
     private final int MENU_POINTS = 2;
@@ -43,7 +44,8 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                 router.newRootScreen(new Screens.CastingScreen());
                 return true;
             case R.id.nav_rating:
-                router.newRootScreen(new Screens.StarRatingScreen());
+                getViewState().changeTitle(rating);
+                router.newRootScreen(new Screens.RatingScreen());
                 return true;
             case R.id.nav_notify:
             case R.id.nav_contacts:

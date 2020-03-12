@@ -22,7 +22,7 @@ import io.reactivex.schedulers.Schedulers;
 public class RatingPresenter extends MvpPresenter<RatingView> {
 
     private Interactor interactor;
-    private ArrayList<PersonRatingDTO> data = new ArrayList<PersonRatingDTO>();
+    private ArrayList<PersonDTO> data = new ArrayList<PersonDTO>();
 
     @Inject
     RatingPresenter(Interactor interactor) {
@@ -30,14 +30,12 @@ public class RatingPresenter extends MvpPresenter<RatingView> {
     }
 
     public void getRating(){
-
-
         Disposable disposable = interactor.getRating(10)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(arrayList -> {
                             Log.d("RatingFragmentLog", arrayList.size() + " arrayList");
-                            getViewState().setData(arrayList);
+//                            getViewState().setData(arrayList);
                             //data.addAll(arrayList);
                             //Log.d("RatingFragmentLog", data.size() + " data");
 
@@ -48,8 +46,9 @@ public class RatingPresenter extends MvpPresenter<RatingView> {
 
     }
 
-    public ArrayList<PersonRatingDTO> getData(){
-        Log.d("RatingFragmentLog", data.size() + " presenter");
-        return this.data;
-    }
+//    public ArrayList<PersonRatingDTO> getData(){
+//        Log.d("RatingFragmentLog", data.size() + " presenter");
+//        return this.data;
+//    }
+
 }

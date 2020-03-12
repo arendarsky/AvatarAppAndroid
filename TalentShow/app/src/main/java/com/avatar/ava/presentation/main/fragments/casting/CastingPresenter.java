@@ -7,6 +7,8 @@ import com.arellomobile.mvp.MvpPresenter;
 import com.avatar.ava.domain.Interactor;
 import com.avatar.ava.domain.entities.PersonDTO;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -38,6 +40,9 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
                                 + person.getUsedVideo().getName());
                 },
                         error -> {
+                    if (Objects.equals(error.getMessage(), "Empty list")){
+                        getViewState().showNoMoreVideos();
+                    }
                     Log.d("Casting presenter", error.getMessage());
                         });
     }
@@ -54,8 +59,12 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
                                             personDTO.getUsedVideo().getName()
                             );
                         },
-                        throwable -> Log.d("Casting presenter", throwable.toString())
-                );
+                        error -> {
+                            if (Objects.equals(error.getMessage(), "Empty list")){
+                                getViewState().showNoMoreVideos();
+                            }
+                            Log.d("Casting presenter", error.getMessage());
+                        });
 //                .subscribe(
 //                .subscribe(
 //                        () ->
@@ -84,8 +93,12 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
                                             personDTO.getUsedVideo().getName()
                             );
                         },
-                        throwable -> Log.d("Casting presenter", throwable.toString())
-                );
+                        error -> {
+                            if (Objects.equals(error.getMessage(), "Empty list")){
+                                getViewState().showNoMoreVideos();
+                            }
+                            Log.d("Casting presenter", error.getMessage());
+                        });
 //        Disposable disposable = interactor.setLiked(false)
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())

@@ -11,4 +11,5 @@ public interface CastingView extends MvpView {
     void setAvatar(String avatarLink);
     void setDescription(String description);
     void setName(String name);
+    void showNoMoreVideos();
 }

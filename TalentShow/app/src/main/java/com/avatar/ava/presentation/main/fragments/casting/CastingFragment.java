@@ -62,6 +62,24 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     @BindView(R.id.activity_casting_layout)
     ConstraintLayout layout;
 
+    @BindView(R.id.activity_casting_card)
+    ConstraintLayout castingCard;
+
+    @BindView(R.id.casting_no_more_videos)
+    TextView noMoreVideos;
+
+    @BindView(R.id.activity_casting_btn_like)
+    View likeButton;
+
+    @BindView(R.id.activity_casting_btn_x)
+    View dislikeButton;
+
+    @BindView(R.id.casting_view_x)
+    View crossView;
+
+    @BindView(R.id.casting_view_heart)
+    View heartView;
+
     VideoView video_fullscreen;
 
     ImageButton btn_fullscreen;
@@ -92,7 +110,13 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         video.seekTo(startVideo);
         video.start();
 
-
+        castingCard.setVisibility(View.INVISIBLE);
+        noMoreVideos.setVisibility(View.INVISIBLE);
+        likeButton.setVisibility(View.INVISIBLE);
+        dislikeButton.setVisibility(View.INVISIBLE);
+        heartView.setVisibility(View.INVISIBLE);
+        crossView.setVisibility(View.INVISIBLE);
+        
 //        video.setOnPreparedListener(mp -> mp.setOnVideoSizeChangedListener(
 //                (mp12, width, height) -> {
 //                    /*
@@ -224,6 +248,12 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
     @Override
     public void loadNewVideo(String videoLink){
+        castingCard.setVisibility(View.VISIBLE);
+        noMoreVideos.setVisibility(View.INVISIBLE);
+        likeButton.setVisibility(View.VISIBLE);
+        dislikeButton.setVisibility(View.VISIBLE);
+        heartView.setVisibility(View.VISIBLE);
+        crossView.setVisibility(View.VISIBLE);
         Log.d("Casting link", videoLink);
         video.setVideoURI(Uri.parse(videoLink));
     }
@@ -245,4 +275,16 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     public void setName(String name) {
         this.name.setText(name);
     }
+
+    @Override
+    public void showNoMoreVideos() {
+        castingCard.setVisibility(View.INVISIBLE);
+        noMoreVideos.setVisibility(View.VISIBLE);
+        likeButton.setVisibility(View.INVISIBLE);
+        dislikeButton.setVisibility(View.INVISIBLE);
+        crossView.setVisibility(View.INVISIBLE);
+        heartView.setVisibility(View.INVISIBLE);
+    }
+
+
 }
