@@ -1,5 +1,6 @@
 package com.avatar.ava.presentation.main.fragments.rating;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +17,13 @@ import com.bumptech.glide.Glide;
 import com.avatar.ava.R;
 
 
-
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder> {
 
-    private List<PersonRatingDTO> data = new ArrayList<>();
+    private List<PersonDTO> data = new ArrayList<>();
 
     @NonNull
     @Override
@@ -36,12 +37,14 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        PersonRatingDTO personRatingDTO = data.get(position);
-        String name = personRatingDTO.getPersonDTO().getName();
+        PersonDTO personRatingDTO = data.get(position);
+        holder.video.setVideoURI(Uri.parse("https://avatarapp.yambr.ru/api/video/" + personRatingDTO.getVideoForCasting().getName()));
+        holder.description.setText(personRatingDTO.getDescription());
+        String name = personRatingDTO.getName();
         holder.name.setText(name);
         holder.pos.setText(String.valueOf(position + 1) + " место");
         Glide.with(holder.itemView.getContext())
-                .load(personRatingDTO.getPersonDTO().getPhoto())
+                .load(personRatingDTO.getPhoto())
                 .circleCrop()
                 .into(holder.ava);
 
@@ -52,12 +55,12 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         return data.size();
     }
 
-    public void setItems(List<PersonRatingDTO> newData){
+    public void setItems(List<PersonDTO> newData){
         data.addAll(newData);
         notifyDataSetChanged();
     }
 
-    public void addItem(PersonRatingDTO p){
+    public void addItem(PersonDTO p){
         data.add(p);
         notifyDataSetChanged();
     }
