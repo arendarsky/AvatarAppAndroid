@@ -8,5 +8,5 @@ import java.util.ArrayList;
 import io.reactivex.Single;
 
 public interface IRatingRepository {
-    Single<ArrayList<PersonDTO>> getRating(int number);
+    Single<ArrayList<PersonRatingDTO>> getRating(int number);
 }

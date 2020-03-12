@@ -7,5 +7,5 @@ import com.avatar.ava.domain.entities.PersonRatingDTO;
 import java.util.ArrayList;
 
 public interface RatingView extends MvpView {
-    public void setData(ArrayList<PersonDTO> data);
+    public void setData(ArrayList<PersonRatingDTO> data);
 }

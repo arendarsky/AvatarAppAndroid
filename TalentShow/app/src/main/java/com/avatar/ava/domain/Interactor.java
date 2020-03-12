@@ -32,7 +32,7 @@ public class Interactor {
 
     }
 
-    public Single<ArrayList<PersonDTO>> getRating(int number){
+    public Single<ArrayList<PersonRatingDTO>> getRating(int number){
         return this.ratingRepository.getRating(number);
     }
 

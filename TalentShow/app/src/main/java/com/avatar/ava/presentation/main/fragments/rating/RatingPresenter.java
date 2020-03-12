@@ -22,7 +22,7 @@ import io.reactivex.schedulers.Schedulers;
 public class RatingPresenter extends MvpPresenter<RatingView> {
 
     private Interactor interactor;
-    private ArrayList<PersonDTO> data = new ArrayList<PersonDTO>();
+    private ArrayList<PersonRatingDTO> data = new ArrayList<PersonRatingDTO>();
 
     @Inject
     RatingPresenter(Interactor interactor) {
@@ -48,7 +48,7 @@ public class RatingPresenter extends MvpPresenter<RatingView> {
 
     }
 
-    public ArrayList<PersonDTO> getData(){
+    public ArrayList<PersonRatingDTO> getData(){
         Log.d("RatingFragmentLog", data.size() + " presenter");
         return this.data;
     }

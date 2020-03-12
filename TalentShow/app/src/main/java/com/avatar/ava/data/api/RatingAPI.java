@@ -12,6 +12,6 @@ import retrofit2.http.Query;
 
 public interface RatingAPI {
 
-    @GET("api/video/get_unwatched")
-    Single<ArrayList<PersonDTO>> getRating(@Header("Authorization") String token, @Query("number") int number);
+    @GET("/api/rating/get")
+    Single<ArrayList<PersonRatingDTO>> getRating(@Header("Authorization") String token, @Query("number") int number);
 }

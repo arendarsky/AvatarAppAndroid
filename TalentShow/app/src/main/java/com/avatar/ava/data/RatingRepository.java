@@ -33,7 +33,7 @@ public class RatingRepository implements IRatingRepository {
     }
 
     @Override
-    public Single<ArrayList<PersonDTO>> getRating(int number) {
+    public Single<ArrayList<PersonRatingDTO>> getRating(int number) {
         Disposable disposable = ratingAPI.getRating(preferencesRepository.getToken(), number)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -46,7 +46,7 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
     RecyclerView recycler;
 
 
-    private ArrayList<PersonDTO> data = new ArrayList<PersonDTO>();
+    private ArrayList<PersonRatingDTO> data = new ArrayList<PersonRatingDTO>();
 
     private RatingAdapter adapter;
 
@@ -81,15 +81,15 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
 
         makeResponse();
         if(data != null)
-        for(PersonDTO el : data){
-            Log.d("RatingFragmentLog", el.getName() + "");
+        for(PersonRatingDTO el : data){
+            Log.d("RatingFragmentLog", el.getPersonDTO().getName() + "");
         }
     }
 
-    public void setData(ArrayList<PersonDTO> data){
+    public void setData(ArrayList<PersonRatingDTO> data){
         this.data = data;
         Log.d("RatingFragmentLog", this.data.size() + "  " + data.size());
-        Log.d("RatingFragmentLog", data.get(0).getName() + " ");
+        Log.d("RatingFragmentLog", data.get(0).getPersonDTO().getName() + " ");
         adapter.setItems(data);
     }
 
