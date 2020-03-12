@@ -82,14 +82,14 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
         makeResponse();
         if(data != null)
         for(PersonRatingDTO el : data){
-            Log.d("RatingFragmentLog", el.getLikesNumber() + "");
+            Log.d("RatingFragmentLog", el.getPersonDTO().getName() + "");
         }
     }
 
     public void setData(ArrayList<PersonRatingDTO> data){
         this.data = data;
         Log.d("RatingFragmentLog", this.data.size() + "  " + data.size());
-        Log.d("RatingFragmentLog", data.get(0).getLikesNumber() + " " + data.get(0).getPersonDTO().getName());
+        Log.d("RatingFragmentLog", data.get(0).getPersonDTO().getName() + " ");
         adapter.setItems(data);
     }
 

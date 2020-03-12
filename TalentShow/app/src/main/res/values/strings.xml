@@ -65,4 +65,7 @@
     <string name="want_load_video"><b>Хочешь загрузить видео?</b></string>
     <string name="add_video">Добавить видео</string>
     <string name="no_more_videos">Непросмотернные видео кончились, повторите попытку позднее</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import com.avatar.ava.presentation.main.MainScreenActivity;
 import com.avatar.ava.presentation.main.fragments.FragmentFileLoadMain;
 import com.avatar.ava.presentation.main.fragments.casting.CastingFragment;
+import com.avatar.ava.presentation.main.fragments.profile.ProfileFragment;
 import com.avatar.ava.presentation.signing.fragments.FragmentFileLoadJust;
 import com.avatar.ava.presentation.signing.fragments.authorisation.AuthorisationFragment;
 import com.avatar.ava.presentation.signing.fragments.registration.FragmentRegistration;
@@ -140,6 +141,17 @@ public class Screens {
         public Fragment getFragment() {
             Bundle bundle = new Bundle();
             FragmentFileLoadJust fragment = new FragmentFileLoadJust();
+            fragment.setArguments(bundle);
+            return fragment;
+        }
+    }
+
+    public static final class ProfileScreen extends SupportAppScreen{
+
+        @Override
+        public Fragment getFragment() {
+            Bundle bundle = new Bundle();
+            ProfileFragment fragment = new ProfileFragment();
             fragment.setArguments(bundle);
             return fragment;
         }

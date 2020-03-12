@@ -1,6 +1,5 @@
 package com.avatar.ava.data.api;
 
-import com.avatar.ava.domain.entities.PersonDTO;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
 
 import java.util.ArrayList;
@@ -10,8 +9,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Query;
 
-public interface RatingAPI {
+public interface ProfileAPI {
 
-    @GET("/api/rating/get")
-    Single<ArrayList<PersonRatingDTO>> getRating(@Header("Authorization") String token, @Query("number") int number);
+    @GET("/api/profile/get")
+    Single<PersonRatingDTO> getProfile(@Header("Authorization") String token);
 }
