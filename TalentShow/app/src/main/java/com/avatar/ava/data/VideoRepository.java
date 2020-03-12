@@ -101,8 +101,7 @@ public class VideoRepository implements IVideoRepository {
 
     @Override
     public Completable setLiked(boolean liked) {
-        return videoAPI.setLiked(preferencesRepository.getToken(), currentPerson.getUsedVideo().getName(), liked)
-                ;
+        return videoAPI.setLiked(preferencesRepository.getToken(), currentPerson.getUsedVideo().getName(), liked);
     }
 
     @Override
