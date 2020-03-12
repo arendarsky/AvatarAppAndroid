@@ -45,10 +45,12 @@ public class ProfilePresenter extends MvpPresenter<ProfileView> {
 
 
     void uploadPhoto(Uri uri){
-        Disposable disposable = interactor.uploadVideo(uri)
+        Disposable disposable = interactor.uploadPhoto(uri)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> {Log.d("ProfileFragmentLog", "successPhotoUpload");},
+                .subscribe(() -> {
+                    getProfile();
+                    Log.d("ProfileFragmentLog", "successPhotoUpload");},
                         e -> Log.d("ProfileFragmentLog", "errorPhotoUpload" + e.getMessage()));
     }
 }

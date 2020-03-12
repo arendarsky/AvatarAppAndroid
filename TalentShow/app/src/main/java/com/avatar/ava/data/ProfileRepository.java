@@ -75,14 +75,23 @@ public class ProfileRepository implements IProfileRepository {
         File file = new File(getFilePathFromUri(appContext, photoUri));
 
         String extension = appContext.getContentResolver().getType(photoUri);
-        Log.d("Extension", file.getPath());
+        Log.d("Extension", file.getPath() + " | " + photoUri.toString() + " | " + photoUri.getPath());
+
+        //RequestBody mFile = RequestBody.create(MediaType.parse("image/*"), file);
+        //MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), mFile);
+
+
         RequestBody requestFile =
                 RequestBody.create(file, MediaType.parse("multipart/form-data"));
-
+        Log.d("Extension", file.getName() + "  " + requestFile.toString());
         MultipartBody.Part body =
                 MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+        Log.d("Extension", file.getName() + "  " + body.toString());
         return profileAPI.uploadPhoto(preferencesRepository.getToken(), body)
-                .doOnSuccess(name -> this.img = name)
+                .doOnSuccess(name -> {
+                    this.img = name;
+                    Log.d("Extension", img);
+                    })
                 .ignoreElement();
 
     }

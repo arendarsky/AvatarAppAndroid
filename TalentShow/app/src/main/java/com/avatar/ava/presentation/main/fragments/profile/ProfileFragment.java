@@ -120,6 +120,11 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         videos.addAll(person.getPersonDTO().getVideos());
     }
 
+    @Override
+    public void updatePhoto() {
+
+    }
+
 
     @OnClick(R.id.fragment_profile_btn)
     void setPhoto(){
