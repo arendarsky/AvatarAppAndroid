@@ -5,6 +5,7 @@ import android.net.Uri;
 import com.avatar.ava.domain.entities.PersonDTO;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
 import com.avatar.ava.domain.repository.IAuthRepository;
+import com.avatar.ava.domain.repository.IProfileRepository;
 import com.avatar.ava.domain.repository.ISharedPreferemcesRepository;
 import com.avatar.ava.domain.repository.IVideoRepository;
 import com.avatar.ava.domain.repository.IRatingRepository;
@@ -21,15 +22,21 @@ public class Interactor {
     private IAuthRepository authRepository;
     private IVideoRepository videoRepository;
     private IRatingRepository ratingRepository;
+    private IProfileRepository profileRepository;
     private ISharedPreferemcesRepository preferencesRepository;
 
     @Inject
-    public Interactor(IAuthRepository authRepository, IVideoRepository videoRepository, ISharedPreferemcesRepository preferencesRepository, IRatingRepository ratingRepository){
+    public Interactor(IAuthRepository authRepository, IVideoRepository videoRepository, ISharedPreferemcesRepository preferencesRepository,
+                      IRatingRepository ratingRepository, IProfileRepository profileRepository){
         this.authRepository = authRepository;
         this.videoRepository = videoRepository;
         this.preferencesRepository = preferencesRepository;
         this.ratingRepository = ratingRepository;
+        this.profileRepository = profileRepository;
+    }
 
+    public Single<PersonRatingDTO> getProfile(){
+        return this.profileRepository.getProfile();
     }
 
     public Single<ArrayList<PersonRatingDTO>> getRating(int number){

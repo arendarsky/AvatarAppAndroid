@@ -23,6 +23,8 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
 
     private final String new_video = "Новое видео";
     private final String casting = "Кастинг";
+    private final String rating = "Рейтинг";
+    private final String profile = "Профиль";
     private final int SAVE_BUTTON = 0;
     private final int ADD_BUTTON = 1;
     private final int MENU_POINTS = 2;
@@ -43,12 +45,16 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                 router.newRootScreen(new Screens.CastingScreen());
                 return true;
             case R.id.nav_rating:
+                getViewState().changeTitle(rating);
                 router.newRootScreen(new Screens.StarRatingScreen());
                 return true;
             case R.id.nav_notify:
             case R.id.nav_contacts:
-            case R.id.nav_profile:
                 getViewState().showMessage("Nothing here yet");
+                return true;
+            case R.id.nav_profile:
+                getViewState().changeTitle(profile);
+                router.newRootScreen(new Screens.ProfileScreen());
                 return true;
         }
         return false;

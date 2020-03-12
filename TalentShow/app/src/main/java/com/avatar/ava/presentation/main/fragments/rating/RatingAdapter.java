@@ -58,7 +58,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         holder.name.setText(name);
         holder.pos.setText(String.valueOf(position + 1) + " место");
         Glide.with(holder.itemView.getContext())
-                .load(personRatingDTO.getPersonDTO().getPhoto())
+                .load("http://avatarapp.yambr.ru/api/profile/photo/get/" + personRatingDTO.getPersonDTO().getPhoto())
                 .circleCrop()
                 .into(holder.ava);
 
