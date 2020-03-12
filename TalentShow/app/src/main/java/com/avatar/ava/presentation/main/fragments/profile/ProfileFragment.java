@@ -68,6 +68,12 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     @BindView(R.id.fragment_profile_link)
     EditText link;
 
+    @BindView(R.id.fragment_profile_edit_photo)
+    TextView editPhoto;
+
+    @BindView(R.id.fragment_profile_btn_edit)
+    TextView editProfile;
+
     @ProvidePresenter
     ProfilePresenter getPresenter(){
         return Toothpick.openScope(App.class).getInstance(ProfilePresenter.class);
@@ -120,18 +126,10 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         videos.addAll(person.getPersonDTO().getVideos());
     }
 
-    @Override
-    public void updatePhoto() {
-
-    }
 
 
-    @OnClick(R.id.fragment_profile_btn)
-    void setPhoto(){
-        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-        photoPickerIntent.setType("image/*");
-        startActivityForResult(photoPickerIntent, 1);
-    }
+
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -146,5 +144,33 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
                     Log.d("ProfileFragment", "setImage");
                 }
         }
+    }
+
+    private boolean edit = false;
+
+    @OnClick(R.id.fragment_profile_btn_edit)
+    public void editProfile(){
+        if(!edit){
+            edit = true;
+            description.setEnabled(true);
+            link.setEnabled(true);
+            editPhoto.setVisibility(View.VISIBLE);
+            editProfile.setText("Применить");
+        }else{
+            edit = false;
+            presenter.setDescription(description.getText().toString());
+            description.setEnabled(false);
+            link.setEnabled(false);
+            editPhoto.setVisibility(View.GONE);
+            editProfile.setText("Редактировать");
+        }
+
+    }
+
+    @OnClick(R.id.fragment_profile_edit_photo)
+    void changePhoto(){
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, 1);
     }
 }

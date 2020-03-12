@@ -35,12 +35,26 @@ public class ProfilePresenter extends MvpPresenter<ProfileView> {
                             Log.d("ProfileFragmentLog", "error");});
     }
 
-    void setDesription(String description){
+    void setDescription(String description){
         Disposable disposable = interactor.setDescription(description)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> {});
 
+    }
+
+    void setName(String name){
+        Disposable disposable = interactor.setName(name)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> getProfile());
+    }
+
+    void setPassword(String oldPassword, String newPassword){
+        Disposable disposable = interactor.setPassword(oldPassword, newPassword)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {});
     }
 
 
