@@ -1,38 +1,24 @@
 package com.avatar.ava.presentation.main.fragments.rating;
 
-import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.avatar.ava.App;
-import com.avatar.ava.domain.entities.PersonDTO;
-import com.avatar.ava.domain.entities.PersonRatingDTO;
-import com.avatar.ava.presentation.main.MainScreenActivity;
-import com.bumptech.glide.Glide;
 import com.avatar.ava.R;
+import com.avatar.ava.domain.entities.PersonRatingDTO;
+import com.bumptech.glide.Glide;
 
-
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
-import toothpick.Toothpick;
-
 public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder> {
-
-    @Inject
-    Context appContext;
 
     private List<PersonRatingDTO> data = new ArrayList<>();
 
@@ -41,16 +27,15 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     public RatingAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.star_rating_recycler_item_star, parent, false);
-        ViewHolder viewHolder = new ViewHolder(v);
-        Toothpick.inject(this, Toothpick.openScope(App.class));
-        return viewHolder;
+        return new ViewHolder(v);
     }
 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PersonRatingDTO personRatingDTO = data.get(position);
-        holder.video.setVideoURI(Uri.parse("http://avatarapp.yambr.ru/api/video/" + personRatingDTO.getPersonDTO().getVideoForCasting().getName()));
+        holder.video.setVideoURI(Uri.parse("http://avatarapp.yambr.ru/api/video/"
+                + personRatingDTO.getPersonDTO().getVideoForCasting().getName()));
 
         holder.video.start();
         holder.description.setText(personRatingDTO.getPersonDTO().getDescription());
@@ -58,7 +43,8 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         holder.name.setText(name);
         holder.pos.setText(String.valueOf(position + 1) + " место");
         Glide.with(holder.itemView.getContext())
-                .load("http://avatarapp.yambr.ru/api/profile/photo/get/" + personRatingDTO.getPersonDTO().getPhoto())
+                .load("http://avatarapp.yambr.ru/api/profile/photo/get/"
+                        + personRatingDTO.getPersonDTO().getPhoto())
                 .circleCrop()
                 .into(holder.ava);
 
@@ -85,7 +71,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         TextView pos, name, description;
         ImageView ava;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             video = itemView.findViewById(R.id.rating_item_video);
             pos = itemView.findViewById(R.id.rating_item_pos);

@@ -73,9 +73,9 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
             case BACK:
                 router.backTo(null);
                 break;
-            case CHOOSE_SECONDS:
-                router.navigateTo(new Screens.ChooseBestScreen());
-                break;
+//            case CHOOSE_SECONDS:
+//                router.navigateTo(new Screens.ChooseBestScreen(uri));
+//                break;
             case VIDEO_SCREEN_JUST:
                 router.navigateTo(new Screens.FileLoadJustScreen());
                 break;
@@ -89,11 +89,16 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(arrayList -> getViewState().startingNextActivity(),
 //                        e -> getViewState().showingError());
+//        openSecondsScreen(videoUri);
         Disposable disposable = interactor.uploadVideo(videoUri)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> startFragment(CHOOSE_SECONDS),
+                .subscribe(() -> {getViewState().startMain();},
                         e -> getViewState().showingError(""));
+    }
+
+    void openSecondsScreen(Uri fileUri){
+        router.navigateTo(new Screens.ChooseBestScreen(fileUri));
     }
 
     void backPressed(){

@@ -1,8 +1,9 @@
-package com.avatar.ava.presentation.main;
+package com.avatar.ava.presentation.signing.fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
 import android.content.Context;
@@ -26,6 +27,7 @@ import com.arellomobile.mvp.MvpView;
 import com.avatar.ava.App;
 import com.avatar.ava.data.AuthRepository;
 import com.avatar.ava.domain.Interactor;
+import com.avatar.ava.presentation.main.MainScreenActivity;
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.avatar.ava.R;
@@ -48,10 +50,8 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import toothpick.Toothpick;
 
-public class FragmentChooseVideoBest extends MvpAppCompatFragment implements MvpView, OnRangeSeekBarListener {
+public class FragmentChooseVideoBest extends Fragment implements OnRangeSeekBarListener {
 
-    @Inject
-    Interactor interactor;
 
     private Activity activity;
 
@@ -72,8 +72,6 @@ public class FragmentChooseVideoBest extends MvpAppCompatFragment implements Mvp
     @BindView(R.id.videoTrimmer)
     DeepVideoTrimmer videoTrimmer;
 
-    @Inject
-    Context appContext;
 
     int duration = 0;
 
@@ -88,17 +86,21 @@ public class FragmentChooseVideoBest extends MvpAppCompatFragment implements Mvp
 
     }
 
+    //TODO переделать этот код
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+
+        Uri uri = savedInstanceState.getParcelable("uri");
         String url = "https://youtu.be/69FMw5OykjQ";
 
 
 
         String fileName = "android.resource://"+ getActivity().getPackageName()+"/raw/example";
 
-        Uri uri = Uri.parse(fileName);
+//        Uri uri = Uri.parse(fileName);
 
         //video.setVideoURI(Uri.parse(link));
         //video.setVideoURI(uri);
@@ -116,8 +118,8 @@ public class FragmentChooseVideoBest extends MvpAppCompatFragment implements Mvp
             float value1 = thums.get(0).getVal() / 100 * video.getDuration();
             float value2 = thums.get(1).getVal() / 100 * video.getDuration();
             Log.d("videoTrimmerLog", value1 + " " + value2);
-            setInterval(fileName, (int)value1, (int)value2);
-            startActivity(new Intent(getContext(), MainScreenActivity.class));
+//            setInterval(fileName, (int)value1, (int)value2);
+//            startActivity(new Intent(getContext(), MainScreenActivity.class));
         });
     }
 
@@ -204,11 +206,11 @@ public class FragmentChooseVideoBest extends MvpAppCompatFragment implements Mvp
 
     }
 
-    private void setInterval(String name, int startTime, int endTime){
-        Disposable disposable = interactor.setInterval(name, startTime, endTime)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> startActivity(new Intent(getContext(), MainScreenActivity.class)),
-                        e -> Log.d("Error", "error"));
-    }
+//    private void setInterval(String name, int startTime, int endTime){
+//        Disposable disposable = interactor.setInterval(name, startTime, endTime)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(() -> startActivity(new Intent(getContext(), MainScreenActivity.class)),
+//                        e -> Log.d("Error", "error"));
+//    }
 }

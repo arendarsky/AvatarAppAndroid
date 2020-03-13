@@ -25,6 +25,8 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
     private final String casting = "Кастинг";
     private final String rating = "Рейтинг";
     private final String profile = "Профиль";
+    private final String notifications = "Уведомления";
+
     private final int SAVE_BUTTON = 0;
     private final int ADD_BUTTON = 1;
     private final int MENU_POINTS = 2;
@@ -49,6 +51,9 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                 router.newRootScreen(new Screens.RatingScreen());
                 return true;
             case R.id.nav_notify:
+                getViewState().changeTitle(notifications);
+                router.newRootScreen(new Screens.NotificationsScreen());
+                return true;
             case R.id.nav_contacts:
                 getViewState().showMessage("Nothing here yet");
                 return true;

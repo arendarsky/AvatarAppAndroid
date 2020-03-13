@@ -78,8 +78,8 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
                 "https://i.pinimg.com/originals/c6/e4/ff/c6e4ff2696c7e51ae4e2ffddceb80fef.jpg");
         //adapter.addItem(person);
         //adapter.addItem(person);
-
-        makeResponse();
+        presenter.getRating();
+//        makeResponse();
         if(data != null)
         for(PersonRatingDTO el : data){
             Log.d("RatingFragmentLog", el.getPersonDTO().getName() + "");
@@ -93,10 +93,10 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
         adapter.setItems(data);
     }
 
-    public void makeResponse(){
-        presenter.getRating();
-        //Log.d("RatingFragmentLog", data.size() + " fragment");
-    }
+//    public void makeResponse(){
+//        presenter.getRating();
+//        //Log.d("RatingFragmentLog", data.size() + " fragment");
+//    }
 
 
     public RatingAdapter getAdapter() {

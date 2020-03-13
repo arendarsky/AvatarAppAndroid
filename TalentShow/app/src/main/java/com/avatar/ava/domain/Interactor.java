@@ -2,7 +2,9 @@ package com.avatar.ava.domain;
 
 import android.net.Uri;
 
+import com.avatar.ava.domain.entities.NotificationsDTO;
 import com.avatar.ava.domain.entities.PersonDTO;
+import com.avatar.ava.domain.entities.PersonRatingDTO;
 import com.avatar.ava.domain.repository.IAuthRepository;
 import com.avatar.ava.domain.repository.IProfileRepository;
 import com.avatar.ava.domain.repository.ISharedPreferemcesRepository;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 
 public class Interactor {
@@ -38,7 +41,7 @@ public class Interactor {
         return this.profileRepository.getProfile();
     }
 
-    public Single<ArrayList<PersonDTO>> getRating(int number){
+    public Single<ArrayList<PersonRatingDTO>> getRating(int number){
         return this.ratingRepository.getRating(number);
     }
 
@@ -96,5 +99,9 @@ public class Interactor {
 
     public Single<PersonDTO> getVideoLinkOnCreate(){
         return this.videoRepository.getVideoLinkOnCreate();
+    }
+
+    public Observable<NotificationsDTO> getLikes(int number){
+        return this.ratingRepository.getLikes(number);
     }
 }

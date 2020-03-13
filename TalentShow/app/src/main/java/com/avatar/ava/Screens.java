@@ -2,6 +2,7 @@ package com.avatar.ava;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,13 +10,14 @@ import androidx.fragment.app.Fragment;
 import com.avatar.ava.presentation.main.MainScreenActivity;
 import com.avatar.ava.presentation.main.fragments.FragmentFileLoadMain;
 import com.avatar.ava.presentation.main.fragments.casting.CastingFragment;
+import com.avatar.ava.presentation.main.fragments.notifications.FragmentNotifications;
 import com.avatar.ava.presentation.main.fragments.profile.ProfileFragment;
 import com.avatar.ava.presentation.signing.fragments.FragmentFileLoadJust;
 import com.avatar.ava.presentation.signing.fragments.authorisation.AuthorisationFragment;
 import com.avatar.ava.presentation.signing.fragments.registration.FragmentRegistration;
 import com.avatar.ava.presentation.signing.fragments.ChooseAuthFragment;
 import com.avatar.ava.presentation.main.ActivityStarStatistics;
-import com.avatar.ava.presentation.main.FragmentChooseVideoBest;
+import com.avatar.ava.presentation.signing.fragments.FragmentChooseVideoBest;
 import com.avatar.ava.presentation.signing.fragments.FragmentEnterFileLoad;
 import com.avatar.ava.presentation.main.fragments.rating.RatingFragment;
 
@@ -102,20 +104,21 @@ public class Screens {
 
     public static final class ChooseBestScreen extends SupportAppScreen{
 
-        //TODO раскоменить и удалить незакоменченное
+        private Uri uri;
 
-           @Override
+        public ChooseBestScreen(Uri uri) {
+            super();
+            this.uri = uri;
+        }
+
+        @Override
            public Fragment getFragment() {
                Bundle bundle = new Bundle();
+               bundle.putParcelable("uri", uri);
                FragmentChooseVideoBest fragment = new FragmentChooseVideoBest();
                fragment.setArguments(bundle);
                return fragment;
            }
-
-     //   @Override
-     //   public Intent getActivityIntent(Context context) {
-     //       return new Intent(context, FragmentChooseVideoBest.class);
-     //   }
     }
 
     public static final class StarStatisticsScreen extends SupportAppScreen{
@@ -152,6 +155,17 @@ public class Screens {
         public Fragment getFragment() {
             Bundle bundle = new Bundle();
             ProfileFragment fragment = new ProfileFragment();
+            fragment.setArguments(bundle);
+            return fragment;
+        }
+    }
+
+    public static final class NotificationsScreen extends SupportAppScreen{
+
+        @Override
+        public Fragment getFragment() {
+            Bundle bundle = new Bundle();
+            FragmentNotifications fragment = new FragmentNotifications();
             fragment.setArguments(bundle);
             return fragment;
         }
