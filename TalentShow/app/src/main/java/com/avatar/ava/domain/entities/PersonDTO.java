@@ -108,4 +108,12 @@ public class PersonDTO {
     public void setUsedVideo(VideoDTO usedVideo) {
         this.usedVideo = usedVideo;
     }
+
+    public List<VideoDTO> getVideos() {
+        return videos;
+    }
+
+    public void setVideos(List<VideoDTO> videos) {
+        this.videos = videos;
+    }
 }

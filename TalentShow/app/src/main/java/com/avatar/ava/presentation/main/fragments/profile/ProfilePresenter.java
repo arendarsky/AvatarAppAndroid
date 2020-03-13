@@ -1,15 +1,11 @@
 package com.avatar.ava.presentation.main.fragments.profile;
 
+import android.net.Uri;
 import android.util.Log;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.avatar.ava.domain.Interactor;
-import com.avatar.ava.domain.entities.PersonRatingDTO;
-import com.avatar.ava.presentation.main.fragments.rating.RatingView;
-
-import java.util.ArrayList;
-
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -34,9 +30,41 @@ public class ProfilePresenter extends MvpPresenter<ProfileView> {
                 .subscribe(person -> {
                             Log.d("ProfileFragmentLog", person.getPersonDTO().getName());
                             getViewState().setDataProfile(person);
-
                         },
                         error -> {
                             Log.d("ProfileFragmentLog", "error");});
+    }
+
+    void setDescription(String description){
+        Disposable disposable = interactor.setDescription(description)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {});
+
+    }
+
+    void setName(String name){
+        Disposable disposable = interactor.setName(name)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> getProfile());
+    }
+
+    void setPassword(String oldPassword, String newPassword){
+        Disposable disposable = interactor.setPassword(oldPassword, newPassword)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {});
+    }
+
+
+    void uploadPhoto(Uri uri){
+        Disposable disposable = interactor.uploadPhoto(uri)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {
+                    getProfile();
+                    Log.d("ProfileFragmentLog", "successPhotoUpload");},
+                        e -> Log.d("ProfileFragmentLog", "errorPhotoUpload" + e.getMessage()));
     }
 }

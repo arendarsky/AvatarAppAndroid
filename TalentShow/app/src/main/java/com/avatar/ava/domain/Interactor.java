@@ -37,6 +37,22 @@ public class Interactor {
         this.profileRepository = profileRepository;
     }
 
+    public Completable uploadPhoto(Uri photoUri){
+        return  this.profileRepository.uploadPhoto(photoUri);
+    }
+
+    public Completable setPassword(String oldPassword, String newPassword){
+        return this.profileRepository.setPassword(oldPassword, newPassword);
+    }
+
+    public Completable setName(String name){
+        return this.profileRepository.setName(name);
+    }
+
+    public Completable setDescription(String description){
+        return this.profileRepository.setDescription(description);
+    }
+
     public Single<PersonRatingDTO> getProfile(){
         return this.profileRepository.getProfile();
     }
