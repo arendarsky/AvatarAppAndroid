@@ -12,6 +12,7 @@ import com.avatar.ava.domain.repository.IVideoRepository;
 import com.avatar.ava.domain.repository.IRatingRepository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -117,7 +118,7 @@ public class Interactor {
         return this.videoRepository.getVideoLinkOnCreate();
     }
 
-    public Observable<NotificationsDTO> getLikes(int number){
-        return this.ratingRepository.getLikes(number);
+    public Single<List<NotificationsDTO>> getLikes(int number, int skipNumber){
+        return this.profileRepository.getNotifications(number, skipNumber);
     }
 }

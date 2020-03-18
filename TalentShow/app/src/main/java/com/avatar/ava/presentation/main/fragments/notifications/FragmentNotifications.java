@@ -21,6 +21,8 @@ import com.avatar.ava.App;
 import com.avatar.ava.R;
 import com.avatar.ava.domain.entities.NotificationsDTO;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -80,10 +82,10 @@ public class FragmentNotifications extends MvpAppCompatFragment implements Notif
     }
 
     @Override
-    public void addLike(NotificationsDTO notificationsDTO) {
+    public void addLike(List<NotificationsDTO> notificationsDTO) {
         noNotificationsText.setVisibility(View.INVISIBLE);
         recyclerView.setVisibility(View.VISIBLE);
-        adapter.addItem(notificationsDTO);
+        adapter.addItems(notificationsDTO);
     }
 
     @Override

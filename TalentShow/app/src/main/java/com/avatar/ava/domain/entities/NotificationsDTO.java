@@ -6,31 +6,55 @@ import org.parceler.ParcelConstructor;
 
 public class NotificationsDTO {
 
-    @SerializedName("date")
-    private String date;
+    @SerializedName("id")
+    private int id;
 
-    @SerializedName("user")
-    private PersonDTO user;
+    @SerializedName("name")
+    private String name;
+
+    @SerializedName("description")
+    private String description;
+
+    @SerializedName("profilePhoto")
+    private String photo;
 
     @ParcelConstructor
-    public NotificationsDTO(String date, PersonDTO user) {
-        this.date = date;
-        this.user = user;
+    public NotificationsDTO(int id, String name, String description, String photo) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.photo = photo;
     }
 
-    public PersonDTO getUser() {
-        return user;
+    public int getId() {
+        return id;
     }
 
-    public void setUser(PersonDTO user) {
-        this.user = user;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getDate() {
-        return date;
+    public String getName() {
+        return name;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

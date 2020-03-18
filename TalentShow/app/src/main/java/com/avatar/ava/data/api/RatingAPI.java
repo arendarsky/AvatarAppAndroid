@@ -5,6 +5,7 @@ import com.avatar.ava.domain.entities.PersonDTO;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -18,5 +19,5 @@ public interface RatingAPI {
     Single<ArrayList<PersonRatingDTO>> getRating(@Header("Authorization") String token, @Query("number") int number);
 
     @GET("/api/rating/likes/get")
-    Observable<NotificationsDTO> getLikes(@Header("Authorization") String token, @Query("number") int number);
+    Single<List<NotificationsDTO>> getLikes(@Header("Authorization") String token, @Query("number") int number);
 }

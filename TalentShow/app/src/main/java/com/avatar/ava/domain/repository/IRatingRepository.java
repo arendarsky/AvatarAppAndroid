@@ -5,11 +5,11 @@ import com.avatar.ava.domain.entities.PersonDTO;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
 public interface IRatingRepository {
     Single<ArrayList<PersonRatingDTO>> getRating(int number);
-    Observable<NotificationsDTO> getLikes(int number);
 }

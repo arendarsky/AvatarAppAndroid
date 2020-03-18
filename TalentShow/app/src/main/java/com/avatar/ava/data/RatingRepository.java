@@ -10,6 +10,7 @@ import com.avatar.ava.domain.repository.IRatingRepository;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -47,12 +48,4 @@ public class RatingRepository implements IRatingRepository {
 
         return ratingAPI.getRating(preferencesRepository.getToken(), number);
     }
-
-    @Override
-    public Observable<NotificationsDTO> getLikes(int number) {
-        return ratingAPI.getLikes(preferencesRepository.getToken(), number)
-                .doOnNext(notificationsDTO -> notificationsDTO.getUser().prepareInfo());
-    }
-
-
 }

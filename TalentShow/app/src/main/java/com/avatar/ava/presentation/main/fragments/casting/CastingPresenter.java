@@ -121,7 +121,7 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
     }
 
     void loadNewPerson(PersonDTO person){
-        getViewState().setAvatar(person.getPhoto());
+        getViewState().setAvatar("https://avatarapp.yambr.ru/api/video/" + person.getPhoto());
         getViewState().setName(person.getName());
         getViewState().setDescription(person.getDescription());
     }

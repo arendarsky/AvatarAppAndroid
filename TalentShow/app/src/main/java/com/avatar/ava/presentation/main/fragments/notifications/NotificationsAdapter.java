@@ -32,12 +32,13 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         NotificationsDTO notification = data.get(position);
-        Glide.with(holder.itemView.getContext())
-                .load("http://avatarapp.yambr.ru/api/profile/photo/get/"
-                        + notification.getUser().getPhoto())
-                .circleCrop()
-                .into(holder.avatar);
-        holder.text.setText(notification.getUser().getName() + this.likeText);
+        if (notification.getPhoto() != null)
+            Glide.with(holder.itemView.getContext())
+                    .load("http://avatarapp.yambr.ru/api/profile/photo/get/"
+                            + notification.getPhoto())
+                    .circleCrop()
+                    .into(holder.avatar);
+        holder.text.setText(notification.getName() + this.likeText);
     }
 
     @Override

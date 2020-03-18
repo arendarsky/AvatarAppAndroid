@@ -117,18 +117,19 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         heartView.setVisibility(View.INVISIBLE);
         crossView.setVisibility(View.INVISIBLE);
         
-//        video.setOnPreparedListener(mp -> mp.setOnVideoSizeChangedListener(
-//                (mp12, width, height) -> {
-//                    /*
-//                     * add media controller
-//                     */
+        video.setOnPreparedListener(mp -> mp.setOnVideoSizeChangedListener(
+                (mp12, width, height) -> {
+                    mp.setLooping(true);
+                    /*
+                     * add media controller
+                     */
 //                    mc = new MediaController(appContext);
 //                    video.setMediaController(mc);
-//                    /*
-//                     * and set its position on screen
-//                     */
+                    /*
+                     * and set its position on screen
+                     */
 //                    mc.setAnchorView(video);
-//                }));
+                }));
 //
 //        trackProgress();
         presenter.getFirstVideo();

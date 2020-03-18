@@ -11,6 +11,7 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.schedulers.Schedulers;
 import ru.terrakok.cicerone.Router;
 
@@ -84,17 +85,24 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
     }
 
     void uploadVideoToServer(Uri videoUri){
-//        Disposable disposable = interactor.getUnwatchedVideos(1)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(arrayList -> getViewState().startingNextActivity(),
-//                        e -> getViewState().showingError());
 //        openSecondsScreen(videoUri);
-        Disposable disposable = interactor.uploadVideo(videoUri)
+        interactor.uploadVideo(videoUri)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> {getViewState().startMain();},
-                        e -> getViewState().showingError(""));
+                .subscribe(new DisposableCompletableObserver() {
+                               @Override
+                               public void onComplete() {
+                                   getViewState().startMain();
+                               }
+
+                               @Override
+                               public void onError(Throwable e) {
+                                    getViewState().showingError("");
+                               }
+                           }
+//                        () -> getViewState().startMain(),
+//                        e -> getViewState().showingError("")
+                );
     }
 
     void openSecondsScreen(Uri fileUri){

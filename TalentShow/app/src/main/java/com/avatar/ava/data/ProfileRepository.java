@@ -5,12 +5,12 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.avatar.ava.data.api.ProfileAPI;
-import com.avatar.ava.data.api.RatingAPI;
+import com.avatar.ava.domain.entities.NotificationsDTO;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
 import com.avatar.ava.domain.repository.IProfileRepository;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -94,5 +94,10 @@ public class ProfileRepository implements IProfileRepository {
                     })
                 .ignoreElement();
 
+    }
+
+    @Override
+    public Single<List<NotificationsDTO>> getNotifications(int number, int skipNumber) {
+        return profileAPI.getNotifications(preferencesRepository.getToken(), number, skipNumber);
     }
 }

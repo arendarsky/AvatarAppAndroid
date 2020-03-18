@@ -54,9 +54,6 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                 getViewState().changeTitle(notifications);
                 router.newRootScreen(new Screens.NotificationsScreen());
                 return true;
-            case R.id.nav_contacts:
-                getViewState().showMessage("Nothing here yet");
-                return true;
             case R.id.nav_profile:
                 getViewState().changeTitle(profile);
                 router.newRootScreen(new Screens.ProfileScreen());
