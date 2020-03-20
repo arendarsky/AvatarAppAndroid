@@ -10,14 +10,15 @@ import android.webkit.MimeTypeMap;
 import com.avatar.ava.data.api.VideoAPI;
 import com.avatar.ava.domain.entities.PersonDTO;
 import com.avatar.ava.domain.repository.IVideoRepository;
+import com.iceteck.silicompressorr.SiliCompressor;
 
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.net.URISyntaxException;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.concurrent.Callable;
 
 import javax.inject.Inject;
 
@@ -25,7 +26,6 @@ import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.exceptions.Exceptions;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -41,26 +41,57 @@ public class VideoRepository implements IVideoRepository {
     private ArrayList<PersonDTO> castingPersons = new ArrayList<>();
     private String uploadedVideoName;
 
+
     @Inject
     VideoRepository(Retrofit retrofit, SharedPreferencesRepository preferencesRepository, Context appContext){
         this.videoAPI = retrofit.create(VideoAPI.class);
         this.preferencesRepository = preferencesRepository;
         this.appContext = appContext;
+
     }
 
     public Completable uploadVideo(Uri fileURI){
+
         File file = new File(getFilePathFromUri(appContext, fileURI));
 
-        String extension = appContext.getContentResolver().getType(fileURI);
-        Log.d("Extension", file.getPath());
-        RequestBody requestFile =
-                RequestBody.create(file, MediaType.parse("multipart/form-data"));
+//        String compressedFilePath = null;
+//        try {
+//            compressedFilePath = SiliCompressor.with(appContext).compressVideo(file.getAbsolutePath(), file.getParentFile().getAbsolutePath());
+//        } catch (URISyntaxException e) {
+//            e.printStackTrace();
+//        }
 
-        MultipartBody.Part body =
-                        MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-        return videoAPI.uploadVideo(preferencesRepository.getToken(), body)
-                .doOnSuccess(name -> this.uploadedVideoName = name)
-                .ignoreElement();
+//        try {
+            return Single.fromCallable(() -> SiliCompressor.with(appContext).compressVideo(file.getAbsolutePath(), file.getParentFile().getAbsolutePath()))
+                    .flatMap(
+                            filePath ->
+                                    videoAPI.uploadVideo(
+                                            preferencesRepository.getToken(),
+                                            MultipartBody.Part.
+                                                    createFormData("file",
+                                                            file.getName(),
+                                                            RequestBody.create(
+                                                                    new File(filePath),
+                                                                    MediaType.parse("multipart/form-data")
+                                                            )
+                                                    )
+                                    ).doOnSuccess(name -> uploadedVideoName = name)).ignoreElement();
+//        } catch (URISyntaxException e) {
+//            return Completable.error(new IllegalStateException());
+//        }
+
+//
+//        String extension = appContext.getContentResolver().getType(fileURI);
+//        Log.d("Extension", file.getPath());
+//        File compressedFile = new File(compressedFilePath);
+//        RequestBody requestFile =
+//                RequestBody.create(compressedFile, MediaType.parse("multipart/form-data"));
+//
+//        MultipartBody.Part body =
+//                MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+//        return videoAPI.uploadVideo(preferencesRepository.getToken(), body)
+//                .doOnSuccess(name -> uploadedVideoName = name)
+//                .ignoreElement();
     }
 
     @Override
@@ -69,16 +100,7 @@ public class VideoRepository implements IVideoRepository {
             Disposable disposable = videoAPI.getUnwatched(preferencesRepository.getToken(), 20)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(list -> {
-                                ArrayList<PersonDTO> persons = new ArrayList<>();
-                                for (PersonDTO person:
-                                        list) {
-                                    person.prepareInfo();
-                                    persons.add(person);
-                                }
-                                this.castingPersons = persons;
-
-                            },
+                    .subscribe(list -> this.castingPersons = list,
                             error -> {});
         }
         return  Single.fromCallable(() -> {
@@ -94,21 +116,12 @@ public class VideoRepository implements IVideoRepository {
 
     @Override
     public Single<ArrayList<PersonDTO>> getUnwatchedVideos(int number) {
-
         Disposable disposable = videoAPI.getUnwatched(preferencesRepository.getToken(), 30)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(list -> {
-                    ArrayList<PersonDTO> persons = new ArrayList<>();
-                    for (PersonDTO person:
-                            list) {
-                        person.prepareInfo();
-                        persons.add(person);
-                    }
-                    this.castingPersons = persons;
-
-                },
-                error -> {});
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(list ->
+                            this.castingPersons = list,
+                        error -> {});
 
 
 
@@ -117,12 +130,12 @@ public class VideoRepository implements IVideoRepository {
 
     @Override
     public Completable setLiked(boolean liked) {
-        return videoAPI.setLiked(preferencesRepository.getToken(), currentPerson.getUsedVideo().getName(), liked);
+        return videoAPI.setLiked(preferencesRepository.getToken(), currentPerson.getVideo().getName(), liked);
     }
 
     @Override
     public Completable setInterval(String fileName, int startTime, int endTime) {
-        return videoAPI.setInterval(preferencesRepository.getToken(), fileName, startTime, endTime);
+        return videoAPI.setInterval(preferencesRepository.getToken(), uploadedVideoName, startTime, endTime);
     }
 
     @Override
@@ -137,14 +150,8 @@ public class VideoRepository implements IVideoRepository {
         return videoAPI.getUnwatched(preferencesRepository.getToken(), 10)
                 .flatMap(list -> {
                     if (list.size() == 0) throw new IllegalStateException("Empty list");
-                    ArrayList<PersonDTO> persons = new ArrayList<>();
-                    for (PersonDTO person:
-                         list) {
-                        person.prepareInfo();
-                        persons.add(person);
-                    }
-                    this.castingPersons = persons;
-                    this.currentPerson = persons.remove(0);
+                    this.castingPersons = list;
+                    this.currentPerson = this.castingPersons.remove(0);
                     return Single.just(this.currentPerson);
                 });
     }
@@ -201,4 +208,6 @@ public class VideoRepository implements IVideoRepository {
         }
         return null;
     }
+
+
 }

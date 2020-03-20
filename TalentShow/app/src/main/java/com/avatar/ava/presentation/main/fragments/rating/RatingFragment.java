@@ -74,7 +74,7 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
         adapter = new RatingAdapter();
         recycler.setAdapter(adapter);
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        PersonDTO person = new PersonDTO(0 , "Ivan", "Ivanov", "",
+        PersonDTO person = new PersonDTO("Ivan", "Ivanov",
                 "https://i.pinimg.com/originals/c6/e4/ff/c6e4ff2696c7e51ae4e2ffddceb80fef.jpg");
 //        adapter.addItem(person);
 //        adapter.addItem(person);
@@ -82,14 +82,14 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
         makeResponse();
         if(data != null)
         for(PersonRatingDTO el : data){
-            Log.d("RatingFragmentLog", el.getPersonDTO().getName() + "");
+            Log.d("RatingFragmentLog", el.getName() + "");
         }
     }
 
     public void setData(ArrayList<PersonRatingDTO> data){
         this.data = data;
         Log.d("RatingFragmentLog", this.data.size() + "  " + data.size());
-        Log.d("RatingFragmentLog", data.get(0).getPersonDTO().getName() + " ");
+        Log.d("RatingFragmentLog", data.get(0).getName() + " ");
         adapter.setItems(data);
     }
 

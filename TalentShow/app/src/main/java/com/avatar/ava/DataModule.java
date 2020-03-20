@@ -83,11 +83,11 @@ public class DataModule extends Module{
                         .client(httpClient.build())
                         .build());
 
-        bind(IAuthRepository.class).to(AuthRepository.class);
+        bind(IAuthRepository.class).to(AuthRepository.class).singletonInScope();
         bind(IVideoRepository.class).to(VideoRepository.class).singletonInScope();
         bind(IRatingRepository.class).to(RatingRepository.class).singletonInScope();
         bind(IProfileRepository.class).to(ProfileRepository.class).singletonInScope();
-        bind(ISharedPreferemcesRepository.class).to(SharedPreferencesRepository.class);
+        bind(ISharedPreferemcesRepository.class).to(SharedPreferencesRepository.class).singletonInScope();
 
     }
 }

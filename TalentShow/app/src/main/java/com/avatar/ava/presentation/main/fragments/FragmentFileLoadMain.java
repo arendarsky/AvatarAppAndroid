@@ -27,7 +27,7 @@ public class FragmentFileLoadMain extends Fragment {
     Context appContext;
 
     private Activity activity;
-    private final int LOAD_VIDEO = 3;
+    private final int LOAD_VIDEO = 5;
     private final int SKIP_AUTH = 2;
     private final int BACK = 7;
 

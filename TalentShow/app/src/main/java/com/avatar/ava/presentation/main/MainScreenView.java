@@ -14,4 +14,5 @@ public interface MainScreenView extends MvpView {
     void addButtonClicked();
     void hideBottomNavBar();
     void showBottomNavBar();
+    void pickVideo();
 }

@@ -4,9 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.ParcelConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class PersonDTO {
 
     private int pos = 0;
@@ -20,29 +17,26 @@ public class PersonDTO {
     @SerializedName("profilePhoto")
     private String photo = "";
 
-    @SerializedName("videos")
-    private List<VideoDTO> videos = new ArrayList<>();
+    @SerializedName("video")
+    private VideoDTO video;
 
-    private VideoDTO usedVideo;
+    @SerializedName("id")
+    private int id;
+
 
     @ParcelConstructor
-    public PersonDTO(String name, String description, String photo, List<VideoDTO> videos){
+    public PersonDTO(String name, String description, String photo, VideoDTO video, int id){
         this.name = name;
         this.description = description;
         this.photo = photo;
-        this.videos = videos;
+        this.video = video;
+        this.id = id;
     }
 
     public PersonDTO(String name, String description, String photo){
         this.name = name;
         this.description = description;
         this.photo = photo;
-    }
-
-    public PersonDTO(int pos, String video, String name, String description, String ava) {
-        this.pos = pos;
-        this.name = name;
-        this.description = description;
     }
 
 
@@ -80,40 +74,19 @@ public class PersonDTO {
         this.photo = photo;
     }
 
-    public VideoDTO getVideoForCasting(){
-        VideoDTO videoForCasting = new VideoDTO();
-        for (int i = 0; i < this.videos.size(); ++i){
-            if (this.videos.get(i).isActive()){
-                videoForCasting = this.videos.get(i);
-                break;
-            }
-        }
-        return videoForCasting;
+    public VideoDTO getVideo() {
+        return video;
     }
 
-    public void prepareInfo(){
-        VideoDTO videoForCasting = new VideoDTO();
-        for (int i = 0; i < this.videos.size(); ++i){
-            if (this.videos.get(i).isActive()){
-                this.usedVideo = this.videos.get(i);
-                break;
-            }
-        }
+    public void setVideo(VideoDTO video) {
+        this.video = video;
     }
 
-    public VideoDTO getUsedVideo() {
-        return usedVideo;
+    public int getId() {
+        return id;
     }
 
-    public void setUsedVideo(VideoDTO usedVideo) {
-        this.usedVideo = usedVideo;
-    }
-
-    public List<VideoDTO> getVideos() {
-        return videos;
-    }
-
-    public void setVideos(List<VideoDTO> videos) {
-        this.videos = videos;
+    public void setId(int id) {
+        this.id = id;
     }
 }

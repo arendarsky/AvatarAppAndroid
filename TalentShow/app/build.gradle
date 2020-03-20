@@ -84,7 +84,9 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.2.1'
     implementation 'androidx.navigation:navigation-ui:2.2.1'
 
-
     //Video Trimmer
     implementation 'com.deep.videotrimmer:videotrimmer:1.0'
+
+    //Video Compressor
+    implementation 'com.iceteck.silicompressorr:silicompressor:2.2.3'
 }

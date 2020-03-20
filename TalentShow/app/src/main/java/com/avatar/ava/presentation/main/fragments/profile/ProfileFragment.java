@@ -117,13 +117,13 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     public void setDataProfile(PersonRatingDTO person) {
         //set Data
         Glide.with(getView())
-                .load("http://avatarapp.yambr.ru/api/profile/photo/get/" + person.getPersonDTO().getPhoto())
+                .load("http://avatarapp.yambr.ru/api/profile/photo/get/" + person.getPhoto())
                 .circleCrop()
                 .into(profileImage);
-        name.setText(person.getPersonDTO().getName());
+        name.setText(person.getName());
         likes.setText(person.getLikesNumber() + " Лайков");
-        description.setText(person.getPersonDTO().getDescription());
-        videos.addAll(person.getPersonDTO().getVideos());
+        description.setText(person.getDescription());
+//        videos.addAll(person.getPersonDTO().getVideo());
     }
 
 

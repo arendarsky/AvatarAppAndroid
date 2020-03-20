@@ -34,10 +34,13 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(person -> {
-                    this.loadNewPerson(person);
-                    getViewState().loadNewVideo(
-                        "https://avatarapp.yambr.ru/api/video/"
-                                + person.getUsedVideo().getName());
+                    if (person.getVideo() != null) {
+                        this.loadNewPerson(person);
+                        getViewState().loadNewVideo(
+                                "https://avatarapp.yambr.ru/api/video/"
+                                        + person.getVideo().getName());
+                    }
+                    else getViewState().showNoMoreVideos();
                 },
                         error -> {
                     if (Objects.equals(error.getMessage(), "Empty list")){
@@ -56,7 +59,7 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
                             this.loadNewPerson(personDTO);
                             getViewState().loadNewVideo(
                                     "https://avatarapp.yambr.ru/api/video/" +
-                                            personDTO.getUsedVideo().getName()
+                                            personDTO.getVideo().getName()
                             );
                         },
                         error -> {
@@ -90,7 +93,7 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
                             this.loadNewPerson(personDTO);
                             getViewState().loadNewVideo(
                                     "https://avatarapp.yambr.ru/api/video/" +
-                                            personDTO.getUsedVideo().getName()
+                                            personDTO.getVideo().getName()
                             );
                         },
                         error -> {

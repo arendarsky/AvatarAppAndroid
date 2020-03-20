@@ -28,7 +28,7 @@ public class ProfilePresenter extends MvpPresenter<ProfileView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(person -> {
-                            Log.d("ProfileFragmentLog", person.getPersonDTO().getName());
+                            Log.d("ProfileFragmentLog", person.getName());
                             getViewState().setDataProfile(person);
                         },
                         error -> {

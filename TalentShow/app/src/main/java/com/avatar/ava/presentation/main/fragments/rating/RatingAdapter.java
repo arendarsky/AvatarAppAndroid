@@ -35,16 +35,16 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PersonRatingDTO personRatingDTO = data.get(position);
         holder.video.setVideoURI(Uri.parse("http://avatarapp.yambr.ru/api/video/"
-                + personRatingDTO.getPersonDTO().getVideoForCasting().getName()));
+                + personRatingDTO.getVideo().getName()));
 
         holder.video.start();
-        holder.description.setText(personRatingDTO.getPersonDTO().getDescription());
-        String name = personRatingDTO.getPersonDTO().getName();
+        holder.description.setText(personRatingDTO.getDescription());
+        String name = personRatingDTO.getName();
         holder.name.setText(name);
         holder.pos.setText(String.valueOf(position + 1) + " место");
         Glide.with(holder.itemView.getContext())
                 .load("http://avatarapp.yambr.ru/api/profile/photo/get/"
-                        + personRatingDTO.getPersonDTO().getPhoto())
+                        + personRatingDTO.getPhoto())
                 .circleCrop()
                 .into(holder.ava);
 

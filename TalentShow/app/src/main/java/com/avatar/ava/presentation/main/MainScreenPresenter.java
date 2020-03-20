@@ -1,9 +1,12 @@
 package com.avatar.ava.presentation.main;
 
+import android.net.Uri;
+
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.avatar.ava.Screens;
 import com.avatar.ava.R;
+import com.avatar.ava.domain.Interactor;
 
 
 import java.util.ArrayList;
@@ -11,15 +14,20 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableCompletableObserver;
+import io.reactivex.schedulers.Schedulers;
 import ru.terrakok.cicerone.Router;
-import ru.terrakok.cicerone.Screen;
 
 @InjectViewState
 public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
 
     private Router router;
+    private Interactor interactor;
 
-    private final int LOAD_NEW_VIDEO = 0;
+    private final int LOAD_NEW_VIDEO_SCREEN = 4;
+    private final int LOAD_VIDEO = 5;
+
 
     private final String new_video = "Новое видео";
     private final String casting = "Кастинг";
@@ -34,8 +42,9 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
     private List<PrevState> previousStates = new ArrayList<>();
 
     @Inject
-    MainScreenPresenter(Router router){
+    MainScreenPresenter(Router router, Interactor interactor){
         this.router = router;
+        this.interactor = interactor;
     }
 
     boolean onNavClicked(int id){
@@ -65,7 +74,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
     void changeFragment(int code){
         getViewState().clearTopView();
         switch (code){
-            case LOAD_NEW_VIDEO:
+            case LOAD_NEW_VIDEO_SCREEN:
                 getViewState().hideBottomNavBar();
                 getViewState().showBackButton();
                 getViewState().showSaveButton();
@@ -73,6 +82,8 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                 previousStates.add(new PrevState(false, casting, ADD_BUTTON));
                 router.navigateTo(new Screens.FileLoadMainScreen());
                 break;
+            case LOAD_VIDEO:
+                getViewState().pickVideo();
         }
     }
 
@@ -115,5 +126,26 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                 getViewState().showMenuPoints();
                 break;
         }
+    }
+
+    void uploadVideoToServer(Uri videoUri){
+//        openSecondsScreen(videoUri);
+        interactor.uploadVideo(videoUri)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableCompletableObserver() {
+                               @Override
+                               public void onComplete() {
+                                   backButtonPressed(true);
+                               }
+
+                               @Override
+                               public void onError(Throwable e) {
+                                   getViewState().showMessage("Ошибка при загрузке видео");
+                               }
+                           }
+//                        () -> getViewState().startMain(),
+//                        e -> getViewState().showingError("")
+                );
     }
 }
