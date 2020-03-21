@@ -41,6 +41,7 @@ import butterknife.OnClick;
 import toothpick.Toothpick;
 
 import static android.app.Activity.RESULT_OK;
+import static com.avatar.ava.DataModule.SERVER_NAME;
 
 
 public class ProfileFragment extends MvpAppCompatFragment implements ProfileView {
@@ -65,8 +66,6 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     @BindView(R.id.fragment_profile_description)
     EditText description;
 
-    @BindView(R.id.fragment_profile_link)
-    EditText link;
 
     @BindView(R.id.fragment_profile_edit_photo)
     TextView editPhoto;
@@ -108,7 +107,6 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         super.onViewCreated(view, savedInstanceState);
         Toothpick.inject(this, Toothpick.openScope(App.class));
         description.setEnabled(false);
-        link.setEnabled(false);
         presenter.getProfile();
     }
 
@@ -117,7 +115,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     public void setDataProfile(PersonRatingDTO person) {
         //set Data
         Glide.with(getView())
-                .load("http://avatarapp.yambr.ru/api/profile/photo/get/" + person.getPhoto())
+                .load(SERVER_NAME + "/api/profile/photo/get/" + person.getPhoto())
                 .circleCrop()
                 .into(profileImage);
         name.setText(person.getName());
@@ -153,14 +151,12 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         if(!edit){
             edit = true;
             description.setEnabled(true);
-            link.setEnabled(true);
             editPhoto.setVisibility(View.VISIBLE);
             editProfile.setText("Применить");
         }else{
             edit = false;
             presenter.setDescription(description.getText().toString());
             description.setEnabled(false);
-            link.setEnabled(false);
             editPhoto.setVisibility(View.GONE);
             editProfile.setText("Редактировать");
         }

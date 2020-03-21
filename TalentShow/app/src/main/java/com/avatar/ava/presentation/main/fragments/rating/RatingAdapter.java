@@ -18,6 +18,8 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.avatar.ava.DataModule.SERVER_NAME;
+
 public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder> {
 
     private List<PersonRatingDTO> data = new ArrayList<>();
@@ -34,8 +36,14 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PersonRatingDTO personRatingDTO = data.get(position);
-        holder.video.setVideoURI(Uri.parse("http://avatarapp.yambr.ru/api/video/"
+        holder.video.setVideoURI(Uri.parse(SERVER_NAME + "/api/video/"
                 + personRatingDTO.getVideo().getName()));
+        holder.video.setOnPreparedListener(mp -> mp.setOnVideoSizeChangedListener(
+                (mp12, width, height) -> {
+                    mp.setLooping(true);
+                }));
+
+        holder.likes.setText("     " + String.valueOf(personRatingDTO.getLikesNumber()));
 
         holder.video.start();
         holder.description.setText(personRatingDTO.getDescription());
@@ -43,7 +51,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         holder.name.setText(name);
         holder.pos.setText(String.valueOf(position + 1) + " место");
         Glide.with(holder.itemView.getContext())
-                .load("http://avatarapp.yambr.ru/api/profile/photo/get/"
+                .load(SERVER_NAME + "/api/profile/photo/get/"
                         + personRatingDTO.getPhoto())
                 .circleCrop()
                 .into(holder.ava);
@@ -68,7 +76,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     class ViewHolder extends RecyclerView.ViewHolder{
 
         VideoView video;
-        TextView pos, name, description;
+        TextView pos, name, description, likes;
         ImageView ava;
 
         ViewHolder(@NonNull View itemView) {
@@ -78,6 +86,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
             name = itemView.findViewById(R.id.rating_item_name);
             description = itemView.findViewById(R.id.rating_item_description);
             ava = itemView.findViewById(R.id.rating_item_ava);
+            likes = itemView.findViewById(R.id.rating_item_likes);
         }
     }
 }

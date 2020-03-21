@@ -1,78 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/darkBackground">
+    android:background="@color/darkBackground"
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="518dp"
-        app:cardCornerRadius="20dp"
+        android:layout_height="500dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         app:cardBackgroundColor="@color/blackText"
+        app:cardCornerRadius="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <VideoView
             android:id="@+id/rating_item_video"
+            android:layout_gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="0dp"
+            android:layout_height="300dp"
             />
+
 
         <ImageView
             android:id="@+id/rating_item_ava"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="405dp"
-            android:layout_marginEnd="293dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
 
             android:src="@drawable/casting_activity_ava"
 
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
-
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="310dp"
+             />
 
         <TextView
             android:id="@+id/rating_item_pos"
             android:layout_width="wrap_content"
-            android:layout_height="28dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="57dp"
+            android:layout_height="20dp"
             android:background="@drawable/rating_item_pos_bg"
             android:gravity="center"
             android:lineSpacingExtra="1sp"
             android:text="1 место"
             android:textColor="@color/whiteText"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            android:layout_marginTop="265dp"
+            android:layout_marginStart="16dp"
+             />
+
+
+        <TextView
+            android:id="@+id/rating_item_likes"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="265dp"
+            android:layout_marginStart="110dp"
+
+            android:background="@drawable/rating_item_likes_bg"
+            android:gravity="center"
+            android:lineSpacingExtra="1sp"
+            android:text="1"
+            android:textColor="@color/whiteText" />
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@drawable/rating_item_like"
+            android:layout_marginTop="270dp"
+            android:layout_marginStart="125dp"/>
 
         <TextView
             android:id="@+id/rating_item_name"
             android:layout_width="wrap_content"
-            android:layout_height="28dp"
-            android:layout_marginStart="66dp"
-            android:layout_marginTop="405dp"
-            android:layout_marginEnd="57dp"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:lineSpacingExtra="1sp"
             android:text="@string/activity_casting_name"
             android:textColor="@color/whiteText"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            android:layout_marginTop="315dp"
+            android:layout_marginStart="56dp"/>
 
         <TextView
             android:id="@+id/rating_item_description"
-            android:layout_width="291dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="440dp"
-            android:layout_marginEnd="20dp"
+
+            android:layout_marginTop="350dp"
+            android:layout_marginStart="16dp"
 
             android:gravity="top"
             android:lineSpacingExtra="2sp"
@@ -81,9 +99,11 @@
             android:translationY="-1.05sp" />
 
     </androidx.cardview.widget.CardView>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        />
 
-</LinearLayout>
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/cardView"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
