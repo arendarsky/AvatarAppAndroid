@@ -21,13 +21,32 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/guideline">
 
-        <VideoView
-            android:id="@+id/activity_casting_video"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="3"
             android:layout_marginStart="0dp"
             android:layout_marginEnd="0dp"
-            android:clickable="false"/>
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:scaleType="fitXY">
+            <VideoView
+                android:id="@+id/activity_casting_video"
+
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+
+                android:clickable="false"/>
+
+        </RelativeLayout>
+
+
 
         <ImageView
             android:id="@+id/casting_activity_avatar"
