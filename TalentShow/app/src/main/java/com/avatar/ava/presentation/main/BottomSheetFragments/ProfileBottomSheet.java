@@ -1,20 +1,14 @@
 package com.avatar.ava.presentation.main.BottomSheetFragments;
 
-import android.content.Context;
-import android.net.Uri;
-import android.os.Bundle;
 
+import android.content.Context;
+import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-
 import com.avatar.ava.R;
-import com.avatar.ava.presentation.main.fragments.casting.CastingDialogFragment;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 
@@ -40,7 +34,6 @@ public class ProfileBottomSheet extends BottomSheetDialogFragment
      }
      @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
       super.onViewCreated(view, savedInstanceState);
-
       view.findViewById(EDIT).setOnClickListener(this);
       view.findViewById(SETTINGS).setOnClickListener(this);
       view.findViewById(CANCEL).setOnClickListener(this);
@@ -60,16 +53,26 @@ public class ProfileBottomSheet extends BottomSheetDialogFragment
       super.onDetach();
       mListener = null;
      }
-     @Override public void onClick(View view) {
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme);
+    }
+
+    @Override public void onClick(View view) {
       mListener.onItemClick(view.getId());
 
       dismiss();
      }
-     public interface ItemClickListener {
+
+
+
+    public interface ItemClickListener {
       void onItemClick(int item);
      }
 
-    
+
 
 
 }
