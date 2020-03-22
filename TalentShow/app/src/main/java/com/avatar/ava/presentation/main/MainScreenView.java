@@ -9,6 +9,7 @@ public interface MainScreenView extends MvpView {
     void showMenuPoints();
     void showSaveButton();
     void showAddButton();
+    void showSaveProfile();
     void clearTopView();
     void showMessage(String message);
     void addButtonClicked();

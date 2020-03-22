@@ -23,6 +23,9 @@ import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -30,7 +33,10 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
 
+import com.avatar.ava.presentation.main.BottomSheetFragments.ProfileBottomSheet;
 import com.avatar.ava.presentation.main.fragments.FragmentFileLoadMain;
+import com.avatar.ava.presentation.main.fragments.casting.CastingDialogFragment;
+import com.avatar.ava.presentation.main.fragments.profile.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import javax.inject.Inject;
@@ -43,7 +49,7 @@ import ru.terrakok.cicerone.NavigatorHolder;
 import ru.terrakok.cicerone.android.support.SupportAppNavigator;
 import toothpick.Toothpick;
 
-public class MainScreenActivity extends MvpAppCompatActivity implements MainScreenView, MainScreenPostman {
+public class MainScreenActivity extends MvpAppCompatActivity implements MainScreenView, MainScreenPostman, ProfileBottomSheet.ItemClickListener {
 
     @BindView(R.id.bottom_nav_bar)
     BottomNavigationView bottomNavigationView;
@@ -60,6 +66,9 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     @BindView(R.id.main_frame_menu_points)
     View menuPoints;
 
+    @BindView(R.id.main_frame_save_profile_btn)
+    TextView saveProfile;
+
     @BindView(R.id.main_frame_back)
     ConstraintLayout backButton;
 
@@ -73,6 +82,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     MainScreenPresenter presenter;
 
     private final int LOAD_NEW_VIDEO_SCREEN = 4;
+    private final int CHANGE_PROFILE = 6;
 
     private final int CAMERA_CODE = 1;
     private final int REQUEST_PICK_IMAGE = 2;
@@ -153,16 +163,40 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     }
 
     @Override
+    public void showSaveProfile(){
+        saveProfile.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void clearTopView() {
         backButton.setVisibility(View.INVISIBLE);
         menuPoints.setVisibility(View.INVISIBLE);
         saveButton.setVisibility(View.INVISIBLE);
         addButton.setVisibility(View.INVISIBLE);
+        saveProfile.setVisibility(View.INVISIBLE);
     }
 
     @OnClick(R.id.main_frame_add)
     public void addButtonClicked(){
         presenter.changeFragment(LOAD_NEW_VIDEO_SCREEN);
+    }
+
+    @OnClick(R.id.main_frame_menu_points)
+    public void menuPointsClick(){
+        ProfileBottomSheet profileBottomSheet =
+                ProfileBottomSheet.newInstance();
+        profileBottomSheet.show(getSupportFragmentManager(),
+                ProfileBottomSheet.TAG);
+    }
+
+    @OnClick(R.id.main_frame_save_profile_btn)
+    public void saveProfileClick(){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        ProfileFragment profileFragment = (ProfileFragment) fragmentManager.findFragmentById(ProfileFragment.ProfileID);
+        profileFragment.editProfile();
+        clearTopView();
+        changeTitle("Профиль");
+        showMenuPoints();
     }
 
     @Override
@@ -290,4 +324,17 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     }
 
 
+    @Override
+    public void onItemClick(int item) {
+        switch (item){
+            case ProfileBottomSheet.EDIT:
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                ProfileFragment profileFragment = (ProfileFragment) fragmentManager.findFragmentById(ProfileFragment.ProfileID);
+                profileFragment.editProfile();
+                clearTopView();
+                changeTitle("Ред. профиля");
+                showSaveProfile();
+                break;
+        }
+    }
 }

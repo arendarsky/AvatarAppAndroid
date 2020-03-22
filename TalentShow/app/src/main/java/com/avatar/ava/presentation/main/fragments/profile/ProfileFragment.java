@@ -46,6 +46,8 @@ import static com.avatar.ava.DataModule.SERVER_NAME;
 
 public class ProfileFragment extends MvpAppCompatFragment implements ProfileView {
 
+    public static int ProfileID;
+
     ArrayList<VideoDTO> videos = new ArrayList<VideoDTO>();
 
     @Inject
@@ -58,7 +60,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     ImageView profileImage;
 
     @BindView(R.id.fragment_profile_name)
-    TextView name;
+    EditText name;
 
     @BindView(R.id.fragment_profile_likes)
     TextView likes;
@@ -95,6 +97,8 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        ProfileID = this.getId();
+        //if(!this.isAdded())getActivity().getSupportFragmentManager().beginTransaction().add(this, "ProfileFragment1").commit();
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, v);
         return v;
@@ -107,6 +111,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         super.onViewCreated(view, savedInstanceState);
         Toothpick.inject(this, Toothpick.openScope(App.class));
         description.setEnabled(false);
+        name.setEnabled(false);
         presenter.getProfile();
     }
 
@@ -121,7 +126,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         name.setText(person.getName());
         likes.setText(person.getLikesNumber() + " Лайков");
         description.setText(person.getDescription());
-//        videos.addAll(person.getPersonDTO().getVideo());
+       //videos.addAll(person.getPersonDTO().getVideo());
     }
 
 
@@ -151,12 +156,15 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         if(!edit){
             edit = true;
             description.setEnabled(true);
+            name.setEnabled(true);
             editPhoto.setVisibility(View.VISIBLE);
             editProfile.setText("Применить");
         }else{
             edit = false;
             presenter.setDescription(description.getText().toString());
+            presenter.setName(name.getText().toString());
             description.setEnabled(false);
+            name.setEnabled(false);
             editPhoto.setVisibility(View.GONE);
             editProfile.setText("Редактировать");
         }

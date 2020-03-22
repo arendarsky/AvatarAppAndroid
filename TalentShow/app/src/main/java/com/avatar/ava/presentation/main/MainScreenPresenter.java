@@ -1,6 +1,7 @@
 package com.avatar.ava.presentation.main;
 
 import android.net.Uri;
+import android.widget.Toast;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
@@ -27,6 +28,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
 
     private final int LOAD_NEW_VIDEO_SCREEN = 4;
     private final int LOAD_VIDEO = 5;
+    private final int CHANGE_PROFILE = 6;
 
 
     private final String new_video = "Новое видео";
@@ -65,6 +67,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                 return true;
             case R.id.nav_profile:
                 getViewState().changeTitle(profile);
+                getViewState().showMenuPoints();
                 router.newRootScreen(new Screens.ProfileScreen());
                 return true;
         }
@@ -84,6 +87,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                 break;
             case LOAD_VIDEO:
                 getViewState().pickVideo();
+                break;
         }
     }
 

@@ -47,7 +47,7 @@ public class ProfilePresenter extends MvpPresenter<ProfileView> {
         Disposable disposable = interactor.setName(name)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> getProfile());
+                .subscribe(() -> {});
     }
 
     void setPassword(String oldPassword, String newPassword){
