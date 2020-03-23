@@ -7,6 +7,7 @@ import android.util.Log;
 import com.avatar.ava.data.api.ProfileAPI;
 import com.avatar.ava.domain.entities.NotificationsDTO;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
+import com.avatar.ava.domain.entities.ProfileDTO;
 import com.avatar.ava.domain.repository.IProfileRepository;
 
 import java.io.File;
@@ -43,7 +44,7 @@ public class ProfileRepository implements IProfileRepository {
 
 
     @Override
-    public Single<PersonRatingDTO> getProfile() {
+    public Single<ProfileDTO> getProfile() {
         Disposable disposable = profileAPI.getProfile(preferencesRepository.getToken())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -28,6 +28,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
+import com.avatar.ava.domain.entities.ProfileDTO;
 import com.avatar.ava.domain.entities.VideoDTO;
 import com.avatar.ava.presentation.main.MainScreenActivity;
 import com.avatar.ava.presentation.main.MainScreenPostman;
@@ -158,14 +159,6 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         name.setEnabled(false);
         presenter.getProfile();
         activity = (MainScreenActivity) getActivity();
-        switch (currCountVideos){
-            case 0:
-                container2.setVisibility(View.INVISIBLE);
-            case 1:
-                container3.setVisibility(View.INVISIBLE);
-            case 2:
-                container4.setVisibility(View.INVISIBLE);
-        }
         /*if(currCountVideos == 0){
             container2.setVisibility(View.INVISIBLE);
             container3.setVisibility(View.INVISIBLE);
@@ -178,9 +171,22 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         }*/
     }
 
+    private void showContainers(){
+        if(currCountVideos == 0){
+            container2.setVisibility(View.INVISIBLE);
+            container3.setVisibility(View.INVISIBLE);
+            container4.setVisibility(View.INVISIBLE);
+        }else if(currCountVideos == 1){
+            container3.setVisibility(View.INVISIBLE);
+            container4.setVisibility(View.INVISIBLE);
+        }else if(currCountVideos == 2){
+            container4.setVisibility(View.INVISIBLE);
+        }
+    }
+
 
     @Override
-    public void setDataProfile(PersonRatingDTO person) {
+    public void setDataProfile(ProfileDTO person) {
         //set Data
         Glide.with(getView())
                 .load(SERVER_NAME + "/api/profile/photo/get/" + person.getPhoto())
@@ -189,7 +195,21 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         name.setText(person.getName());
         likes.setText(person.getLikesNumber() + " Лайков");
         description.setText(person.getDescription());
-       //videos.addAll(person.getPersonDTO().getVideo());
+        videos = person.getVideos();
+        currCountVideos = videos.size();
+        showContainers();
+        Log.d("ProfileLog", "videos " + currCountVideos + " size " + videos.size());
+        video1.setVideoURI(Uri.parse(SERVER_NAME + "/api/video/" + videos.get(0).getName()));
+        video1.setVisibility(View.VISIBLE);
+
+        video2.setVideoURI(Uri.parse(SERVER_NAME + "/api/video/" + videos.get(1).getName()));
+        video2.setVisibility(View.VISIBLE);
+
+        video3.setVideoURI(Uri.parse(SERVER_NAME + "/api/video/" + videos.get(2).getName()));
+        video3.setVisibility(View.VISIBLE);
+
+        video4.setVideoURI(Uri.parse(SERVER_NAME + "/api/video/" + videos.get(3).getName()));
+        video4.setVisibility(View.VISIBLE);
     }
 
 
