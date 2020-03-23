@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
@@ -16,8 +17,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -26,6 +29,7 @@ import com.avatar.ava.App;
 import com.avatar.ava.R;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
 import com.avatar.ava.domain.entities.VideoDTO;
+import com.avatar.ava.presentation.main.MainScreenActivity;
 import com.avatar.ava.presentation.main.MainScreenPostman;
 import com.avatar.ava.presentation.main.fragments.rating.RatingPresenter;
 import com.bumptech.glide.Glide;
@@ -47,6 +51,8 @@ import static com.avatar.ava.DataModule.SERVER_NAME;
 public class ProfileFragment extends MvpAppCompatFragment implements ProfileView {
 
     public static int ProfileID;
+    private final int LOAD_NEW_VIDEO_SCREEN = 4;
+    private int currCountVideos = 0;
 
     ArrayList<VideoDTO> videos = new ArrayList<VideoDTO>();
 
@@ -75,6 +81,42 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     @BindView(R.id.fragment_profile_btn_edit)
     TextView editProfile;
 
+    @BindView(R.id.fragment_profile_video_1)
+    VideoView video1;
+
+    @BindView(R.id.fragment_profile_video_2)
+    VideoView video2;
+
+    @BindView(R.id.fragment_profile_video_3)
+    VideoView video3;
+
+    @BindView(R.id.fragment_profile_video_4)
+    VideoView video4;
+
+    @BindView(R.id.fragment_profile_add_video_btn_1)
+    ImageButton addVideoBtn1;
+
+    @BindView(R.id.fragment_profile_add_video_btn_2)
+    ImageButton addVideoBtn2;
+
+    @BindView(R.id.fragment_profile_add_video_btn_3)
+    ImageButton addVideoBtn3;
+
+    @BindView(R.id.fragment_profile_add_video_btn_4)
+    ImageButton addVideoBtn4;
+
+    @BindView(R.id.fragment_profile_container1)
+    ConstraintLayout container1;
+
+    @BindView(R.id.fragment_profile_container2)
+    ConstraintLayout container2;
+
+    @BindView(R.id.fragment_profile_container3)
+    ConstraintLayout container3;
+
+    @BindView(R.id.fragment_profile_container4)
+    ConstraintLayout container4;
+
     @ProvidePresenter
     ProfilePresenter getPresenter(){
         return Toothpick.openScope(App.class).getInstance(ProfilePresenter.class);
@@ -92,6 +134,8 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         super.onCreate(savedInstanceState);
 
     }
+
+    MainScreenActivity activity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -113,6 +157,25 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         description.setEnabled(false);
         name.setEnabled(false);
         presenter.getProfile();
+        activity = (MainScreenActivity) getActivity();
+        switch (currCountVideos){
+            case 0:
+                container2.setVisibility(View.INVISIBLE);
+            case 1:
+                container3.setVisibility(View.INVISIBLE);
+            case 2:
+                container4.setVisibility(View.INVISIBLE);
+        }
+        /*if(currCountVideos == 0){
+            container2.setVisibility(View.INVISIBLE);
+            container3.setVisibility(View.INVISIBLE);
+            container4.setVisibility(View.INVISIBLE);
+        }else if(currCountVideos == 1){
+            container3.setVisibility(View.INVISIBLE);
+            container4.setVisibility(View.INVISIBLE);
+        }else if(currCountVideos == 2){
+            container4.setVisibility(View.INVISIBLE);
+        }*/
     }
 
 
@@ -176,5 +239,23 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, 1);
+    }
+
+
+    @OnClick(R.id.fragment_profile_add_video_btn_1)
+    public void addVideo1(){
+        activity.fragmentAction(LOAD_NEW_VIDEO_SCREEN);
+    }
+    @OnClick(R.id.fragment_profile_add_video_btn_2)
+    public void addVideo2(){
+        activity.fragmentAction(LOAD_NEW_VIDEO_SCREEN);
+    }
+    @OnClick(R.id.fragment_profile_add_video_btn_3)
+    public void addVideo3(){
+        activity.fragmentAction(LOAD_NEW_VIDEO_SCREEN);
+    }
+    @OnClick(R.id.fragment_profile_add_video_btn_4)
+    public void addVideo4(){
+        activity.fragmentAction(LOAD_NEW_VIDEO_SCREEN);
     }
 }

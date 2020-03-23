@@ -150,7 +150,7 @@
         android:layout_height="100dp"
         android:layout_marginStart="26dp"
         android:layout_marginTop="20dp"
-        android:id="@+id/fragment_profile_container"
+        android:id="@+id/fragment_profile_container1"
         app:layout_constraintTop_toBottomOf="@id/fragment_profile_video_tv"
         app:layout_constraintStart_toStartOf="parent"
         >
@@ -197,6 +197,7 @@
         android:layout_height="100dp"
         android:layout_marginEnd="26dp"
         android:layout_marginTop="20dp"
+        android:id="@+id/fragment_profile_container2"
         app:layout_constraintTop_toBottomOf="@id/fragment_profile_video_tv"
         app:layout_constraintEnd_toEndOf="parent"
         >
@@ -241,7 +242,8 @@
         android:layout_height="100dp"
         android:layout_marginStart="26dp"
         android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@id/fragment_profile_container"
+        android:id="@+id/fragment_profile_container3"
+        app:layout_constraintTop_toBottomOf="@id/fragment_profile_container1"
         app:layout_constraintStart_toStartOf="parent"
         >
 
@@ -284,7 +286,8 @@
         android:layout_height="100dp"
         android:layout_marginEnd="26dp"
         android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@id/fragment_profile_container"
+        android:id="@+id/fragment_profile_container4"
+        app:layout_constraintTop_toBottomOf="@id/fragment_profile_container1"
         app:layout_constraintEnd_toEndOf="parent"
         >
 
