@@ -27,6 +27,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
 
     private final int LOAD_NEW_VIDEO_SCREEN = 4;
     private final int LOAD_VIDEO = 5;
+    private final int CHOOSE_SECONDS_SCREEN = 6;
 
 
     private final String new_video = "Новое видео";
@@ -34,10 +35,14 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
     private final String rating = "Рейтинг";
     private final String profile = "Профиль";
     private final String notifications = "Уведомления";
+    private final String best30 = "Лучшие 30";
 
     private final int SAVE_BUTTON = 0;
     private final int ADD_BUTTON = 1;
     private final int MENU_POINTS = 2;
+
+    private final boolean SHOW_BACK = true;
+    private final boolean HIDE_BACK = false;
 
     private List<PrevState> previousStates = new ArrayList<>();
 
@@ -79,12 +84,21 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                 getViewState().showBackButton();
                 getViewState().showSaveButton();
                 getViewState().changeTitle(new_video);
-                previousStates.add(new PrevState(false, casting, ADD_BUTTON));
+                previousStates.add(new PrevState(HIDE_BACK, casting, ADD_BUTTON));
                 router.navigateTo(new Screens.FileLoadMainScreen());
                 break;
             case LOAD_VIDEO:
                 getViewState().pickVideo();
         }
+    }
+
+    void openBest30Screen(Uri uri){
+        getViewState().clearTopView();
+        getViewState().showBackButton();
+        getViewState().changeTitle(best30);
+        getViewState().showSaveButton();
+        previousStates.add(new PrevState(SHOW_BACK, new_video, SAVE_BUTTON));
+        router.navigateTo(new Screens.ChooseBestMainScreen(uri));
     }
 
     boolean backButtonPressed(boolean fileLoad){
@@ -93,7 +107,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
             if (fileLoad)
                 getViewState().showBottomNavBar();
 
-            router.backTo(null);
+            router.exit();
             return false;
         }
         else return true;
@@ -109,6 +123,13 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
             title = b;
             code = c;
         }
+    }
+
+    private void retunToRoot(){
+        decodePrevState(previousStates.remove(0));
+        previousStates.clear();
+        router.backTo(null);
+        getViewState().showBottomNavBar();
     }
 
     private void decodePrevState(PrevState prevState){
@@ -128,24 +149,41 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
         }
     }
 
-    void uploadVideoToServer(Uri videoUri){
+    void composeVideo(Uri videoUri){
 //        openSecondsScreen(videoUri);
-        interactor.uploadVideo(videoUri)
+        interactor.composeVideo(videoUri)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+//                .doOnSubscribe(d -> openBest30Screen(videoUri))
+                .subscribe(new DisposableCompletableObserver() {
+                               @Override
+                               public void onComplete() {
+                                    openBest30Screen(videoUri);
+                               }
+
+                               @Override
+                               public void onError(Throwable e) {
+                                   getViewState().showMessage("Ошибка при сжатии видео");
+                               }
+                           }
+                );
+    }
+
+    void uploadAndSetInterval(Float beginTime, Float endTime){
+        interactor.uploadAndSetInterval(beginTime, endTime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableCompletableObserver() {
                                @Override
                                public void onComplete() {
-                                   backButtonPressed(true);
+                                   retunToRoot();
                                }
 
                                @Override
                                public void onError(Throwable e) {
-                                   getViewState().showMessage("Ошибка при загрузке видео");
+                                    getViewState().showMessage("Ошибка при загрузке видео");
                                }
                            }
-//                        () -> getViewState().startMain(),
-//                        e -> getViewState().showingError("")
                 );
     }
 }

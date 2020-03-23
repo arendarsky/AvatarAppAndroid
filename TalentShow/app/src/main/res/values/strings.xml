@@ -35,7 +35,7 @@
     <string name="rating"><b>Рейтинг</b></string>
     <string name="stars">Звезды</string>
     <string name="producers">Продюсеры</string>
-    <string name="top_20"><b>ТОП-20</b></string>
+    <string name="top_20"><b>Топ-20</b></string>
     <string name="name_hint">Иван Иванов</string>
     <string name="number_hint">1</string>
     <string name="casting">Кастинг</string>
@@ -70,4 +70,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="no_like_rn">У вас пока нет лайков. Загляните позже</string>
+    <string name="casting_video_fragment">Эти 30 секунд будут показаны всем людям в разделе кастинг. Полное видео доступно лишь для тех, с кем вы поделились своим контактом.</string>
+    <string name="best_30_seconds">Лучшие 30 секунд</string>
 </resources>

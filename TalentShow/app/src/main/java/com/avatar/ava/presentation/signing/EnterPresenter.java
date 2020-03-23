@@ -10,7 +10,6 @@ import com.avatar.ava.domain.Interactor;
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.schedulers.Schedulers;
 import ru.terrakok.cicerone.Router;
@@ -86,7 +85,7 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
 
     void uploadVideoToServer(Uri videoUri){
 //        openSecondsScreen(videoUri);
-        interactor.uploadVideo(videoUri)
+        interactor.composeVideo(videoUri)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableCompletableObserver() {

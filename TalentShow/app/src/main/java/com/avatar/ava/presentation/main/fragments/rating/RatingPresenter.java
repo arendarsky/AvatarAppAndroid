@@ -34,7 +34,6 @@ public class RatingPresenter extends MvpPresenter<RatingView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(arrayList -> {
-//                            Log.d("RatingFragmentLog", arrayList.size() + " arrayList");
                             getViewState().setData(arrayList);
                             //data.addAll(arrayList);
                             //Log.d("RatingFragmentLog", data.size() + " data");

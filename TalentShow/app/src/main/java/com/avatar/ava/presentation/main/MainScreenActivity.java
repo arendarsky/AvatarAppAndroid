@@ -23,6 +23,7 @@ import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -30,8 +31,11 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
 
+import com.avatar.ava.presentation.main.fragments.FragmentChooseBestMain;
 import com.avatar.ava.presentation.main.fragments.FragmentFileLoadMain;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -177,6 +181,8 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
 
     @Override
     public void pickVideo() {
+        showBackButton();
+        showSaveButton();
         if (permissionAlreadyGranted()){
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(Intent.createChooser(intent, "Select video"), REQUEST_PICK_IMAGE);
@@ -191,7 +197,8 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_PICK_IMAGE && data != null){
             Log.d("Video", data.getData().toString());
-            presenter.uploadVideoToServer(data.getData());
+
+            presenter.composeVideo(data.getData());
         }
     }
 
@@ -219,6 +226,16 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
                         instanceof FragmentFileLoadMain
         );
         if (closeApp) super.onBackPressed();
+    }
+
+    @OnClick(R.id.main_frame_save)
+    void saveClicked(){
+        Fragment currentFragment = getSupportFragmentManager()
+                .findFragmentById(R.id.activity_main_frame_container);
+        if (currentFragment instanceof FragmentChooseBestMain){
+            List<Float> tmp = ((FragmentChooseBestMain) currentFragment).getInterval();
+            presenter.uploadAndSetInterval(tmp.get(0), tmp.get(1));
+        }
     }
 
     private boolean permissionAlreadyGranted() {

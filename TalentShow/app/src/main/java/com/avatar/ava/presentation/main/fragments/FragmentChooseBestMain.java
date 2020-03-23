@@ -1,11 +1,8 @@
-package com.avatar.ava.presentation.signing.fragments;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+package com.avatar.ava.presentation.main.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +13,10 @@ import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.avatar.ava.App;
 import com.avatar.ava.R;
@@ -32,21 +33,20 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import toothpick.Toothpick;
 
-public class FragmentChooseVideoBest extends Fragment implements OnRangeSeekBarListener {
-
+public class FragmentChooseBestMain extends Fragment implements OnRangeSeekBarListener {
 
     private Activity activity;
 
-    @BindView(R.id.fragment_video_best_video)
+    @BindView(R.id.fragment_video_best_main_video)
     VideoView video;
 
-    @BindView(R.id.fragment_video_best_bar)
+    @BindView(R.id.fragment_video_best_main_bar)
     RangeSeekBar<Float> rangeSeekBar;
 
-    @BindView(R.id.fragment_video_best_start)
+    @BindView(R.id.fragment_video_best_main_start)
     TextView startText;
 
-    @BindView(R.id.fragment_video_best_end)
+    @BindView(R.id.fragment_video_best_main_end)
     TextView endText;
 
     float duration = 0;
@@ -125,7 +125,7 @@ public class FragmentChooseVideoBest extends Fragment implements OnRangeSeekBarL
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_video_best, container, false);
+        return inflater.inflate(R.layout.fragment_video_best_main, container, false);
     }
 
     @Override

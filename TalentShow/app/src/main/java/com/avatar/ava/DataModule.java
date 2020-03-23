@@ -1,6 +1,8 @@
 package com.avatar.ava;
 
+import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 
 import com.avatar.ava.data.AuthRepository;
@@ -28,7 +30,10 @@ import toothpick.config.Module;
 
 public class DataModule extends Module{
 
-    public DataModule(){
+    private Context appContext;
+
+    public DataModule(Context appContext){
+        this.appContext = appContext;
 
         final String CONNECT_TIMEOUT = "CONNECT_TIMEOUT";
         final String READ_TIMEOUT = "READ_TIMEOUT";
@@ -82,6 +87,7 @@ public class DataModule extends Module{
                         .addConverterFactory(GsonConverterFactory.create())
                         .client(httpClient.build())
                         .build());
+
 
         bind(IAuthRepository.class).to(AuthRepository.class).singletonInScope();
         bind(IVideoRepository.class).to(VideoRepository.class).singletonInScope();

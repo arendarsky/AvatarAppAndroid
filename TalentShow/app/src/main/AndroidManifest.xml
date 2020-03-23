@@ -24,7 +24,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.avatar.ava.presentation.main.ActivityStarStatistics"></activity>
         <activity android:name="com.avatar.ava.presentation.signing.fragments.FragmentChooseVideoBest">
 
         </activity>

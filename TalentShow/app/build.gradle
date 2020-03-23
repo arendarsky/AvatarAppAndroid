@@ -89,4 +89,10 @@ dependencies {
 
     //Video Compressor
     implementation 'com.iceteck.silicompressorr:silicompressor:2.2.3'
+
+    //ffmpeg
+    implementation 'com.arthenica:mobile-ffmpeg-min-gpl:4.3.1.LTS'
+
+    //Double range seek bar
+    implementation 'com.yahoo.mobile.client.android.util.rangeseekbar:rangeseekbar-library:0.1.0'
 }

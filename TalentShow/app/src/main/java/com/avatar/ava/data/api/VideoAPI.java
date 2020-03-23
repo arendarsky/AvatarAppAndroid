@@ -33,7 +33,7 @@ public interface VideoAPI {
     Completable setLiked(@Header("Authorization") String token, @Query("name") String name, @Query("isLike") boolean liked);
 
     @GET("/api/video/set_interval")
-    Completable setInterval(@Header("Authorization") String token, @Query("fileName") String fileName, @Query("startTime") int startTime, @Query("endTime") int endTime);
+    Completable setInterval(@Header("Authorization") String token, @Query("fileName") String fileName, @Query("startTime") float startTime, @Query("endTime") float endTime);
 
 
 }

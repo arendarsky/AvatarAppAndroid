@@ -1,13 +1,11 @@
 package com.avatar.ava;
 
-import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import com.avatar.ava.presentation.main.MainScreenActivity;
+import com.avatar.ava.presentation.main.fragments.FragmentChooseBestMain;
 import com.avatar.ava.presentation.main.fragments.FragmentFileLoadMain;
 import com.avatar.ava.presentation.main.fragments.casting.CastingFragment;
 import com.avatar.ava.presentation.main.fragments.notifications.FragmentNotifications;
@@ -16,7 +14,6 @@ import com.avatar.ava.presentation.signing.fragments.FragmentFileLoadJust;
 import com.avatar.ava.presentation.signing.fragments.authorisation.AuthorisationFragment;
 import com.avatar.ava.presentation.signing.fragments.registration.FragmentRegistration;
 import com.avatar.ava.presentation.signing.fragments.ChooseAuthFragment;
-import com.avatar.ava.presentation.main.ActivityStarStatistics;
 import com.avatar.ava.presentation.signing.fragments.FragmentChooseVideoBest;
 import com.avatar.ava.presentation.signing.fragments.FragmentEnterFileLoad;
 import com.avatar.ava.presentation.main.fragments.rating.RatingFragment;
@@ -68,13 +65,6 @@ public class Screens {
         }
     }
 
-    public static final class StarNameEnterScreen extends SupportAppScreen{
-        @Override
-        public Intent getActivityIntent(Context context) {
-            return new Intent(context, FragmentRegistration.class);
-        }
-    }
-
     public static final class FileLoadScreen extends SupportAppScreen{
         @Override
         public Fragment getFragment() {
@@ -85,12 +75,6 @@ public class Screens {
         }
     }
 
-    public static final class MainScreen extends SupportAppScreen{
-        @Override
-        public Intent getActivityIntent(Context context) {
-            return new Intent(context, MainScreenActivity.class);
-        }
-    }
 
     public static final class CastingScreen extends SupportAppScreen{
         @Override
@@ -121,10 +105,22 @@ public class Screens {
            }
     }
 
-    public static final class StarStatisticsScreen extends SupportAppScreen{
+    public static final class ChooseBestMainScreen extends SupportAppScreen{
+
+        private Uri uri;
+
+        public ChooseBestMainScreen(Uri uri) {
+            super();
+            this.uri = uri;
+        }
+
         @Override
-        public Intent getActivityIntent(Context context) {
-            return new Intent(context, ActivityStarStatistics.class);
+        public Fragment getFragment() {
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("uri", uri);
+            FragmentChooseBestMain fragment = new FragmentChooseBestMain();
+            fragment.setArguments(bundle);
+            return fragment;
         }
     }
 

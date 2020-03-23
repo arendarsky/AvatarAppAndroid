@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +18,7 @@ import com.avatar.ava.presentation.main.MainScreenPostman;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import toothpick.Toothpick;
@@ -30,6 +32,9 @@ public class FragmentFileLoadMain extends Fragment {
     private final int LOAD_VIDEO = 5;
     private final int SKIP_AUTH = 2;
     private final int BACK = 7;
+
+    @BindView(R.id.file_load_main_progressbar)
+    ProgressBar progressBar;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +62,7 @@ public class FragmentFileLoadMain extends Fragment {
 
     @OnClick(R.id.fragment_file_load_main_button_add)
     void loadFileClicked() {
+        progressBar.setVisibility(View.VISIBLE);
         try {
             ((MainScreenPostman) activity).fragmentAction(LOAD_VIDEO);
         } catch (Exception e) {

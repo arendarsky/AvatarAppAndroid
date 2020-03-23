@@ -3,20 +3,21 @@ package com.avatar.ava.data;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
+import com.arthenica.mobileffmpeg.Config;
+import com.arthenica.mobileffmpeg.FFmpeg;
 import com.avatar.ava.data.api.VideoAPI;
 import com.avatar.ava.domain.entities.PersonDTO;
 import com.avatar.ava.domain.repository.IVideoRepository;
-import com.iceteck.silicompressorr.SiliCompressor;
 
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.net.URISyntaxException;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
@@ -32,6 +33,8 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Retrofit;
 
+import static com.arthenica.mobileffmpeg.Config.RETURN_CODE_SUCCESS;
+
 public class VideoRepository implements IVideoRepository {
 
     private VideoAPI videoAPI;
@@ -39,7 +42,7 @@ public class VideoRepository implements IVideoRepository {
     private Context appContext;
     private PersonDTO currentPerson;
     private ArrayList<PersonDTO> castingPersons = new ArrayList<>();
-    private String uploadedVideoName;
+    private String convertedFilePath;
 
 
     @Inject
@@ -47,10 +50,9 @@ public class VideoRepository implements IVideoRepository {
         this.videoAPI = retrofit.create(VideoAPI.class);
         this.preferencesRepository = preferencesRepository;
         this.appContext = appContext;
-
     }
 
-    public Completable uploadVideo(Uri fileURI){
+    public Completable composeVideo(Uri fileURI){
 
         File file = new File(getFilePathFromUri(appContext, fileURI));
 
@@ -62,20 +64,95 @@ public class VideoRepository implements IVideoRepository {
 //        }
 
 //        try {
-            return Single.fromCallable(() -> SiliCompressor.with(appContext).compressVideo(file.getAbsolutePath(), file.getParentFile().getAbsolutePath()))
-                    .flatMap(
-                            filePath ->
-                                    videoAPI.uploadVideo(
-                                            preferencesRepository.getToken(),
-                                            MultipartBody.Part.
-                                                    createFormData("file",
-                                                            file.getName(),
-                                                            RequestBody.create(
-                                                                    new File(filePath),
-                                                                    MediaType.parse("multipart/form-data")
-                                                            )
-                                                    )
-                                    ).doOnSuccess(name -> uploadedVideoName = name)).ignoreElement();
+
+        this.convertedFilePath = file.getAbsolutePath().substring(0,
+                file.getAbsolutePath().lastIndexOf("."))
+                + ".mp4";
+
+//        File convertedFile = new File(Environment.getExternalStorageDirectory() + "/" + File.separator + "test.mp4");
+        File convertedFile = new File(this.convertedFilePath);
+        String commands = "-i "
+                + file.getAbsolutePath() + " -q:v 20 "
+//                + " -c:v libx264 "
+                + convertedFile.getAbsolutePath();
+
+//        int rc = FFmpeg.execute(commands);
+//
+//        if (rc == RETURN_CODE_SUCCESS) {
+//            Log.i(Config.TAG, "Command execution completed successfully.");
+//        } else {
+//            Log.i(Config.TAG, String.format("Command execution failed with rc=%d and the output below.", rc));
+//            Config.printLastCommandOutput(Log.INFO);
+//        }
+
+
+
+        return Single.fromCallable(() -> FFmpeg.execute(commands)).ignoreElement();
+//                .andThen(videoAPI.composeVideo(
+//                preferencesRepository.getToken(),
+//                MultipartBody.Part.
+//                        createFormData("file",
+//                                convertedFile.getName(),
+//                                RequestBody.create(
+//                                        convertedFile,
+//                                        MediaType.parse("multipart/form-data")
+//                                )
+//                        )
+//        ).doOnSuccess(name -> uploadedVideoName = name).ignoreElement());
+
+
+//        return Completable.fromAction(() -> ffmpeg.execute(commands,
+//        new ExecuteBinaryResponseHandler() {
+//            @Override
+//            public void onStart() {
+//
+//            }
+//
+//            @Override
+//            public void onFinish() {
+//
+//            }
+//
+//            @Override
+//            public void onSuccess(String message) {
+//                Log.d("Converting", "success");
+//            }
+//
+//            @Override
+//            public void onProgress(String message) {
+//
+//            }
+//
+//            @Override
+//            public void onFailure(String message) {
+//                Log.d("Converting", "failure");
+//            }
+//        })).andThen(videoAPI.composeVideo(
+//                preferencesRepository.getToken(),
+//                MultipartBody.Part.
+//                        createFormData("file",
+//                                file.getName(),
+//                                RequestBody.create(
+//                                        new File(convertedFilePath),
+//                                        MediaType.parse("multipart/form-data")
+//                                )
+//                        )
+//        ).doOnSuccess(name -> uploadedVideoName = name).ignoreElement());
+
+//            return Single.fromCallable(() -> SiliCompressor.with(appContext).compressVideo(file.getAbsolutePath(), file.getParentFile().getAbsolutePath()))
+//                    .flatMap(
+//                            filePath ->
+//                                    videoAPI.composeVideo(
+//                                            preferencesRepository.getToken(),
+//                                            MultipartBody.Part.
+//                                                    createFormData("file",
+//                                                            file.getName(),
+//                                                            RequestBody.create(
+//                                                                    new File(filePath),
+//                                                                    MediaType.parse("multipart/form-data")
+//                                                            )
+//                                                    )
+//                                    ).doOnSuccess(name -> uploadedVideoName = name)).ignoreElement();
 //        } catch (URISyntaxException e) {
 //            return Completable.error(new IllegalStateException());
 //        }
@@ -89,9 +166,28 @@ public class VideoRepository implements IVideoRepository {
 //
 //        MultipartBody.Part body =
 //                MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-//        return videoAPI.uploadVideo(preferencesRepository.getToken(), body)
+//        return videoAPI.composeVideo(preferencesRepository.getToken(), body)
 //                .doOnSuccess(name -> uploadedVideoName = name)
 //                .ignoreElement();
+    }
+
+    @Override
+    public Completable uploadAndSetInterval(Float beginTime, Float endTime){
+        File convertedFile = new File(this.convertedFilePath);
+        return videoAPI.uploadVideo(
+                preferencesRepository.getToken(),
+                MultipartBody.Part.
+                        createFormData("file",
+                                convertedFile.getName(),
+                                RequestBody.create(
+                                        convertedFile,
+                                        MediaType.parse("multipart/form-data")
+                                )
+                        )).flatMapCompletable(name -> videoAPI.setInterval(
+                preferencesRepository.getToken(),
+                name,
+                beginTime,
+                endTime));
     }
 
     @Override
@@ -113,14 +209,13 @@ public class VideoRepository implements IVideoRepository {
     }
 
 
-
     @Override
     public Single<ArrayList<PersonDTO>> getUnwatchedVideos(int number) {
         Disposable disposable = videoAPI.getUnwatched(preferencesRepository.getToken(), 30)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list ->
-                            this.castingPersons = list,
+                                this.castingPersons = list,
                         error -> {});
 
 
@@ -133,10 +228,10 @@ public class VideoRepository implements IVideoRepository {
         return videoAPI.setLiked(preferencesRepository.getToken(), currentPerson.getVideo().getName(), liked);
     }
 
-    @Override
-    public Completable setInterval(String fileName, int startTime, int endTime) {
-        return videoAPI.setInterval(preferencesRepository.getToken(), uploadedVideoName, startTime, endTime);
-    }
+//    @Override
+//    public Completable setInterval(float startTime, float endTime) {
+//        return videoAPI.setInterval(preferencesRepository.getToken(), uploadedVideoName, startTime, endTime);
+//    }
 
     @Override
     public Single<PersonDTO> getVideoLinkOnCreate() {
@@ -180,7 +275,6 @@ public class VideoRepository implements IVideoRepository {
                 extension = URLConnection.guessContentTypeFromStream(input);
             }
             if (extension.equals(".quicktime")) extension = ".mov";
-            Log.d("extension", extension);
             File outputDir = context.getCacheDir();
             File outputFile = File.createTempFile("video",
                     extension, outputDir);

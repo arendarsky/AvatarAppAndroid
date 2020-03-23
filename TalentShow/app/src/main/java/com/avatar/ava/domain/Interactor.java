@@ -17,7 +17,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
-import io.reactivex.Observable;
 import io.reactivex.Single;
 
 public class Interactor {
@@ -70,13 +69,17 @@ public class Interactor {
         return this.authRepository.confirmMail(mail, code.replaceAll(" ", ""));
     }
 
-    public Completable uploadVideo(Uri videoUri){
-        return this.videoRepository.uploadVideo(videoUri);
+    public Completable composeVideo(Uri videoUri){
+        return this.videoRepository.composeVideo(videoUri);
     }
 
-    public Completable setInterval(String fileName, int startTime, int endTime) {
-        return this.videoRepository.setInterval(fileName, startTime, endTime);
+    public Completable uploadAndSetInterval(Float startTime, Float endTime){
+        return this.videoRepository.uploadAndSetInterval(startTime, endTime);
     }
+
+//    public Completable setInterval(float startTime, float endTime) {
+//        return this.videoRepository.setInterval(startTime, endTime);
+//    }
 
     public boolean checkAuth(){
         return this.preferencesRepository.checkAuth();

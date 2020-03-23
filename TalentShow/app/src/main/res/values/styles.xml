@@ -120,7 +120,7 @@
     <style name="activity_star_video_best_heading">
 
         <item name="android:textSize">
-            36sp
+            20sp
         </item>
 
         <item name="android:letterSpacing">
