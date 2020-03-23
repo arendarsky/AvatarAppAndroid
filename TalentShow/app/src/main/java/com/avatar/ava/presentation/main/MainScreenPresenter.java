@@ -28,7 +28,8 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
 
     private final int LOAD_NEW_VIDEO_SCREEN = 4;
     private final int LOAD_VIDEO = 5;
-    private final int CHANGE_PROFILE = 6;
+    private final int PROFILE_SETTINGS = 6;
+    private final int PROFILE_CHANGE_PASSWORD = 7;
 
 
     private final String new_video = "Новое видео";
@@ -87,6 +88,16 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                 break;
             case LOAD_VIDEO:
                 getViewState().pickVideo();
+                break;
+            case PROFILE_SETTINGS:
+                getViewState().changeTitle("Настройки");
+                previousStates.add(new PrevState(false, profile, MENU_POINTS));
+                router.navigateTo(new Screens.ProfileSettingsScreen());
+                break;
+            case PROFILE_CHANGE_PASSWORD:
+                getViewState().changeTitle("Изм. пароля");
+                getViewState().showSavePassword();
+                router.navigateTo(new Screens.ChangePasswordScreen());
                 break;
         }
     }

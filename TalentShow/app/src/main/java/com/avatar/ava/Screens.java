@@ -12,6 +12,8 @@ import com.avatar.ava.presentation.main.fragments.FragmentFileLoadMain;
 import com.avatar.ava.presentation.main.fragments.casting.CastingFragment;
 import com.avatar.ava.presentation.main.fragments.notifications.FragmentNotifications;
 import com.avatar.ava.presentation.main.fragments.profile.ProfileFragment;
+import com.avatar.ava.presentation.main.fragments.profile.profileSettings.ChangePassword.ChangePasswordFragment;
+import com.avatar.ava.presentation.main.fragments.profile.profileSettings.ProfileSettingsFragment;
 import com.avatar.ava.presentation.signing.fragments.FragmentFileLoadJust;
 import com.avatar.ava.presentation.signing.fragments.authorisation.AuthorisationFragment;
 import com.avatar.ava.presentation.signing.fragments.registration.FragmentRegistration;
@@ -128,11 +130,31 @@ public class Screens {
         }
     }
 
+    public static final class ChangePasswordScreen extends SupportAppScreen{
+        @Override
+        public Fragment getFragment() {
+            Bundle bundle = new Bundle();
+            ChangePasswordFragment fragment = new ChangePasswordFragment();
+            fragment.setArguments(bundle);
+            return fragment;
+        }
+    }
+
     public static final class FileLoadMainScreen extends SupportAppScreen{
         @Override
         public Fragment getFragment() {
             Bundle bundle = new Bundle();
             FragmentFileLoadMain fragment = new FragmentFileLoadMain();
+            fragment.setArguments(bundle);
+            return fragment;
+        }
+    }
+
+    public static final class ProfileSettingsScreen extends SupportAppScreen{
+        @Override
+        public Fragment getFragment() {
+            Bundle bundle = new Bundle();
+            ProfileSettingsFragment fragment = new ProfileSettingsFragment();
             fragment.setArguments(bundle);
             return fragment;
         }

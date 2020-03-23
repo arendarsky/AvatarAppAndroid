@@ -37,6 +37,7 @@ import com.avatar.ava.presentation.main.BottomSheetFragments.ProfileBottomSheet;
 import com.avatar.ava.presentation.main.fragments.FragmentFileLoadMain;
 import com.avatar.ava.presentation.main.fragments.casting.CastingDialogFragment;
 import com.avatar.ava.presentation.main.fragments.profile.ProfileFragment;
+import com.avatar.ava.presentation.main.fragments.profile.profileSettings.ChangePassword.ChangePasswordFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import javax.inject.Inject;
@@ -69,6 +70,9 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     @BindView(R.id.main_frame_save_profile_btn)
     TextView saveProfile;
 
+    @BindView(R.id.main_frame_save_password_btn)
+    TextView savePassword;
+
     @BindView(R.id.main_frame_back)
     ConstraintLayout backButton;
 
@@ -82,7 +86,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     MainScreenPresenter presenter;
 
     private final int LOAD_NEW_VIDEO_SCREEN = 4;
-    private final int CHANGE_PROFILE = 6;
+    private final int PROFILE_SETTINGS = 6;
 
     private final int CAMERA_CODE = 1;
     private final int REQUEST_PICK_IMAGE = 2;
@@ -168,12 +172,18 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     }
 
     @Override
+    public void showSavePassword(){
+        savePassword.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void clearTopView() {
         backButton.setVisibility(View.INVISIBLE);
         menuPoints.setVisibility(View.INVISIBLE);
         saveButton.setVisibility(View.INVISIBLE);
         addButton.setVisibility(View.INVISIBLE);
         saveProfile.setVisibility(View.INVISIBLE);
+        savePassword.setVisibility(View.INVISIBLE);
     }
 
     @OnClick(R.id.main_frame_add)
@@ -197,6 +207,14 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         clearTopView();
         changeTitle("Профиль");
         showMenuPoints();
+    }
+
+    @OnClick(R.id.main_frame_save_password_btn)
+    public void savePasswordClick(){
+        //changePass
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        ChangePasswordFragment changePasswordFragment = (ChangePasswordFragment) fragmentManager.findFragmentById(ChangePasswordFragment.ChangePasswordID);
+        changePasswordFragment.changePassword();
     }
 
     @Override
@@ -333,8 +351,15 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
                 profileFragment.editProfile();
                 clearTopView();
                 changeTitle("Ред. профиля");
+                showBackButton();
                 showSaveProfile();
                 break;
+            case ProfileBottomSheet.SETTINGS:
+                presenter.changeFragment(PROFILE_SETTINGS);
         }
+    }
+
+    public MainScreenPresenter getPresenter(){
+        return presenter;
     }
 }

@@ -10,6 +10,7 @@ public interface MainScreenView extends MvpView {
     void showSaveButton();
     void showAddButton();
     void showSaveProfile();
+    void showSavePassword();
     void clearTopView();
     void showMessage(String message);
     void addButtonClicked();
