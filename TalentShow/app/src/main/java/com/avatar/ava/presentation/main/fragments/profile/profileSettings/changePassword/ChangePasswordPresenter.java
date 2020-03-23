@@ -1,4 +1,4 @@
-package com.avatar.ava.presentation.main.fragments.profile.profileSettings.ChangePassword;
+package com.avatar.ava.presentation.main.fragments.profile.profileSettings.changePassword;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;

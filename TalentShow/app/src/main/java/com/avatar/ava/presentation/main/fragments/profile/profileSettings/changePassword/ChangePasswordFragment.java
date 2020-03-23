@@ -1,12 +1,10 @@
-package com.avatar.ava.presentation.main.fragments.profile.profileSettings.ChangePassword;
+package com.avatar.ava.presentation.main.fragments.profile.profileSettings.changePassword;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +17,6 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
 import com.avatar.ava.presentation.main.MainScreenActivity;
-import com.avatar.ava.presentation.main.fragments.profile.profileSettings.ProfileSettingsPresenter;
-import com.avatar.ava.presentation.main.fragments.profile.profileSettings.ProfileSettingsView;
 
 import javax.inject.Inject;
 
