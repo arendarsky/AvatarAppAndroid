@@ -73,8 +73,8 @@ public class Interactor {
         return this.videoRepository.composeVideo(videoUri);
     }
 
-    public Completable uploadAndSetInterval(Float startTime, Float endTime){
-        return this.videoRepository.uploadAndSetInterval(startTime, endTime);
+    public Completable uploadAndSetInterval(Uri fileUri, Float startTime, Float endTime){
+        return this.videoRepository.uploadAndSetInterval(fileUri, startTime, endTime);
     }
 
 //    public Completable setInterval(float startTime, float endTime) {

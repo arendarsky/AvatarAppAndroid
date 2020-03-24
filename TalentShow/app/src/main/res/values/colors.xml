@@ -8,6 +8,7 @@
     <color name="whiteEditableText">#F1F1F1</color>
     <color name="regGrayColor">#D2D2D2</color>
     <color name="hint_text_color">#A1A1A1</color>
+    <color name="lightDark">#262626</color>
     <color name="blueTextColor">#007AFF</color>
     <color name="whiteBackground">#FFFFFF</color>
     <color name="blackText">#060606</color>

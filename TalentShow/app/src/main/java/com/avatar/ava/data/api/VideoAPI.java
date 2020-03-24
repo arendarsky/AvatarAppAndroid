@@ -21,19 +21,23 @@ public interface VideoAPI {
     @Headers({"CONNECT_TIMEOUT:10000", "READ_TIMEOUT:10000", "WRITE_TIMEOUT:10000"})
     @Multipart
     @POST("api/video/upload")
-    Single<String> uploadVideo(@Header("Authorization") String token, @Part  MultipartBody.Part file);
-
-//    @GET("api/video/get_unwatched")
-//    Single<ArrayList<String>> getUnwatched(@Header("Authorization") String token, @Query("number") int number);
+    Single<String> uploadVideo(@Header("Authorization") String token,
+                               @Part  MultipartBody.Part file);
 
     @GET("api/video/get_unwatched")
-    Single<ArrayList<PersonDTO>> getUnwatched(@Header("Authorization") String token, @Query("number") int number);
+    Single<ArrayList<PersonDTO>> getUnwatched(@Header("Authorization") String token,
+                                              @Query("number") int number);
 
     @GET("api/video/set_like")
-    Completable setLiked(@Header("Authorization") String token, @Query("name") String name, @Query("isLike") boolean liked);
+    Completable setLiked(@Header("Authorization") String token,
+                         @Query("name") String name,
+                         @Query("isLike") boolean liked);
 
     @GET("/api/video/set_interval")
-    Completable setInterval(@Header("Authorization") String token, @Query("fileName") String fileName, @Query("startTime") float startTime, @Query("endTime") float endTime);
+    Completable setInterval(@Header("Authorization") String token,
+                            @Query("fileName") String fileName,
+                            @Query("startTime") double startTime,
+                            @Query("endTime") double endTime);
 
 
 }

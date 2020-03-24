@@ -8,73 +8,110 @@
     android:id="@+id/activity_casting_layout"
     tools:context="com.avatar.ava.presentation.main.fragments.casting.CastingFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/activity_casting_card"
+    <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:id="@+id/activity_casting_card"
         android:layout_marginStart="15dp"
         android:layout_marginTop="17dp"
         android:layout_marginEnd="17dp"
-        android:background="@drawable/casting_video_background"
+        app:cardCornerRadius="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/guideline">
-
-        <VideoView
-            android:id="@+id/activity_casting_video"
-            android:layout_width="match_parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_height="match_parent"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="0dp"
-            android:clickable="false"/>
+            android:layout_width="match_parent">
 
-        <ImageView
-            android:id="@+id/casting_activity_avatar"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="19dp"
-            android:layout_marginEnd="293dp"
-            android:src="@drawable/casting_activity_ava"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <VideoView
+                android:id="@+id/activity_casting_video"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                android:clickable="false"/>
 
-        <TextView
-            android:id="@+id/activity_casting_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="19dp"
-            android:layout_marginEnd="20dp"
-            android:gravity="center_vertical"
-            android:lineSpacingExtra="1sp"
-            android:text="@string/activity_casting_name"
-            android:textSize="20sp"
-            android:textColor="@color/whiteText"
-            app:layout_constraintStart_toEndOf="@id/casting_activity_avatar"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <ProgressBar
+                android:id="@+id/casting_fragment_progress_bar"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:visibility="invisible"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-        <TextView
-            android:id="@+id/activity_casting_description"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="45dp"
-            android:fontFamily="@font/roboto"
-            android:gravity="start"
-            android:lineSpacingExtra="2sp"
-            android:text="Это описание к видео, которое написал автор, чтобы было понятно, что он хочет сказать своим творчеством. Наверное, тут очень ограничен обхем текста."
-            android:textColor="@color/whiteText"
-            android:textSize="13sp"
-            android:translationY="-1.05sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/casting_top_gradient"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/casting_activity_avatar"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="19dp"
+                    android:layout_marginEnd="293dp"
+                    android:layout_marginBottom="15dp"
+                    android:src="@drawable/casting_activity_ava"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <TextView
+                    android:id="@+id/activity_casting_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="19dp"
+                    android:layout_marginEnd="20dp"
+                    android:gravity="center_vertical"
+                    android:lineSpacingExtra="1sp"
+                    android:text="@string/activity_casting_name"
+                    android:textSize="20sp"
+                    android:textColor="@color/whiteText"
+                    app:layout_constraintStart_toEndOf="@id/casting_activity_avatar"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/casting_bottom_gradient"
+                app:layout_constraintBottom_toBottomOf="parent">
+                <TextView
+                    android:id="@+id/activity_casting_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="45dp"
+                    android:layout_marginTop="13dp"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="start"
+                    android:lineSpacingExtra="2sp"
+                    android:text="Это описание к видео, которое написал автор, чтобы было понятно, что он хочет сказать своим творчеством. Наверное, тут очень ограничен обхем текста."
+                    android:textColor="@color/whiteText"
+                    android:textSize="13sp"
+                    android:translationY="-1.05sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/casting_no_more_videos"

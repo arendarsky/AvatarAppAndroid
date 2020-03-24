@@ -118,7 +118,7 @@ public class FragmentChooseBestMain extends Fragment implements OnRangeSeekBarLi
 //        float value2 = thums.get(1).getVal() / 100 * video.getDuration();
         List<Float> tmp = new ArrayList<>();
         tmp.add(rangeSeekBar.getSelectedMinValue());
-        tmp.add(rangeSeekBar.getAbsoluteMaxValue());
+        tmp.add(rangeSeekBar.getSelectedMaxValue());
         return tmp;
     }
 

@@ -172,22 +172,31 @@ public class VideoRepository implements IVideoRepository {
     }
 
     @Override
-    public Completable uploadAndSetInterval(Float beginTime, Float endTime){
+    public Completable uploadAndSetInterval(Uri fileURI, Float beginTime, Float endTime){
+        File file = new File(getFilePathFromUri(appContext, fileURI));
+        this.convertedFilePath = file.getAbsolutePath().substring(0,
+                file.getAbsolutePath().lastIndexOf("."))
+                + ".mp4";
         File convertedFile = new File(this.convertedFilePath);
-        return videoAPI.uploadVideo(
-                preferencesRepository.getToken(),
-                MultipartBody.Part.
-                        createFormData("file",
-                                convertedFile.getName(),
-                                RequestBody.create(
-                                        convertedFile,
-                                        MediaType.parse("multipart/form-data")
-                                )
-                        )).flatMapCompletable(name -> videoAPI.setInterval(
-                preferencesRepository.getToken(),
-                name,
-                beginTime,
-                endTime));
+        String commands = "-i "
+                + file.getAbsolutePath() + " -q:v 20 "
+//                + " -c:v libx264 "
+                + convertedFile.getAbsolutePath();
+        return Single.fromCallable(() -> FFmpeg.execute(commands)).ignoreElement()
+                .andThen(videoAPI.uploadVideo(
+                        preferencesRepository.getToken(),
+                        MultipartBody.Part.
+                                createFormData("file",
+                                        convertedFile.getName(),
+                                        RequestBody.create(
+                                                convertedFile,
+                                                MediaType.parse("multipart/form-data")
+                                        )
+                                )).flatMapCompletable(name -> videoAPI.setInterval(
+                        preferencesRepository.getToken(),
+                        name,
+                        (double) beginTime * 1000,
+                        (double) endTime * 1000)));
     }
 
     @Override

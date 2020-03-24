@@ -27,6 +27,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
 
     private final int LOAD_NEW_VIDEO_SCREEN = 4;
     private final int LOAD_VIDEO = 5;
+    private final int CAPTURE_VIDEO = 7;
     private final int CHOOSE_SECONDS_SCREEN = 6;
 
 
@@ -45,6 +46,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
     private final boolean HIDE_BACK = false;
 
     private List<PrevState> previousStates = new ArrayList<>();
+    private Uri selectedFileUri;
 
     @Inject
     MainScreenPresenter(Router router, Interactor interactor){
@@ -89,10 +91,14 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                 break;
             case LOAD_VIDEO:
                 getViewState().pickVideo();
+                break;
+            case CAPTURE_VIDEO:
+                getViewState().captureVideo();
         }
     }
 
-    void openBest30Screen(Uri uri){
+    public void openBest30Screen(Uri uri){
+        selectedFileUri = uri;
         getViewState().clearTopView();
         getViewState().showBackButton();
         getViewState().changeTitle(best30);
@@ -149,28 +155,28 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
         }
     }
 
-    void composeVideo(Uri videoUri){
+//    void composeVideo(Uri videoUri){
 //        openSecondsScreen(videoUri);
-        interactor.composeVideo(videoUri)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-//                .doOnSubscribe(d -> openBest30Screen(videoUri))
-                .subscribe(new DisposableCompletableObserver() {
-                               @Override
-                               public void onComplete() {
-                                    openBest30Screen(videoUri);
-                               }
-
-                               @Override
-                               public void onError(Throwable e) {
-                                   getViewState().showMessage("Ошибка при сжатии видео");
-                               }
-                           }
-                );
-    }
+//        interactor.composeVideo(videoUri)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+////                .doOnSubscribe(d -> openBest30Screen(videoUri))
+//                .subscribe(new DisposableCompletableObserver() {
+//                               @Override
+//                               public void onComplete() {
+//                                    openBest30Screen(videoUri);
+//                               }
+//
+//                               @Override
+//                               public void onError(Throwable e) {
+//                                   getViewState().showMessage("Ошибка при сжатии видео");
+//                               }
+//                           }
+//                );
+//    }
 
     void uploadAndSetInterval(Float beginTime, Float endTime){
-        interactor.uploadAndSetInterval(beginTime, endTime)
+        interactor.uploadAndSetInterval(selectedFileUri, beginTime, endTime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableCompletableObserver() {

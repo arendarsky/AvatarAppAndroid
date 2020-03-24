@@ -7,6 +7,15 @@
     android:background="@color/darkBackground"
     tools:context="com.avatar.ava.presentation.signing.fragments.FragmentChooseVideoBest">
 
+    <ProgressBar
+        android:id="@+id/fragment_video_best_progressbar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:visibility="invisible"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_video_best_back"
@@ -38,6 +47,22 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/fragment_video_best_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:textSize="17sp"
+        android:textColor="@color/whiteText"
+        android:text="@string/save"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/fragment_video_best_back"
+        app:layout_constraintBottom_toBottomOf="@id/fragment_video_best_back"/>
 
     <VideoView
         android:id="@+id/fragment_video_best_video"
@@ -116,27 +141,27 @@
         android:textSize="12sp"
         android:textColor="@color/grayText"
         android:translationY="-1.45sp"
-        app:layout_constraintBottom_toTopOf="@id/activity_star_video_best_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fragment_video_best_bar"/>
 
-    <Button
-        android:layout_width="345dp"
-        android:layout_height="44dp"
-        android:id="@+id/activity_star_video_best_btn"
-        android:layout_marginTop="670dp"
-        android:layout_marginBottom="59dp"
-        android:background="@drawable/blue_button_background"
-        android:gravity="center"
-        android:text="@string/next"
-        android:textAppearance="@style/ActivityProducerNameButtonText"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:elevation="10dp"
-        />
+<!--    <Button-->
+<!--        android:layout_width="345dp"-->
+<!--        android:layout_height="44dp"-->
+<!--        android:id="@+id/activity_star_video_best_btn"-->
+<!--        android:layout_marginTop="670dp"-->
+<!--        android:layout_marginBottom="59dp"-->
+<!--        android:background="@drawable/blue_button_background"-->
+<!--        android:gravity="center"-->
+<!--        android:text="@string/next"-->
+<!--        android:textAppearance="@style/ActivityProducerNameButtonText"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:elevation="10dp"-->
+<!--        />-->
 
 
 

@@ -7,6 +7,8 @@ import com.arellomobile.mvp.MvpPresenter;
 import com.avatar.ava.Screens;
 import com.avatar.ava.domain.Interactor;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -31,6 +33,9 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
     private final int BACK = 7;
     private final int CHOOSE_SECONDS = 8;
     private final int VIDEO_SCREEN_JUST = 9;
+    private final int UPLOAD_VIDEO = 10;
+
+    private Uri selectedFileUri;
 
     @Inject
     public EnterPresenter(Interactor interactor, Router router) {
@@ -61,9 +66,9 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
             case AUTH_FINISHED:
                 getViewState().startMain();
                 break;
-            case LOAD_AVATAR:
-                getViewState().loadPhotoForAvatar();
-                break;
+//            case LOAD_AVATAR:
+//                getViewState().loadPhotoForAvatar();
+//                break;
             case CHOOSE_VIDEO:
                 getViewState().pickVideo();
                 break;
@@ -71,7 +76,7 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
                 router.navigateTo(new Screens.FileLoadScreen());
                 break;
             case BACK:
-                router.backTo(null);
+                router.exit();
                 break;
 //            case CHOOSE_SECONDS:
 //                router.navigateTo(new Screens.ChooseBestScreen(uri));
@@ -79,13 +84,12 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
             case VIDEO_SCREEN_JUST:
                 router.navigateTo(new Screens.FileLoadJustScreen());
                 break;
-
         }
     }
 
-    void uploadVideoToServer(Uri videoUri){
+    void uploadVideoToServer(Float startTime, Float endTime){
 //        openSecondsScreen(videoUri);
-        interactor.composeVideo(videoUri)
+        interactor.uploadAndSetInterval(selectedFileUri, startTime, endTime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableCompletableObserver() {
@@ -105,6 +109,7 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
     }
 
     void openSecondsScreen(Uri fileUri){
+        selectedFileUri = fileUri;
         router.navigateTo(new Screens.ChooseBestScreen(fileUri));
     }
 

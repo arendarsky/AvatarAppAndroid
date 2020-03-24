@@ -2,6 +2,7 @@ package com.avatar.ava.presentation.main.fragments.casting;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
@@ -63,7 +64,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     ConstraintLayout layout;
 
     @BindView(R.id.activity_casting_card)
-    ConstraintLayout castingCard;
+    CardView castingCard;
 
     @BindView(R.id.casting_no_more_videos)
     TextView noMoreVideos;

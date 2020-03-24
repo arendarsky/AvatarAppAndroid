@@ -26,9 +26,13 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.presentation.main.MainScreenActivity;
+import com.avatar.ava.presentation.main.fragments.FragmentChooseBestMain;
+import com.avatar.ava.presentation.signing.fragments.FragmentChooseVideoBest;
 import com.avatar.ava.presentation.signing.fragments.FragmentEnterFileLoad;
 import com.avatar.ava.R;
 
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -49,7 +53,7 @@ public class EnterActivity extends MvpAppCompatActivity implements EnterView, Re
     EnterPresenter presenter;
 
     @ProvidePresenter
-    EnterPresenter getPresenter(){
+    EnterPresenter getPresenter() {
         return Toothpick.openScope(App.class).getInstance(EnterPresenter.class);
     }
 
@@ -59,6 +63,7 @@ public class EnterActivity extends MvpAppCompatActivity implements EnterView, Re
     private final String link = "";
     private final int REQUEST_ID_VIDEO_CAPTURE = 100;
     private final int REQUEST_PICK_IMAGE = 2;
+    private final int UPLOAD_VIDEO = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,27 +79,26 @@ public class EnterActivity extends MvpAppCompatActivity implements EnterView, Re
         finish();
     }
 
-    @Override
-    public void loadPhotoForAvatar() {
-        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        getIntent.setType("image/*");
-
-        Intent pickIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        pickIntent.setType("image/*");
-
-        Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
-
-        startActivityForResult(chooserIntent, PICK_IMAGE);
-    }
+//    @Override
+//    public void loadPhotoForAvatar() {
+//        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+//        getIntent.setType("image/*");
+//
+//        Intent pickIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        pickIntent.setType("image/*");
+//
+//        Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
+//        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+//
+//        startActivityForResult(chooserIntent, PICK_IMAGE);
+//    }
 
     @Override
     public void pickVideo() {
-        if (permissionAlreadyGranted()){
+        if (permissionAlreadyGranted()) {
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(Intent.createChooser(intent, "Select video"), REQUEST_PICK_IMAGE);
-        }
-        else{
+        } else {
             requestPermission();
         }
     }
@@ -102,18 +106,27 @@ public class EnterActivity extends MvpAppCompatActivity implements EnterView, Re
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE && data != null){
+        if (requestCode == PICK_IMAGE && data != null) {
             //TODO Добавить какую-то реализацию сохранения фотографии
         }
-        if (requestCode == REQUEST_PICK_IMAGE && data != null){
+        if (requestCode == REQUEST_PICK_IMAGE && data != null) {
             Log.d("Video", data.getData().toString());
-            presenter.uploadVideoToServer(data.getData());
+            presenter.openSecondsScreen(data.getData());
+//            presenter.uploadVideoToServer(data.getData());
         }
-
     }
 
     @Override
     public void fragmentMessage(int resultCode) {
+        if (resultCode == UPLOAD_VIDEO){
+            Fragment currentFragment = getSupportFragmentManager()
+                    .findFragmentById(R.id.splash_container);
+            List<Float> tmp;
+            if (currentFragment instanceof FragmentChooseVideoBest) {
+                tmp = ((FragmentChooseVideoBest) currentFragment).getInterval();
+                presenter.uploadVideoToServer(tmp.get(0), tmp.get(1));
+            }
+        }
         presenter.startFragment(resultCode);
     }
 
@@ -177,13 +190,14 @@ public class EnterActivity extends MvpAppCompatActivity implements EnterView, Re
                 startActivityForResult(Intent.createChooser(intent, "Select video"), REQUEST_PICK_IMAGE);
             } else {
                 Toast.makeText(appContext, "Permission is denied!", Toast.LENGTH_SHORT).show();
-                boolean showRationale = shouldShowRequestPermissionRationale( Manifest.permission.CAMERA );
-                if (! showRationale) {
+                boolean showRationale = shouldShowRequestPermissionRationale(Manifest.permission.CAMERA);
+                if (!showRationale) {
                     openSettingsDialog();
                 }
             }
         }
     }
+
     private void openSettingsDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(appContext);
         builder.setTitle("Required Permissions");

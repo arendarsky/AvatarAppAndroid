@@ -14,11 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.avatar.ava.App;
 import com.avatar.ava.R;
+import com.avatar.ava.presentation.signing.RegAuthPostman;
 import com.deep.videotrimmer.DeepVideoTrimmer;
 import com.deep.videotrimmer.interfaces.OnRangeSeekBarListener;
 import com.deep.videotrimmer.view.RangeSeekBarView;
@@ -30,6 +32,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import toothpick.Toothpick;
 
 public class FragmentChooseVideoBest extends Fragment implements OnRangeSeekBarListener {
@@ -49,11 +52,17 @@ public class FragmentChooseVideoBest extends Fragment implements OnRangeSeekBarL
     @BindView(R.id.fragment_video_best_end)
     TextView endText;
 
+    @BindView(R.id.fragment_video_best_progressbar)
+    ProgressBar progressBar;
+
     float duration = 0;
 
     MediaController mc;
 
     String fileName = "filename";
+
+    private final int BACK = 7;
+    private final int UPLOAD_VIDEO = 10;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -118,9 +127,28 @@ public class FragmentChooseVideoBest extends Fragment implements OnRangeSeekBarL
 //        float value2 = thums.get(1).getVal() / 100 * video.getDuration();
         List<Float> tmp = new ArrayList<>();
         tmp.add(rangeSeekBar.getSelectedMinValue());
-        tmp.add(rangeSeekBar.getAbsoluteMaxValue());
+        tmp.add(rangeSeekBar.getSelectedMaxValue());
         return tmp;
     }
+
+    @OnClick(R.id.fragment_video_best_save)
+    void saveClicked(){
+        try {
+            ((RegAuthPostman) activity).fragmentMessage(UPLOAD_VIDEO);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @OnClick(R.id.fragment_video_best_back)
+    void backClicked(){
+        try {
+            ((RegAuthPostman) activity).fragmentMessage(BACK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Nullable
     @Override

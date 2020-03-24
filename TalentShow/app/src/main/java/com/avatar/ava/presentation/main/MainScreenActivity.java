@@ -80,6 +80,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
 
     private final int CAMERA_CODE = 1;
     private final int REQUEST_PICK_IMAGE = 2;
+    private final int CAPTURE_VIDEO = 3;
 
     @ProvidePresenter
     MainScreenPresenter providePresenter(){
@@ -187,19 +188,25 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(Intent.createChooser(intent, "Select video"), REQUEST_PICK_IMAGE);
         }
-        else{
-            requestPermission();
+        else requestPermission();
+    }
+
+    @Override
+    public void captureVideo() {
+        if (permissionAlreadyGranted()) {
+            Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+            startActivityForResult(intent, CAPTURE_VIDEO);
         }
+        else requestPermission();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_PICK_IMAGE && data != null){
-            Log.d("Video", data.getData().toString());
-
-            presenter.composeVideo(data.getData());
-        }
+        if (requestCode == REQUEST_PICK_IMAGE && data != null)
+            presenter.openBest30Screen(data.getData());
+        if (requestCode == CAPTURE_VIDEO && data != null)
+            presenter.openBest30Screen(data.getData());
     }
 
     @OnClick(R.id.main_frame_back)

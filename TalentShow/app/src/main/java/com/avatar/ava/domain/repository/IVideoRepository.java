@@ -14,6 +14,6 @@ public interface IVideoRepository {
     Single<PersonDTO> getNewVideoLink();
     Single<ArrayList<PersonDTO>> getUnwatchedVideos(int number);
     Completable setLiked(boolean liked);
-    Completable uploadAndSetInterval(Float beginTime, Float endTime);
+    Completable uploadAndSetInterval(Uri fileUri, Float beginTime, Float endTime);
     Single<PersonDTO> getVideoLinkOnCreate();
 }
