@@ -261,10 +261,19 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
     @Override
     public void setAvatar(String avatarLink) {
-        Glide.with(getView())
-                .load(avatarLink)
-                .circleCrop()
-                .into(avatar);
+        if(avatarLink.equals("null")){
+            Glide.with(getView())
+                    .load(R.drawable.empty_profile_icon)
+                    .circleCrop()
+                    .into(avatar);
+        }
+        else{
+            Glide.with(getView())
+                    .load(avatarLink)
+                    .circleCrop()
+                    .into(avatar);
+        }
+
     }
 
     @Override

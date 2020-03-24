@@ -126,7 +126,12 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
     }
 
     void loadNewPerson(PersonDTO person){
-        getViewState().setAvatar(SERVER_NAME + "/api/video/" + person.getPhoto());
+        if(person.getPhoto() != null){
+            getViewState().setAvatar(SERVER_NAME + "/api/video/" + person.getPhoto());
+        }else{
+            getViewState().setAvatar("null");
+        }
+
         getViewState().setName(person.getName());
         getViewState().setDescription(person.getDescription());
     }

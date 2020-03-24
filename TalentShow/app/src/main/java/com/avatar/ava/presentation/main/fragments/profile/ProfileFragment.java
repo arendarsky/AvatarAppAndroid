@@ -188,10 +188,18 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     @Override
     public void setDataProfile(ProfileDTO person) {
         //set Data
-        Glide.with(getView())
-                .load(SERVER_NAME + "/api/profile/photo/get/" + person.getPhoto())
-                .circleCrop()
-                .into(profileImage);
+        if(person.getPhoto() == null){
+            Glide.with(getView())
+                    .load(R.drawable.empty_profile_icon)
+                    .circleCrop()
+                    .into(profileImage);
+        }else{
+            Glide.with(getView())
+                    .load(SERVER_NAME + "/api/profile/photo/get/" + person.getPhoto())
+                    .circleCrop()
+                    .into(profileImage);
+        }
+
         name.setText(person.getName());
         likes.setText(person.getLikesNumber() + " Лайков");
         description.setText(person.getDescription());

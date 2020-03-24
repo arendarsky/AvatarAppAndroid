@@ -50,11 +50,19 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         String name = personRatingDTO.getName();
         holder.name.setText(name);
         holder.pos.setText(String.valueOf(position + 1) + " место");
-        Glide.with(holder.itemView.getContext())
-                .load(SERVER_NAME + "/api/profile/photo/get/"
-                        + personRatingDTO.getPhoto())
-                .circleCrop()
-                .into(holder.ava);
+        if(personRatingDTO.getPhoto() == null){
+            Glide.with(holder.itemView.getContext())
+                    .load(R.drawable.empty_profile_icon)
+                    .circleCrop()
+                    .into(holder.ava);
+        }else{
+            Glide.with(holder.itemView.getContext())
+                    .load(SERVER_NAME + "/api/profile/photo/get/"
+                            + personRatingDTO.getPhoto())
+                    .circleCrop()
+                    .into(holder.ava);
+        }
+
 
     }
 
