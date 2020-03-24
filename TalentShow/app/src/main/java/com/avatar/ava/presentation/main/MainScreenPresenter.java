@@ -1,6 +1,7 @@
 package com.avatar.ava.presentation.main;
 
 import android.net.Uri;
+import android.widget.Toast;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
@@ -27,8 +28,10 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
 
     private final int LOAD_NEW_VIDEO_SCREEN = 4;
     private final int LOAD_VIDEO = 5;
-    private final int CAPTURE_VIDEO = 7;
+    private final int CAPTURE_VIDEO = 8;
     private final int CHOOSE_SECONDS_SCREEN = 6;
+    private final int PROFILE_SETTINGS = 6;
+    private final int PROFILE_CHANGE_PASSWORD = 7;
 
 
     private final String new_video = "Новое видео";
@@ -72,6 +75,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                 return true;
             case R.id.nav_profile:
                 getViewState().changeTitle(profile);
+                getViewState().showMenuPoints();
                 router.newRootScreen(new Screens.ProfileScreen());
                 return true;
         }
@@ -94,6 +98,17 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                 break;
             case CAPTURE_VIDEO:
                 getViewState().captureVideo();
+                break;
+            case PROFILE_SETTINGS:
+                getViewState().changeTitle("Настройки");
+                previousStates.add(new PrevState(false, profile, MENU_POINTS));
+                router.navigateTo(new Screens.ProfileSettingsScreen());
+                break;
+            case PROFILE_CHANGE_PASSWORD:
+                getViewState().changeTitle("Изм. пароля");
+                getViewState().showSavePassword();
+                router.navigateTo(new Screens.ChangePasswordScreen());
+                break;
         }
     }
 

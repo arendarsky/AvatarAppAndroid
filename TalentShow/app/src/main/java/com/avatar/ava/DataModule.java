@@ -31,6 +31,7 @@ import toothpick.config.Module;
 public class DataModule extends Module{
 
     private Context appContext;
+    public final static String SERVER_NAME = "http://avatarapp.yambr.ru";
 
     public DataModule(Context appContext){
         this.appContext = appContext;
@@ -87,7 +88,6 @@ public class DataModule extends Module{
                         .addConverterFactory(GsonConverterFactory.create())
                         .client(httpClient.build())
                         .build());
-
 
         bind(IAuthRepository.class).to(AuthRepository.class).singletonInScope();
         bind(IVideoRepository.class).to(VideoRepository.class).singletonInScope();

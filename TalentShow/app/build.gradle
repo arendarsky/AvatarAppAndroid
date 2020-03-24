@@ -95,4 +95,7 @@ dependencies {
 
     //Double range seek bar
     implementation 'com.yahoo.mobile.client.android.util.rangeseekbar:rangeseekbar-library:0.1.0'
+
+    //ExoPlayer
+    implementation 'com.google.android.exoplayer:exoplayer:2.10.8'
 }

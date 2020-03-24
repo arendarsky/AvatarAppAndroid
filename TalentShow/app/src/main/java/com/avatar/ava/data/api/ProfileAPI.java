@@ -2,6 +2,7 @@ package com.avatar.ava.data.api;
 
 import com.avatar.ava.domain.entities.NotificationsDTO;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
+import com.avatar.ava.domain.entities.ProfileDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import retrofit2.http.Query;
 public interface ProfileAPI {
 
     @GET("/api/profile/get")
-    Single<PersonRatingDTO> getProfile(@Header("Authorization") String token);
+    Single<ProfileDTO> getProfile(@Header("Authorization") String token);
 
     @POST("/api/profile/set_description")
     Completable setDescription(@Header("Authorization") String token,

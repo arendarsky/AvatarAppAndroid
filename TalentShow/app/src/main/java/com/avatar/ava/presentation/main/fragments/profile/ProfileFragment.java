@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
@@ -16,8 +17,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -25,7 +28,9 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
+import com.avatar.ava.domain.entities.ProfileDTO;
 import com.avatar.ava.domain.entities.VideoDTO;
+import com.avatar.ava.presentation.main.MainScreenActivity;
 import com.avatar.ava.presentation.main.MainScreenPostman;
 import com.avatar.ava.presentation.main.fragments.rating.RatingPresenter;
 import com.bumptech.glide.Glide;
@@ -41,9 +46,14 @@ import butterknife.OnClick;
 import toothpick.Toothpick;
 
 import static android.app.Activity.RESULT_OK;
+import static com.avatar.ava.DataModule.SERVER_NAME;
 
 
 public class ProfileFragment extends MvpAppCompatFragment implements ProfileView {
+
+    public static int ProfileID;
+    private final int LOAD_NEW_VIDEO_SCREEN = 4;
+    private int currCountVideos = 0;
 
     ArrayList<VideoDTO> videos = new ArrayList<VideoDTO>();
 
@@ -57,7 +67,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     ImageView profileImage;
 
     @BindView(R.id.fragment_profile_name)
-    TextView name;
+    EditText name;
 
     @BindView(R.id.fragment_profile_likes)
     TextView likes;
@@ -65,14 +75,48 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     @BindView(R.id.fragment_profile_description)
     EditText description;
 
-    @BindView(R.id.fragment_profile_link)
-    EditText link;
 
     @BindView(R.id.fragment_profile_edit_photo)
     TextView editPhoto;
 
     @BindView(R.id.fragment_profile_btn_edit)
     TextView editProfile;
+
+    @BindView(R.id.fragment_profile_video_1)
+    VideoView video1;
+
+    @BindView(R.id.fragment_profile_video_2)
+    VideoView video2;
+
+    @BindView(R.id.fragment_profile_video_3)
+    VideoView video3;
+
+    @BindView(R.id.fragment_profile_video_4)
+    VideoView video4;
+
+    @BindView(R.id.fragment_profile_add_video_btn_1)
+    ImageButton addVideoBtn1;
+
+    @BindView(R.id.fragment_profile_add_video_btn_2)
+    ImageButton addVideoBtn2;
+
+    @BindView(R.id.fragment_profile_add_video_btn_3)
+    ImageButton addVideoBtn3;
+
+    @BindView(R.id.fragment_profile_add_video_btn_4)
+    ImageButton addVideoBtn4;
+
+    @BindView(R.id.fragment_profile_container1)
+    ConstraintLayout container1;
+
+    @BindView(R.id.fragment_profile_container2)
+    ConstraintLayout container2;
+
+    @BindView(R.id.fragment_profile_container3)
+    ConstraintLayout container3;
+
+    @BindView(R.id.fragment_profile_container4)
+    ConstraintLayout container4;
 
     @ProvidePresenter
     ProfilePresenter getPresenter(){
@@ -92,10 +136,14 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
 
     }
 
+    MainScreenActivity activity;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        ProfileID = this.getId();
+        //if(!this.isAdded())getActivity().getSupportFragmentManager().beginTransaction().add(this, "ProfileFragment1").commit();
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, v);
         return v;
@@ -108,24 +156,85 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         super.onViewCreated(view, savedInstanceState);
         Toothpick.inject(this, Toothpick.openScope(App.class));
         description.setEnabled(false);
-        link.setEnabled(false);
+        name.setEnabled(false);
         presenter.getProfile();
+        activity = (MainScreenActivity) getActivity();
+        /*if(currCountVideos == 0){
+            container2.setVisibility(View.INVISIBLE);
+            container3.setVisibility(View.INVISIBLE);
+            container4.setVisibility(View.INVISIBLE);
+        }else if(currCountVideos == 1){
+            container3.setVisibility(View.INVISIBLE);
+            container4.setVisibility(View.INVISIBLE);
+        }else if(currCountVideos == 2){
+            container4.setVisibility(View.INVISIBLE);
+        }*/
+    }
+
+    private void showContainers(){
+        if(currCountVideos == 0){
+            container2.setVisibility(View.INVISIBLE);
+            container3.setVisibility(View.INVISIBLE);
+            container4.setVisibility(View.INVISIBLE);
+        }else if(currCountVideos == 1){
+            container3.setVisibility(View.INVISIBLE);
+            container4.setVisibility(View.INVISIBLE);
+        }else if(currCountVideos == 2){
+            container4.setVisibility(View.INVISIBLE);
+        }
     }
 
 
     @Override
-    public void setDataProfile(PersonRatingDTO person) {
+    public void setDataProfile(ProfileDTO person) {
         //set Data
-        Glide.with(getView())
-                .load("http://avatarapp.yambr.ru/api/profile/photo/get/" + person.getPhoto())
-                .circleCrop()
-                .into(profileImage);
+        if(person.getPhoto() == null){
+            Glide.with(getView())
+                    .load(R.drawable.empty_profile_icon)
+                    .circleCrop()
+                    .into(profileImage);
+        }else{
+            Glide.with(getView())
+                    .load(SERVER_NAME + "/api/profile/photo/get/" + person.getPhoto())
+                    .circleCrop()
+                    .into(profileImage);
+        }
+
         name.setText(person.getName());
         likes.setText(person.getLikesNumber() + " Лайков");
         description.setText(person.getDescription());
-//        videos.addAll(person.getPersonDTO().getVideo());
+        videos = person.getVideos();
+        currCountVideos = videos.size();
+        showContainers();
+        Log.d("ProfileLog", "videos " + currCountVideos + " size " + videos.size());
+
+
+        showVideos();
     }
 
+
+    private void showVideos(){
+        if(currCountVideos >= 1){
+            video1.setVideoURI(Uri.parse(SERVER_NAME + "/api/video/" + videos.get(0).getName()));
+            video1.setVisibility(View.VISIBLE);
+            addVideoBtn1.setVisibility(View.INVISIBLE);
+            if(currCountVideos >= 2){
+                video2.setVideoURI(Uri.parse(SERVER_NAME + "/api/video/" + videos.get(1).getName()));
+                video2.setVisibility(View.VISIBLE);
+                addVideoBtn2.setVisibility(View.INVISIBLE);
+                if(currCountVideos >= 3){
+                    video3.setVideoURI(Uri.parse(SERVER_NAME + "/api/video/" + videos.get(2).getName()));
+                    video3.setVisibility(View.VISIBLE);
+                    addVideoBtn3.setVisibility(View.INVISIBLE);
+                }
+                if(currCountVideos == 4){
+                    video4.setVideoURI(Uri.parse(SERVER_NAME + "/api/video/" + videos.get(3).getName()));
+                    video4.setVisibility(View.VISIBLE);
+                    addVideoBtn4.setVisibility(View.INVISIBLE);
+                }
+            }
+        }
+    }
 
 
 
@@ -153,14 +262,15 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         if(!edit){
             edit = true;
             description.setEnabled(true);
-            link.setEnabled(true);
+            name.setEnabled(true);
             editPhoto.setVisibility(View.VISIBLE);
             editProfile.setText("Применить");
         }else{
             edit = false;
             presenter.setDescription(description.getText().toString());
+            presenter.setName(name.getText().toString());
             description.setEnabled(false);
-            link.setEnabled(false);
+            name.setEnabled(false);
             editPhoto.setVisibility(View.GONE);
             editProfile.setText("Редактировать");
         }
@@ -172,5 +282,23 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, 1);
+    }
+
+
+    @OnClick(R.id.fragment_profile_add_video_btn_1)
+    public void addVideo1(){
+        activity.fragmentAction(LOAD_NEW_VIDEO_SCREEN);
+    }
+    @OnClick(R.id.fragment_profile_add_video_btn_2)
+    public void addVideo2(){
+        activity.fragmentAction(LOAD_NEW_VIDEO_SCREEN);
+    }
+    @OnClick(R.id.fragment_profile_add_video_btn_3)
+    public void addVideo3(){
+        activity.fragmentAction(LOAD_NEW_VIDEO_SCREEN);
+    }
+    @OnClick(R.id.fragment_profile_add_video_btn_4)
+    public void addVideo4(){
+        activity.fragmentAction(LOAD_NEW_VIDEO_SCREEN);
     }
 }

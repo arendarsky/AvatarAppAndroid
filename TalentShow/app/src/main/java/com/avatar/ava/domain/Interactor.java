@@ -5,6 +5,7 @@ import android.net.Uri;
 import com.avatar.ava.domain.entities.NotificationsDTO;
 import com.avatar.ava.domain.entities.PersonDTO;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
+import com.avatar.ava.domain.entities.ProfileDTO;
 import com.avatar.ava.domain.repository.IAuthRepository;
 import com.avatar.ava.domain.repository.IProfileRepository;
 import com.avatar.ava.domain.repository.ISharedPreferemcesRepository;
@@ -53,7 +54,7 @@ public class Interactor {
         return this.profileRepository.setDescription(description);
     }
 
-    public Single<PersonRatingDTO> getProfile(){
+    public Single<ProfileDTO> getProfile(){
         return this.profileRepository.getProfile();
     }
 

@@ -15,6 +15,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.avatar.ava.DataModule.SERVER_NAME;
+
 @InjectViewState
 public class CastingPresenter extends MvpPresenter<CastingView> {
 
@@ -37,7 +39,7 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
                     if (person.getVideo() != null) {
                         this.loadNewPerson(person);
                         getViewState().loadNewVideo(
-                                "https://avatarapp.yambr.ru/api/video/"
+                                SERVER_NAME + "/api/video/"
                                         + person.getVideo().getName());
                     }
                     else getViewState().showNoMoreVideos();
@@ -58,7 +60,7 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
                         personDTO -> {
                             this.loadNewPerson(personDTO);
                             getViewState().loadNewVideo(
-                                    "https://avatarapp.yambr.ru/api/video/" +
+                                    SERVER_NAME + "/api/video/" +
                                             personDTO.getVideo().getName()
                             );
                         },
@@ -92,7 +94,7 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
                         personDTO -> {
                             this.loadNewPerson(personDTO);
                             getViewState().loadNewVideo(
-                                    "https://avatarapp.yambr.ru/api/video/" +
+                                    SERVER_NAME + "/api/video/" +
                                             personDTO.getVideo().getName()
                             );
                         },
@@ -124,7 +126,12 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
     }
 
     void loadNewPerson(PersonDTO person){
-        getViewState().setAvatar("https://avatarapp.yambr.ru/api/video/" + person.getPhoto());
+        if(person.getPhoto() != null){
+            getViewState().setAvatar(SERVER_NAME + "/api/video/" + person.getPhoto());
+        }else{
+            getViewState().setAvatar("null");
+        }
+
         getViewState().setName(person.getName());
         getViewState().setDescription(person.getDescription());
     }
