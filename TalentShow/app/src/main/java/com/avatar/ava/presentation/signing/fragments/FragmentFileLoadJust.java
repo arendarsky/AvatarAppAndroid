@@ -43,15 +43,6 @@ public class FragmentFileLoadJust extends Fragment {
         if (context instanceof Activity) activity = (Activity) context;
     }
 
-    @OnClick(R.id.file_load_just_back)
-    void backClicked(){
-        try {
-            ((RegAuthPostman) activity).fragmentMessage(BACK);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @OnClick(R.id.fragment_video_load_just_skip)
     void skipClicked(){
         try {

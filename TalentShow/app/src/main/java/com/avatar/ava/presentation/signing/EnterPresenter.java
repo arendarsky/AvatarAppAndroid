@@ -82,7 +82,7 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
 //                router.navigateTo(new Screens.ChooseBestScreen(uri));
 //                break;
             case VIDEO_SCREEN_JUST:
-                router.navigateTo(new Screens.FileLoadJustScreen());
+                router.newRootScreen(new Screens.FileLoadJustScreen());
                 break;
         }
     }
