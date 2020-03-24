@@ -89,4 +89,7 @@ dependencies {
 
     //Video Compressor
     implementation 'com.iceteck.silicompressorr:silicompressor:2.2.3'
+
+    //ExoPlayer
+    implementation 'com.google.android.exoplayer:exoplayer:2.10.8'
 }

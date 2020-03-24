@@ -207,19 +207,34 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         currCountVideos = videos.size();
         showContainers();
         Log.d("ProfileLog", "videos " + currCountVideos + " size " + videos.size());
-        video1.setVideoURI(Uri.parse(SERVER_NAME + "/api/video/" + videos.get(0).getName()));
-        video1.setVisibility(View.VISIBLE);
 
-        video2.setVideoURI(Uri.parse(SERVER_NAME + "/api/video/" + videos.get(1).getName()));
-        video2.setVisibility(View.VISIBLE);
 
-        video3.setVideoURI(Uri.parse(SERVER_NAME + "/api/video/" + videos.get(2).getName()));
-        video3.setVisibility(View.VISIBLE);
-
-        video4.setVideoURI(Uri.parse(SERVER_NAME + "/api/video/" + videos.get(3).getName()));
-        video4.setVisibility(View.VISIBLE);
+        showVideos();
     }
 
+
+    private void showVideos(){
+        if(currCountVideos >= 1){
+            video1.setVideoURI(Uri.parse(SERVER_NAME + "/api/video/" + videos.get(0).getName()));
+            video1.setVisibility(View.VISIBLE);
+            addVideoBtn1.setVisibility(View.INVISIBLE);
+            if(currCountVideos >= 2){
+                video2.setVideoURI(Uri.parse(SERVER_NAME + "/api/video/" + videos.get(1).getName()));
+                video2.setVisibility(View.VISIBLE);
+                addVideoBtn2.setVisibility(View.INVISIBLE);
+                if(currCountVideos >= 3){
+                    video3.setVideoURI(Uri.parse(SERVER_NAME + "/api/video/" + videos.get(2).getName()));
+                    video3.setVisibility(View.VISIBLE);
+                    addVideoBtn3.setVisibility(View.INVISIBLE);
+                }
+                if(currCountVideos == 4){
+                    video4.setVideoURI(Uri.parse(SERVER_NAME + "/api/video/" + videos.get(3).getName()));
+                    video4.setVisibility(View.VISIBLE);
+                    addVideoBtn4.setVisibility(View.INVISIBLE);
+                }
+            }
+        }
+    }
 
 
 
