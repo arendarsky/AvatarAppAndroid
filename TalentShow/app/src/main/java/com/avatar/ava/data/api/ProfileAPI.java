@@ -17,6 +17,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ProfileAPI {
@@ -47,5 +48,8 @@ public interface ProfileAPI {
     Single<List<NotificationsDTO>> getNotifications(@Header("Authorization") String token,
                                                        @Query("number") int number,
                                                        @Query("skip") int skipNumber);
+
+    @GET("/api/video/remove/{name}")
+    Completable removeVideo(@Header("Authorization") String token, @Path("name") String name);
 
 }

@@ -14,6 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.avatar.ava.R;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
 import com.bumptech.glide.Glide;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.ProgressiveMediaSource;
+import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,16 +43,29 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PersonRatingDTO personRatingDTO = data.get(position);
-        holder.video.setVideoURI(Uri.parse(SERVER_NAME + "/api/video/"
+        /*holder.video.setVideoURI(Uri.parse(SERVER_NAME + "/api/video/"
                 + personRatingDTO.getVideo().getName()));
         holder.video.setOnPreparedListener(mp -> mp.setOnVideoSizeChangedListener(
                 (mp12, width, height) -> {
                     mp.setLooping(true);
                 }));
+        holder.video.start();*/
+
+        SimpleExoPlayer player = new SimpleExoPlayer.Builder(holder.itemView.getContext()).build();
+        holder.video.setPlayer(player);
+        // Produces DataSource instances through which media data is loaded.
+        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(holder.itemView.getContext(),
+                Util.getUserAgent(holder.itemView.getContext(), "Talent Show"));
+        // This is the MediaSource representing the media to be played.
+        MediaSource videoSource =
+                new ProgressiveMediaSource.Factory(dataSourceFactory)
+                        .createMediaSource(Uri.parse(SERVER_NAME + "/api/video/"
+                                + personRatingDTO.getVideo().getName()));
+        // Prepare the player with the source.
+        player.prepare(videoSource);
+        player.setPlayWhenReady(true);
 
         holder.likes.setText("     " + String.valueOf(personRatingDTO.getLikesNumber()));
-
-        holder.video.start();
         holder.description.setText(personRatingDTO.getDescription());
         String name = personRatingDTO.getName();
         holder.name.setText(name);
@@ -83,7 +103,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
-        VideoView video;
+        PlayerView video;
         TextView pos, name, description, likes;
         ImageView ava;
 

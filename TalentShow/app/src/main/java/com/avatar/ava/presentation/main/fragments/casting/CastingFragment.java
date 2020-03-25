@@ -25,6 +25,13 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
 import com.bumptech.glide.Glide;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.ProgressiveMediaSource;
+import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 
 import javax.inject.Inject;
 
@@ -33,6 +40,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import toothpick.Toothpick;
+
+import static com.avatar.ava.DataModule.SERVER_NAME;
 
 
 public class CastingFragment extends MvpAppCompatFragment implements CastingView {
@@ -49,7 +58,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     }
 
     @BindView(R.id.activity_casting_video)
-    VideoView video;
+    PlayerView video;
 
     @BindView(R.id.activity_casting_name)
     TextView name;
@@ -104,12 +113,22 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         return inflater.inflate(R.layout.fragment_casting, container, false);
     }
 
+    MediaSource videoSource;
+    DataSource.Factory dataSourceFactory;
+    SimpleExoPlayer player;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        video.seekTo(startVideo);
-        video.start();
+        /*video.seekTo(startVideo);
+        video.start();*/
+
+        player = new SimpleExoPlayer.Builder(getContext()).build();
+        video.setPlayer(player);
+        // Produces DataSource instances through which media data is loaded.
+        dataSourceFactory = new DefaultDataSourceFactory(getContext(),
+                Util.getUserAgent(getContext(), "Talent Show"));
 
         castingCard.setVisibility(View.INVISIBLE);
         noMoreVideos.setVisibility(View.INVISIBLE);
@@ -118,19 +137,19 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         heartView.setVisibility(View.INVISIBLE);
         crossView.setVisibility(View.INVISIBLE);
         
-        video.setOnPreparedListener(mp -> mp.setOnVideoSizeChangedListener(
+        /*video.setOnPreparedListener(mp -> mp.setOnVideoSizeChangedListener(
                 (mp12, width, height) -> {
                     mp.setLooping(true);
-                    /*
+                    *//*
                      * add media controller
-                     */
+                     *//*
 //                    mc = new MediaController(appContext);
 //                    video.setMediaController(mc);
-                    /*
+                    *//*
                      * and set its position on screen
-                     */
+                     *//*
 //                    mc.setAnchorView(video);
-                }));
+                }));*/
 //
 //        trackProgress();
         presenter.getFirstVideo();
@@ -200,7 +219,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 //    }
 
 
-    private void trackProgress() {
+    /*private void trackProgress() {
         new Thread(() -> {
             while (!mShouldStop) {
                 if (video != null && video.isPlaying()) {
@@ -216,7 +235,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
                 }
             }
         }).start();
-    }
+    }*/
 
 //    CastingDialogFragment castingDialogFragment;
 //    public void showBottomSheetCasting(View view){
@@ -257,7 +276,12 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         heartView.setVisibility(View.VISIBLE);
         crossView.setVisibility(View.VISIBLE);
         Log.d("Casting link", videoLink);
-        video.setVideoURI(Uri.parse(videoLink));
+        //video.setVideoURI(Uri.parse(videoLink));
+        player.stop(false);
+        videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
+                .createMediaSource(Uri.parse(videoLink));
+        player.prepare(videoSource);
+        player.setPlayWhenReady(true);
     }
 
     @Override

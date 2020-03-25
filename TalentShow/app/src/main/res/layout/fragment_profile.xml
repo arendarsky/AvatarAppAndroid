@@ -155,11 +155,24 @@
         app:layout_constraintStart_toStartOf="parent"
         >
 
-        <VideoView
+        <View
+            android:id="@+id/fragment_profile_settings1"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:background="@drawable/three_points"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:visibility="invisible"
+            android:elevation="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.exoplayer2.ui.PlayerView
             android:id="@+id/fragment_profile_video_1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
+            app:use_controller="false"
 
         />
 
@@ -202,11 +215,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         >
 
-        <VideoView
+        <View
+            android:id="@+id/fragment_profile_settings2"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:background="@drawable/three_points"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:visibility="invisible"
+            android:elevation="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.exoplayer2.ui.PlayerView
             android:id="@+id/fragment_profile_video_2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
+            app:use_controller="false"
             />
 
         <ImageButton
@@ -247,11 +273,24 @@
         app:layout_constraintStart_toStartOf="parent"
         >
 
-        <VideoView
+        <View
+            android:id="@+id/fragment_profile_settings3"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:background="@drawable/three_points"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:visibility="invisible"
+            android:elevation="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.exoplayer2.ui.PlayerView
             android:id="@+id/fragment_profile_video_3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
+            app:use_controller="false"
             />
 
         <ImageButton
@@ -291,11 +330,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         >
 
-        <VideoView
+        <View
+            android:id="@+id/fragment_profile_settings4"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:background="@drawable/three_points"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:visibility="invisible"
+            android:elevation="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.exoplayer2.ui.PlayerView
             android:id="@+id/fragment_profile_video_4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
+            app:use_controller="false"
             />
 
         <ImageButton
@@ -322,5 +374,7 @@
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

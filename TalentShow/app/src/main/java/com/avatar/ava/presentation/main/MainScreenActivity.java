@@ -32,6 +32,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
 
+import com.avatar.ava.presentation.main.BottomSheetFragments.ProfileVideoBottomSheet;
 import com.avatar.ava.presentation.main.fragments.FragmentChooseBestMain;
 import com.avatar.ava.presentation.main.BottomSheetFragments.ProfileBottomSheet;
 import com.avatar.ava.presentation.main.fragments.FragmentFileLoadMain;
@@ -51,7 +52,7 @@ import ru.terrakok.cicerone.NavigatorHolder;
 import ru.terrakok.cicerone.android.support.SupportAppNavigator;
 import toothpick.Toothpick;
 
-public class MainScreenActivity extends MvpAppCompatActivity implements MainScreenView, MainScreenPostman, ProfileBottomSheet.ItemClickListener {
+public class MainScreenActivity extends MvpAppCompatActivity implements MainScreenView, MainScreenPostman, ProfileBottomSheet.ItemClickListener, ProfileVideoBottomSheet.ItemClickListener {
 
     @BindView(R.id.bottom_nav_bar)
     BottomNavigationView bottomNavigationView;
@@ -382,5 +383,17 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
 
     public MainScreenPresenter getPresenter(){
         return presenter;
+    }
+
+    @Override
+    public void onItemVideoClick(int item) {
+        Log.d("ProfileLog", "main");
+        switch (item){
+            case ProfileVideoBottomSheet.DELETE:
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                ProfileFragment profileFragment = (ProfileFragment) fragmentManager.findFragmentById(ProfileFragment.ProfileID);
+                profileFragment.deleteVideo();
+                break;
+        }
     }
 }

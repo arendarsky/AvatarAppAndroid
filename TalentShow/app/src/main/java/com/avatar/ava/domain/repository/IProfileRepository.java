@@ -18,4 +18,5 @@ public interface IProfileRepository {
     Completable setPassword(String oldPassword, String newPassword);
     Completable uploadPhoto(Uri photoUri);
     Single<List<NotificationsDTO>> getNotifications(int number, int skipNumber);
+    Completable removeVideo(String name);
 }

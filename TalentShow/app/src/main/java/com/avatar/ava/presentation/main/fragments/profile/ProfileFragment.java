@@ -30,10 +30,22 @@ import com.avatar.ava.R;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
 import com.avatar.ava.domain.entities.ProfileDTO;
 import com.avatar.ava.domain.entities.VideoDTO;
+import com.avatar.ava.presentation.main.BottomSheetFragments.ProfileBottomSheet;
+import com.avatar.ava.presentation.main.BottomSheetFragments.ProfileVideoBottomSheet;
 import com.avatar.ava.presentation.main.MainScreenActivity;
 import com.avatar.ava.presentation.main.MainScreenPostman;
 import com.avatar.ava.presentation.main.fragments.rating.RatingPresenter;
 import com.bumptech.glide.Glide;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.ProgressiveMediaSource;
+import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource;
+import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -83,16 +95,16 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     TextView editProfile;
 
     @BindView(R.id.fragment_profile_video_1)
-    VideoView video1;
+    PlayerView video1;
 
     @BindView(R.id.fragment_profile_video_2)
-    VideoView video2;
+    PlayerView video2;
 
     @BindView(R.id.fragment_profile_video_3)
-    VideoView video3;
+    PlayerView video3;
 
     @BindView(R.id.fragment_profile_video_4)
-    VideoView video4;
+    PlayerView video4;
 
     @BindView(R.id.fragment_profile_add_video_btn_1)
     ImageButton addVideoBtn1;
@@ -117,6 +129,18 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
 
     @BindView(R.id.fragment_profile_container4)
     ConstraintLayout container4;
+
+    @BindView(R.id.fragment_profile_settings1)
+    View settings1;
+
+    @BindView(R.id.fragment_profile_settings2)
+    View settings2;
+
+    @BindView(R.id.fragment_profile_settings3)
+    View settings3;
+
+    @BindView(R.id.fragment_profile_settings4)
+    View settings4;
 
     @ProvidePresenter
     ProfilePresenter getPresenter(){
@@ -170,6 +194,11 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
             container4.setVisibility(View.INVISIBLE);
         }*/
     }
+    String delNameVideo = "";
+    public void deleteVideo(){
+        Log.d("ProfileLog", "delName: " + delNameVideo);
+        presenter.removeVideo(delNameVideo);
+    }
 
     private void showContainers(){
         if(currCountVideos == 0){
@@ -210,27 +239,73 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
 
 
         showVideos();
+        //showBottomSheet();
+    }
+
+    private void showBottomSheet(){
+        ProfileVideoBottomSheet profileVideoBottomSheet =
+                ProfileVideoBottomSheet.newInstance();
+        profileVideoBottomSheet.show(getParentFragmentManager(),
+                ProfileVideoBottomSheet.TAG);
+    }
+
+
+
+    private void setupVideo(int num, Uri uri){
+        PlayerView playerView;
+        switch (num){
+            case 1:
+                playerView = video1;
+                break;
+            case 2:
+                playerView = video2;
+                break;
+            case 3:
+                playerView = video3;
+                break;
+            case 4:
+                playerView = video4;
+                break;
+            default:
+                playerView = null;
+        }
+        SimpleExoPlayer player = new SimpleExoPlayer.Builder(appContext).build();
+        playerView.setPlayer(player);
+        // Produces DataSource instances through which media data is loaded.
+        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(appContext,
+                Util.getUserAgent(appContext, "Talent Show"));
+        // This is the MediaSource representing the media to be played.
+        MediaSource videoSource =
+                new ProgressiveMediaSource.Factory(dataSourceFactory)
+                        .createMediaSource(uri);
+        // Prepare the player with the source.
+        player.prepare(videoSource);
+        //player.setPlayWhenReady(true);
     }
 
 
     private void showVideos(){
         if(currCountVideos >= 1){
-            video1.setVideoURI(Uri.parse(SERVER_NAME + "/api/video/" + videos.get(0).getName()));
+            setupVideo(1, Uri.parse(SERVER_NAME + "/api/video/" + videos.get(0).getName()));
             video1.setVisibility(View.VISIBLE);
             addVideoBtn1.setVisibility(View.INVISIBLE);
+            settings1.setVisibility(View.VISIBLE);
             if(currCountVideos >= 2){
-                video2.setVideoURI(Uri.parse(SERVER_NAME + "/api/video/" + videos.get(1).getName()));
+                setupVideo(2, Uri.parse(SERVER_NAME + "/api/video/" + videos.get(1).getName()));
                 video2.setVisibility(View.VISIBLE);
                 addVideoBtn2.setVisibility(View.INVISIBLE);
+                settings2.setVisibility(View.VISIBLE);
                 if(currCountVideos >= 3){
-                    video3.setVideoURI(Uri.parse(SERVER_NAME + "/api/video/" + videos.get(2).getName()));
+                    setupVideo(3, Uri.parse(SERVER_NAME + "/api/video/" + videos.get(2).getName()));
                     video3.setVisibility(View.VISIBLE);
                     addVideoBtn3.setVisibility(View.INVISIBLE);
+                    settings3.setVisibility(View.VISIBLE);
                 }
                 if(currCountVideos == 4){
-                    video4.setVideoURI(Uri.parse(SERVER_NAME + "/api/video/" + videos.get(3).getName()));
+                    setupVideo(4, Uri.parse(SERVER_NAME + "/api/video/" + videos.get(3).getName()));
                     video4.setVisibility(View.VISIBLE);
                     addVideoBtn4.setVisibility(View.INVISIBLE);
+                    settings4.setVisibility(View.VISIBLE);
                 }
             }
         }
@@ -301,4 +376,34 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     public void addVideo4(){
         activity.fragmentAction(LOAD_NEW_VIDEO_SCREEN);
     }
+
+    @OnClick(R.id.fragment_profile_settings1)
+    public void showSettings1(){
+        if(videos.size() >= 1)
+        delNameVideo = videos.get(0).getName();
+        showBottomSheet();
+    }
+
+    @OnClick(R.id.fragment_profile_settings2)
+    public void showSettings2(){
+        if(videos.size() >= 2)
+        delNameVideo = videos.get(1).getName();
+        showBottomSheet();
+    }
+
+    @OnClick(R.id.fragment_profile_settings3)
+    public void showSettings3(){
+        if(videos.size() >= 3)
+        delNameVideo = videos.get(2).getName();
+        showBottomSheet();
+    }
+
+    @OnClick(R.id.fragment_profile_settings4)
+    public void showSettings4(){
+        if(videos.size() >= 4)
+        delNameVideo = videos.get(3).getName();
+        showBottomSheet();
+    }
+
+
 }

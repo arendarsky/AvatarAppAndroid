@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="220dp"
+
+    tools:context=".presentation.main.BottomSheetFragments.ProfileBottomSheet">
+
+    <TextView
+        android:id="@+id/profile_video_bottom_sheet_casting"
+        android:layout_width="wrap_content"
+        android:layout_height="57dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="Отправить в кастинг"
+        android:textColor="@color/whiteText"
+        android:textSize="20sp"
+        android:background="@drawable/bottom_sheet_profile_bg_up"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@drawable/bottom_sheet_profile_line"
+        app:layout_constraintTop_toBottomOf="@id/profile_video_bottom_sheet_casting"
+        app:layout_constraintEnd_toEndOf="@id/profile_video_bottom_sheet_casting"
+        app:layout_constraintStart_toStartOf="@id/profile_video_bottom_sheet_casting"
+        android:elevation="10dp"
+        />
+
+
+    <TextView
+        android:id="@+id/profile_video_bottom_sheet_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="57dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="26dp"
+
+        android:gravity="center"
+        android:text="Удалить"
+        android:textColor="@color/whiteText"
+        android:textSize="20sp"
+        android:background="@drawable/bottom_sheet_profile_bg_down"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_video_bottom_sheet_casting" />
+
+    <TextView
+        android:id="@+id/profile_video_bottom_sheet_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="57dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Отмена"
+        android:textStyle="bold"
+        android:textColor="@color/whiteText"
+        android:textSize="20sp"
+        android:background="@drawable/bottom_sheet_profile_item_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_video_bottom_sheet_delete" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

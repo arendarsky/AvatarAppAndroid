@@ -67,4 +67,11 @@ public class ProfilePresenter extends MvpPresenter<ProfileView> {
                     Log.d("ProfileFragmentLog", "successPhotoUpload");},
                         e -> Log.d("ProfileFragmentLog", "errorPhotoUpload" + e.getMessage()));
     }
+
+    void removeVideo(String name){
+        Disposable disposable = interactor.removeVideo(name)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {getProfile();});
+    }
 }

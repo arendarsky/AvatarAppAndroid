@@ -38,8 +38,12 @@ public class Interactor {
         this.profileRepository = profileRepository;
     }
 
+    public Completable removeVideo(String name){
+        return this.profileRepository.removeVideo(name);
+    }
+
     public Completable uploadPhoto(Uri photoUri){
-        return  this.profileRepository.uploadPhoto(photoUri);
+        return this.profileRepository.uploadPhoto(photoUri);
     }
 
     public Completable setPassword(String oldPassword, String newPassword){

@@ -24,13 +24,14 @@
             android:layout_height="match_parent"
             android:layout_width="match_parent">
 
-            <VideoView
+            <com.google.android.exoplayer2.ui.PlayerView
                 android:id="@+id/activity_casting_video"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="0dp"
                 android:layout_marginEnd="0dp"
-                android:clickable="false"/>
+                android:clickable="false"
+                app:use_controller="false"/>
 
             <ProgressBar
                 android:id="@+id/casting_fragment_progress_bar"

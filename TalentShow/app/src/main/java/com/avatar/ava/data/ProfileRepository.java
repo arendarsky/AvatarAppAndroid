@@ -101,4 +101,9 @@ public class ProfileRepository implements IProfileRepository {
     public Single<List<NotificationsDTO>> getNotifications(int number, int skipNumber) {
         return profileAPI.getNotifications(preferencesRepository.getToken(), number, skipNumber);
     }
+
+    @Override
+    public Completable removeVideo(String name) {
+        return profileAPI.removeVideo(preferencesRepository.getToken(), name);
+    }
 }
