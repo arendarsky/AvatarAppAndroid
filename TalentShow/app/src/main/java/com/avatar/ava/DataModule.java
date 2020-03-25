@@ -31,8 +31,9 @@ import toothpick.config.Module;
 public class DataModule extends Module{
 
     private Context appContext;
-    public final static String SERVER_NAME = "http://avatarapp.yambr.ru";
 
+    //public final static String SERVER_NAME = "http://avatarapp.yambr.ru";
+    public final static String SERVER_NAME = "https://xce-factor.ru";
     public DataModule(Context appContext){
         this.appContext = appContext;
 
@@ -83,7 +84,7 @@ public class DataModule extends Module{
 
         bind(Retrofit.class).toInstance(
                 new Retrofit.Builder()
-                        .baseUrl("http://avatarapp.yambr.ru")
+                        .baseUrl(SERVER_NAME)
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                         .addConverterFactory(GsonConverterFactory.create())
                         .client(httpClient.build())

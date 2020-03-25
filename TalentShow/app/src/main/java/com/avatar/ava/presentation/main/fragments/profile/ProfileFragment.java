@@ -251,7 +251,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         videos = person.getVideos();
         currCountVideos = videos.size();
         showContainers();
-        Log.d("ProfileLog", "videos " + currCountVideos + " size " + videos.size() + " aprov " + videos.get(0).isApproved());
+        //Log.d("ProfileLog", "videos " + currCountVideos + " size " + videos.size() + " aprov " + videos.get(0).isApproved());
 
         showHints();
         showVideos();
