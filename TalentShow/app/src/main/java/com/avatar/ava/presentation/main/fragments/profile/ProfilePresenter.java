@@ -74,4 +74,13 @@ public class ProfilePresenter extends MvpPresenter<ProfileView> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> {getProfile();});
     }
+
+    void setActive(String fileName){
+        Disposable disposable = interactor.setActive(fileName)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> getProfile(),
+                        error -> Log.d("ProfileLog", "error " + error)
+                );
+    }
 }

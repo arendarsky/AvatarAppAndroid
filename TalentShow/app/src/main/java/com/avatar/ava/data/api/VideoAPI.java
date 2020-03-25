@@ -39,5 +39,8 @@ public interface VideoAPI {
                             @Query("startTime") double startTime,
                             @Query("endTime") double endTime);
 
+    @GET("/api/video/set_active")
+    Completable setActive(@Header("Authorization") String token,
+                          @Query("fileName") String fileName);
 
 }

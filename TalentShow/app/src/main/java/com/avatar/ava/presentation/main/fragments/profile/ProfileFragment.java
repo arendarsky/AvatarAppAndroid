@@ -142,6 +142,18 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     @BindView(R.id.fragment_profile_settings4)
     View settings4;
 
+    @BindView(R.id.fragment_profile_in_casting_1)
+    TextView videoHint1;
+
+    @BindView(R.id.fragment_profile_in_casting_2)
+    TextView videoHint2;
+
+    @BindView(R.id.fragment_profile_in_casting_3)
+    TextView videoHint3;
+
+    @BindView(R.id.fragment_profile_in_casting_4)
+    TextView videoHint4;
+
     @ProvidePresenter
     ProfilePresenter getPresenter(){
         return Toothpick.openScope(App.class).getInstance(ProfilePresenter.class);
@@ -196,8 +208,12 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     }
     String delNameVideo = "";
     public void deleteVideo(){
-        Log.d("ProfileLog", "delName: " + delNameVideo);
+        Log.d("ProfileLog", "delName: " + delNameVideo + " cast " + castingVideoName);
         presenter.removeVideo(delNameVideo);
+    }
+    String castingVideoName = "";
+    public void setCastingVideo(){
+        presenter.setActive(castingVideoName);
     }
 
     private void showContainers(){
@@ -235,11 +251,56 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         videos = person.getVideos();
         currCountVideos = videos.size();
         showContainers();
-        Log.d("ProfileLog", "videos " + currCountVideos + " size " + videos.size());
+        Log.d("ProfileLog", "videos " + currCountVideos + " size " + videos.size() + " aprov " + videos.get(0).isApproved());
 
-
+        showHints();
         showVideos();
         //showBottomSheet();
+    }
+    String moderation = "На модерации";
+    String casting = "В кастинге";
+    private void showHints(){
+        if(videos.size() >= 1){
+            if(videos.get(0).isApproved() == false){
+                videoHint1.setText(moderation);
+                videoHint1.setVisibility(View.VISIBLE);
+            }
+            if(videos.get(0).isActive() == true){
+                videoHint1.setText(casting);
+                videoHint1.setVisibility(View.VISIBLE);
+            }
+            if(videos.size() >= 2){
+                if(videos.get(1).isApproved() == false){
+                    videoHint2.setText(moderation);
+                    videoHint2.setVisibility(View.VISIBLE);
+                }
+                if(videos.get(1).isActive() == true){
+                    videoHint2.setText(casting);
+                    videoHint2.setVisibility(View.VISIBLE);
+                }
+                if(videos.size() >= 3){
+                    if(videos.get(2).isApproved() == false){
+                        videoHint3.setText(moderation);
+                        videoHint3.setVisibility(View.VISIBLE);
+                    }
+                    if(videos.get(2).isActive() == true){
+                        videoHint3.setText(casting);
+                        videoHint3.setVisibility(View.VISIBLE);
+                    }
+                    if(videos.size() >= 4){
+                        if(videos.get(3).isApproved() == false){
+                            videoHint4.setText(moderation);
+                            videoHint4.setVisibility(View.VISIBLE);
+                        }
+                        if(videos.get(3).isActive() == true){
+                            videoHint4.setText(casting);
+                            videoHint4.setVisibility(View.VISIBLE);
+                        }
+
+                    }
+                }
+            }
+        }
     }
 
     private void showBottomSheet(){
@@ -379,29 +440,41 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
 
     @OnClick(R.id.fragment_profile_settings1)
     public void showSettings1(){
-        if(videos.size() >= 1)
-        delNameVideo = videos.get(0).getName();
+        if(videos.size() >= 1){
+            castingVideoName = videos.get(0).getName();
+            delNameVideo = videos.get(0).getName();
+        }
+
         showBottomSheet();
     }
 
     @OnClick(R.id.fragment_profile_settings2)
     public void showSettings2(){
-        if(videos.size() >= 2)
-        delNameVideo = videos.get(1).getName();
+        if(videos.size() >= 2){
+            delNameVideo = videos.get(1).getName();
+            castingVideoName = videos.get(1).getName();
+        }
+
         showBottomSheet();
     }
 
     @OnClick(R.id.fragment_profile_settings3)
     public void showSettings3(){
-        if(videos.size() >= 3)
-        delNameVideo = videos.get(2).getName();
+        if(videos.size() >= 3){
+            delNameVideo = videos.get(2).getName();
+            castingVideoName = videos.get(2).getName();
+        }
+
         showBottomSheet();
     }
 
     @OnClick(R.id.fragment_profile_settings4)
     public void showSettings4(){
-        if(videos.size() >= 4)
-        delNameVideo = videos.get(3).getName();
+        if(videos.size() >= 4){
+            delNameVideo = videos.get(3).getName();
+            castingVideoName = videos.get(3).getName();
+        }
+
         showBottomSheet();
     }
 

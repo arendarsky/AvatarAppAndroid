@@ -260,6 +260,11 @@ public class VideoRepository implements IVideoRepository {
                 });
     }
 
+    @Override
+    public Completable setActive(String fileName) {
+        return videoAPI.setActive(preferencesRepository.getToken(), fileName);
+    }
+
     public static String getFilePathFromUri(Context context, Uri uri) {
         if (uri == null) return null;
         ContentResolver resolver = context.getContentResolver();

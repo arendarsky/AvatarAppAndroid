@@ -388,11 +388,14 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     @Override
     public void onItemVideoClick(int item) {
         Log.d("ProfileLog", "main");
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        ProfileFragment profileFragment = (ProfileFragment) fragmentManager.findFragmentById(ProfileFragment.ProfileID);
         switch (item){
             case ProfileVideoBottomSheet.DELETE:
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                ProfileFragment profileFragment = (ProfileFragment) fragmentManager.findFragmentById(ProfileFragment.ProfileID);
                 profileFragment.deleteVideo();
+                break;
+            case ProfileVideoBottomSheet.CASTING:
+                profileFragment.setCastingVideo();
                 break;
         }
     }

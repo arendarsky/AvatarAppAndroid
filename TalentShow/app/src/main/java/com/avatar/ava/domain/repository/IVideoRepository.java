@@ -16,4 +16,5 @@ public interface IVideoRepository {
     Completable setLiked(boolean liked);
     Completable uploadAndSetInterval(Uri fileUri, Float beginTime, Float endTime);
     Single<PersonDTO> getVideoLinkOnCreate();
+    Completable setActive(String fileName);
 }

@@ -38,6 +38,10 @@ public class Interactor {
         this.profileRepository = profileRepository;
     }
 
+    public Completable setActive(String fileName){
+        return videoRepository.setActive(fileName);
+    }
+
     public Completable removeVideo(String name){
         return this.profileRepository.removeVideo(name);
     }
