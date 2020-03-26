@@ -20,6 +20,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -42,6 +44,7 @@ public class VideoRepository implements IVideoRepository {
     private Context appContext;
     private PersonDTO currentPerson;
     private ArrayList<PersonDTO> castingPersons = new ArrayList<>();
+    private Set<PersonDTO> personDTOSet = new LinkedHashSet<>();
     private String convertedFilePath;
 
 
@@ -201,16 +204,26 @@ public class VideoRepository implements IVideoRepository {
 
     @Override
     public Single<PersonDTO> getNewVideoLink() {
-        if (castingPersons.size() <= 10){
+        if (personDTOSet.size() <= 10){
             Disposable disposable = videoAPI.getUnwatched(preferencesRepository.getToken(), 20)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(list -> this.castingPersons = list,
+                    .subscribe(
+                            list -> {
+                                list.remove(this.currentPerson);
+                                Set<PersonDTO> tmp = new LinkedHashSet<>(list);
+                                this.personDTOSet = tmp;
+//                                this.personDTOSet.remove(this.currentPerson);
+                            },
                             error -> {});
         }
         return  Single.fromCallable(() -> {
-            if (castingPersons.isEmpty()) throw new Exception("Empty list");
-            else return castingPersons.remove(0);
+            if (personDTOSet.isEmpty()) throw new Exception("Empty list");
+            else {
+                this.currentPerson = personDTOSet.iterator().next();
+                personDTOSet.remove(this.currentPerson);
+                return this.currentPerson;
+            }
         });
 //        if (castingPersons.isEmpty())
 //            throw new IllegalStateException("Empty list");
@@ -224,7 +237,7 @@ public class VideoRepository implements IVideoRepository {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list ->
-                                this.castingPersons = list,
+                                this.personDTOSet.addAll(list),
                         error -> {});
 
 
@@ -254,8 +267,9 @@ public class VideoRepository implements IVideoRepository {
         return videoAPI.getUnwatched(preferencesRepository.getToken(), 10)
                 .flatMap(list -> {
                     if (list.size() == 0) throw new IllegalStateException("Empty list");
-                    this.castingPersons = list;
-                    this.currentPerson = this.castingPersons.remove(0);
+                    this.personDTOSet.addAll(list);
+                    this.currentPerson = this.personDTOSet.iterator().next();
+                    this.personDTOSet.remove(this.currentPerson);
                     return Single.just(this.currentPerson);
                 });
     }

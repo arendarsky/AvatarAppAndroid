@@ -54,7 +54,10 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
         Disposable disposable = interactor.setLiked(true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .andThen(interactor.getNewVideoLink()).subscribe(
+                .subscribe(
+                        () ->
+//                .andThen(
+                        interactor.getNewVideoLink().subscribe(
                         personDTO -> {
                             this.loadNewPerson(personDTO);
                             getViewState().loadNewVideo(personDTO);
@@ -64,7 +67,8 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
                                 getViewState().showNoMoreVideos();
                             }
                             Log.d("Casting presenter", error.getMessage());
-                        });
+                        }),
+                error -> getViewState().showError("Не удалось оценить видео, попробуйте позже"));
 //                .subscribe(
 //                .subscribe(
 //                        () ->
@@ -85,7 +89,8 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
         Disposable disposable = interactor.setLiked(true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .andThen(interactor.getNewVideoLink()).subscribe(
+                .subscribe(
+                        () -> interactor.getNewVideoLink().subscribe(
                         personDTO -> {
                             this.loadNewPerson(personDTO);
                             getViewState().loadNewVideo(personDTO);
@@ -95,7 +100,9 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
                                 getViewState().showNoMoreVideos();
                             }
                             Log.d("Casting presenter", error.getMessage());
-                        });
+                        }),
+                        error -> getViewState().showError("Не удалось оценить видео, попробуйте позже")
+                        );
 //        Disposable disposable = interactor.setLiked(false)
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
@@ -119,7 +126,7 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
 
     void loadNewPerson(PersonDTO person){
         if(person.getPhoto() != null){
-            getViewState().setAvatar(SERVER_NAME + "/api/video/" + person.getPhoto());
+            getViewState().setAvatar(SERVER_NAME + "/api/profile/photo/get" + person.getPhoto());
         }else{
             getViewState().setAvatar("null");
         }
