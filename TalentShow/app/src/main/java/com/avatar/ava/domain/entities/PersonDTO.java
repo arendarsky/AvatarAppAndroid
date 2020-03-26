@@ -1,8 +1,12 @@
 package com.avatar.ava.domain.entities;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.annotations.SerializedName;
 
 import org.parceler.ParcelConstructor;
+
+import java.util.Objects;
 
 public class PersonDTO {
 
@@ -39,6 +43,10 @@ public class PersonDTO {
         this.photo = photo;
     }
 
+//    @Override
+//    public boolean equals(@Nullable Object obj) {
+//        return ((PersonDTO) obj).id == this.id;
+//    }
 
     public PersonDTO(){}
 
