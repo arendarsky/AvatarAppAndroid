@@ -95,12 +95,13 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     public void onViewAttachedToWindow(@NonNull ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
         holder.player.setPlayWhenReady(true);
+        holder.player.retry();
     }
 
     @Override
     public void onViewDetachedFromWindow(@NonNull ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
-        holder.player.stop(true);
+        holder.player.stop();
 
     }
 
