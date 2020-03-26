@@ -31,7 +31,12 @@
                 android:layout_marginStart="0dp"
                 android:layout_marginEnd="0dp"
                 android:clickable="false"
-                app:use_controller="false"/>
+                app:use_controller="false"
+                android:background="@color/blackText"
+                app:buffered_color="@color/blackText"
+                app:default_artwork="@color/blackText"
+                app:scrubber_color="@color/blackText"
+                app:resize_mode="zoom"/>
 
             <ProgressBar
                 android:id="@+id/casting_fragment_progress_bar"

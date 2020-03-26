@@ -26,12 +26,14 @@ import com.avatar.ava.App;
 import com.avatar.ava.R;
 import com.bumptech.glide.Glide;
 import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.analytics.AnalyticsListener;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.google.android.exoplayer2.video.VideoListener;
 
 import javax.inject.Inject;
 
@@ -282,6 +284,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
                 .createMediaSource(Uri.parse(videoLink));
         player.prepare(videoSource);
         player.setPlayWhenReady(true);
+
     }
 
     @Override
