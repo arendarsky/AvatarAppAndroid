@@ -38,9 +38,7 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
                 .subscribe(person -> {
                     if (person.getVideo() != null) {
                         this.loadNewPerson(person);
-                        getViewState().loadNewVideo(
-                                SERVER_NAME + "/api/video/"
-                                        + person.getVideo().getName());
+                        getViewState().loadNewVideo(person);
                     }
                     else getViewState().showNoMoreVideos();
                 },
@@ -59,10 +57,7 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
                 .andThen(interactor.getNewVideoLink()).subscribe(
                         personDTO -> {
                             this.loadNewPerson(personDTO);
-                            getViewState().loadNewVideo(
-                                    SERVER_NAME + "/api/video/" +
-                                            personDTO.getVideo().getName()
-                            );
+                            getViewState().loadNewVideo(personDTO);
                         },
                         error -> {
                             if (Objects.equals(error.getMessage(), "Empty list")){
@@ -93,10 +88,7 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
                 .andThen(interactor.getNewVideoLink()).subscribe(
                         personDTO -> {
                             this.loadNewPerson(personDTO);
-                            getViewState().loadNewVideo(
-                                    SERVER_NAME + "/api/video/" +
-                                            personDTO.getVideo().getName()
-                            );
+                            getViewState().loadNewVideo(personDTO);
                         },
                         error -> {
                             if (Objects.equals(error.getMessage(), "Empty list")){

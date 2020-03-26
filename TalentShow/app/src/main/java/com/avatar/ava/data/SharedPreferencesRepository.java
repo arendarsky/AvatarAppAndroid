@@ -37,6 +37,12 @@ public class SharedPreferencesRepository implements ISharedPreferemcesRepository
         editor.apply();
     }
 
+    public void exitAcc(){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(authed, false);
+        editor.apply();
+    }
+
     public boolean checkAuth(){
         return sharedPreferences.getBoolean(authed, false);
     }

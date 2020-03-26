@@ -32,10 +32,12 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
 
+import com.avatar.ava.presentation.SplashActivity;
 import com.avatar.ava.presentation.main.BottomSheetFragments.ProfileVideoBottomSheet;
 import com.avatar.ava.presentation.main.fragments.FragmentChooseBestMain;
 import com.avatar.ava.presentation.main.BottomSheetFragments.ProfileBottomSheet;
 import com.avatar.ava.presentation.main.fragments.FragmentFileLoadMain;
+import com.avatar.ava.presentation.main.fragments.casting.CastingFragment;
 import com.avatar.ava.presentation.main.fragments.profile.ProfileFragment;
 import com.avatar.ava.presentation.main.fragments.profile.profileSettings.changePassword.ChangePasswordFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -77,6 +79,9 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
 
     @BindView(R.id.main_frame_back)
     ConstraintLayout backButton;
+
+    @BindView(R.id.main_frame_exit)
+    TextView exit;
 
     @Inject
     NavigatorHolder navigatorHolder;
@@ -180,6 +185,11 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     }
 
     @Override
+    public void showExit(){
+        exit.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void clearTopView() {
         backButton.setVisibility(View.INVISIBLE);
         menuPoints.setVisibility(View.INVISIBLE);
@@ -187,6 +197,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         addButton.setVisibility(View.INVISIBLE);
         saveProfile.setVisibility(View.INVISIBLE);
         savePassword.setVisibility(View.INVISIBLE);
+        exit.setVisibility(View.INVISIBLE);
     }
 
     @OnClick(R.id.main_frame_add)
@@ -398,5 +409,19 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
                 profileFragment.setCastingVideo();
                 break;
         }
+    }
+
+    @OnClick(R.id.main_frame_exit)
+    public void exitFromAcc(){
+        presenter.exitAcc();
+        startActivity(new Intent(MainScreenActivity.this, SplashActivity.class));
+    }
+
+    @Override
+    public void stopVideoFromCasting(){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        CastingFragment castingFragment = (CastingFragment) fragmentManager.findFragmentById(CastingFragment.CASTING_ID);
+        if(castingFragment != null)
+        castingFragment.stopVideo();
     }
 }

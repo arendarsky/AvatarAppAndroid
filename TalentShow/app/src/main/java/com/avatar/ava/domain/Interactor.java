@@ -133,4 +133,8 @@ public class Interactor {
     public Single<List<NotificationsDTO>> getLikes(int number, int skipNumber){
         return this.profileRepository.getNotifications(number, skipNumber);
     }
+
+    public void exitFromAccount(){
+        this.preferencesRepository.exitAcc();
+    }
 }

@@ -11,6 +11,8 @@ public interface MainScreenView extends MvpView {
     void showAddButton();
     void showSaveProfile();
     void showSavePassword();
+    void showExit();
+    void stopVideoFromCasting();
     void clearTopView();
     void showMessage(String message);
     void addButtonClicked();

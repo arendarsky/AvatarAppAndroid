@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -24,9 +25,13 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
+import com.avatar.ava.domain.entities.PersonDTO;
 import com.bumptech.glide.Glide;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.analytics.AnalyticsListener;
+import com.google.android.exoplayer2.source.ClippingMediaSource;
+import com.google.android.exoplayer2.source.LoopingMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.ui.PlayerView;
@@ -47,6 +52,8 @@ import static com.avatar.ava.DataModule.SERVER_NAME;
 
 
 public class CastingFragment extends MvpAppCompatFragment implements CastingView {
+
+    public static int CASTING_ID;
 
     @Inject
     Context appContext;
@@ -92,6 +99,9 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     @BindView(R.id.casting_view_heart)
     View heartView;
 
+    @BindView(R.id.casting_fragment_progress_bar)
+    ProgressBar progressBar;
+
     VideoView video_fullscreen;
 
     ImageButton btn_fullscreen;
@@ -125,6 +135,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         ButterKnife.bind(this, view);
         /*video.seekTo(startVideo);
         video.start();*/
+        CASTING_ID = this.getId();
 
         player = new SimpleExoPlayer.Builder(getContext()).build();
         video.setPlayer(player);
@@ -138,6 +149,13 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         dislikeButton.setVisibility(View.INVISIBLE);
         heartView.setVisibility(View.INVISIBLE);
         crossView.setVisibility(View.INVISIBLE);
+
+        player.addVideoListener(new VideoListener() {
+            @Override
+            public void onRenderedFirstFrame() {
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+        });
         
         /*video.setOnPreparedListener(mp -> mp.setOnVideoSizeChangedListener(
                 (mp12, width, height) -> {
@@ -261,30 +279,44 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
     @OnClick(R.id.activity_casting_btn_like)
     public void likeClicked(){
+        progressBar.setVisibility(View.VISIBLE);
         presenter.likeVideo();
     }
 
     @OnClick(R.id.activity_casting_btn_x)
     public void dislikeClicked() {
+        progressBar.setVisibility(View.VISIBLE);
         presenter.dislikeVideo();
     }
 
     @Override
-    public void loadNewVideo(String videoLink){
+    public void loadNewVideo(PersonDTO personDTO){
         castingCard.setVisibility(View.VISIBLE);
         noMoreVideos.setVisibility(View.INVISIBLE);
         likeButton.setVisibility(View.VISIBLE);
         dislikeButton.setVisibility(View.VISIBLE);
         heartView.setVisibility(View.VISIBLE);
         crossView.setVisibility(View.VISIBLE);
+
+        String videoLink = SERVER_NAME + "/api/video/" + personDTO.getVideo().getName();
+        int start = (int)personDTO.getVideo().getStartTime() * 1000;
+        int end = (int)personDTO.getVideo().getEndTime() * 1000;
         Log.d("Casting link", videoLink);
         //video.setVideoURI(Uri.parse(videoLink));
         player.stop(false);
         videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
                 .createMediaSource(Uri.parse(videoLink));
-        player.prepare(videoSource);
+        ClippingMediaSource clippingMediaSource =  new ClippingMediaSource(videoSource, start, end);
+        LoopingMediaSource loopingMediaSource = new LoopingMediaSource(clippingMediaSource, 3);
+        player.prepare(loopingMediaSource);
+
         player.setPlayWhenReady(true);
 
+    }
+
+    public void stopVideo(){
+        if(player != null)
+        player.stop();
     }
 
     @Override
