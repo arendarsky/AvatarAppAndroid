@@ -90,7 +90,13 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
         this.data = data;
         Log.d("RatingFragmentLog", this.data.size() + "  " + data.size());
         Log.d("RatingFragmentLog", data.get(0).getName() + " ");
-        adapter.setItems(data);
+        for(int i = 0; i < this.data.size(); i++){
+            if(this.data.get(i).getVideo() == null){
+                this.data.remove(i);
+                Log.d("RatingFragmentLog", "remove " + i + " element");
+            }
+        }
+        adapter.setItems(this.data);
     }
 
     public void makeResponse(){

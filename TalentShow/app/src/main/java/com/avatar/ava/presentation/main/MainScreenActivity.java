@@ -255,7 +255,9 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     @Override
     public void captureVideo() {
         if (permissionAlreadyGranted()) {
-            Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+            //Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+            Intent intent = new Intent(android.provider.MediaStore.ACTION_VIDEO_CAPTURE);
+            //Intent intent = new Intent("android.media.action.VIDEO_CAMERA");
             startActivityForResult(intent, CAPTURE_VIDEO);
         }
         else requestPermission();
@@ -420,7 +422,11 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     @Override
     public void stopVideoFromCasting(){
         FragmentManager fragmentManager = getSupportFragmentManager();
-        CastingFragment castingFragment = (CastingFragment) fragmentManager.findFragmentById(CastingFragment.CASTING_ID);
+        CastingFragment castingFragment = null;
+        if (fragmentManager.findFragmentById(CastingFragment.CASTING_ID) instanceof CastingFragment){
+            castingFragment = (CastingFragment) fragmentManager.findFragmentById(CastingFragment.CASTING_ID);
+        }
+        //CastingFragment castingFragment = (CastingFragment) fragmentManager.findFragmentById(CastingFragment.CASTING_ID);
         if(castingFragment != null)
         castingFragment.stopVideo();
     }

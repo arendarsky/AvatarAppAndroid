@@ -50,20 +50,22 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
                     mp.setLooping(true);
                 }));
         holder.video.start();*/
+        if(personRatingDTO.getVideo() != null){
+            holder.player = new SimpleExoPlayer.Builder(holder.itemView.getContext()).build();
+            holder.video.setPlayer(holder.player);
+            // Produces DataSource instances through which media data is loaded.
+            DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(holder.itemView.getContext(),
+                    Util.getUserAgent(holder.itemView.getContext(), "Talent Show"));
+            // This is the MediaSource representing the media to be played.
+            MediaSource videoSource =
+                    new ProgressiveMediaSource.Factory(dataSourceFactory)
+                            .createMediaSource(Uri.parse(SERVER_NAME + "/api/video/"
+                                    + personRatingDTO.getVideo().getName()));
+            // Prepare the player with the source.
+            holder.player.prepare(videoSource);
+            holder.player.setPlayWhenReady(true);
+        }
 
-        holder.player = new SimpleExoPlayer.Builder(holder.itemView.getContext()).build();
-        holder.video.setPlayer(holder.player);
-        // Produces DataSource instances through which media data is loaded.
-        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(holder.itemView.getContext(),
-                Util.getUserAgent(holder.itemView.getContext(), "Talent Show"));
-        // This is the MediaSource representing the media to be played.
-        MediaSource videoSource =
-                new ProgressiveMediaSource.Factory(dataSourceFactory)
-                        .createMediaSource(Uri.parse(SERVER_NAME + "/api/video/"
-                                + personRatingDTO.getVideo().getName()));
-        // Prepare the player with the source.
-        holder.player.prepare(videoSource);
-        holder.player.setPlayWhenReady(true);
 
         holder.likes.setText("     " + String.valueOf(personRatingDTO.getLikesNumber()));
         holder.description.setText(personRatingDTO.getDescription());
@@ -94,14 +96,20 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     @Override
     public void onViewAttachedToWindow(@NonNull ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
-        holder.player.setPlayWhenReady(true);
-        holder.player.retry();
+        if(holder.player != null){
+            holder.player.setPlayWhenReady(true);
+            holder.player.retry();
+        }
+
     }
 
     @Override
     public void onViewDetachedFromWindow(@NonNull ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
-        holder.player.stop();
+        if(holder.player != null){
+            holder.player.stop(true);
+        }
+
 
     }
 

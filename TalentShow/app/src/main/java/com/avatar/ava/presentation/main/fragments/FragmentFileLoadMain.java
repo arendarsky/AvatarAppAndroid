@@ -32,7 +32,7 @@ public class FragmentFileLoadMain extends Fragment {
 
     private Activity activity;
     private final int LOAD_VIDEO = 5;
-    private final int CAPTURE_VIDEO = 7;
+    private final int CAPTURE_VIDEO = 8;
 
     @BindView(R.id.file_load_main_progressbar)
     ProgressBar progressBar;
