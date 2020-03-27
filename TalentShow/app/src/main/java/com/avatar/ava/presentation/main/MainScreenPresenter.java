@@ -200,6 +200,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                 .subscribe(new DisposableCompletableObserver() {
                                @Override
                                public void onComplete() {
+                                   getViewState().setLoadVideoToServer(false);
                                    retunToRoot();
                                }
 

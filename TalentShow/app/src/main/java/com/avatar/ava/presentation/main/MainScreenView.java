@@ -3,7 +3,7 @@ package com.avatar.ava.presentation.main;
 import com.arellomobile.mvp.MvpView;
 
 public interface MainScreenView extends MvpView {
-
+    void setLoadVideoToServer(boolean loadVideoToServer);
     void changeTitle(String title);
     void showBackButton();
     void showMenuPoints();

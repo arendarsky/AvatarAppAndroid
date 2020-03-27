@@ -297,13 +297,21 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         );
         if (closeApp) super.onBackPressed();
     }
+    private boolean loadVideoToServer = false;
+    @Override
+    public void setLoadVideoToServer(boolean loadVideoToServer) {
+        this.loadVideoToServer = loadVideoToServer;
+    }
 
     @OnClick(R.id.main_frame_save)
     void saveClicked(){
         Fragment currentFragment = getSupportFragmentManager()
                 .findFragmentById(R.id.activity_main_frame_container);
-        if (currentFragment instanceof FragmentChooseBestMain){
+        if (currentFragment instanceof FragmentChooseBestMain && loadVideoToServer == false){
             List<Float> tmp = ((FragmentChooseBestMain) currentFragment).getInterval();
+            Log.d("ActivityMainLog", "uploadVideoandSetInterval");
+            loadVideoToServer = true;
+
             presenter.uploadAndSetInterval(tmp.get(0), tmp.get(1));
         }
     }
