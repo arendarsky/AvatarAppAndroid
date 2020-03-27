@@ -21,10 +21,6 @@ import android.widget.VideoView;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
 import com.avatar.ava.presentation.signing.RegAuthPostman;
-import com.deep.videotrimmer.DeepVideoTrimmer;
-import com.deep.videotrimmer.interfaces.OnRangeSeekBarListener;
-import com.deep.videotrimmer.view.RangeSeekBarView;
-import com.deep.videotrimmer.view.Thumb;
 import com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar;
 
 import java.util.ArrayList;
@@ -35,7 +31,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import toothpick.Toothpick;
 
-public class FragmentChooseVideoBest extends Fragment implements OnRangeSeekBarListener {
+public class FragmentChooseVideoBest extends Fragment  {
 
 
     private Activity activity;
@@ -212,26 +208,7 @@ public class FragmentChooseVideoBest extends Fragment implements OnRangeSeekBarL
 
         }
     */
-    @Override
-    public void onCreate(RangeSeekBarView rangeSeekBarView, int index, float value) {
 
-    }
-
-    @Override
-    public void onSeek(RangeSeekBarView rangeSeekBarView, int index, float value) {
-
-        Log.d("videoTrimmerLog", index + " " + (value / 100 * video.getDuration()));
-    }
-
-    @Override
-    public void onSeekStart(RangeSeekBarView rangeSeekBarView, int index, float value) {
-
-    }
-
-    @Override
-    public void onSeekStop(RangeSeekBarView rangeSeekBarView, int index, float value) {
-
-    }
 
 //    private void setInterval(String name, int startTime, int endTime){
 //        Disposable disposable = interactor.setInterval(name, startTime, endTime)
