@@ -63,7 +63,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
                                     + personRatingDTO.getVideo().getName()));
             // Prepare the player with the source.
             holder.player.prepare(videoSource);
-            holder.player.setPlayWhenReady(true);
+            //holder.player.setPlayWhenReady(true);
         }
 
 
@@ -97,8 +97,8 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     public void onViewAttachedToWindow(@NonNull ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
         if(holder.player != null){
-            holder.player.setPlayWhenReady(true);
-            holder.player.retry();
+           // holder.player.setPlayWhenReady(true);
+            //holder.player.retry();
         }
 
     }

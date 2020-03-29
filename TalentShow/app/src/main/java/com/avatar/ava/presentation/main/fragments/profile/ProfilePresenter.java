@@ -30,6 +30,7 @@ public class ProfilePresenter extends MvpPresenter<ProfileView> {
                 .subscribe(person -> {
                             Log.d("ProfileFragmentLog", person.getName());
                             getViewState().setDataProfile(person);
+                            getViewState().update();
                         },
                         error -> {
                             Log.d("ProfileFragmentLog", "error");});
@@ -72,14 +73,20 @@ public class ProfilePresenter extends MvpPresenter<ProfileView> {
         Disposable disposable = interactor.removeVideo(name)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> {getProfile();});
+                .subscribe(() -> {
+                    getProfile();
+
+                });
     }
 
     void setActive(String fileName){
         Disposable disposable = interactor.setActive(fileName)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> getProfile(),
+                .subscribe(() -> {
+                    getProfile();
+
+                    },
                         error -> Log.d("ProfileLog", "error " + error)
                 );
     }

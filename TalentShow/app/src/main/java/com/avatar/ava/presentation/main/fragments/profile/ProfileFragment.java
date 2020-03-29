@@ -265,7 +265,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
                 videoHint1.setText(moderation);
                 videoHint1.setVisibility(View.VISIBLE);
             }
-            if(videos.get(0).isActive() == true){
+            if(videos.get(0).isActive() == true && videos.get(0).isApproved()){
                 videoHint1.setText(casting);
                 videoHint1.setVisibility(View.VISIBLE);
             }
@@ -274,7 +274,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
                     videoHint2.setText(moderation);
                     videoHint2.setVisibility(View.VISIBLE);
                 }
-                if(videos.get(1).isActive() == true){
+                if(videos.get(1).isActive() == true && videos.get(0).isApproved()){
                     videoHint2.setText(casting);
                     videoHint2.setVisibility(View.VISIBLE);
                 }
@@ -283,7 +283,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
                         videoHint3.setText(moderation);
                         videoHint3.setVisibility(View.VISIBLE);
                     }
-                    if(videos.get(2).isActive() == true){
+                    if(videos.get(2).isActive() == true && videos.get(0).isApproved()){
                         videoHint3.setText(casting);
                         videoHint3.setVisibility(View.VISIBLE);
                     }
@@ -292,7 +292,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
                             videoHint4.setText(moderation);
                             videoHint4.setVisibility(View.VISIBLE);
                         }
-                        if(videos.get(3).isActive() == true){
+                        if(videos.get(3).isActive() == true && videos.get(0).isApproved()){
                             videoHint4.setText(casting);
                             videoHint4.setVisibility(View.VISIBLE);
                         }
@@ -398,7 +398,9 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         if(!edit){
             edit = true;
             description.setEnabled(true);
+            description.setBackgroundResource(R.drawable.profile_fragment_edit_bg);
             name.setEnabled(true);
+            name.setBackgroundResource(R.drawable.profile_fragment_edit_bg);
             editPhoto.setVisibility(View.VISIBLE);
             editProfile.setText("Применить");
         }else{
@@ -406,11 +408,49 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
             presenter.setDescription(description.getText().toString());
             presenter.setName(name.getText().toString());
             description.setEnabled(false);
+            description.setBackground(null);
             name.setEnabled(false);
+            name.setBackground(null);
             editPhoto.setVisibility(View.GONE);
             editProfile.setText("Редактировать");
+
+            showContainers();
+            showHints();
+            showVideos();
         }
 
+    }
+    @Override
+    public void update(){
+        video1.setVisibility(View.INVISIBLE);
+        video2.setVisibility(View.INVISIBLE);
+        video3.setVisibility(View.INVISIBLE);
+        video4.setVisibility(View.INVISIBLE);
+
+        videoHint1.setVisibility(View.INVISIBLE);
+        videoHint2.setVisibility(View.INVISIBLE);
+        videoHint3.setVisibility(View.INVISIBLE);
+        videoHint4.setVisibility(View.INVISIBLE);
+
+        container1.setVisibility(View.VISIBLE);
+        container2.setVisibility(View.VISIBLE);
+        container3.setVisibility(View.VISIBLE);
+        container4.setVisibility(View.VISIBLE);
+
+        addVideoBtn1.setVisibility(View.VISIBLE);
+        settings1.setVisibility(View.INVISIBLE);
+        addVideoBtn2.setVisibility(View.VISIBLE);
+        settings2.setVisibility(View.INVISIBLE);
+        addVideoBtn3.setVisibility(View.VISIBLE);
+        settings3.setVisibility(View.INVISIBLE);
+        addVideoBtn4.setVisibility(View.VISIBLE);
+        settings4.setVisibility(View.INVISIBLE);
+
+
+
+        showContainers();
+        showHints();
+        showVideos();
     }
 
     @OnClick(R.id.fragment_profile_edit_photo)

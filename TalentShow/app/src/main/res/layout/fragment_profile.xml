@@ -66,7 +66,7 @@
         android:enabled="false"
         android:id="@+id/fragment_profile_name"
         android:layout_width="252dp"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
         android:textSize="22sp"
         android:textStyle="bold"
         android:textColor="@color/whiteText"
@@ -124,6 +124,7 @@
         android:layout_width="343dp"
         android:layout_height="wrap_content"
         android:text="Описание"
+        android:gravity="top"
         android:textSize="15sp"
         android:textColor="@color/whiteText"
         android:layout_marginTop="85dp"
@@ -148,7 +149,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="160dp"
         android:layout_height="100dp"
-        android:layout_marginStart="26dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:id="@+id/fragment_profile_container1"
         app:layout_constraintTop_toBottomOf="@id/fragment_profile_video_tv"
@@ -211,9 +212,11 @@
         android:layout_height="100dp"
         android:layout_marginEnd="26dp"
         android:layout_marginTop="20dp"
+        android:layout_marginStart="40dp"
         android:id="@+id/fragment_profile_container2"
         app:layout_constraintTop_toBottomOf="@id/fragment_profile_video_tv"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fragment_profile_container1"
         >
 
         <View
@@ -268,7 +271,7 @@
 
         android:layout_width="160dp"
         android:layout_height="100dp"
-        android:layout_marginStart="26dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:id="@+id/fragment_profile_container3"
         app:layout_constraintTop_toBottomOf="@id/fragment_profile_container1"
@@ -328,9 +331,11 @@
         android:layout_height="100dp"
         android:layout_marginEnd="26dp"
         android:layout_marginTop="20dp"
+        android:layout_marginStart="40dp"
         android:id="@+id/fragment_profile_container4"
         app:layout_constraintTop_toBottomOf="@id/fragment_profile_container1"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fragment_profile_container1"
         >
 
         <View

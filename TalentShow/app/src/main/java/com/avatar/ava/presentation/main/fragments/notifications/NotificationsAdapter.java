@@ -16,6 +16,8 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.avatar.ava.DataModule.SERVER_NAME;
+
 public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdapter.ViewHolder> {
 
     private List<NotificationsDTO> data = new ArrayList<>();
@@ -32,12 +34,19 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         NotificationsDTO notification = data.get(position);
-        if (notification.getPhoto() != null)
+        if (notification.getPhoto() != null){
             Glide.with(holder.itemView.getContext())
-                    .load("http://avatarapp.yambr.ru/api/profile/photo/get/"
+                    .load(SERVER_NAME + "/api/profile/photo/get/"
                             + notification.getPhoto())
                     .circleCrop()
                     .into(holder.avatar);
+        }else{
+            Glide.with(holder.itemView.getContext())
+                    .load(R.drawable.empty_profile_icon)
+                    .circleCrop()
+                    .into(holder.avatar);
+        }
+
         holder.text.setText(notification.getName() + this.likeText);
     }
 

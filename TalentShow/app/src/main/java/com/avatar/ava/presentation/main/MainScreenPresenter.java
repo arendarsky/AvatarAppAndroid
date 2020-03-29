@@ -59,7 +59,6 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
 
     boolean onNavClicked(int id){
         getViewState().clearTopView();
-        if(id != R.id.nav_casting)
         getViewState().stopVideoFromCasting();
         switch (id){
             case R.id.nav_casting:
