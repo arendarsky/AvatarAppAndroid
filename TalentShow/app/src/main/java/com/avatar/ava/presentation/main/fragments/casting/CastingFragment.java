@@ -354,6 +354,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         dislikeButton.setVisibility(View.INVISIBLE);
         crossView.setVisibility(View.INVISIBLE);
         heartView.setVisibility(View.INVISIBLE);
+        stopVideo();
     }
 
 
