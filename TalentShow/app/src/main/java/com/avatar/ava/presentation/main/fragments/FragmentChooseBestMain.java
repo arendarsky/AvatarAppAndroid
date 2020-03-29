@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -44,6 +45,9 @@ public class FragmentChooseBestMain extends Fragment {
 
     @BindView(R.id.fragment_video_best_main_end)
     TextView endText;
+
+    @BindView(R.id.best_video_fragment_progress_bar)
+    ProgressBar progress_bar;
 
     float duration = 0;
 
@@ -96,6 +100,11 @@ public class FragmentChooseBestMain extends Fragment {
 //            setInterval(fileName, (int)value1, (int)value2);
 //            startActivity(new Intent(getContext(), MainScreenActivity.class));
 //        });
+    }
+
+    public void sendVideo(){
+        video.stopPlayback();
+        progress_bar.setVisibility(View.VISIBLE);
     }
 
     private String getTime(int seconds) {

@@ -311,7 +311,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
             List<Float> tmp = ((FragmentChooseBestMain) currentFragment).getInterval();
             Log.d("ActivityMainLog", "uploadVideoandSetInterval");
             loadVideoToServer = true;
-
+            ((FragmentChooseBestMain) currentFragment).sendVideo();
             presenter.uploadAndSetInterval(tmp.get(0), tmp.get(1));
         }
     }
