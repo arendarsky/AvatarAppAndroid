@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
@@ -212,8 +213,14 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         presenter.removeVideo(delNameVideo);
     }
     String castingVideoName = "";
+    boolean castingIsApproved = false;
     public void setCastingVideo(){
-        presenter.setActive(castingVideoName);
+        if(castingIsApproved){
+            presenter.setActive(castingVideoName);
+        }else{
+            Toast.makeText(getContext(), "Видео ещё не прошло модерацию", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private void showContainers(){
@@ -274,7 +281,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
                     videoHint2.setText(moderation);
                     videoHint2.setVisibility(View.VISIBLE);
                 }
-                if(videos.get(1).isActive() == true && videos.get(0).isApproved()){
+                if(videos.get(1).isActive() == true && videos.get(1).isApproved()){
                     videoHint2.setText(casting);
                     videoHint2.setVisibility(View.VISIBLE);
                 }
@@ -283,7 +290,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
                         videoHint3.setText(moderation);
                         videoHint3.setVisibility(View.VISIBLE);
                     }
-                    if(videos.get(2).isActive() == true && videos.get(0).isApproved()){
+                    if(videos.get(2).isActive() == true && videos.get(2).isApproved()){
                         videoHint3.setText(casting);
                         videoHint3.setVisibility(View.VISIBLE);
                     }
@@ -292,7 +299,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
                             videoHint4.setText(moderation);
                             videoHint4.setVisibility(View.VISIBLE);
                         }
-                        if(videos.get(3).isActive() == true && videos.get(0).isApproved()){
+                        if(videos.get(3).isActive() == true && videos.get(3).isApproved()){
                             videoHint4.setText(casting);
                             videoHint4.setVisibility(View.VISIBLE);
                         }
@@ -483,6 +490,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         if(videos.size() >= 1){
             castingVideoName = videos.get(0).getName();
             delNameVideo = videos.get(0).getName();
+            castingIsApproved = videos.get(0).isApproved();
         }
 
         showBottomSheet();
@@ -493,6 +501,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         if(videos.size() >= 2){
             delNameVideo = videos.get(1).getName();
             castingVideoName = videos.get(1).getName();
+            castingIsApproved = videos.get(1).isApproved();
         }
 
         showBottomSheet();
@@ -503,6 +512,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         if(videos.size() >= 3){
             delNameVideo = videos.get(2).getName();
             castingVideoName = videos.get(2).getName();
+            castingIsApproved = videos.get(2).isApproved();
         }
 
         showBottomSheet();
@@ -513,6 +523,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         if(videos.size() >= 4){
             delNameVideo = videos.get(3).getName();
             castingVideoName = videos.get(3).getName();
+            castingIsApproved = videos.get(3).isApproved();
         }
 
         showBottomSheet();
