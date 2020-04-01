@@ -15,7 +15,7 @@ public class PublicProfileDTO {
     @SerializedName("profilePhoto")
     private String photo = "";
 
-    @SerializedName("video")
+    @SerializedName("videos")
     private ArrayList<VideoDTO> videos;
 
     @SerializedName("id")
