@@ -139,6 +139,7 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
         }else if(currCountVideos == 2){
             container4.setVisibility(View.INVISIBLE);
         }*/
+        description.setEnabled(false);
     }
 
 
@@ -159,7 +160,12 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
         name.setText(person.getName());
         description.setText(person.getDescription());
         videos = person.getVideos();
-        currCountVideos = videos.size();
+        if(videos != null){
+            currCountVideos = videos.size();
+        }else{
+            currCountVideos = 0;
+        }
+
         showContainers();
         showVideos();
     }

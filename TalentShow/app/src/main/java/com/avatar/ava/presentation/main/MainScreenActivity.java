@@ -156,6 +156,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
 
     @Override
     public void openPublicProfile(int id) {
+        stopVideoFromCasting();
         presenter.openPublicProfile(id,
                 getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_container).getId());
     }
