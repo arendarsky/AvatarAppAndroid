@@ -30,6 +30,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.analytics.AnalyticsListener;
+import com.google.android.exoplayer2.analytics.PlaybackStatsListener;
 import com.google.android.exoplayer2.source.ClippingMediaSource;
 import com.google.android.exoplayer2.source.LoopingMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
@@ -102,6 +103,9 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     @BindView(R.id.casting_fragment_progress_bar)
     ProgressBar progressBar;
 
+    @BindView(R.id.casting_fragment_restart_btn)
+    ImageButton restartBtn;
+
     VideoView video_fullscreen;
 
     ImageButton btn_fullscreen;
@@ -154,6 +158,15 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
             @Override
             public void onRenderedFirstFrame() {
                 progressBar.setVisibility(View.INVISIBLE);
+                restartBtn.setVisibility(View.INVISIBLE);
+            }
+        });
+        player.addAnalyticsListener(new AnalyticsListener() {
+            @Override
+            public void onPlayerStateChanged(EventTime eventTime, boolean playWhenReady, int playbackState) {
+                if(playbackState == Player.STATE_ENDED){
+                    restartBtn.setVisibility(View.VISIBLE);
+                }
             }
         });
         
@@ -161,18 +174,18 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
                 (mp12, width, height) -> {
                     mp.setLooping(true);
                     *//*
-                     * add media controller
-                     *//*
+                 * add media controller
+                 *//*
 //                    mc = new MediaController(appContext);
 //                    video.setMediaController(mc);
                     *//*
-                     * and set its position on screen
-                     *//*
+                 * and set its position on screen
+                 *//*
 //                    mc.setAnchorView(video);
                 }));*/
 //
 //        trackProgress();
-        presenter.getFirstVideo();
+                presenter.getFirstVideo();
     }
 //
 //    }
@@ -307,11 +320,17 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
                 .createMediaSource(Uri.parse(videoLink));
         ClippingMediaSource clippingMediaSource =  new ClippingMediaSource(videoSource, start, end);
-        LoopingMediaSource loopingMediaSource = new LoopingMediaSource(clippingMediaSource, 3);
-        player.prepare(loopingMediaSource);
+        //LoopingMediaSource loopingMediaSource = new LoopingMediaSource(clippingMediaSource, 3);
+        player.prepare(clippingMediaSource);
 
         player.setPlayWhenReady(true);
 
+    }
+
+    @OnClick(R.id.casting_fragment_restart_btn)
+    public void restartVideo(){
+        player.seekTo(0);
+        player.setPlayWhenReady(true);
     }
 
     public void stopVideo(){
