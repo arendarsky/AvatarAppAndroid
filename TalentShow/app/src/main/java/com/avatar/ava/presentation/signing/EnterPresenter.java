@@ -7,8 +7,6 @@ import com.arellomobile.mvp.MvpPresenter;
 import com.avatar.ava.Screens;
 import com.avatar.ava.domain.Interactor;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -34,6 +32,9 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
     private final int CHOOSE_SECONDS = 8;
     private final int VIDEO_SCREEN_JUST = 9;
     private final int UPLOAD_VIDEO = 10;
+    private final int CONFIRM_MAIL = 11;
+
+    private boolean registration = false;
 
     private Uri selectedFileUri;
 
@@ -62,9 +63,9 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
             case START_REG:
                 router.navigateTo(new Screens.RegistrationScreen());
                 break;
-            case SKIP_AUTH:
             case AUTH_FINISHED:
-                getViewState().startMain();
+                if (registration) router.newRootScreen(new Screens.FileLoadJustScreen());
+                else getViewState().startMain();
                 break;
 //            case LOAD_AVATAR:
 //                getViewState().loadPhotoForAvatar();
@@ -83,6 +84,9 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
 //                break;
             case VIDEO_SCREEN_JUST:
                 router.newRootScreen(new Screens.FileLoadJustScreen());
+                break;
+            case CONFIRM_MAIL:
+                router.newRootScreen(new Screens.ConfirmMailScreen());
                 break;
         }
     }

@@ -9,11 +9,24 @@ public class AuthResponse {
     @Expose
     private String token;
 
-    public AuthResponse(String token) {
+    @SerializedName("confirmationRequired")
+    @Expose
+    private boolean confirmationRequired;
+
+    public AuthResponse(String token, boolean confirmationRequired) {
         this.token = token;
+        this.confirmationRequired = confirmationRequired;
     }
 
     public String getToken() {
         return token;
+    }
+
+    public boolean isConfirmationRequired() {
+        return confirmationRequired;
+    }
+
+    public void setConfirmationRequired(boolean confirmationRequired) {
+        this.confirmationRequired = confirmationRequired;
     }
 }

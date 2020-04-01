@@ -1,7 +1,6 @@
 package com.avatar.ava.data;
 
 import com.avatar.ava.data.api.AuthAPI;
-import com.avatar.ava.domain.entities.AuthResponse;
 import com.avatar.ava.domain.entities.RegisterDTO;
 import com.avatar.ava.domain.repository.IAuthRepository;
 
@@ -10,8 +9,6 @@ import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.Single;
-import io.reactivex.SingleSource;
-import io.reactivex.functions.Function;
 import retrofit2.Retrofit;
 
 public class AuthRepository implements IAuthRepository {
@@ -40,36 +37,42 @@ public class AuthRepository implements IAuthRepository {
     public Single<Object> auth(String mail, String password) {
         return authAPI.authUser(mail, password)
                 .flatMap(s -> {
-                    if (s.getToken() == null) return Single.just(false);
-                    else
-                        {
-                            preferencesRepository.saveToken(s.getToken());
-                            return Single.just(true);
-                        }
+                            if (!s.isConfirmationRequired()) {
+                                if (s.getToken() == null) return Single.just(1);
+                                else {
+                                    preferencesRepository.saveToken(s.getToken());
+                                    return Single.just(0);
+                                }
+                            }
+                            else {
+                                return Single.just(2);
+                            }
                 }
                 );
     }
 
-    //TODO Изменить код в сооьветствии с правками Влада
     @Override
     public Single<Object> registerUser(String name, String mail, String password) {
 
         return authAPI.registerUser(new RegisterDTO(name, mail, password))
                 .flatMap(aBoolean -> {
                     if (aBoolean){
-                        return authAPI.authUser(mail, password)
-                                .flatMap((Function<AuthResponse, SingleSource<?>>) s -> {
-                                    if (s.getToken().isEmpty()) return Single.just(false);
-                                    else
-                                        {
-                                            preferencesRepository.saveToken(s.getToken());
-                                            return Single.just(true);
-                                        }
-                                }
-                                );
+                        return authAPI.sendCode(mail).toSingleDefault(true);
+//                        return authAPI.authUser(mail, password)
+//                                .flatMap((Function<AuthResponse, SingleSource<?>>) s -> {
+//                                    if (s.getToken().isEmpty()) return Single.just(false);
+//                                    else
+//                                        {
+//                                            preferencesRepository.saveToken(s.getToken());
+//                                            return Single.just(true);
+//                                        }
+//                                }
+//                                );
                     }
                     else return Single.just(false);
                 }
                 );
     }
+
+
 }

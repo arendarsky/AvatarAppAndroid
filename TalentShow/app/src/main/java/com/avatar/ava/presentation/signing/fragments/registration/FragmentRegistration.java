@@ -68,7 +68,7 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
     private Activity activity;
     private final int LOAD_AVATAR = 5;
     private final int BACK = 7;
-    private final int VIDEO_SCREEN_JUST = 9;
+    private final int CONFIRM_MAIL = 11;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -135,7 +135,7 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
     @Override
     public void nextScreen() {
         try {
-            ((RegAuthPostman) activity).fragmentMessage(VIDEO_SCREEN_JUST);
+            ((RegAuthPostman) activity).fragmentMessage(CONFIRM_MAIL);
         } catch (Exception e) {
             e.printStackTrace();
         }

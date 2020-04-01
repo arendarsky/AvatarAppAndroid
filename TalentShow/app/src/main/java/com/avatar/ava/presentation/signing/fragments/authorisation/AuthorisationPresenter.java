@@ -27,9 +27,10 @@ public class AuthorisationPresenter extends MvpPresenter<AuthorisationView>{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         object -> {
-                            if (object.equals(true)) getViewState().nextScreen();
-                            else getViewState().showError("Почта или пароль введены неверно");
-                            },
+                            if (object.equals(0)) getViewState().nextScreen();
+                            if (object.equals(1)) getViewState().showError("Почта или пароль введены неверно");
+                            if (object.equals(2)) getViewState().showError("Почта не подтверждена");
+                        },
                         error -> getViewState().showError("Ошибка сети"));
     }
 }

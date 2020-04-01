@@ -29,7 +29,7 @@
         android:gravity="center"
         android:textSize="17sp"
         android:textColor="@color/whiteText"
-        android:background="@drawable/blue_button_background"
+        android:background="@drawable/buttons_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/choose_auth_text1"/>
@@ -40,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="23dp"
-        android:background="@drawable/blue_button_background"
+        android:background="@drawable/buttons_background"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:gravity="center"
