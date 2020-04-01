@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.avatar.ava.R;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
+import com.avatar.ava.presentation.main.fragments.RecyclerClickListener;
 import com.bumptech.glide.Glide;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaSource;
@@ -29,26 +30,28 @@ import static com.avatar.ava.DataModule.SERVER_NAME;
 public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder> {
 
     private List<PersonRatingDTO> data = new ArrayList<>();
+    private RecyclerClickListener clickListener;
 
     @NonNull
     @Override
     public RatingAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.rating_recycler_item_star, parent, false);
-        return new ViewHolder(v);
+        ViewHolder viewHolder = new ViewHolder(v);
+        viewHolder.ava.setOnClickListener(v1 ->
+                clickListener.itemClicked(v1, viewHolder.getAdapterPosition()));
+        return viewHolder;
     }
 
+
+    public RatingAdapter(RecyclerClickListener clickListener) {
+        super();
+        this.clickListener = clickListener;
+    }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PersonRatingDTO personRatingDTO = data.get(position);
-        /*holder.video.setVideoURI(Uri.parse(SERVER_NAME + "/api/video/"
-                + personRatingDTO.getVideo().getName()));
-        holder.video.setOnPreparedListener(mp -> mp.setOnVideoSizeChangedListener(
-                (mp12, width, height) -> {
-                    mp.setLooping(true);
-                }));
-        holder.video.start();*/
         if(personRatingDTO.getVideo() != null){
             holder.player = new SimpleExoPlayer.Builder(holder.itemView.getContext()).build();
             holder.video.setPlayer(holder.player);
@@ -84,6 +87,10 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     @Override
     public int getItemCount() {
         return data.size();
+    }
+
+    int getPersonId(int index){
+        return data.get(index).getId();
     }
 
     @Override

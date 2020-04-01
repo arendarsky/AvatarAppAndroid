@@ -12,6 +12,7 @@ import com.avatar.ava.presentation.main.fragments.notifications.FragmentNotifica
 import com.avatar.ava.presentation.main.fragments.profile.ProfileFragment;
 import com.avatar.ava.presentation.main.fragments.profile.profileSettings.changePassword.ChangePasswordFragment;
 import com.avatar.ava.presentation.main.fragments.profile.profileSettings.ProfileSettingsFragment;
+import com.avatar.ava.presentation.main.fragments.profile.publicProfile.PublicProfileFragment;
 import com.avatar.ava.presentation.signing.fragments.ConfirmMailFragment;
 import com.avatar.ava.presentation.signing.fragments.FragmentFileLoadJust;
 import com.avatar.ava.presentation.signing.fragments.authorisation.AuthorisationFragment;
@@ -196,6 +197,25 @@ public class Screens {
         public Fragment getFragment() {
             Bundle bundle = new Bundle();
             ConfirmMailFragment fragment = new ConfirmMailFragment();
+            fragment.setArguments(bundle);
+            return fragment;
+        }
+    }
+
+    public static final class PublicProfileScreen extends SupportAppScreen{
+
+        private int id;
+
+        public PublicProfileScreen(int id) {
+            super();
+            this.id = id;
+        }
+
+        @Override
+        public Fragment getFragment() {
+            Bundle bundle = new Bundle();
+            PublicProfileFragment fragment = new PublicProfileFragment();
+            bundle.putInt("id", this.id);
             fragment.setArguments(bundle);
             return fragment;
         }

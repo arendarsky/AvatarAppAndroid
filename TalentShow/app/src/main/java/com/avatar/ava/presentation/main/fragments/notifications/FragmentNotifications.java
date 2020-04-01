@@ -20,6 +20,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
 import com.avatar.ava.domain.entities.NotificationsDTO;
+import com.avatar.ava.presentation.main.MainScreenPostman;
 
 import java.util.List;
 
@@ -61,6 +62,7 @@ public class FragmentNotifications extends MvpAppCompatFragment implements Notif
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        if (context instanceof Activity) activity = (Activity) context;
     }
 
     @Nullable
@@ -74,7 +76,13 @@ public class FragmentNotifications extends MvpAppCompatFragment implements Notif
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter = new NotificationsAdapter();
+        adapter = new NotificationsAdapter((v, position) -> {
+            try {
+                ((MainScreenPostman) activity).openPublicProfile(adapter.getPersonId(position));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         noNotificationsText.setVisibility(View.INVISIBLE);

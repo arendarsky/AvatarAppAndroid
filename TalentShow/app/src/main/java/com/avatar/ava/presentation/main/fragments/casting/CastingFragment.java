@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
 import com.avatar.ava.domain.entities.PersonDTO;
+import com.avatar.ava.presentation.main.MainScreenPostman;
 import com.bumptech.glide.Glide;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -55,6 +57,7 @@ import static com.avatar.ava.DataModule.SERVER_NAME;
 public class CastingFragment extends MvpAppCompatFragment implements CastingView {
 
     public static int CASTING_ID;
+    private Activity activity;
 
     @Inject
     Context appContext;
@@ -170,121 +173,24 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
             }
         });
         
-        /*video.setOnPreparedListener(mp -> mp.setOnVideoSizeChangedListener(
-                (mp12, width, height) -> {
-                    mp.setLooping(true);
-                    *//*
-                 * add media controller
-                 *//*
-//                    mc = new MediaController(appContext);
-//                    video.setMediaController(mc);
-                    *//*
-                 * and set its position on screen
-                 *//*
-//                    mc.setAnchorView(video);
-                }));*/
-//
-//        trackProgress();
+
                 presenter.getFirstVideo();
     }
-//
-//    }
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        String source = "android.resource://" + getPackageName() +"/"+R.raw.example;
-//
-//        if(getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE){
-//            setContentView(R.layout.activity_casting_fullscreen);
-//            video_fullscreen = findViewById(R.id.activity_casting_video_fullscreen);
-//            video_fullscreen.setVideoURI(Uri.parse(source));
-//            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//            getWindow().getDecorView().setSystemUiVisibility(
-//                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-//                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-//
-//            btn_fullscreen = findViewById(R.id.activity_casting_btn_fullscreen);
-//
-//            btn_fullscreen.setOnClickListener(v -> {
-//                fullscreen = false;
-//                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-//            });
-//
-//
-//            video_fullscreen.setOnPreparedListener(mp -> mp.setOnVideoSizeChangedListener(
-//                    (mp1, width, height) -> {
-//                /*
-//                 * add media controller
-//                 */
-//                mc1 = new MediaController(appContext);
-//                video_fullscreen.setMediaController(mc1);
-//                /*
-//                 * and set its position on screen
-//                 */
-//                mc1.setAnchorView(video_fullscreen);
-//            }));
-//
-//            video_fullscreen.start();
-//        }else{
-//            setContentView(R.layout.fragment_casting);
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof Activity) activity = (Activity) context;
+    }
 
-
-//            ButterKnife.bind(this);
-//            Toothpick.inject(this, Toothpick.openScope(App.class));
-//            String url = "http://techslides.com/demos/sample-videos/small.mp4";
-
-//            menu.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-//            video.setVideoURI(Uri.parse(source));
-//            video.setVideoPath("https://avatarapp.yambr.ru/api/video/qmxicx0h.24p.mp4");
-
-//            tv.setOnClickListener(v -> {
-//                fullscreen = true;
-//                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-//
-//            });
-//
-//
-//
-//    }
-
-
-    /*private void trackProgress() {
-        new Thread(() -> {
-            while (!mShouldStop) {
-                if (video != null && video.isPlaying()) {
-                    if (video.getCurrentPosition() >= startVideo + 30000) {
-                        video.pause();
-                        mShouldStop = true;
-                    }
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
-    }*/
-
-//    CastingDialogFragment castingDialogFragment;
-//    public void showBottomSheetCasting(View view){
-//        castingDialogFragment =
-//                CastingDialogFragment.newInstance();
-//        castingDialogFragment.show(getSupportFragmentManager(),
-//                CastingDialogFragment.TAG);
-//    }
-
-//    @Override
-//    public void onItemClick(int item) {
-//        if(item == R.id.casting_dialog_btn){
-//            String text = castingDialogFragment.getText();
-//            Log.d("castingText", text);
-//        }
-//    }
+    @OnClick(R.id.casting_activity_avatar)
+    void avatarClicked(){
+        try {
+            ((MainScreenPostman) activity).openPublicProfile(presenter.getPersonId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public void showError(String error){
         Toast.makeText(appContext, error, Toast.LENGTH_SHORT).show();

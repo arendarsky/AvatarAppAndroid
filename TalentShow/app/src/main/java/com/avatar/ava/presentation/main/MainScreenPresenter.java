@@ -1,7 +1,6 @@
 package com.avatar.ava.presentation.main;
 
 import android.net.Uri;
-import android.widget.Toast;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
@@ -33,7 +32,6 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
     private final int PROFILE_SETTINGS = 6;
     private final int PROFILE_CHANGE_PASSWORD = 7;
 
-
     private final String new_video = "Новое видео";
     private final String casting = "Кастинг";
     private final String rating = "Рейтинг";
@@ -44,6 +42,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
     private final int SAVE_BUTTON = 0;
     private final int ADD_BUTTON = 1;
     private final int MENU_POINTS = 2;
+    private final int NOTHING = 4;
 
     private final boolean SHOW_BACK = true;
     private final boolean HIDE_BACK = false;
@@ -114,7 +113,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
         }
     }
 
-    public void openBest30Screen(Uri uri){
+    void openBest30Screen(Uri uri){
         selectedFileUri = uri;
         getViewState().clearTopView();
         getViewState().showBackButton();
@@ -122,6 +121,24 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
         getViewState().showSaveButton();
         previousStates.add(new PrevState(SHOW_BACK, new_video, SAVE_BUTTON));
         router.navigateTo(new Screens.ChooseBestMainScreen(uri));
+    }
+
+    void openPublicProfile(int id, int prevScreen){
+        getViewState().clearTopView();
+        getViewState().showBackButton();
+        getViewState().changeTitle(profile);
+        switch (prevScreen){
+            case R.id.nav_casting:
+                previousStates.add(new PrevState(HIDE_BACK, casting, ADD_BUTTON));
+                break;
+            case R.id.nav_rating:
+                previousStates.add(new PrevState(HIDE_BACK, rating, NOTHING));
+                break;
+            case R.id.nav_notify:
+                previousStates.add(new PrevState(HIDE_BACK, notifications, NOTHING));
+                break;
+        }
+        router.navigateTo(new Screens.PublicProfileScreen(id));
     }
 
     boolean backButtonPressed(boolean fileLoad){
@@ -148,7 +165,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
         }
     }
 
-    private void retunToRoot(){
+    private void returnToRoot(){
         decodePrevState(previousStates.remove(0));
         previousStates.clear();
         router.backTo(null);
@@ -201,7 +218,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                                    @Override
                                    public void onComplete() {
                                        getViewState().setLoadVideoToServer(false);
-                                       retunToRoot();
+                                       returnToRoot();
                                    }
 
                                    @Override

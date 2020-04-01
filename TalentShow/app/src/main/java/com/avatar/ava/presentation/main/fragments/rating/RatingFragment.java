@@ -1,5 +1,6 @@
 package com.avatar.ava.presentation.main.fragments.rating;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,7 @@ import com.avatar.ava.App;
 import com.avatar.ava.R;
 import com.avatar.ava.domain.entities.PersonDTO;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
+import com.avatar.ava.presentation.main.MainScreenPostman;
 
 import java.util.ArrayList;
 
@@ -50,6 +52,8 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
 
     private RatingAdapter adapter;
 
+    private Activity activity;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,14 +68,25 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
         View v = inflater.inflate(R.layout.fragment_rating, container, false);
         ButterKnife.bind(this, v);
         return v;
+    }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof Activity) activity = (Activity) context;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Toothpick.inject(this, Toothpick.openScope(App.class));
-        adapter = new RatingAdapter();
+        adapter = new RatingAdapter((v, position) -> {
+            try {
+                ((MainScreenPostman) activity).openPublicProfile(adapter.getPersonId(position));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         recycler.setAdapter(adapter);
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
         PersonDTO person = new PersonDTO("Ivan", "Ivanov",

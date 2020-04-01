@@ -109,9 +109,16 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
 
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
+                private int id;
+
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    id = menuItem.getItemId();
                     return presenter.onNavClicked(menuItem.getItemId());
+                }
+
+                public int getId() {
+                    return id;
                 }
             };
 
@@ -142,11 +149,15 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         Toast.makeText(appContext, message, Toast.LENGTH_SHORT).show();
     }
 
-    //TODO вызов метода ниже из фрагмента кастинга с нужным кодом. Все коды будут указаны в презентере
-
     @Override
     public void fragmentAction(int code) {
         presenter.changeFragment(code);
+    }
+
+    @Override
+    public void openPublicProfile(int id) {
+        presenter.openPublicProfile(id,
+                getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_container).getId());
     }
 
     @Override

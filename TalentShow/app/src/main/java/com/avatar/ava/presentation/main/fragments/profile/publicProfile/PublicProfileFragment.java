@@ -93,8 +93,8 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
 
 
     @ProvidePresenter
-    PublicProfileFragment getPresenter(){
-        return Toothpick.openScope(App.class).getInstance(PublicProfileFragment.class);
+    PublicProfilePresenter getPresenter(){
+        return Toothpick.openScope(App.class).getInstance(PublicProfilePresenter.class);
     }
 
 
@@ -118,6 +118,7 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
         //if(!this.isAdded())getActivity().getSupportFragmentManager().beginTransaction().add(this, "ProfileFragment1").commit();
         View v = inflater.inflate(R.layout.fragment_public_profile, container, false);
         ButterKnife.bind(this, v);
+        this.id = getArguments().getInt("id");
         return v;
     }
 

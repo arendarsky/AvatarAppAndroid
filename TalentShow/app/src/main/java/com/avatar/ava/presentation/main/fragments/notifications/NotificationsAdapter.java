@@ -3,6 +3,7 @@ package com.avatar.ava.presentation.main.fragments.notifications;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.avatar.ava.R;
 import com.avatar.ava.domain.entities.NotificationsDTO;
+import com.avatar.ava.presentation.main.fragments.RecyclerClickListener;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -23,12 +25,22 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     private List<NotificationsDTO> data = new ArrayList<>();
     private final String likeText = " хочет видеть тебя в финале XCE FACTOR 2020";
 
+    private RecyclerClickListener clickListener;
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
+        View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.notification_item, parent, false);
-        return new ViewHolder(v);
+        final ViewHolder viewHolder = new ViewHolder(view);
+        viewHolder.avatar.setOnClickListener(v1 ->
+                clickListener.itemClicked(v1, viewHolder.getAdapterPosition()));
+        return viewHolder;
+    }
+
+    public NotificationsAdapter(RecyclerClickListener clickListener) {
+        super();
+        this.clickListener = clickListener;
     }
 
     @Override
@@ -58,6 +70,10 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     public void addItems(List<NotificationsDTO> newData){
         this.data.addAll(newData);
         notifyDataSetChanged();
+    }
+
+    int getPersonId(int index){
+        return data.get(index).getId();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{

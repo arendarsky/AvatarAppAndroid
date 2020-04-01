@@ -20,13 +20,17 @@ public class PersonRatingDTO {
     @SerializedName("profilePhoto")
     private String photo;
 
+    @SerializedName("id")
+    private int id;
+
     @ParcelConstructor
-    public PersonRatingDTO(int likesNumber, VideoDTO video, String name, String description, String photo) {
+    public PersonRatingDTO(int likesNumber, VideoDTO video, String name, String description, String photo, int id) {
         this.likesNumber = likesNumber;
         this.video = video;
         this.name = name;
         this.description = description;
         this.photo = photo;
+        this.id = id;
     }
 
     public int getLikesNumber() {
@@ -68,5 +72,13 @@ public class PersonRatingDTO {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
