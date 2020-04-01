@@ -1,9 +1,6 @@
 package com.avatar.ava;
 
-import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
-
 
 import com.avatar.ava.data.AuthRepository;
 import com.avatar.ava.data.ProfileRepository;
@@ -30,12 +27,8 @@ import toothpick.config.Module;
 
 public class DataModule extends Module{
 
-    private Context appContext;
-
-    //public final static String SERVER_NAME = "http://avatarapp.yambr.ru";
     public final static String SERVER_NAME = "https://xce-factor.ru";
-    public DataModule(Context appContext){
-        this.appContext = appContext;
+    public DataModule(){
 
         final String CONNECT_TIMEOUT = "CONNECT_TIMEOUT";
         final String READ_TIMEOUT = "READ_TIMEOUT";

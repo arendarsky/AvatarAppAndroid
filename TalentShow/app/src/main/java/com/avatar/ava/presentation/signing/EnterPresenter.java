@@ -89,23 +89,26 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
 
     void uploadVideoToServer(Float startTime, Float endTime){
 //        openSecondsScreen(videoUri);
-        interactor.uploadAndSetInterval(selectedFileUri, startTime, endTime)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableCompletableObserver() {
-                               @Override
-                               public void onComplete() {
-                                   getViewState().startMain();
-                               }
+        if (endTime - startTime < 30) {
+            interactor.uploadAndSetInterval(selectedFileUri, startTime, endTime)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new DisposableCompletableObserver() {
+                                   @Override
+                                   public void onComplete() {
+                                       getViewState().startMain();
+                                   }
 
-                               @Override
-                               public void onError(Throwable e) {
-                                    getViewState().showingError("");
+                                   @Override
+                                   public void onError(Throwable e) {
+                                       getViewState().showingError("");
+                                   }
                                }
-                           }
 //                        () -> getViewState().startMain(),
 //                        e -> getViewState().showingError("")
-                );
+                    );
+        }
+        else getViewState().showingError("Выбранный фрагмент больше 30 секунд");
     }
 
     void openSecondsScreen(Uri fileUri){
