@@ -264,6 +264,13 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     }
 
     @Override
+    public void hideProgressBar() {
+        Fragment fragment = getSupportFragmentManager().
+                findFragmentById(R.id.activity_main_frame_container);
+        if (fragment instanceof FragmentChooseBestMain) ((FragmentChooseBestMain) fragment).hideProgressBar();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_PICK_IMAGE && data != null)
@@ -279,15 +286,6 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
                         instanceof FragmentFileLoadMain
         );
     }
-
-//    @Override
-//    public void onBackPressed() {
-//        presenter.backButtonPressed(
-//                getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_container)
-//                        instanceof FragmentFileLoadMain
-//        );
-//    }
-
 
     @Override
     public void onBackPressed() {
@@ -307,11 +305,11 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     void saveClicked(){
         Fragment currentFragment = getSupportFragmentManager()
                 .findFragmentById(R.id.activity_main_frame_container);
-        if (currentFragment instanceof FragmentChooseBestMain && loadVideoToServer == false){
+        if (currentFragment instanceof FragmentChooseBestMain && !loadVideoToServer){
             List<Float> tmp = ((FragmentChooseBestMain) currentFragment).getInterval();
             Log.d("ActivityMainLog", "uploadVideoandSetInterval");
             loadVideoToServer = true;
-            ((FragmentChooseBestMain) currentFragment).sendVideo();
+//            ((FragmentChooseBestMain) currentFragment).sendVideo();
             presenter.uploadAndSetInterval(tmp.get(0), tmp.get(1));
         }
     }

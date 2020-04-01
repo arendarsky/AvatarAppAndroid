@@ -20,4 +20,5 @@ public interface MainScreenView extends MvpView {
     void showBottomNavBar();
     void pickVideo();
     void captureVideo();
+    void hideProgressBar();
 }

@@ -15,11 +15,12 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="17dp"
         android:layout_marginEnd="17dp"
+        android:layout_marginBottom="28dp"
         app:cardCornerRadius="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/guideline">
+        app:layout_constraintBottom_toTopOf="@id/activity_casting_btn_like">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_height="match_parent"
             android:layout_width="match_parent">
@@ -64,10 +65,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
+                android:elevation="20dp"
                 android:background="@drawable/casting_top_gradient"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
@@ -104,6 +103,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:elevation="20dp"
                 android:background="@drawable/casting_bottom_gradient"
                 app:layout_constraintBottom_toBottomOf="parent">
                 <TextView
@@ -152,12 +152,12 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/red_circle"
-        android:layout_marginStart="36dp"
-        android:layout_marginEnd="289dp"
+        android:layout_marginStart="68dp"
         android:layout_marginBottom="28dp"
+        android:layout_marginEnd="138dp"
         android:elevation="10dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/activity_casting_btn_like"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <View
@@ -176,10 +176,10 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/green_circle"
-        android:layout_marginStart="288dp"
-        android:layout_marginEnd="37dp"
+        android:layout_marginEnd="68dp"
         android:layout_marginBottom="28dp"
         android:elevation="10dp"
+        app:layout_constraintStart_toEndOf="@id/activity_casting_btn_x"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
@@ -193,12 +193,5 @@
         app:layout_constraintBottom_toBottomOf="@id/activity_casting_btn_like"
         app:layout_constraintEnd_toEndOf="@id/activity_casting_btn_like"
         app:layout_constraintStart_toStartOf="@id/activity_casting_btn_like"/>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

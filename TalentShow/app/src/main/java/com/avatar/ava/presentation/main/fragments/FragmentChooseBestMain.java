@@ -46,8 +46,8 @@ public class FragmentChooseBestMain extends Fragment {
     @BindView(R.id.fragment_video_best_main_end)
     TextView endText;
 
-    @BindView(R.id.best_video_fragment_progress_bar)
-    ProgressBar progress_bar;
+    @BindView(R.id.fragment_video_best_main_progressbar)
+    ProgressBar progressBar;
 
     float duration = 0;
 
@@ -102,11 +102,6 @@ public class FragmentChooseBestMain extends Fragment {
 //        });
     }
 
-    public void sendVideo(){
-        video.stopPlayback();
-        progress_bar.setVisibility(View.VISIBLE);
-    }
-
     private String getTime(int seconds) {
         int hr = seconds/3600;
         int rem = seconds%3600;
@@ -124,7 +119,13 @@ public class FragmentChooseBestMain extends Fragment {
         List<Float> tmp = new ArrayList<>();
         tmp.add(rangeSeekBar.getSelectedMinValue());
         tmp.add(rangeSeekBar.getSelectedMaxValue());
+        video.stopPlayback();
+        progressBar.setVisibility(View.VISIBLE);
         return tmp;
+    }
+
+    public void hideProgressBar(){
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @Nullable

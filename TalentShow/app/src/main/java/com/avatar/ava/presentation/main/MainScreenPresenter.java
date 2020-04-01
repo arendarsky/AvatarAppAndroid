@@ -193,22 +193,26 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
 //    }
 
     void uploadAndSetInterval(Float beginTime, Float endTime){
-        interactor.uploadAndSetInterval(selectedFileUri, beginTime, endTime)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableCompletableObserver() {
-                               @Override
-                               public void onComplete() {
-                                   getViewState().setLoadVideoToServer(false);
-                                   retunToRoot();
-                               }
+        if (endTime - beginTime < 30) {
+            interactor.uploadAndSetInterval(selectedFileUri, beginTime, endTime)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new DisposableCompletableObserver() {
+                                   @Override
+                                   public void onComplete() {
+                                       getViewState().setLoadVideoToServer(false);
+                                       retunToRoot();
+                                   }
 
-                               @Override
-                               public void onError(Throwable e) {
-                                    getViewState().showMessage("Ошибка при загрузке видео");
+                                   @Override
+                                   public void onError(Throwable e) {
+                                       getViewState().hideProgressBar();
+                                       getViewState().showMessage("Ошибка при загрузке видео");
+                                   }
                                }
-                           }
-                );
+                    );
+        }
+        else getViewState().showMessage("Выбранный фрагмент больше 30 секунд");
     }
 
     void exitAcc(){
