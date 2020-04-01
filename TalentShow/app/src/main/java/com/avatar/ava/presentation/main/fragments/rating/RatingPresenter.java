@@ -30,7 +30,7 @@ public class RatingPresenter extends MvpPresenter<RatingView> {
     }
 
     public void getRating(){
-        Disposable disposable = interactor.getRating(10)
+        Disposable disposable = interactor.getRating(20)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(arrayList -> {

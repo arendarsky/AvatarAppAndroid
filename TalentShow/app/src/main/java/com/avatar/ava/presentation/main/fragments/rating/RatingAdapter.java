@@ -53,16 +53,10 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         if(personRatingDTO.getVideo() != null){
             holder.player = new SimpleExoPlayer.Builder(holder.itemView.getContext()).build();
             holder.video.setPlayer(holder.player);
-            // Produces DataSource instances through which media data is loaded.
-            DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(holder.itemView.getContext(),
-                    Util.getUserAgent(holder.itemView.getContext(), "Talent Show"));
-            // This is the MediaSource representing the media to be played.
-            MediaSource videoSource =
-                    new ProgressiveMediaSource.Factory(dataSourceFactory)
-                            .createMediaSource(Uri.parse(SERVER_NAME + "/api/video/"
-                                    + personRatingDTO.getVideo().getName()));
+            holder.setVideoName(personRatingDTO.getVideo().getName());
+            holder.setVideoSource();
             // Prepare the player with the source.
-            holder.player.prepare(videoSource);
+            holder.player.prepare(holder.videoSource);
             //holder.player.setPlayWhenReady(true);
         }
 
@@ -129,6 +123,9 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         TextView pos, name, description, likes;
         ImageView ava;
         SimpleExoPlayer player;
+        DataSource.Factory dataSourceFactory;
+        MediaSource videoSource;
+        String videoName;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -138,6 +135,21 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
             description = itemView.findViewById(R.id.rating_item_description);
             ava = itemView.findViewById(R.id.rating_item_ava);
             likes = itemView.findViewById(R.id.rating_item_likes);
+
+            // Produces DataSource instances through which media data is loaded.
+            dataSourceFactory = new DefaultDataSourceFactory(itemView.getContext(),
+                    Util.getUserAgent(itemView.getContext(), "Talent Show"));
+
+
+        }
+
+        public void setVideoName(String videoName) {
+            this.videoName = videoName;
+        }
+
+        public void setVideoSource() {
+            this.videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
+                    .createMediaSource(Uri.parse(SERVER_NAME + "/api/video/" + videoName));
         }
     }
 }
