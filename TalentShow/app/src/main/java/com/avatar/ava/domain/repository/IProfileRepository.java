@@ -5,6 +5,7 @@ import android.net.Uri;
 import com.avatar.ava.domain.entities.NotificationsDTO;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
 import com.avatar.ava.domain.entities.ProfileDTO;
+import com.avatar.ava.domain.entities.PublicProfileDTO;
 
 import java.util.List;
 
@@ -19,4 +20,5 @@ public interface IProfileRepository {
     Completable uploadPhoto(Uri photoUri);
     Single<List<NotificationsDTO>> getNotifications(int number, int skipNumber);
     Completable removeVideo(String name);
+    Single<PublicProfileDTO> getPublicProfile(int id);
 }

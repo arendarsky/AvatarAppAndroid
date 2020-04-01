@@ -8,6 +8,7 @@ import com.avatar.ava.data.api.ProfileAPI;
 import com.avatar.ava.domain.entities.NotificationsDTO;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
 import com.avatar.ava.domain.entities.ProfileDTO;
+import com.avatar.ava.domain.entities.PublicProfileDTO;
 import com.avatar.ava.domain.repository.IProfileRepository;
 
 import java.io.File;
@@ -106,4 +107,11 @@ public class ProfileRepository implements IProfileRepository {
     public Completable removeVideo(String name) {
         return profileAPI.removeVideo(preferencesRepository.getToken(), name);
     }
+
+    @Override
+    public Single<PublicProfileDTO> getPublicProfile(int id) {
+        return profileAPI.getPublicProfile(preferencesRepository.getToken(), id);
+    }
+
+
 }

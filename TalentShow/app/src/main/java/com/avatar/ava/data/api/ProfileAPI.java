@@ -3,6 +3,7 @@ package com.avatar.ava.data.api;
 import com.avatar.ava.domain.entities.NotificationsDTO;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
 import com.avatar.ava.domain.entities.ProfileDTO;
+import com.avatar.ava.domain.entities.PublicProfileDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,5 +52,8 @@ public interface ProfileAPI {
 
     @GET("/api/video/remove/{name}")
     Completable removeVideo(@Header("Authorization") String token, @Path("name") String name);
+
+    @GET("/api/profile/public/get")
+    Single<PublicProfileDTO> getPublicProfile(@Header("Authorization") String token, @Query("id") int id);
 
 }

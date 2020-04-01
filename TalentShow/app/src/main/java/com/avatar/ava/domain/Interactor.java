@@ -6,6 +6,7 @@ import com.avatar.ava.domain.entities.NotificationsDTO;
 import com.avatar.ava.domain.entities.PersonDTO;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
 import com.avatar.ava.domain.entities.ProfileDTO;
+import com.avatar.ava.domain.entities.PublicProfileDTO;
 import com.avatar.ava.domain.repository.IAuthRepository;
 import com.avatar.ava.domain.repository.IProfileRepository;
 import com.avatar.ava.domain.repository.ISharedPreferemcesRepository;
@@ -136,5 +137,9 @@ public class Interactor {
 
     public void exitFromAccount(){
         this.preferencesRepository.exitAcc();
+    }
+
+    public Single<PublicProfileDTO> getPublicProfile(int id){
+        return this.profileRepository.getPublicProfile(id);
     }
 }
