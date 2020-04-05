@@ -92,7 +92,7 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
         currentPerson = person;
 
         if(person.getPhoto() != null)
-            getViewState().setAvatar(SERVER_NAME + "/api/profile/photo/get" + person.getPhoto());
+            getViewState().setAvatar(SERVER_NAME + "/api/profile/photo/get/" + person.getPhoto());
 
         else getViewState().setAvatar("null");
 

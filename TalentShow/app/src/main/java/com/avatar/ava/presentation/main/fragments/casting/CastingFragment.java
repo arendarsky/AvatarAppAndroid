@@ -148,7 +148,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         video.setPlayer(player);
         // Produces DataSource instances through which media data is loaded.
         dataSourceFactory = new DefaultDataSourceFactory(getContext(),
-                Util.getUserAgent(getContext(), "Talent Show"));
+                Util.getUserAgent(getContext(), getResources().getString(R.string.app_name)));
 
         castingCard.setVisibility(View.INVISIBLE);
         noMoreVideos.setVisibility(View.INVISIBLE);
@@ -222,7 +222,8 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         int end = (int)personDTO.getVideo().getEndTime() * 1000;
         Log.d("Casting link", videoLink);
         //video.setVideoURI(Uri.parse(videoLink));
-        player.stop(false);
+        player.stop();
+        //player.release();
         videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
                 .createMediaSource(Uri.parse(videoLink));
         ClippingMediaSource clippingMediaSource =  new ClippingMediaSource(videoSource, start, end);
@@ -242,10 +243,12 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     public void stopVideo(){
         if(player != null)
         player.stop();
+        player.release();
     }
 
     @Override
     public void setAvatar(String avatarLink) {
+        Log.d("CastingLog", "linkAVa " + avatarLink);
         if(avatarLink.equals("null")){
             Glide.with(getView())
                     .load(R.drawable.empty_profile_icon)

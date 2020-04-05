@@ -78,6 +78,7 @@
                     android:layout_marginEnd="293dp"
                     android:layout_marginBottom="15dp"
                     android:src="@drawable/casting_activity_ava"
+                    android:elevation="20dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

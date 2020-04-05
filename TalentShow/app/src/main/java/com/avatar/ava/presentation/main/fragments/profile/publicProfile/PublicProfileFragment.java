@@ -1,6 +1,7 @@
 package com.avatar.ava.presentation.main.fragments.profile.publicProfile;
 
 import android.content.Context;
+import android.media.MediaCodec;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,6 +26,9 @@ import com.avatar.ava.domain.entities.VideoDTO;
 import com.avatar.ava.presentation.main.MainScreenActivity;
 import com.avatar.ava.presentation.main.fragments.profile.ProfilePresenter;
 import com.bumptech.glide.Glide;
+import com.google.android.exoplayer2.BaseRenderer;
+import com.google.android.exoplayer2.ExoPlayer;
+import com.google.android.exoplayer2.Renderer;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
@@ -32,6 +36,7 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.google.android.exoplayer2.video.MediaCodecVideoRenderer;
 
 import java.util.ArrayList;
 
@@ -117,6 +122,10 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
 
         //if(!this.isAdded())getActivity().getSupportFragmentManager().beginTransaction().add(this, "ProfileFragment1").commit();
         View v = inflater.inflate(R.layout.fragment_public_profile, container, false);
+        video1 = new PlayerView(getContext());
+        video2 = new PlayerView(getContext());
+        video3 = new PlayerView(getContext());
+        video4 = new PlayerView(getContext());
         ButterKnife.bind(this, v);
         this.id = getArguments().getInt("id");
         return v;
@@ -139,6 +148,7 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
         }else if(currCountVideos == 2){
             container4.setVisibility(View.INVISIBLE);
         }*/
+        description.setEnabled(false);
     }
 
 
@@ -159,7 +169,12 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
         name.setText(person.getName());
         description.setText(person.getDescription());
         videos = person.getVideos();
-        currCountVideos = videos.size();
+        if(videos != null){
+            currCountVideos = videos.size();
+        }else{
+            currCountVideos = 0;
+        }
+
         showContainers();
         showVideos();
     }
@@ -212,17 +227,21 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
             default:
                 playerView = null;
         }
+
         SimpleExoPlayer player = new SimpleExoPlayer.Builder(appContext).build();
         playerView.setPlayer(player);
         // Produces DataSource instances through which media data is loaded.
         DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(appContext,
-                Util.getUserAgent(appContext, "Talent Show"));
+                Util.getUserAgent(appContext, "com.avatar.ava"));
         // This is the MediaSource representing the media to be played.
         MediaSource videoSource =
                 new ProgressiveMediaSource.Factory(dataSourceFactory)
                         .createMediaSource(uri);
         // Prepare the player with the source.
         player.prepare(videoSource);
+
+
+
         //player.setPlayWhenReady(true);
     }
 

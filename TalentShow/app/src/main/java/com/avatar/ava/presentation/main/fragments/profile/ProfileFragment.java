@@ -170,6 +170,10 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         ProfileID = this.getId();
         //if(!this.isAdded())getActivity().getSupportFragmentManager().beginTransaction().add(this, "ProfileFragment1").commit();
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
+        video1 = new PlayerView(getContext());
+        video2 = new PlayerView(getContext());
+        video3 = new PlayerView(getContext());
+        video4 = new PlayerView(getContext());
         ButterKnife.bind(this, v);
         return v;
     }
@@ -195,6 +199,21 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
             container4.setVisibility(View.INVISIBLE);
         }*/
     }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.d("ProfileLog", "detach");
+        if(player1 != null)
+        player1.release();
+        if(player2 != null)
+        player2.release();
+        if(player3 != null)
+        player3.release();
+        if(player4 != null)
+        player4.release();
+    }
+
     String delNameVideo = "";
     public void deleteVideo(){
         Log.d("ProfileLog", "delName: " + delNameVideo + " cast " + castingVideoName);
@@ -306,26 +325,73 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     }
 
 
-
+    SimpleExoPlayer player1, player2, player3, player4;
     private void setupVideo(int num, Uri uri){
+        // Produces DataSource instances through which media data is loaded.
+        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(appContext,
+                Util.getUserAgent(appContext, getResources().getString(R.string.app_name)));
+        // This is the MediaSource representing the media to be played.
+        MediaSource videoSource =
+                new ProgressiveMediaSource.Factory(dataSourceFactory)
+                        .createMediaSource(uri);
+        switch (num){
+            case 1:
+                player1 = new SimpleExoPlayer.Builder(appContext).build();
+                video1.setPlayer(player1);
+                // Prepare the player with the source.
+                player1.prepare(videoSource);
+                //player.setPlayWhenReady(true);
+                break;
+
+            case 2:
+                player2 = new SimpleExoPlayer.Builder(appContext).build();
+                video2.setPlayer(player2);
+                // Prepare the player with the source.
+                player2.prepare(videoSource);
+                //player.setPlayWhenReady(true);
+                break;
+
+            case 3:
+                player3 = new SimpleExoPlayer.Builder(appContext).build();
+                video3.setPlayer(player3);
+                // Prepare the player with the source.
+                player3.prepare(videoSource);
+                //player.setPlayWhenReady(true);
+                break;
+
+            case 4:
+                player4 = new SimpleExoPlayer.Builder(appContext).build();
+                video4.setPlayer(player4);
+                // Prepare the player with the source.
+                player4.prepare(videoSource);
+                //player.setPlayWhenReady(true);
+                break;
+        }
+    }
+    /*private void setupVideo(int num, Uri uri){
         PlayerView playerView;
+        SimpleExoPlayer player;
         switch (num){
             case 1:
                 playerView = video1;
+                player = player1;
                 break;
             case 2:
                 playerView = video2;
+                player = player2;
                 break;
             case 3:
                 playerView = video3;
+                player = player3;
                 break;
             case 4:
                 playerView = video4;
+                player = player4;
                 break;
             default:
                 playerView = null;
         }
-        SimpleExoPlayer player = new SimpleExoPlayer.Builder(appContext).build();
+        player = new SimpleExoPlayer.Builder(appContext).build();
         playerView.setPlayer(player);
         // Produces DataSource instances through which media data is loaded.
         DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(appContext,
@@ -337,7 +403,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         // Prepare the player with the source.
         player.prepare(videoSource);
         //player.setPlayWhenReady(true);
-    }
+    }*/
 
 
     private void showVideos(){
