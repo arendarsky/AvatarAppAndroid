@@ -51,7 +51,7 @@
         android:id="@+id/fragment_reg_logo"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="69dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/logo"
         app:layout_constraintTop_toBottomOf="@id/fragment_reg_back"
         app:layout_constraintStart_toStartOf="parent"
@@ -103,7 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.4" />
+            app:layout_constraintGuide_begin="102dp" />
 
         <EditText
             android:id="@+id/reg_name_edit"
@@ -112,6 +112,9 @@
             android:layout_marginEnd="12dp"
             android:textSize="17sp"
             android:paddingTop="5dp"
+            android:singleLine="true"
+            android:hint="@string/enter_ur_name"
+            android:textColorHint="@color/hint_text_color"
             android:layout_marginBottom="5dp"
             android:textColor="@color/whiteText"
             android:background="@color/none_color"
@@ -153,7 +156,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.4" />
+            app:layout_constraintGuide_begin="102dp" />
 
         <EditText
             android:id="@+id/reg_email_edit"
@@ -166,6 +169,8 @@
             android:paddingBottom="5dp"
             android:inputType="textEmailAddress"
             android:background="@color/none_color"
+            android:hint="@string/enter_ur_mail"
+            android:textColorHint="@color/hint_text_color"
             app:layout_constraintStart_toEndOf="@id/fragment_filed2_guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -183,56 +188,61 @@
         app:layout_constraintTop_toBottomOf="@id/fragment_reg_field_2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textColor="@color/hint_text_color"
-        android:textSize="17sp"
-        android:text="@string/password"
-        android:layout_marginStart="12dp"
-        android:layout_marginBottom="14dp"
-        android:layout_marginTop="14dp"
-        android:gravity="start"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/fragment_filed3_guideline"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/hint_text_color"
+            android:textSize="17sp"
+            android:text="@string/password"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
+            android:gravity="start"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/fragment_filed3_guideline"/>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/fragment_filed3_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.4" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/fragment_filed3_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="102dp" />
 
-    <EditText
-        android:id="@+id/reg_password_edit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
-        android:textSize="17sp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:background="@color/none_color"
-        android:textColor="@color/whiteText"
-        android:inputType="textPassword"
-        app:layout_constraintStart_toEndOf="@id/fragment_filed3_guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        <EditText
+            android:id="@+id/reg_password_edit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:textSize="17sp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="@color/none_color"
+            android:textColor="@color/whiteText"
+            android:inputType="textPassword"
+            android:hint="@string/create_password"
+            android:textColorHint="@color/hint_text_color"
+            app:layout_constraintStart_toEndOf="@id/fragment_filed3_guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
+        android:id="@+id/fragment_registration_text1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         android:layout_marginStart="45dp"
         android:layout_marginEnd="45dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:text="@string/i_accept_terms"
         android:textColor="@color/regGrayColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/fragment_reg_continue"
         app:layout_constraintTop_toBottomOf="@id/fragment_reg_field_3"/>
 
     <TextView
@@ -242,6 +252,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="50dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/buttons_background"
         android:textSize="17sp"
         android:gravity="center"
@@ -249,6 +260,7 @@
         android:textColor="@color/whiteText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_registration_text1"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
