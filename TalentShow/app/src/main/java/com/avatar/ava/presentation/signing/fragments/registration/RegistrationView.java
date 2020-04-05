@@ -1,5 +1,8 @@
 package com.avatar.ava.presentation.signing.fragments.registration;
 
+import android.view.MotionEvent;
+import android.view.View;
+
 import com.arellomobile.mvp.MvpView;
 
 public interface RegistrationView extends MvpView{
