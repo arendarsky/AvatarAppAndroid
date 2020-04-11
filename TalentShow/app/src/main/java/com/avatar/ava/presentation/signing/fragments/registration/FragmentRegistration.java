@@ -3,12 +3,14 @@ package com.avatar.ava.presentation.signing.fragments.registration;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -56,6 +58,9 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
     @BindView(R.id.fragment_registration_progressbar)
     ProgressBar progressBar;
 
+    @BindView(R.id.fragment_registration_text1)
+    TextView termsOfUse;
+
     @InjectPresenter
     RegistrationPresenter presenter;
 
@@ -92,6 +97,7 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        termsOfUse.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @OnClick(R.id.fragment_reg_continue)
@@ -123,7 +129,7 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
         }
         if (nameEdit.getText().toString().length() >= 2
                 && Pattern.compile("\\w+@\\D+\\.\\D+")
-                        .matcher(emailEdit.getText().toString()).find()
+                .matcher(emailEdit.getText().toString()).find()
                 && passwordEdit.getText().length() >= 6){
 
             progressBar.setVisibility(View.VISIBLE);
@@ -152,8 +158,12 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
 
     @Override
     public void showError(String error) {
-        progressBar.setVisibility(View.INVISIBLE);
         Toast.makeText(appContext, error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @OnTextChanged(R.id.reg_name_edit)

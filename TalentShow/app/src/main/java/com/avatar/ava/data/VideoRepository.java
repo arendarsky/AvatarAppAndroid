@@ -3,12 +3,9 @@ package com.avatar.ava.data;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.net.Uri;
-import android.os.Environment;
 import android.os.ParcelFileDescriptor;
-import android.util.Log;
 import android.webkit.MimeTypeMap;
 
-import com.arthenica.mobileffmpeg.Config;
 import com.arthenica.mobileffmpeg.FFmpeg;
 import com.avatar.ava.data.api.VideoAPI;
 import com.avatar.ava.domain.entities.PersonDTO;
@@ -35,8 +32,6 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Retrofit;
 
-import static com.arthenica.mobileffmpeg.Config.RETURN_CODE_SUCCESS;
-
 public class VideoRepository implements IVideoRepository {
 
     private VideoAPI videoAPI;
@@ -59,119 +54,16 @@ public class VideoRepository implements IVideoRepository {
 
         File file = new File(getFilePathFromUri(appContext, fileURI));
 
-//        String compressedFilePath = null;
-//        try {
-//            compressedFilePath = SiliCompressor.with(appContext).compressVideo(file.getAbsolutePath(), file.getParentFile().getAbsolutePath());
-//        } catch (URISyntaxException e) {
-//            e.printStackTrace();
-//        }
-
-//        try {
-
         this.convertedFilePath = file.getAbsolutePath().substring(0,
                 file.getAbsolutePath().lastIndexOf("."))
                 + ".mp4";
 
-//        File convertedFile = new File(Environment.getExternalStorageDirectory() + "/" + File.separator + "test.mp4");
         File convertedFile = new File(this.convertedFilePath);
         String commands = "-i "
                 + file.getAbsolutePath() + " -q:v 20 "
-//                + " -c:v libx264 "
                 + convertedFile.getAbsolutePath();
 
-//        int rc = FFmpeg.execute(commands);
-//
-//        if (rc == RETURN_CODE_SUCCESS) {
-//            Log.i(Config.TAG, "Command execution completed successfully.");
-//        } else {
-//            Log.i(Config.TAG, String.format("Command execution failed with rc=%d and the output below.", rc));
-//            Config.printLastCommandOutput(Log.INFO);
-//        }
-
-
-
         return Single.fromCallable(() -> FFmpeg.execute(commands)).ignoreElement();
-//                .andThen(videoAPI.composeVideo(
-//                preferencesRepository.getToken(),
-//                MultipartBody.Part.
-//                        createFormData("file",
-//                                convertedFile.getName(),
-//                                RequestBody.create(
-//                                        convertedFile,
-//                                        MediaType.parse("multipart/form-data")
-//                                )
-//                        )
-//        ).doOnSuccess(name -> uploadedVideoName = name).ignoreElement());
-
-
-//        return Completable.fromAction(() -> ffmpeg.execute(commands,
-//        new ExecuteBinaryResponseHandler() {
-//            @Override
-//            public void onStart() {
-//
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//
-//            }
-//
-//            @Override
-//            public void onSuccess(String message) {
-//                Log.d("Converting", "success");
-//            }
-//
-//            @Override
-//            public void onProgress(String message) {
-//
-//            }
-//
-//            @Override
-//            public void onFailure(String message) {
-//                Log.d("Converting", "failure");
-//            }
-//        })).andThen(videoAPI.composeVideo(
-//                preferencesRepository.getToken(),
-//                MultipartBody.Part.
-//                        createFormData("file",
-//                                file.getName(),
-//                                RequestBody.create(
-//                                        new File(convertedFilePath),
-//                                        MediaType.parse("multipart/form-data")
-//                                )
-//                        )
-//        ).doOnSuccess(name -> uploadedVideoName = name).ignoreElement());
-
-//            return Single.fromCallable(() -> SiliCompressor.with(appContext).compressVideo(file.getAbsolutePath(), file.getParentFile().getAbsolutePath()))
-//                    .flatMap(
-//                            filePath ->
-//                                    videoAPI.composeVideo(
-//                                            preferencesRepository.getToken(),
-//                                            MultipartBody.Part.
-//                                                    createFormData("file",
-//                                                            file.getName(),
-//                                                            RequestBody.create(
-//                                                                    new File(filePath),
-//                                                                    MediaType.parse("multipart/form-data")
-//                                                            )
-//                                                    )
-//                                    ).doOnSuccess(name -> uploadedVideoName = name)).ignoreElement();
-//        } catch (URISyntaxException e) {
-//            return Completable.error(new IllegalStateException());
-//        }
-
-//
-//        String extension = appContext.getContentResolver().getType(fileURI);
-//        Log.d("Extension", file.getPath());
-//        File compressedFile = new File(compressedFilePath);
-//        RequestBody requestFile =
-//                RequestBody.create(compressedFile, MediaType.parse("multipart/form-data"));
-//
-//        MultipartBody.Part body =
-//                MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-//        return videoAPI.composeVideo(preferencesRepository.getToken(), body)
-//                .doOnSuccess(name -> uploadedVideoName = name)
-//                .ignoreElement();
     }
 
     @Override
@@ -213,7 +105,6 @@ public class VideoRepository implements IVideoRepository {
                                 list.remove(this.currentPerson);
                                 Set<PersonDTO> tmp = new LinkedHashSet<>(list);
                                 this.personDTOSet = tmp;
-//                                this.personDTOSet.remove(this.currentPerson);
                             },
                             error -> {});
         }
@@ -221,57 +112,33 @@ public class VideoRepository implements IVideoRepository {
             if (personDTOSet.isEmpty()) throw new Exception("Empty list");
             else {
                 this.currentPerson = personDTOSet.iterator().next();
-                personDTOSet.remove(this.currentPerson);
                 return this.currentPerson;
             }
         });
-//        if (castingPersons.isEmpty())
-//            throw new IllegalStateException("Empty list");
-//        return Single.just(this.castingPersons.remove(0));
     }
 
-
-    @Override
-    public Single<ArrayList<PersonDTO>> getUnwatchedVideos(int number) {
-        Disposable disposable = videoAPI.getUnwatched(preferencesRepository.getToken(), 30)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(list ->
-                                this.personDTOSet.addAll(list),
-                        error -> {});
-
-
-
-        return videoAPI.getUnwatched(preferencesRepository.getToken(), number);
-    }
 
     @Override
     public Completable setLiked(boolean liked) {
+        this.personDTOSet.remove(this.currentPerson);
         return videoAPI.setLiked(preferencesRepository.getToken(), currentPerson.getVideo().getName(), liked);
     }
 
-//    @Override
-//    public Completable setInterval(float startTime, float endTime) {
-//        return videoAPI.setInterval(preferencesRepository.getToken(), uploadedVideoName, startTime, endTime);
-//    }
-
     @Override
     public Single<PersonDTO> getVideoLinkOnCreate() {
-//        return videoAPI.getUnwatched(preferencesRepository.getToken(), 10)
-//                .doOnSuccess(
-//                        arrayList -> {
-//                            this.castingPersons = arrayList;
-//                            this.currentPerson = arrayList.remove(0);
-//                        }
-//                );
-        return videoAPI.getUnwatched(preferencesRepository.getToken(), 10)
-                .flatMap(list -> {
-                    if (list.size() == 0) throw new IllegalStateException("Empty list");
-                    this.personDTOSet.addAll(list);
-                    this.currentPerson = this.personDTOSet.iterator().next();
-                    this.personDTOSet.remove(this.currentPerson);
-                    return Single.just(this.currentPerson);
-                });
+        if (this.personDTOSet.isEmpty())
+            return videoAPI.getUnwatched(preferencesRepository.getToken(), 10)
+                    .flatMap(list -> {
+                        if (list.size() == 0) throw new IllegalStateException("Empty list");
+                        this.personDTOSet.addAll(list);
+                        this.currentPerson = this.personDTOSet.iterator().next();
+                        this.personDTOSet.remove(this.currentPerson);
+                        return Single.just(this.currentPerson);
+                    });
+        else{
+            this.currentPerson = personDTOSet.iterator().next();
+            return Single.just(this.currentPerson);
+        }
     }
 
     @Override

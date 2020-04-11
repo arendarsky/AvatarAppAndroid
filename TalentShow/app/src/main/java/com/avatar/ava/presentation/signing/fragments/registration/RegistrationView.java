@@ -13,4 +13,5 @@ public interface RegistrationView extends MvpView{
     void continueClicked();
     void nextScreen();
     void showError(String error);
+    void hideProgressBar();
 }

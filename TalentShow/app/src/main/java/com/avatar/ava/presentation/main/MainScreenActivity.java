@@ -54,7 +54,8 @@ import ru.terrakok.cicerone.NavigatorHolder;
 import ru.terrakok.cicerone.android.support.SupportAppNavigator;
 import toothpick.Toothpick;
 
-public class MainScreenActivity extends MvpAppCompatActivity implements MainScreenView, MainScreenPostman, ProfileBottomSheet.ItemClickListener, ProfileVideoBottomSheet.ItemClickListener {
+public class MainScreenActivity extends MvpAppCompatActivity implements MainScreenView,
+        MainScreenPostman, ProfileBottomSheet.ItemClickListener, ProfileVideoBottomSheet.ItemClickListener {
 
     @BindView(R.id.bottom_nav_bar)
     BottomNavigationView bottomNavigationView;
@@ -109,16 +110,9 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
 
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
-                private int id;
-
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                    id = menuItem.getItemId();
                     return presenter.onNavClicked(menuItem.getItemId());
-                }
-
-                public int getId() {
-                    return id;
                 }
             };
 
@@ -158,7 +152,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     public void openPublicProfile(int id) {
         stopVideoFromCasting();
         presenter.openPublicProfile(id,
-                getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_container).getId());
+                getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_container));
     }
 
     @Override

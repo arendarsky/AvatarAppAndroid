@@ -87,10 +87,6 @@ public class Interactor {
         return this.videoRepository.uploadAndSetInterval(fileUri, startTime, endTime);
     }
 
-//    public Completable setInterval(float startTime, float endTime) {
-//        return this.videoRepository.setInterval(startTime, endTime);
-//    }
-
     public boolean checkAuth(){
         return this.preferencesRepository.checkAuth();
     }
@@ -105,10 +101,6 @@ public class Interactor {
 
     public void saveName(String name){
         this.preferencesRepository.saveName(name);
-    }
-
-    public Single<ArrayList<PersonDTO>> getUnwatchedVideos(int number){
-        return this.videoRepository.getUnwatchedVideos(number);
     }
 
     public Single<Object> authUser(String mail, String password){

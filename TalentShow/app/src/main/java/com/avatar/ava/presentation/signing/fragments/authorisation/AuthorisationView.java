@@ -6,4 +6,5 @@ public interface AuthorisationView extends MvpView {
 
     void nextScreen();
     void showError(String error);
+    void hideProgressBar();
 }

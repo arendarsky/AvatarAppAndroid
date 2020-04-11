@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <ProgressBar
-        android:id="@+id/fragment_registration_progressbar"
+        android:id="@+id/fragment_auth_progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
@@ -51,11 +51,11 @@
         android:id="@+id/fragment_auth_logo"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="69dp"
         android:background="@drawable/logo"
         app:layout_constraintTop_toBottomOf="@id/fragment_auth_back"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/fragment_auth_guideline"/>
 
     <TextView
         android:id="@+id/fragment_auth_text1"
@@ -69,7 +69,7 @@
         android:textColor="@color/whiteText"
         android:text="@string/auth"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_auth_logo"
+        app:layout_constraintTop_toBottomOf="@id/fragment_auth_guideline"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -193,5 +193,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/fragment_auth_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="256dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

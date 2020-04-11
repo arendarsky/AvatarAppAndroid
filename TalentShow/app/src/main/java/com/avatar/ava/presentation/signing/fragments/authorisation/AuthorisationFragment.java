@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,9 @@ public class AuthorisationFragment extends MvpAppCompatFragment implements Autho
 
     @BindView(R.id.auth_password_edit)
     EditText passwordEdit;
+
+    @BindView(R.id.fragment_auth_progressbar)
+    ProgressBar progressBar;
 
     @Inject
     Context appContext;
@@ -98,6 +102,7 @@ public class AuthorisationFragment extends MvpAppCompatFragment implements Autho
         }
 
         if (mailEdit.getText().length() > 0 && passwordEdit.getText().length() > 0) {
+            progressBar.setVisibility(View.VISIBLE);
             presenter.auth(mailEdit.getText().toString(), passwordEdit.getText().toString());
         }
     }
@@ -123,6 +128,11 @@ public class AuthorisationFragment extends MvpAppCompatFragment implements Autho
     @Override
     public void showError(String error) {
         Toast.makeText(appContext, error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @OnTextChanged(R.id.auth_email_edit)

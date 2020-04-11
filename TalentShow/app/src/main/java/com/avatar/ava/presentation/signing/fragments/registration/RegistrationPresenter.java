@@ -25,10 +25,14 @@ public class RegistrationPresenter extends MvpPresenter<RegistrationView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(flag -> {
+                            getViewState().hideProgressBar();
                             if (flag.equals(true)) getViewState().nextScreen();
                             else getViewState().showError("Такой пользователь уже существует");
                         },
-                    e -> getViewState().showError("Ошибка сети")
+                        e -> {
+                            getViewState().hideProgressBar();
+                            getViewState().showError("Ошибка сети");
+                        }
                 );
     }
 }

@@ -172,9 +172,9 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
                 }
             }
         });
-        
 
-                presenter.getFirstVideo();
+
+        presenter.getFirstVideo();
     }
 
     @Override
@@ -242,7 +242,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
     public void stopVideo(){
         if(player != null)
-        player.stop();
+            player.stop();
         player.release();
     }
 

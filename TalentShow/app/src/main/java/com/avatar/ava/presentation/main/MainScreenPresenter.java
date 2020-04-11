@@ -2,11 +2,17 @@ package com.avatar.ava.presentation.main;
 
 import android.net.Uri;
 
+import androidx.fragment.app.Fragment;
+
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.avatar.ava.Screens;
 import com.avatar.ava.R;
 import com.avatar.ava.domain.Interactor;
+import com.avatar.ava.presentation.main.fragments.FragmentChooseBestMain;
+import com.avatar.ava.presentation.main.fragments.casting.CastingFragment;
+import com.avatar.ava.presentation.main.fragments.notifications.FragmentNotifications;
+import com.avatar.ava.presentation.main.fragments.rating.RatingFragment;
 
 
 import java.util.ArrayList;
@@ -123,21 +129,16 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
         router.navigateTo(new Screens.ChooseBestMainScreen(uri));
     }
 
-    void openPublicProfile(int id, int prevScreen){
+    void openPublicProfile(int id, Fragment prevScreen){
         getViewState().clearTopView();
         getViewState().showBackButton();
         getViewState().changeTitle(profile);
-        switch (prevScreen){
-            case R.id.nav_casting:
-                previousStates.add(new PrevState(HIDE_BACK, casting, ADD_BUTTON));
-                break;
-            case R.id.nav_rating:
-                previousStates.add(new PrevState(HIDE_BACK, rating, NOTHING));
-                break;
-            case R.id.nav_notify:
-                previousStates.add(new PrevState(HIDE_BACK, notifications, NOTHING));
-                break;
-        }
+        if (prevScreen instanceof CastingFragment)
+            previousStates.add(new PrevState(HIDE_BACK, casting, ADD_BUTTON));
+        if (prevScreen instanceof RatingFragment)
+            previousStates.add(new PrevState(HIDE_BACK, rating, NOTHING));
+        if (prevScreen instanceof FragmentNotifications)
+            previousStates.add(new PrevState(HIDE_BACK, notifications, NOTHING));
         router.navigateTo(new Screens.PublicProfileScreen(id));
     }
 
