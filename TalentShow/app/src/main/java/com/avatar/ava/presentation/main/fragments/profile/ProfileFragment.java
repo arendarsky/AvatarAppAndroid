@@ -454,6 +454,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
 
     private boolean edit = false;
 
+    String nameBack = "", descriptionBack = "";
     @OnClick(R.id.fragment_profile_btn_edit)
     public void editProfile(){
         if(!edit){
@@ -464,6 +465,8 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
             name.setBackgroundResource(R.drawable.profile_fragment_edit_bg);
             editPhoto.setVisibility(View.VISIBLE);
             editProfile.setText("Применить");
+            nameBack = name.getText().toString();
+            descriptionBack = description.getText().toString();
         }else{
             edit = false;
             presenter.setDescription(description.getText().toString());
@@ -481,6 +484,24 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         }
 
     }
+
+    public void backEdit(){
+        edit = false;
+        description.setEnabled(false);
+        description.setBackground(null);
+        name.setEnabled(false);
+        name.setBackground(null);
+        editPhoto.setVisibility(View.GONE);
+        editProfile.setText("Редактировать");
+
+        name.setText(nameBack);
+        description.setText(descriptionBack);
+
+        showContainers();
+        showHints();
+        showVideos();
+    }
+
     @Override
     public void update(){
         video1.setVisibility(View.INVISIBLE);
