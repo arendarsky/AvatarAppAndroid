@@ -62,7 +62,7 @@
         android:enabled="false"
         android:id="@+id/fragment_profile_name"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
         android:textSize="22sp"
         android:textStyle="bold"
         android:textColor="@color/whiteText"
@@ -121,19 +121,19 @@
     <EditText
         android:id="@+id/fragment_profile_description"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Описание"
-        android:gravity="top"
-        android:textSize="15sp"
-        android:textColor="@color/whiteText"
-        android:layout_marginTop="13dp"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="13dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintTop_toBottomOf="@id/fragment_profile_text2"
-        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="top"
+        android:text="Описание"
+        android:textColor="@color/whiteText"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_profile_btn_edit"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
 
-        />
+        app:layout_constraintTop_toBottomOf="@id/fragment_profile_text2" />
 
 
     <TextView
@@ -400,7 +400,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_begin="366dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

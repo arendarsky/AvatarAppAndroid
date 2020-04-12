@@ -84,6 +84,9 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     @BindView(R.id.main_frame_exit)
     TextView exit;
 
+    @BindView(R.id.main_frame_profile_back)
+    ConstraintLayout backProfileButton;
+
     @Inject
     NavigatorHolder navigatorHolder;
 
@@ -196,6 +199,11 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     }
 
     @Override
+    public void showProfileBack(){
+        backProfileButton.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void clearTopView() {
         backButton.setVisibility(View.INVISIBLE);
         menuPoints.setVisibility(View.INVISIBLE);
@@ -204,6 +212,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         saveProfile.setVisibility(View.INVISIBLE);
         savePassword.setVisibility(View.INVISIBLE);
         exit.setVisibility(View.INVISIBLE);
+        backProfileButton.setVisibility(View.INVISIBLE);
     }
 
     @OnClick(R.id.main_frame_add)
@@ -389,6 +398,16 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     }
 
 
+    @OnClick(R.id.main_frame_profile_back)
+    public void profileBackClicked(){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        ProfileFragment profileFragment = (ProfileFragment) fragmentManager.findFragmentById(ProfileFragment.ProfileID);
+        profileFragment.backEdit();
+        clearTopView();
+        changeTitle("Профиль");
+        showMenuPoints();
+    }
+
     @Override
     public void onItemClick(int item) {
         switch (item){
@@ -398,7 +417,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
                 profileFragment.editProfile();
                 clearTopView();
                 changeTitle("Ред. профиля");
-                showBackButton();
+                showProfileBack();
                 showSaveProfile();
                 break;
             case ProfileBottomSheet.SETTINGS:
