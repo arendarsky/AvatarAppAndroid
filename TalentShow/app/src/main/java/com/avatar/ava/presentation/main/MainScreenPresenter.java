@@ -9,7 +9,6 @@ import com.arellomobile.mvp.MvpPresenter;
 import com.avatar.ava.Screens;
 import com.avatar.ava.R;
 import com.avatar.ava.domain.Interactor;
-import com.avatar.ava.presentation.main.fragments.FragmentChooseBestMain;
 import com.avatar.ava.presentation.main.fragments.casting.CastingFragment;
 import com.avatar.ava.presentation.main.fragments.notifications.FragmentNotifications;
 import com.avatar.ava.presentation.main.fragments.rating.RatingFragment;
@@ -44,6 +43,8 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
     private final String profile = "Профиль";
     private final String notifications = "Уведомления";
     private final String best30 = "Лучшие 30";
+    private final String settings = "Настройки";
+    private final String change_password = "Изм. пароля";
 
     private final int SAVE_BUTTON = 0;
     private final int ADD_BUTTON = 1;
@@ -107,14 +108,16 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                 getViewState().captureVideo();
                 break;
             case PROFILE_SETTINGS:
-                getViewState().changeTitle("Настройки");
+                getViewState().changeTitle(settings);
                 getViewState().showBackButton();
-                previousStates.add(new PrevState(false, profile, MENU_POINTS));
+                getViewState().showSaveButton();
+                previousStates.add(new PrevState(HIDE_BACK, profile, MENU_POINTS));
                 router.navigateTo(new Screens.ProfileSettingsScreen());
                 break;
             case PROFILE_CHANGE_PASSWORD:
-                getViewState().changeTitle("Изм. пароля");
+                getViewState().changeTitle(change_password);
                 getViewState().showSavePassword();
+                previousStates.add(new PrevState(HIDE_BACK, settings, SAVE_BUTTON));
                 router.navigateTo(new Screens.ChangePasswordScreen());
                 break;
         }
@@ -153,6 +156,13 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
             return false;
         }
         else return true;
+    }
+
+    public void openChangePassword() {
+        getViewState().changeTitle("Изм. пароля");
+        getViewState().showSavePassword();
+        getViewState().showBackButton();
+        router.navigateTo(new Screens.ChangePasswordScreen());
     }
 
     //Хранит информацию о прошлом фрагмента для вьюхи сверху при уходе на уровень выше

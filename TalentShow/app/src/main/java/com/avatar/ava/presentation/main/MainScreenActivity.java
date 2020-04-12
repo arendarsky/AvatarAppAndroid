@@ -39,7 +39,9 @@ import com.avatar.ava.presentation.main.BottomSheetFragments.ProfileBottomSheet;
 import com.avatar.ava.presentation.main.fragments.FragmentFileLoadMain;
 import com.avatar.ava.presentation.main.fragments.casting.CastingFragment;
 import com.avatar.ava.presentation.main.fragments.profile.ProfileFragment;
+import com.avatar.ava.presentation.main.fragments.profile.profileSettings.ProfileSettingsFragment;
 import com.avatar.ava.presentation.main.fragments.profile.profileSettings.changePassword.ChangePasswordFragment;
+import com.avatar.ava.presentation.signing.EnterActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
@@ -156,6 +158,11 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         stopVideoFromCasting();
         presenter.openPublicProfile(id,
                 getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_container));
+    }
+
+    @Override
+    public void openChangePassword() {
+        presenter.openChangePassword();
     }
 
     @Override
@@ -310,6 +317,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         );
         if (closeApp) super.onBackPressed();
     }
+
     private boolean loadVideoToServer = false;
     @Override
     public void setLoadVideoToServer(boolean loadVideoToServer) {
@@ -320,12 +328,20 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     void saveClicked(){
         Fragment currentFragment = getSupportFragmentManager()
                 .findFragmentById(R.id.activity_main_frame_container);
+
         if (currentFragment instanceof FragmentChooseBestMain && !loadVideoToServer){
             List<Float> tmp = ((FragmentChooseBestMain) currentFragment).getInterval();
             Log.d("ActivityMainLog", "uploadVideoandSetInterval");
             loadVideoToServer = true;
-//            ((FragmentChooseBestMain) currentFragment).sendVideo();
             presenter.uploadAndSetInterval(tmp.get(0), tmp.get(1));
+        }
+
+        if (currentFragment instanceof ProfileSettingsFragment){
+            presenter.backButtonPressed(false);
+        }
+
+        if (currentFragment instanceof ChangePasswordFragment){
+
         }
     }
 
@@ -402,7 +418,9 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     public void profileBackClicked(){
         FragmentManager fragmentManager = getSupportFragmentManager();
         ProfileFragment profileFragment = (ProfileFragment) fragmentManager.findFragmentById(ProfileFragment.ProfileID);
-        profileFragment.backEdit();
+        if (profileFragment != null) {
+            profileFragment.backEdit();
+        }
         clearTopView();
         changeTitle("Профиль");
         showMenuPoints();
@@ -447,7 +465,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     @OnClick(R.id.main_frame_exit)
     public void exitFromAcc(){
         presenter.exitAcc();
-        startActivity(new Intent(MainScreenActivity.this, SplashActivity.class));
+        startActivity(new Intent(appContext, EnterActivity.class));
     }
 
     @Override
@@ -457,7 +475,6 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         if (fragmentManager.findFragmentById(CastingFragment.CASTING_ID) instanceof CastingFragment){
             castingFragment = (CastingFragment) fragmentManager.findFragmentById(CastingFragment.CASTING_ID);
         }
-        //CastingFragment castingFragment = (CastingFragment) fragmentManager.findFragmentById(CastingFragment.CASTING_ID);
         if(castingFragment != null)
         castingFragment.stopVideo();
     }

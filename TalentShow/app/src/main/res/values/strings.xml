@@ -86,4 +86,16 @@
     <string name="edit_profile">Редактировать профиль</string>
     <string name="send_to_casting">Отправить в кастинг</string>
     <string name="delete">Удалить</string>
+    <string name="edit_short">Ред.</string>
+    <string name="add">Add</string>
+    <string name="name_surname">Имя Фамилия</string>
+    <string name="description">Описание</string>
+    <string name="uploaded_videos">Загруженные видео</string>
+    <string name="in_casting">В кастинге</string>
+    <string name="zero_likes">0 Лайков</string>
+    <string name="edit">Редактировать</string>
+    <string name="old_password">Ст. Пароль</string>
+    <string name="new_password">Нов. Пароль</string>
+    <string name="cant_change_mail">По всем вопросам обращайтесь в поддержку на почту xcefactor@gmail.com</string>
+    <string name="seven_points">●●●●●●●</string>
 </resources>

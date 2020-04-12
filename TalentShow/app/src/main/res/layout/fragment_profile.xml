@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:background="@color/darkBackground"
     tools:context=".presentation.main.fragments.profile.ProfileFragment"
-    android:id="@+id/fragment_profile">
+    android:id="@+id/fragment_profile"
+    tools:ignore="LabelFor" >
 
     <TextView
         android:id="@+id/fragment_profile_btn_edit"
@@ -17,7 +18,7 @@
         android:layout_marginTop="100dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="600dp"
-        android:text="Редактировать"
+        android:text="@string/edit"
         android:textColor="@color/whiteText"
         android:textSize="12sp"
         android:visibility="gone"
@@ -33,7 +34,7 @@
         android:layout_height="73dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="17dp"
-        android:contentDescription="Add"
+        android:contentDescription="@string/add"
         app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -42,41 +43,40 @@
         android:id="@+id/fragment_profile_edit_photo"
         android:layout_width="30dp"
         android:layout_height="20dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="136dp"
-        android:layout_marginEnd="300dp"
-        android:layout_marginBottom="595dp"
-        android:text="Ред."
+        android:text="@string/edit_short"
         android:textColor="@color/whiteText"
         android:textSize="15sp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/fragment_profile_image"
+        app:layout_constraintEnd_toEndOf="@id/fragment_profile_image"
+        app:layout_constraintStart_toStartOf="@id/fragment_profile_image"
+        app:layout_constraintTop_toTopOf="@id/fragment_profile_image"
         />
 
     <EditText
-        android:text="Имя Фамилия"
+        android:text="@string/name_surname"
         android:background="#00000000"
         android:enabled="false"
         android:id="@+id/fragment_profile_name"
         android:layout_width="0dp"
-        android:layout_height="36dp"
+        android:layout_height="wrap_content"
         android:textSize="22sp"
         android:textStyle="bold"
         android:textColor="@color/whiteText"
         android:layout_marginTop="17dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="14dp"
+        android:layout_marginBottom="15dp"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/fragment_profile_likes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/fragment_profile_image"
-        />
+        android:inputType="text"
+        android:importantForAutofill="no" />
 
     <TextView
         android:id="@+id/fragment_profile_likes"
-        android:text="0 Лайков"
+        android:text="@string/zero_likes"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@color/whiteText"
@@ -94,7 +94,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="#A2A2A2"
-        android:textSize="11sp"
+        android:textSize="12sp"
         android:layout_marginTop="4dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
@@ -107,7 +107,7 @@
         android:id="@+id/fragment_profile_text2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Описание"
+        android:text="@string/description"
         android:textColor="@color/whiteText"
         android:textSize="20sp"
         android:layout_marginTop="22dp"
@@ -126,14 +126,15 @@
         android:layout_marginTop="13dp"
         android:layout_marginEnd="16dp"
         android:gravity="top"
-        android:text="Описание"
+        android:text="@string/description"
         android:textColor="@color/whiteText"
         android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_profile_btn_edit"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_profile_guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-
-        app:layout_constraintTop_toBottomOf="@id/fragment_profile_text2" />
+        app:layout_constraintTop_toBottomOf="@id/fragment_profile_text2"
+        android:inputType="textAutoCorrect"
+        android:importantForAutofill="no"/>
 
 
     <TextView
@@ -143,7 +144,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
-        android:text="Загруженные видео"
+        android:text="@string/uploaded_videos"
         android:textColor="@color/whiteText"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -191,15 +192,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/add" />
 
         <TextView
             android:id="@+id/fragment_profile_in_casting_1"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:text="В кастинге"
+            android:text="@string/in_casting"
             android:gravity="center"
-            android:textSize="11sp"
+            android:textSize="12sp"
             android:textColor="@color/whiteText"
             android:background="#262626"
             android:visibility="gone"
@@ -254,15 +256,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/add" />
 
         <TextView
             android:id="@+id/fragment_profile_in_casting_2"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:text="В кастинге"
+            android:text="@string/in_casting"
             android:gravity="center"
-            android:textSize="11sp"
+            android:textSize="12sp"
             android:textColor="@color/whiteText"
             android:background="#262626"
             android:visibility="gone"
@@ -316,15 +319,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/add" />
 
         <TextView
             android:id="@+id/fragment_profile_in_casting_3"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:text="В кастинге"
+            android:text="@string/in_casting"
             android:gravity="center"
-            android:textSize="11sp"
+            android:textSize="12sp"
             android:textColor="@color/whiteText"
             android:background="#262626"
             android:visibility="gone"
@@ -378,15 +382,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/add" />
 
         <TextView
             android:id="@+id/fragment_profile_in_casting_4"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:text="В кастинге"
+            android:text="@string/in_casting"
             android:gravity="center"
-            android:textSize="11sp"
+            android:textSize="12sp"
             android:textColor="@color/whiteText"
             android:background="#262626"
             android:visibility="gone"
@@ -400,7 +405,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="366dp" />
+        app:layout_constraintGuide_percent="0.5"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

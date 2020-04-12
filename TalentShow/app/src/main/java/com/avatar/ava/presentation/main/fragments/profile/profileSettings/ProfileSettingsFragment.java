@@ -49,9 +49,7 @@ public class ProfileSettingsFragment extends MvpAppCompatFragment implements Pro
     @BindView(R.id.fragment_profile_settings_email_edit)
     EditText email;
 
-    @BindView(R.id.fragment_profile_settings_password_edit)
-    EditText password;
-
+    private MainScreenActivity activity;
 
     public ProfileSettingsFragment() {
         // Required empty public constructor
@@ -66,9 +64,6 @@ public class ProfileSettingsFragment extends MvpAppCompatFragment implements Pro
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
-        //if(!this.isAdded())getActivity().getSupportFragmentManager().beginTransaction().add(this, "ProfileFragment1").commit();
         View v = inflater.inflate(R.layout.fragment_profile_settings, container, false);
         ButterKnife.bind(this, v);
         return v;
@@ -81,14 +76,12 @@ public class ProfileSettingsFragment extends MvpAppCompatFragment implements Pro
         super.onViewCreated(view, savedInstanceState);
         Toothpick.inject(this, Toothpick.openScope(App.class));
         email.setEnabled(false);
-        //password.setEnabled(false);
     }
-
-    MainScreenActivity activity;
-    @OnClick(R.id.fragment_profile_settings_field_1)
+    @OnClick(R.id.fragment_profile_settings_password)
     public void changePassword(){
          activity = (MainScreenActivity) getActivity();
-         activity.fragmentAction(PROFILE_CHANGE_PASSWORD);
-        Log.d("ProfileSettings", "click");
+        if (activity != null) {
+            activity.fragmentAction(PROFILE_CHANGE_PASSWORD);
+        }
     }
 }

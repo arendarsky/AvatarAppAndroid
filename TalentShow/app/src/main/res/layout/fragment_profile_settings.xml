@@ -5,11 +5,11 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/darkBackground"
-    tools:context=".presentation.main.fragments.profile.profileSettings.ProfileSettingsFragment">
-
+    tools:context=".presentation.main.fragments.profile.profileSettings.ProfileSettingsFragment"
+    tools:ignore="LabelFor" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/fragment_profile_settings_field_1"
+        android:id="@+id/fragment_profile_settings_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/hint_text_color"
             android:textSize="17sp"
-            android:text="Пароль"
+            android:text="@string/password"
             android:layout_marginStart="12dp"
             android:layout_marginBottom="14dp"
             android:layout_marginTop="14dp"
@@ -33,44 +33,46 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/fragment_profile_settings_filed1_guideline"/>
+            app:layout_constraintEnd_toStartOf="@id/fragment_profile_settings_password_guideline"/>
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/fragment_profile_settings_filed1_guideline"
+            android:id="@+id/fragment_profile_settings_password_guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.4" />
 
-        <EditText
+        <TextView
             android:id="@+id/fragment_profile_settings_password_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
             android:textSize="17sp"
-            android:text="\u25CF\u25CF\u25CF"
+            android:text="@string/seven_points"
             android:textColor="@color/whiteText"
-            android:inputType="textEmailAddress"
+            android:inputType="none"
             android:background="@color/none_color"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            app:layout_constraintStart_toEndOf="@id/fragment_profile_settings_filed1_guideline"
+            app:layout_constraintStart_toEndOf="@id/fragment_profile_settings_password_guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            android:importantForAutofill="no"
+            tools:ignore="TextFields" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/fragment_profile_settings_field_2"
+        android:id="@+id/fragment_profile_settings_mail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="14dp"
-        android:background="@drawable/auth_filed_backgroud"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_profile_settings_field_1"
+        android:background="@drawable/edit_text_border"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_profile_settings_password"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -79,7 +81,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/hint_text_color"
             android:textSize="17sp"
-            android:text="Email"
+            android:text="@string/email"
             android:layout_marginStart="12dp"
             android:layout_marginBottom="14dp"
             android:layout_marginTop="14dp"
@@ -87,10 +89,10 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/fragment_profile_settings_filed2_guideline"/>
+            app:layout_constraintEnd_toStartOf="@id/fragment_profile_settings_mail_guideline"/>
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/fragment_profile_settings_filed2_guideline"
+            android:id="@+id/fragment_profile_settings_mail_guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -103,16 +105,30 @@
             android:layout_marginEnd="12dp"
             android:textSize="17sp"
             android:textColor="@color/whiteText"
-            android:inputType="textEmailAddress"
+            android:inputType="none"
             android:background="@color/none_color"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            app:layout_constraintStart_toEndOf="@id/fragment_profile_settings_filed2_guideline"
+            app:layout_constraintStart_toEndOf="@id/fragment_profile_settings_mail_guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            android:importantForAutofill="no"
+            tools:ignore="TextFields" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:textSize="12sp"
+        android:autoLink="email"
+        android:textColor="@color/whiteText"
+        android:text="@string/cant_change_mail"
+        app:layout_constraintTop_toBottomOf="@id/fragment_profile_settings_mail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
