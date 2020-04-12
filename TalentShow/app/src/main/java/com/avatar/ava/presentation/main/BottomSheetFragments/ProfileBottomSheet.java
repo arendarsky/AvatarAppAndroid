@@ -19,7 +19,6 @@ public class ProfileBottomSheet extends BottomSheetDialogFragment
      public static final String TAG = "ProfileBottomDialog";
      public static final int EDIT = R.id.profile_bottom_sheet_edit;
      public static final int SETTINGS = R.id.profile_bottom_sheet_settings;
-     public static final int CANCEL = R.id.profile_bottom_sheet_cancel;
 
 
      private ProfileBottomSheet.ItemClickListener mListener;
@@ -36,7 +35,6 @@ public class ProfileBottomSheet extends BottomSheetDialogFragment
       super.onViewCreated(view, savedInstanceState);
       view.findViewById(EDIT).setOnClickListener(this);
       view.findViewById(SETTINGS).setOnClickListener(this);
-      view.findViewById(CANCEL).setOnClickListener(this);
      }
      @Override
      public void onAttach(Context context) {

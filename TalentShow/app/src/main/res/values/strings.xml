@@ -82,4 +82,8 @@
     <string name="enter_ur_mail">Введите почту @edu.hse.ru</string>
     <string name="create_password">Придуймате пароль</string>
     <string name="number_likes_u_got">Это количество лайков, которые ты получил за все свои видео</string>
+    <string name="open_settings">Открыть настройки</string>
+    <string name="edit_profile">Редактировать профиль</string>
+    <string name="send_to_casting">Отправить в кастинг</string>
+    <string name="delete">Удалить</string>
 </resources>

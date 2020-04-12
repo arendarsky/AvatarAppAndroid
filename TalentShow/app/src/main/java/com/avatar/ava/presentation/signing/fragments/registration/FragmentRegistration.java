@@ -71,7 +71,6 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
 
     private boolean continuePressed = false;
     private Activity activity;
-    private final int LOAD_AVATAR = 5;
     private final int BACK = 7;
     private final int CONFIRM_MAIL = 11;
 

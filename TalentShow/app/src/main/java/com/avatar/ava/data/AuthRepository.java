@@ -47,7 +47,7 @@ public class AuthRepository implements IAuthRepository {
                             else {
                                 return Single.just(2);
                             }
-                }
+                        }
                 );
     }
 
@@ -56,23 +56,12 @@ public class AuthRepository implements IAuthRepository {
 
         return authAPI.registerUser(new RegisterDTO(name, mail, password))
                 .flatMap(aBoolean -> {
-                    if (aBoolean){
-                        return authAPI.sendCode(mail).toSingleDefault(true);
-//                        return authAPI.authUser(mail, password)
-//                                .flatMap((Function<AuthResponse, SingleSource<?>>) s -> {
-//                                    if (s.getToken().isEmpty()) return Single.just(false);
-//                                    else
-//                                        {
-//                                            preferencesRepository.saveToken(s.getToken());
-//                                            return Single.just(true);
-//                                        }
-//                                }
-//                                );
-                    }
-                    else return Single.just(false);
-                }
+                            if (aBoolean){
+                                return authAPI.sendCode(mail)
+                                        .toSingleDefault(true);
+                            }
+                            else return Single.just(false);
+                        }
                 );
     }
-
-
 }

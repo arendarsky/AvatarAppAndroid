@@ -108,6 +108,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                 break;
             case PROFILE_SETTINGS:
                 getViewState().changeTitle("Настройки");
+                getViewState().showBackButton();
                 previousStates.add(new PrevState(false, profile, MENU_POINTS));
                 router.navigateTo(new Screens.ProfileSettingsScreen());
                 break;
@@ -189,26 +190,6 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                 break;
         }
     }
-
-//    void composeVideo(Uri videoUri){
-//        openSecondsScreen(videoUri);
-//        interactor.composeVideo(videoUri)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-////                .doOnSubscribe(d -> openBest30Screen(videoUri))
-//                .subscribe(new DisposableCompletableObserver() {
-//                               @Override
-//                               public void onComplete() {
-//                                    openBest30Screen(videoUri);
-//                               }
-//
-//                               @Override
-//                               public void onError(Throwable e) {
-//                                   getViewState().showMessage("Ошибка при сжатии видео");
-//                               }
-//                           }
-//                );
-//    }
 
     void uploadAndSetInterval(Float beginTime, Float endTime){
         if (endTime - beginTime < 30) {
