@@ -3,22 +3,20 @@ package com.avatar.ava.presentation.main.fragments.profile.profileSettings.chang
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
-import com.avatar.ava.presentation.main.MainScreenActivity;
 import com.avatar.ava.presentation.main.MainScreenPostman;
 
 import javax.inject.Inject;
@@ -28,6 +26,7 @@ import butterknife.ButterKnife;
 import toothpick.Toothpick;
 
 
+@SuppressWarnings("FieldCanBeLocal")
 public class ChangePasswordFragment extends MvpAppCompatFragment implements ChangePasswordView {
 
     private final int BACK = 9;
@@ -72,7 +71,6 @@ public class ChangePasswordFragment extends MvpAppCompatFragment implements Chan
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ChangePasswordID = this.getId();
-        //if(!this.isAdded())getActivity().getSupportFragmentManager().beginTransaction().add(this, "ProfileFragment1").commit();
         View v = inflater.inflate(R.layout.fragment_change_password, container, false);
         ButterKnife.bind(this, v);
         return v;

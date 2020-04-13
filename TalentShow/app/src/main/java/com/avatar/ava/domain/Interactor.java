@@ -9,7 +9,7 @@ import com.avatar.ava.domain.entities.ProfileDTO;
 import com.avatar.ava.domain.entities.PublicProfileDTO;
 import com.avatar.ava.domain.repository.IAuthRepository;
 import com.avatar.ava.domain.repository.IProfileRepository;
-import com.avatar.ava.domain.repository.ISharedPreferemcesRepository;
+import com.avatar.ava.domain.repository.ISharedPreferencesRepository;
 import com.avatar.ava.domain.repository.IVideoRepository;
 import com.avatar.ava.domain.repository.IRatingRepository;
 
@@ -27,10 +27,10 @@ public class Interactor {
     private IVideoRepository videoRepository;
     private IRatingRepository ratingRepository;
     private IProfileRepository profileRepository;
-    private ISharedPreferemcesRepository preferencesRepository;
+    private ISharedPreferencesRepository preferencesRepository;
 
     @Inject
-    public Interactor(IAuthRepository authRepository, IVideoRepository videoRepository, ISharedPreferemcesRepository preferencesRepository,
+    public Interactor(IAuthRepository authRepository, IVideoRepository videoRepository, ISharedPreferencesRepository preferencesRepository,
                       IRatingRepository ratingRepository, IProfileRepository profileRepository){
         this.authRepository = authRepository;
         this.videoRepository = videoRepository;
@@ -71,32 +71,12 @@ public class Interactor {
         return this.ratingRepository.getRating(number);
     }
 
-    public Completable sendCodeToMail(String mail){
-        return this.authRepository.sendCodeToMail(mail);
-    }
-
-    public Completable confirmEmail(String mail, String code){
-        return this.authRepository.confirmMail(mail, code.replaceAll(" ", ""));
-    }
-
-    public Completable composeVideo(Uri videoUri){
-        return this.videoRepository.composeVideo(videoUri);
-    }
-
     public Completable uploadAndSetInterval(Uri fileUri, Float startTime, Float endTime){
         return this.videoRepository.uploadAndSetInterval(fileUri, startTime, endTime);
     }
 
     public boolean checkAuth(){
         return this.preferencesRepository.checkAuth();
-    }
-
-    public void saveRole(String role){
-        this.preferencesRepository.saveRole(role);
-    }
-
-    public String getRole(){
-        return this.preferencesRepository.getRole();
     }
 
     public void saveName(String name){

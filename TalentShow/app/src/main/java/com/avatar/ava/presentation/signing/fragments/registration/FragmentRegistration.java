@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,10 +19,8 @@ import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
-import com.avatar.ava.presentation.signing.RegAuthPostman;
-import com.bumptech.glide.Glide;
 import com.avatar.ava.R;
-
+import com.avatar.ava.presentation.signing.RegAuthPostman;
 
 import java.util.regex.Pattern;
 
@@ -35,6 +32,7 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import toothpick.Toothpick;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class FragmentRegistration extends MvpAppCompatFragment implements RegistrationView {
 
     public static FragmentRegistration newInstance(){

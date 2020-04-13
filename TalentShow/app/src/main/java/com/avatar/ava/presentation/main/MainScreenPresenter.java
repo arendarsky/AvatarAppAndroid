@@ -24,6 +24,7 @@ import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.schedulers.Schedulers;
 import ru.terrakok.cicerone.Router;
 
+@SuppressWarnings("FieldCanBeLocal")
 @InjectViewState
 public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
 
@@ -33,7 +34,6 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
     private final int LOAD_NEW_VIDEO_SCREEN = 4;
     private final int LOAD_VIDEO = 5;
     private final int CAPTURE_VIDEO = 8;
-    private final int CHOOSE_SECONDS_SCREEN = 6;
     private final int PROFILE_SETTINGS = 6;
     private final int PROFILE_CHANGE_PASSWORD = 7;
     private final int BACK = 9;
@@ -163,14 +163,6 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
         else return true;
     }
 
-    public void openChangePassword() {
-        getViewState().changeTitle("Изм. пароля");
-        getViewState().showSavePassword();
-        getViewState().showBackButton();
-        router.navigateTo(new Screens.ChangePasswordScreen());
-    }
-
-    //Хранит информацию о прошлом фрагмента для вьюхи сверху при уходе на уровень выше
     private class PrevState {
         boolean backButton;
         String title;

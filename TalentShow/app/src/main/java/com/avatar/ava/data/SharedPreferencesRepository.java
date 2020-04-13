@@ -3,11 +3,11 @@ package com.avatar.ava.data;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.avatar.ava.domain.repository.ISharedPreferemcesRepository;
+import com.avatar.ava.domain.repository.ISharedPreferencesRepository;
 
 import javax.inject.Inject;
 
-public class SharedPreferencesRepository implements ISharedPreferemcesRepository {
+public class SharedPreferencesRepository implements ISharedPreferencesRepository {
 
     private final static String token = "token";
     private final static String authed = "authed";
@@ -15,7 +15,7 @@ public class SharedPreferencesRepository implements ISharedPreferemcesRepository
     private final static String name = "name";
 
 
-    SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
 
     @Inject
     SharedPreferencesRepository(SharedPreferences sharedPreferences){
@@ -31,12 +31,6 @@ public class SharedPreferencesRepository implements ISharedPreferemcesRepository
         editor.apply();
     }
 
-    public void setAuthed(){
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(authed, true);
-        editor.apply();
-    }
-
     public void exitAcc(){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(authed, false);
@@ -45,18 +39,6 @@ public class SharedPreferencesRepository implements ISharedPreferemcesRepository
 
     public boolean checkAuth(){
         return sharedPreferences.getBoolean(authed, false);
-    }
-
-    @Override
-    public void saveRole(String personRole) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(role, personRole);
-        editor.apply();
-    }
-
-    @Override
-    public String getRole() {
-        return sharedPreferences.getString(role, null);
     }
 
     @Override

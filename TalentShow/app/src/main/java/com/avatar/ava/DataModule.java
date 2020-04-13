@@ -10,7 +10,7 @@ import com.avatar.ava.data.VideoRepository;
 import com.avatar.ava.domain.repository.IAuthRepository;
 import com.avatar.ava.domain.repository.IProfileRepository;
 import com.avatar.ava.domain.repository.IRatingRepository;
-import com.avatar.ava.domain.repository.ISharedPreferemcesRepository;
+import com.avatar.ava.domain.repository.ISharedPreferencesRepository;
 import com.avatar.ava.domain.repository.IVideoRepository;
 
 import java.util.concurrent.TimeUnit;
@@ -29,7 +29,7 @@ public class DataModule extends Module{
 
     public final static String SERVER_NAME = "https://xce-factor.ru";
     //public final static String SERVER_NAME = "https://avatarapp.yambr.ru";
-    public DataModule(){
+    DataModule(){
 
         final String CONNECT_TIMEOUT = "CONNECT_TIMEOUT";
         final String READ_TIMEOUT = "READ_TIMEOUT";
@@ -88,7 +88,7 @@ public class DataModule extends Module{
         bind(IVideoRepository.class).to(VideoRepository.class).singletonInScope();
         bind(IRatingRepository.class).to(RatingRepository.class).singletonInScope();
         bind(IProfileRepository.class).to(ProfileRepository.class).singletonInScope();
-        bind(ISharedPreferemcesRepository.class).to(SharedPreferencesRepository.class).singletonInScope();
+        bind(ISharedPreferencesRepository.class).to(SharedPreferencesRepository.class).singletonInScope();
 
     }
 }

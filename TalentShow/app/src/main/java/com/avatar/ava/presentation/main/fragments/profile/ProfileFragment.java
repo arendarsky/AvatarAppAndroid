@@ -1,5 +1,6 @@
 package com.avatar.ava.presentation.main.fragments.profile;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,7 +58,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     private final int LOAD_NEW_VIDEO_SCREEN = 4;
     private int currCountVideos = 0;
 
-    ArrayList<VideoDTO> videos = new ArrayList<VideoDTO>();
+    private ArrayList<VideoDTO> videos = new ArrayList<>();
 
     @Inject
     Context appContext;
@@ -143,6 +145,9 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     @BindView(R.id.fragment_profile_in_casting_4)
     TextView videoHint4;
 
+    @BindView(R.id.profile_progress_bar)
+    ProgressBar progressBar;
+
     @ProvidePresenter
     ProfilePresenter getPresenter(){
         return Toothpick.openScope(App.class).getInstance(ProfilePresenter.class);
@@ -153,39 +158,29 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         // Required empty public constructor
     }
 
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    MainScreenActivity activity;
+    private MainScreenActivity activity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         ProfileID = this.getId();
-        //if(!this.isAdded())getActivity().getSupportFragmentManager().beginTransaction().add(this, "ProfileFragment1").commit();
+        Toothpick.inject(this, Toothpick.openScope(App.class));
+
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
-        video1 = new PlayerView(getContext());
-        video2 = new PlayerView(getContext());
-        video3 = new PlayerView(getContext());
-        video4 = new PlayerView(getContext());
+        video1 = new PlayerView(appContext);
+        video2 = new PlayerView(appContext);
+        video3 = new PlayerView(appContext);
+        video4 = new PlayerView(appContext);
         ButterKnife.bind(this, v);
         return v;
     }
 
-
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Toothpick.inject(this, Toothpick.openScope(App.class));
         description.setEnabled(false);
         name.setEnabled(false);
+        progressBar.setVisibility(View.VISIBLE);
         presenter.getProfile();
         activity = (MainScreenActivity) getActivity();
         if (activity != null) activity.showExit();
@@ -194,7 +189,6 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d("ProfileLog", "detach");
         if(player1 != null)
         player1.release();
         if(player2 != null)
@@ -205,13 +199,16 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         player4.release();
     }
 
-    String delNameVideo = "";
+    private String delNameVideo = "";
+
     public void deleteVideo(){
-        Log.d("ProfileLog", "delName: " + delNameVideo + " cast " + castingVideoName);
+        progressBar.setVisibility(View.VISIBLE);
         presenter.removeVideo(delNameVideo);
     }
-    String castingVideoName = "";
-    boolean castingIsApproved = false;
+
+    private String castingVideoName = "";
+    private boolean castingIsApproved = false;
+
     public void setCastingVideo(){
         if(castingIsApproved){
             presenter.setActive(castingVideoName);
@@ -233,16 +230,17 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         }
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void setDataProfile(ProfileDTO person) {
         //set Data
         if(person.getPhoto() == null){
-            Glide.with(getView())
+            Glide.with(this)
                     .load(R.drawable.empty_profile_icon)
                     .circleCrop()
                     .into(profileImage);
         }else{
-            Glide.with(getView())
+            Glide.with(this)
                     .load(SERVER_NAME + "/api/profile/photo/get/" + person.getPhoto())
                     .circleCrop()
                     .into(profileImage);
@@ -257,42 +255,43 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         showHints();
         showVideos();
     }
-    String moderation = "На модерации";
-    String casting = "В кастинге";
+
     private void showHints(){
         if(videos.size() >= 1){
-            if(videos.get(0).isApproved() == false){
+            String moderation = "На модерации";
+            if(!videos.get(0).isApproved()){
                 videoHint1.setText(moderation);
                 videoHint1.setVisibility(View.VISIBLE);
             }
-            if(videos.get(0).isActive() == true && videos.get(0).isApproved()){
+            String casting = "В кастинге";
+            if(videos.get(0).isActive() && videos.get(0).isApproved()){
                 videoHint1.setText(casting);
                 videoHint1.setVisibility(View.VISIBLE);
             }
             if(videos.size() >= 2){
-                if(videos.get(1).isApproved() == false){
+                if(!videos.get(1).isApproved()){
                     videoHint2.setText(moderation);
                     videoHint2.setVisibility(View.VISIBLE);
                 }
-                if(videos.get(1).isActive() == true && videos.get(1).isApproved()){
+                if(videos.get(1).isActive() && videos.get(1).isApproved()){
                     videoHint2.setText(casting);
                     videoHint2.setVisibility(View.VISIBLE);
                 }
                 if(videos.size() >= 3){
-                    if(videos.get(2).isApproved() == false){
+                    if(!videos.get(2).isApproved()){
                         videoHint3.setText(moderation);
                         videoHint3.setVisibility(View.VISIBLE);
                     }
-                    if(videos.get(2).isActive() == true && videos.get(2).isApproved()){
+                    if(videos.get(2).isActive() && videos.get(2).isApproved()){
                         videoHint3.setText(casting);
                         videoHint3.setVisibility(View.VISIBLE);
                     }
                     if(videos.size() >= 4){
-                        if(videos.get(3).isApproved() == false){
+                        if(!videos.get(3).isApproved()){
                             videoHint4.setText(moderation);
                             videoHint4.setVisibility(View.VISIBLE);
                         }
-                        if(videos.get(3).isActive() == true && videos.get(3).isApproved()){
+                        if(videos.get(3).isActive() && videos.get(3).isApproved()){
                             videoHint4.setText(casting);
                             videoHint4.setVisibility(View.VISIBLE);
                         }
@@ -309,12 +308,10 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
                 ProfileVideoBottomSheet.TAG);
     }
 
-    SimpleExoPlayer player1, player2, player3, player4;
+    private SimpleExoPlayer player1, player2, player3, player4;
     private void setupVideo(int num, Uri uri){
-        // Produces DataSource instances through which media data is loaded.
         DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(appContext,
                 Util.getUserAgent(appContext, getResources().getString(R.string.app_name)));
-        // This is the MediaSource representing the media to be played.
         MediaSource videoSource =
                 new ProgressiveMediaSource.Factory(dataSourceFactory)
                         .createMediaSource(uri);
@@ -322,33 +319,25 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
             case 1:
                 player1 = new SimpleExoPlayer.Builder(appContext).build();
                 video1.setPlayer(player1);
-                // Prepare the player with the source.
                 player1.prepare(videoSource);
-                //player.setPlayWhenReady(true);
                 break;
 
             case 2:
                 player2 = new SimpleExoPlayer.Builder(appContext).build();
                 video2.setPlayer(player2);
-                // Prepare the player with the source.
                 player2.prepare(videoSource);
-                //player.setPlayWhenReady(true);
                 break;
 
             case 3:
                 player3 = new SimpleExoPlayer.Builder(appContext).build();
                 video3.setPlayer(player3);
-                // Prepare the player with the source.
                 player3.prepare(videoSource);
-                //player.setPlayWhenReady(true);
                 break;
 
             case 4:
                 player4 = new SimpleExoPlayer.Builder(appContext).build();
                 video4.setPlayer(player4);
-                // Prepare the player with the source.
                 player4.prepare(videoSource);
-                //player.setPlayWhenReady(true);
                 break;
         }
     }
@@ -384,28 +373,30 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        switch(requestCode) {
-            case 1:
-                if(resultCode == RESULT_OK){
-                    Uri selectedImage = data.getData();
-                    //profileImage.setImageURI(selectedImage);
-                    presenter.uploadPhoto(selectedImage);
-                    Log.d("ProfileFragment", "setImage");
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                Uri selectedImage = null;
+                if (data != null) {
+                    selectedImage = data.getData();
                 }
+                progressBar.setVisibility(View.VISIBLE);
+                presenter.uploadPhoto(selectedImage);
+            }
         }
     }
 
     private boolean edit = false;
 
-    String nameBack = "", descriptionBack = "";
+    private String nameBack = "", descriptionBack = "";
+
     @OnClick(R.id.fragment_profile_btn_edit)
     public void editProfile(){
         if(!edit){
             edit = true;
             description.setEnabled(true);
-            description.setBackgroundResource(R.drawable.profile_fragment_edit_bg);
+            description.setBackgroundResource(R.drawable.profile_field_edit_back);
             name.setEnabled(true);
-            name.setBackgroundResource(R.drawable.profile_fragment_edit_bg);
+            name.setBackgroundResource(R.drawable.profile_field_edit_back);
             editPhoto.setVisibility(View.VISIBLE);
             editProfile.setText("Применить");
             nameBack = name.getText().toString();
@@ -478,6 +469,16 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         showVideos();
     }
 
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(appContext, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+
     @OnClick(R.id.fragment_profile_edit_photo)
     void changePhoto(){
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
@@ -487,24 +488,24 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
 
 
     @OnClick(R.id.fragment_profile_add_video_btn_1)
-    public void addVideo1(){
+    void addVideo1(){
         activity.fragmentAction(LOAD_NEW_VIDEO_SCREEN);
     }
     @OnClick(R.id.fragment_profile_add_video_btn_2)
-    public void addVideo2(){
+    void addVideo2(){
         activity.fragmentAction(LOAD_NEW_VIDEO_SCREEN);
     }
     @OnClick(R.id.fragment_profile_add_video_btn_3)
-    public void addVideo3(){
+    void addVideo3(){
         activity.fragmentAction(LOAD_NEW_VIDEO_SCREEN);
     }
     @OnClick(R.id.fragment_profile_add_video_btn_4)
-    public void addVideo4(){
+    void addVideo4(){
         activity.fragmentAction(LOAD_NEW_VIDEO_SCREEN);
     }
 
     @OnClick(R.id.fragment_profile_settings1)
-    public void showSettings1(){
+    void showSettings1(){
         if(videos.size() >= 1){
             castingVideoName = videos.get(0).getName();
             delNameVideo = videos.get(0).getName();
@@ -515,7 +516,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     }
 
     @OnClick(R.id.fragment_profile_settings2)
-    public void showSettings2(){
+    void showSettings2(){
         if(videos.size() >= 2){
             delNameVideo = videos.get(1).getName();
             castingVideoName = videos.get(1).getName();
@@ -526,7 +527,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     }
 
     @OnClick(R.id.fragment_profile_settings3)
-    public void showSettings3(){
+    void showSettings3(){
         if(videos.size() >= 3){
             delNameVideo = videos.get(2).getName();
             castingVideoName = videos.get(2).getName();
@@ -537,7 +538,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     }
 
     @OnClick(R.id.fragment_profile_settings4)
-    public void showSettings4(){
+    void showSettings4(){
         if(videos.size() >= 4){
             delNameVideo = videos.get(3).getName();
             castingVideoName = videos.get(3).getName();

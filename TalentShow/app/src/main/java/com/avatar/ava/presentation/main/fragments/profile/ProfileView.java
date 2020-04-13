@@ -5,6 +5,8 @@ import com.avatar.ava.domain.entities.PersonRatingDTO;
 import com.avatar.ava.domain.entities.ProfileDTO;
 
 public interface ProfileView extends MvpView {
-    public void setDataProfile(ProfileDTO person);
-    public void update();
+    void setDataProfile(ProfileDTO person);
+    void update();
+    void showMessage(String message);
+    void hideProgressBar();
 }

@@ -1,22 +1,23 @@
 package com.avatar.ava.presentation.main.fragments.profile;
 
 import android.net.Uri;
-import android.util.Log;
-
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.avatar.ava.domain.Interactor;
+
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+@SuppressWarnings("unused")
 @InjectViewState
 public class ProfilePresenter extends MvpPresenter<ProfileView> {
 
 
     private Interactor interactor;
+    private String errorMessage = "Произошла ошибка. Попробуйте позже";
 
     @Inject
     ProfilePresenter(Interactor interactor) {
@@ -28,19 +29,19 @@ public class ProfilePresenter extends MvpPresenter<ProfileView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(person -> {
-                            Log.d("ProfileFragmentLog", person.getName());
                             getViewState().setDataProfile(person);
+                            getViewState().hideProgressBar();
                             getViewState().update();
                         },
-                        error -> {
-                            Log.d("ProfileFragmentLog", "error");});
+                        error -> getViewState().showMessage(errorMessage));
     }
 
     void setDescription(String description){
         Disposable disposable = interactor.setDescription(description)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> {});
+                .subscribe(() -> getViewState().hideProgressBar(),
+                        error -> getViewState().showMessage(errorMessage));
 
     }
 
@@ -48,7 +49,8 @@ public class ProfilePresenter extends MvpPresenter<ProfileView> {
         Disposable disposable = interactor.setName(name)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> {});
+                .subscribe(() -> getViewState().hideProgressBar(),
+                        error -> getViewState().showMessage(errorMessage));
     }
 
     void uploadPhoto(Uri uri){
@@ -56,9 +58,10 @@ public class ProfilePresenter extends MvpPresenter<ProfileView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> {
-                    getProfile();
-                    Log.d("ProfileFragmentLog", "successPhotoUpload");},
-                        e -> Log.d("ProfileFragmentLog", "errorPhotoUpload" + e.getMessage()));
+                            getViewState().hideProgressBar();
+                            this.getProfile();
+                        },
+                        e -> getViewState().showMessage(errorMessage));
     }
 
     void removeVideo(String name){
@@ -66,9 +69,10 @@ public class ProfilePresenter extends MvpPresenter<ProfileView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> {
-                    getProfile();
-
-                });
+                            getViewState().hideProgressBar();
+                            this.getProfile();
+                        },
+                        error -> getViewState().showMessage(errorMessage));
     }
 
     void setActive(String fileName){
@@ -76,10 +80,9 @@ public class ProfilePresenter extends MvpPresenter<ProfileView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> {
-                    getProfile();
-
-                    },
-                        error -> Log.d("ProfileLog", "error " + error)
-                );
+                            getViewState().hideProgressBar();
+                            this.getProfile();
+                        },
+                        error -> getViewState().showMessage(errorMessage));
     }
 }

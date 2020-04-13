@@ -10,9 +10,7 @@ import io.reactivex.Completable;
 import io.reactivex.Single;
 
 public interface IVideoRepository {
-    Completable composeVideo(Uri videoUri);
     Single<PersonDTO> getNewVideoLink();
-
     Completable setLiked(boolean liked);
     Completable uploadAndSetInterval(Uri fileUri, Float beginTime, Float endTime);
     Single<PersonDTO> getVideoLinkOnCreate();

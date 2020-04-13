@@ -40,7 +40,6 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
 
-            android:src="@drawable/casting_activity_ava"
 
             android:layout_marginStart="16dp"
             android:layout_marginTop="310dp"

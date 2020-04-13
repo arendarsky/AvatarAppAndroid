@@ -16,7 +16,6 @@ import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -38,7 +37,6 @@ public class VideoRepository implements IVideoRepository {
     private SharedPreferencesRepository preferencesRepository;
     private Context appContext;
     private PersonDTO currentPerson;
-    private ArrayList<PersonDTO> castingPersons = new ArrayList<>();
     private Set<PersonDTO> personDTOSet = new LinkedHashSet<>();
     private String convertedFilePath;
 
@@ -50,22 +48,6 @@ public class VideoRepository implements IVideoRepository {
         this.appContext = appContext;
     }
 
-    public Completable composeVideo(Uri fileURI){
-
-        File file = new File(getFilePathFromUri(appContext, fileURI));
-
-        this.convertedFilePath = file.getAbsolutePath().substring(0,
-                file.getAbsolutePath().lastIndexOf("."))
-                + ".mp4";
-
-        File convertedFile = new File(this.convertedFilePath);
-        String commands = "-i "
-                + file.getAbsolutePath() + " -q:v 20 "
-                + convertedFile.getAbsolutePath();
-
-        return Single.fromCallable(() -> FFmpeg.execute(commands)).ignoreElement();
-    }
-
     @Override
     public Completable uploadAndSetInterval(Uri fileURI, Float beginTime, Float endTime){
         File file = new File(getFilePathFromUri(appContext, fileURI));
@@ -75,7 +57,6 @@ public class VideoRepository implements IVideoRepository {
         File convertedFile = new File(this.convertedFilePath);
         String commands = "-i "
                 + file.getAbsolutePath() + " -q:v 20 "
-//                + " -c:v libx264 "
                 + convertedFile.getAbsolutePath();
         return Single.fromCallable(() -> FFmpeg.execute(commands)).ignoreElement()
                 .andThen(videoAPI.uploadVideo(
@@ -94,6 +75,7 @@ public class VideoRepository implements IVideoRepository {
                         (double) endTime * 1000)));
     }
 
+    @SuppressWarnings("unused")
     @Override
     public Single<PersonDTO> getNewVideoLink() {
         if (personDTOSet.size() <= 10){
@@ -103,8 +85,7 @@ public class VideoRepository implements IVideoRepository {
                     .subscribe(
                             list -> {
                                 list.remove(this.currentPerson);
-                                Set<PersonDTO> tmp = new LinkedHashSet<>(list);
-                                this.personDTOSet = tmp;
+                                this.personDTOSet = new LinkedHashSet<>(list);
                             },
                             error -> {});
         }
@@ -146,7 +127,8 @@ public class VideoRepository implements IVideoRepository {
         return videoAPI.setActive(preferencesRepository.getToken(), fileName);
     }
 
-    public static String getFilePathFromUri(Context context, Uri uri) {
+    @SuppressWarnings("CatchMayIgnoreException")
+    static String getFilePathFromUri(Context context, Uri uri) {
         if (uri == null) return null;
         ContentResolver resolver = context.getContentResolver();
         FileInputStream input = null;
@@ -156,17 +138,19 @@ public class VideoRepository implements IVideoRepository {
             if (pfd == null) {
                 return null;
             }
-            String extension = "";
+            String extension;
             if (resolver.getType(uri) == null){
                 extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(resolver.getType(uri));
             }
             else {
                 extension = resolver.getType(uri);
-                extension = "."+extension.substring(extension.lastIndexOf("/")+1);
+                if (extension != null) {
+                    extension = "."+extension.substring(extension.lastIndexOf("/")+1);
+                }
             }
             FileDescriptor fd = pfd.getFileDescriptor();
             input = new FileInputStream(fd);
-            if (extension == null || extension == ""){
+            if (extension == null || extension.equals("")){
                 extension = URLConnection.guessContentTypeFromStream(input);
             }
             if (extension.equals(".quicktime")) extension = ".mov";

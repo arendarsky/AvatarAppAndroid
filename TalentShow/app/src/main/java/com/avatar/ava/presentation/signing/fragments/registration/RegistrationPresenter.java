@@ -16,7 +16,7 @@ public class RegistrationPresenter extends MvpPresenter<RegistrationView> {
     private Interactor interactor;
 
     @Inject
-    public RegistrationPresenter(Interactor interactor) {
+    RegistrationPresenter(Interactor interactor) {
         this.interactor = interactor;
     }
 

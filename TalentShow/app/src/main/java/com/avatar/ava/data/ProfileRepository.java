@@ -17,9 +17,6 @@ import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -45,14 +42,6 @@ public class ProfileRepository implements IProfileRepository {
 
     @Override
     public Single<ProfileDTO> getProfile() {
-        Disposable disposable = profileAPI.getProfile(preferencesRepository.getToken())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(person -> {},
-                        error -> {});
-
-
-
         return profileAPI.getProfile(preferencesRepository.getToken());
     }
 

@@ -1,18 +1,14 @@
 package com.avatar.ava.presentation.main.fragments.profile.profileSettings;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -20,8 +16,6 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
 import com.avatar.ava.presentation.main.MainScreenActivity;
-import com.avatar.ava.presentation.main.fragments.profile.ProfilePresenter;
-import com.avatar.ava.presentation.main.fragments.profile.ProfileView;
 
 import javax.inject.Inject;
 
@@ -31,6 +25,7 @@ import butterknife.OnClick;
 import toothpick.Toothpick;
 
 
+@SuppressWarnings("FieldCanBeLocal")
 public class ProfileSettingsFragment extends MvpAppCompatFragment implements ProfileSettingsView {
 
     private final int PROFILE_CHANGE_PASSWORD = 7;

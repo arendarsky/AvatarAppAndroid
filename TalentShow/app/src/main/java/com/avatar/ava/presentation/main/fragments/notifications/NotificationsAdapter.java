@@ -3,7 +3,6 @@ package com.avatar.ava.presentation.main.fragments.notifications;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +19,7 @@ import java.util.List;
 
 import static com.avatar.ava.DataModule.SERVER_NAME;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdapter.ViewHolder> {
 
     private List<NotificationsDTO> data = new ArrayList<>();
@@ -38,7 +38,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         return viewHolder;
     }
 
-    public NotificationsAdapter(RecyclerClickListener clickListener) {
+    NotificationsAdapter(RecyclerClickListener clickListener) {
         super();
         this.clickListener = clickListener;
     }
@@ -59,7 +59,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
                     .into(holder.avatar);
         }
 
-        holder.text.setText(notification.getName() + this.likeText);
+        holder.text.setText(String.format("%s%s", notification.getName(), this.likeText));
     }
 
     @Override
@@ -67,7 +67,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         return data.size();
     }
 
-    public void addItems(List<NotificationsDTO> newData){
+    void addItems(List<NotificationsDTO> newData){
         this.data.addAll(newData);
         notifyDataSetChanged();
     }
@@ -88,6 +88,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         }
     }
 
+    @SuppressWarnings("unused")
     public void addItem(NotificationsDTO notificationsDTO) {
         data.add(notificationsDTO);
         notifyDataSetChanged();

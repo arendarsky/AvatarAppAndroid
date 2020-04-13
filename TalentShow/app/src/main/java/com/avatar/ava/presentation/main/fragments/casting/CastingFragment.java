@@ -1,10 +1,5 @@
 package com.avatar.ava.presentation.main.fragments.casting;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
@@ -15,11 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -32,9 +30,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.analytics.AnalyticsListener;
-import com.google.android.exoplayer2.analytics.PlaybackStatsListener;
 import com.google.android.exoplayer2.source.ClippingMediaSource;
-import com.google.android.exoplayer2.source.LoopingMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.ui.PlayerView;
@@ -44,7 +40,6 @@ import com.google.android.exoplayer2.util.Util;
 import com.google.android.exoplayer2.video.VideoListener;
 
 import javax.inject.Inject;
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -109,17 +104,6 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     @BindView(R.id.casting_fragment_restart_btn)
     ImageButton restartBtn;
 
-    VideoView video_fullscreen;
-
-    ImageButton btn_fullscreen;
-
-    MediaController mc, mc1;
-    private boolean mShouldStop = false;
-
-    private int startVideo = 0;
-
-    private boolean fullscreen = false;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,9 +116,8 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         return inflater.inflate(R.layout.fragment_casting, container, false);
     }
 
-    MediaSource videoSource;
-    DataSource.Factory dataSourceFactory;
-    SimpleExoPlayer player;
+    private DataSource.Factory dataSourceFactory;
+    private SimpleExoPlayer player;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -144,11 +127,11 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         video.start();*/
         CASTING_ID = this.getId();
 
-        player = new SimpleExoPlayer.Builder(getContext()).build();
+        player = new SimpleExoPlayer.Builder(appContext).build();
         video.setPlayer(player);
         // Produces DataSource instances through which media data is loaded.
-        dataSourceFactory = new DefaultDataSourceFactory(getContext(),
-                Util.getUserAgent(getContext(), getResources().getString(R.string.app_name)));
+        dataSourceFactory = new DefaultDataSourceFactory(appContext,
+                Util.getUserAgent(appContext, getResources().getString(R.string.app_name)));
 
         castingCard.setVisibility(View.INVISIBLE);
         noMoreVideos.setVisibility(View.INVISIBLE);
@@ -224,7 +207,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         //video.setVideoURI(Uri.parse(videoLink));
         player.stop();
         //player.release();
-        videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
+        MediaSource videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
                 .createMediaSource(Uri.parse(videoLink));
         ClippingMediaSource clippingMediaSource =  new ClippingMediaSource(videoSource, start, end);
         //LoopingMediaSource loopingMediaSource = new LoopingMediaSource(clippingMediaSource, 3);
@@ -235,7 +218,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     }
 
     @OnClick(R.id.casting_fragment_restart_btn)
-    public void restartVideo(){
+    void restartVideo(){
         player.seekTo(0);
         player.setPlayWhenReady(true);
     }
@@ -243,20 +226,21 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     public void stopVideo(){
         if(player != null)
             player.stop();
-        player.release();
+        if (player != null) {
+            player.release();
+        }
     }
 
     @Override
     public void setAvatar(String avatarLink) {
-        Log.d("CastingLog", "linkAVa " + avatarLink);
         if(avatarLink.equals("null")){
-            Glide.with(getView())
+            Glide.with(this)
                     .load(R.drawable.empty_profile_icon)
                     .circleCrop()
                     .into(avatar);
         }
         else{
-            Glide.with(getView())
+            Glide.with(this)
                     .load(avatarLink)
                     .circleCrop()
                     .into(avatar);

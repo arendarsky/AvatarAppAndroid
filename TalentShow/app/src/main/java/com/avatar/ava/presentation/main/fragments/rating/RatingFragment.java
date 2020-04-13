@@ -3,7 +3,6 @@ package com.avatar.ava.presentation.main.fragments.rating;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
-import com.avatar.ava.domain.entities.PersonDTO;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
 import com.avatar.ava.presentation.main.MainScreenPostman;
 
@@ -48,18 +46,9 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
     RecyclerView recycler;
 
 
-    private ArrayList<PersonRatingDTO> data = new ArrayList<PersonRatingDTO>();
-
     private RatingAdapter adapter;
 
     private Activity activity;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    public static RatingFragment newInstance(){ return new RatingFragment();}
 
     @Nullable
     @Override
@@ -89,41 +78,12 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
         });
         recycler.setAdapter(adapter);
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        PersonDTO person = new PersonDTO("Ivan", "Ivanov",
-                "https://i.pinimg.com/originals/c6/e4/ff/c6e4ff2696c7e51ae4e2ffddceb80fef.jpg");
-//        adapter.addItem(person);
-//        adapter.addItem(person);
-//        presenter.getRating();
-        makeResponse();
-        if(data != null)
-        for(PersonRatingDTO el : data){
-            Log.d("RatingFragmentLog", el.getName() + "");
-        }
+        presenter.getRating();
+
     }
 
     public void setData(ArrayList<PersonRatingDTO> data){
-        this.data = data;
-        Log.d("RatingFragmentLog", this.data.size() + "  " + data.size());
-        Log.d("RatingFragmentLog", data.get(0).getName() + " ");
-        for(int i = 0; i < this.data.size(); i++){
-            Log.d("RatingFragmentLog", this.data.get(i).getVideo().equals(null) + " ");
-            if(this.data.get(i).getVideo() == null){
-                this.data.remove(i);
-                Log.d("RatingFragmentLog", "remove " + i + " element");
-            }
-        }
-        adapter.setItems(this.data);
+        adapter.setItems(data);
     }
-
-    public void makeResponse(){
-        presenter.getRating();
-        //Log.d("RatingFragmentLog", data.size() + " fragment");
-    }
-
-
-    public RatingAdapter getAdapter() {
-        return adapter;
-    }
-
 
 }

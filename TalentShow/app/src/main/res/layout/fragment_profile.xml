@@ -10,6 +10,16 @@
     android:id="@+id/fragment_profile"
     tools:ignore="LabelFor" >
 
+    <ProgressBar
+        android:id="@+id/profile_progress_bar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:visibility="invisible"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <TextView
         android:id="@+id/fragment_profile_btn_edit"
         android:layout_width="wrap_content"
@@ -54,7 +64,6 @@
         />
 
     <EditText
-        android:text="@string/name_surname"
         android:background="#00000000"
         android:enabled="false"
         android:id="@+id/fragment_profile_name"
@@ -62,6 +71,8 @@
         android:layout_height="wrap_content"
         android:textSize="22sp"
         android:textStyle="bold"
+        android:padding="10dp"
+        android:maxLength="40"
         android:textColor="@color/whiteText"
         android:layout_marginTop="17dp"
         android:layout_marginStart="20dp"
@@ -71,7 +82,7 @@
         app:layout_constraintBottom_toTopOf="@id/fragment_profile_likes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/fragment_profile_image"
-        android:inputType="text"
+        android:inputType="textMultiLine"
         android:importantForAutofill="no" />
 
     <TextView
@@ -126,7 +137,6 @@
         android:layout_marginTop="13dp"
         android:layout_marginEnd="16dp"
         android:gravity="top"
-        android:text="@string/description"
         android:textColor="@color/whiteText"
         android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/fragment_profile_guideline"
@@ -220,6 +230,7 @@
         android:layout_marginEnd="26dp"
         android:layout_marginTop="20dp"
         android:layout_marginStart="40dp"
+        android:visibility="invisible"
         android:id="@+id/fragment_profile_container2"
         app:layout_constraintTop_toBottomOf="@id/fragment_profile_video_tv"
         app:layout_constraintEnd_toEndOf="parent"
@@ -283,6 +294,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
+        android:visibility="invisible"
         android:id="@+id/fragment_profile_container3"
         app:layout_constraintTop_toBottomOf="@id/fragment_profile_container1"
         app:layout_constraintStart_toStartOf="parent"
@@ -346,6 +358,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="40dp"
         android:layout_marginBottom="20dp"
+        android:visibility="invisible"
         android:id="@+id/fragment_profile_container4"
         app:layout_constraintTop_toBottomOf="@id/fragment_profile_container2"
         app:layout_constraintEnd_toEndOf="parent"

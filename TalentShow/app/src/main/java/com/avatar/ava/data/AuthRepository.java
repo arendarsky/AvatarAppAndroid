@@ -28,12 +28,6 @@ public class AuthRepository implements IAuthRepository {
     }
 
     @Override
-    public Completable confirmMail(String mail, String code) {
-        return authAPI.confirmEmail(mail, code).doAfterSuccess(confirmationDTO ->
-                preferencesRepository.saveToken(confirmationDTO.getKey())).ignoreElement();
-    }
-
-    @Override
     public Single<Object> auth(String mail, String password) {
         return authAPI.authUser(mail, password)
                 .flatMap(s -> {

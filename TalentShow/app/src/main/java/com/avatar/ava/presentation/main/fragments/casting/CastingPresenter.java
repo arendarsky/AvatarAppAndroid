@@ -17,6 +17,7 @@ import io.reactivex.schedulers.Schedulers;
 
 import static com.avatar.ava.DataModule.SERVER_NAME;
 
+@SuppressWarnings({"ResultOfMethodCallIgnored", "unused"})
 @InjectViewState
 public class CastingPresenter extends MvpPresenter<CastingView> {
 
@@ -62,7 +63,7 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
                                             if (Objects.equals(error.getMessage(), "Empty list")){
                                                 getViewState().showNoMoreVideos();
                                             }
-                                            Log.d("Casting presenter", error.getMessage());
+                                            Log.d("Casting presenter", Objects.requireNonNull(error.getMessage()));
                                         }),
                         error -> getViewState().showError("Не удалось оценить видео, попробуйте позже"));
 

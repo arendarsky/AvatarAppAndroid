@@ -3,7 +3,6 @@ package com.avatar.ava.presentation.main;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -31,11 +30,9 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
-
-import com.avatar.ava.presentation.SplashActivity;
+import com.avatar.ava.presentation.main.BottomSheetFragments.ProfileBottomSheet;
 import com.avatar.ava.presentation.main.BottomSheetFragments.ProfileVideoBottomSheet;
 import com.avatar.ava.presentation.main.fragments.FragmentChooseBestMain;
-import com.avatar.ava.presentation.main.BottomSheetFragments.ProfileBottomSheet;
 import com.avatar.ava.presentation.main.fragments.FragmentFileLoadMain;
 import com.avatar.ava.presentation.main.fragments.casting.CastingFragment;
 import com.avatar.ava.presentation.main.fragments.profile.ProfileFragment;
@@ -56,6 +53,8 @@ import ru.terrakok.cicerone.NavigatorHolder;
 import ru.terrakok.cicerone.android.support.SupportAppNavigator;
 import toothpick.Toothpick;
 
+
+@SuppressWarnings("FieldCanBeLocal")
 public class MainScreenActivity extends MvpAppCompatActivity implements MainScreenView,
         MainScreenPostman, ProfileBottomSheet.ItemClickListener, ProfileVideoBottomSheet.ItemClickListener {
 
@@ -161,11 +160,6 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     }
 
     @Override
-    public void openChangePassword() {
-        presenter.openChangePassword();
-    }
-
-    @Override
     public void changeTitle(String title) {
         fragmentHeader.setText(title);
     }
@@ -239,7 +233,9 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     public void saveProfileClick(){
         FragmentManager fragmentManager = getSupportFragmentManager();
         ProfileFragment profileFragment = (ProfileFragment) fragmentManager.findFragmentById(ProfileFragment.ProfileID);
-        profileFragment.editProfile();
+        if (profileFragment != null) {
+            profileFragment.editProfile();
+        }
         clearTopView();
         changeTitle("Профиль");
         showMenuPoints();
@@ -250,7 +246,9 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         //changePass
         FragmentManager fragmentManager = getSupportFragmentManager();
         ChangePasswordFragment changePasswordFragment = (ChangePasswordFragment) fragmentManager.findFragmentById(ChangePasswordFragment.ChangePasswordID);
-        changePasswordFragment.changePassword();
+        if (changePasswordFragment != null) {
+            changePasswordFragment.changePassword();
+        }
     }
 
     @Override
@@ -336,13 +334,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
             presenter.uploadAndSetInterval(tmp.get(0), tmp.get(1));
         }
 
-        if (currentFragment instanceof ProfileSettingsFragment){
-            presenter.backButtonPressed(false);
-        }
-
-        if (currentFragment instanceof ChangePasswordFragment){
-
-        }
+        if (currentFragment instanceof ProfileSettingsFragment) presenter.backButtonPressed(false);
     }
 
     private boolean permissionAlreadyGranted() {
@@ -350,25 +342,16 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         int result = ContextCompat.checkSelfPermission(appContext, Manifest.permission.CAMERA);
         int result2 = ContextCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int result3 = ContextCompat.checkSelfPermission(appContext, Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (result == PackageManager.PERMISSION_GRANTED
+        return result == PackageManager.PERMISSION_GRANTED
                 && result2 == PackageManager.PERMISSION_GRANTED
-                && result3 == PackageManager.PERMISSION_GRANTED)
-            return true;
-
-        return false;
+                && result3 == PackageManager.PERMISSION_GRANTED;
     }
 
     private void requestPermission() {
 
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
-
-        }
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-
-        }
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-
-        }
+        ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA);
+        ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         ActivityCompat.requestPermissions(this, new String[]{
                 Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE}, CAMERA_CODE);
@@ -398,15 +381,12 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         AlertDialog.Builder builder = new AlertDialog.Builder(appContext);
         builder.setTitle("Required Permissions");
         builder.setMessage("This app require permission to use awesome feature. Grant them in app settings.");
-        builder.setPositiveButton("Take Me To SETTINGS", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                Uri uri = Uri.fromParts("package", getPackageName(), null);
-                intent.setData(uri);
-                startActivityForResult(intent, 101);
-            }
+        builder.setPositiveButton("Take Me To SETTINGS", (dialog, which) -> {
+            dialog.cancel();
+            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri = Uri.fromParts("package", getPackageName(), null);
+            intent.setData(uri);
+            startActivityForResult(intent, 101);
         });
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
         builder.show();
@@ -432,7 +412,9 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
             case ProfileBottomSheet.EDIT:
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 ProfileFragment profileFragment = (ProfileFragment) fragmentManager.findFragmentById(ProfileFragment.ProfileID);
-                profileFragment.editProfile();
+                if (profileFragment != null) {
+                    profileFragment.editProfile();
+                }
                 clearTopView();
                 changeTitle("Ред. профиля");
                 showProfileBack();
@@ -454,10 +436,14 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         ProfileFragment profileFragment = (ProfileFragment) fragmentManager.findFragmentById(ProfileFragment.ProfileID);
         switch (item){
             case ProfileVideoBottomSheet.DELETE:
-                profileFragment.deleteVideo();
+                if (profileFragment != null) {
+                    profileFragment.deleteVideo();
+                }
                 break;
             case ProfileVideoBottomSheet.CASTING:
-                profileFragment.setCastingVideo();
+                if (profileFragment != null) {
+                    profileFragment.setCastingVideo();
+                }
                 break;
         }
     }

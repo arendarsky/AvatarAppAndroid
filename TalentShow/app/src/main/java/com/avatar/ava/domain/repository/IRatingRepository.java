@@ -1,13 +1,9 @@
 package com.avatar.ava.domain.repository;
 
-import com.avatar.ava.domain.entities.NotificationsDTO;
-import com.avatar.ava.domain.entities.PersonDTO;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
 
 public interface IRatingRepository {
