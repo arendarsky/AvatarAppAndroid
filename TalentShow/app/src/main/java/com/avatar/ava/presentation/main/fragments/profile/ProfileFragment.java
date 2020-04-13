@@ -188,16 +188,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         name.setEnabled(false);
         presenter.getProfile();
         activity = (MainScreenActivity) getActivity();
-        /*if(currCountVideos == 0){
-            container2.setVisibility(View.INVISIBLE);
-            container3.setVisibility(View.INVISIBLE);
-            container4.setVisibility(View.INVISIBLE);
-        }else if(currCountVideos == 1){
-            container3.setVisibility(View.INVISIBLE);
-            container4.setVisibility(View.INVISIBLE);
-        }else if(currCountVideos == 2){
-            container4.setVisibility(View.INVISIBLE);
-        }*/
+        if (activity != null) activity.showExit();
     }
 
     @Override
@@ -227,7 +218,6 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         }else{
             Toast.makeText(getContext(), "Видео ещё не прошло модерацию", Toast.LENGTH_LONG).show();
         }
-
     }
 
     private void showContainers(){
@@ -242,7 +232,6 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
             container4.setVisibility(View.INVISIBLE);
         }
     }
-
 
     @Override
     public void setDataProfile(ProfileDTO person) {
@@ -265,11 +254,8 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         videos = person.getVideos();
         currCountVideos = videos.size();
         showContainers();
-        //Log.d("ProfileLog", "videos " + currCountVideos + " size " + videos.size() + " aprov " + videos.get(0).isApproved());
-
         showHints();
         showVideos();
-        //showBottomSheet();
     }
     String moderation = "На модерации";
     String casting = "В кастинге";
@@ -310,7 +296,6 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
                             videoHint4.setText(casting);
                             videoHint4.setVisibility(View.VISIBLE);
                         }
-
                     }
                 }
             }
@@ -323,7 +308,6 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         profileVideoBottomSheet.show(getParentFragmentManager(),
                 ProfileVideoBottomSheet.TAG);
     }
-
 
     SimpleExoPlayer player1, player2, player3, player4;
     private void setupVideo(int num, Uri uri){
@@ -368,43 +352,6 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
                 break;
         }
     }
-    /*private void setupVideo(int num, Uri uri){
-        PlayerView playerView;
-        SimpleExoPlayer player;
-        switch (num){
-            case 1:
-                playerView = video1;
-                player = player1;
-                break;
-            case 2:
-                playerView = video2;
-                player = player2;
-                break;
-            case 3:
-                playerView = video3;
-                player = player3;
-                break;
-            case 4:
-                playerView = video4;
-                player = player4;
-                break;
-            default:
-                playerView = null;
-        }
-        player = new SimpleExoPlayer.Builder(appContext).build();
-        playerView.setPlayer(player);
-        // Produces DataSource instances through which media data is loaded.
-        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(appContext,
-                Util.getUserAgent(appContext, "Talent Show"));
-        // This is the MediaSource representing the media to be played.
-        MediaSource videoSource =
-                new ProgressiveMediaSource.Factory(dataSourceFactory)
-                        .createMediaSource(uri);
-        // Prepare the player with the source.
-        player.prepare(videoSource);
-        //player.setPlayWhenReady(true);
-    }*/
-
 
     private void showVideos(){
         if(currCountVideos >= 1){
@@ -432,10 +379,6 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
             }
         }
     }
-
-
-
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -603,6 +546,4 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
 
         showBottomSheet();
     }
-
-
 }

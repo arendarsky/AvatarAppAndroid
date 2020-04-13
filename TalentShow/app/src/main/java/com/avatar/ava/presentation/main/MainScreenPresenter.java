@@ -55,6 +55,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
     private final boolean SHOW_BACK = true;
     private final boolean HIDE_BACK = false;
 
+
     private List<PrevState> previousStates = new ArrayList<>();
     private Uri selectedFileUri;
 
@@ -84,7 +85,6 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
             case R.id.nav_profile:
                 getViewState().changeTitle(profile);
                 getViewState().showMenuPoints();
-                getViewState().showExit();
                 router.newRootScreen(new Screens.ProfileScreen());
                 return true;
         }
@@ -118,7 +118,8 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
             case PROFILE_CHANGE_PASSWORD:
                 getViewState().changeTitle(change_password);
                 getViewState().showSavePassword();
-                previousStates.add(new PrevState(HIDE_BACK, settings, SAVE_BUTTON));
+                getViewState().showBackButton();
+                previousStates.add(new PrevState(SHOW_BACK, settings, SAVE_BUTTON));
                 router.navigateTo(new Screens.ChangePasswordScreen());
                 break;
             case BACK:
