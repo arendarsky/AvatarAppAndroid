@@ -35,7 +35,7 @@ public interface ProfileAPI {
                         @Query("name") String name);
 
     @POST("/api/profile/set_password")
-    Completable setPassword(@Header("Authorization") String token,
+    Single<Boolean> setPassword(@Header("Authorization") String token,
                             @Query("oldPassword") String oldPassword,
                             @Query("newPassword") String newPassword);
 

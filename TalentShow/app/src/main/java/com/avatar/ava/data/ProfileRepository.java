@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.avatar.ava.data.api.ProfileAPI;
 import com.avatar.ava.domain.entities.NotificationsDTO;
-import com.avatar.ava.domain.entities.PersonRatingDTO;
 import com.avatar.ava.domain.entities.ProfileDTO;
 import com.avatar.ava.domain.entities.PublicProfileDTO;
 import com.avatar.ava.domain.repository.IProfileRepository;
@@ -68,32 +67,26 @@ public class ProfileRepository implements IProfileRepository {
     }
 
     @Override
-    public Completable setPassword(String oldPassword, String newPassword) {
+    public Single<Boolean> setPassword(String oldPassword, String newPassword) {
         return profileAPI.setPassword(preferencesRepository.getToken(), oldPassword, newPassword);
     }
 
     @Override
     public Completable uploadPhoto(Uri photoUri) {
+
         File file = new File(getFilePathFromUri(appContext, photoUri));
-
-        String extension = appContext.getContentResolver().getType(photoUri);
-        Log.d("Extension", file.getPath() + " | " + photoUri.toString() + " | " + photoUri.getPath());
-
-        //RequestBody mFile = RequestBody.create(MediaType.parse("image/*"), file);
-        //MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), mFile);
-
 
         RequestBody requestFile =
                 RequestBody.create(file, MediaType.parse("multipart/form-data"));
-        Log.d("Extension", file.getName() + "  " + requestFile.toString());
         MultipartBody.Part body =
                 MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-        Log.d("Extension", file.getName() + "  " + body.toString());
+
         return profileAPI.uploadPhoto(preferencesRepository.getToken(), body)
-                .doOnSuccess(name -> {
-                    this.img = name;
-                    Log.d("Extension", img);
-                    })
+                .doOnSuccess(
+                        name -> {
+                            this.img = name;
+                            Log.d("Extension", img);
+                        })
                 .ignoreElement();
 
     }

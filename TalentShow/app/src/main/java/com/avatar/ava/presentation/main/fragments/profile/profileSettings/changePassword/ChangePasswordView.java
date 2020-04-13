@@ -3,5 +3,6 @@ package com.avatar.ava.presentation.main.fragments.profile.profileSettings.chang
 import com.arellomobile.mvp.MvpView;
 
 public interface ChangePasswordView extends MvpView {
-    public void changePass();
+    void changePass();
+    void showMessage(String message);
 }

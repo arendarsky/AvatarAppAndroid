@@ -51,7 +51,7 @@ public class Interactor {
         return this.profileRepository.uploadPhoto(photoUri);
     }
 
-    public Completable setPassword(String oldPassword, String newPassword){
+    public Single<Boolean> setPassword(String oldPassword, String newPassword){
         return this.profileRepository.setPassword(oldPassword, newPassword);
     }
 

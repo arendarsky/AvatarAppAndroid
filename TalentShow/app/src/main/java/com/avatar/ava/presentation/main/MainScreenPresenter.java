@@ -36,6 +36,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
     private final int CHOOSE_SECONDS_SCREEN = 6;
     private final int PROFILE_SETTINGS = 6;
     private final int PROFILE_CHANGE_PASSWORD = 7;
+    private final int BACK = 9;
 
     private final String new_video = "Новое видео";
     private final String casting = "Кастинг";
@@ -119,6 +120,9 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                 getViewState().showSavePassword();
                 previousStates.add(new PrevState(HIDE_BACK, settings, SAVE_BUTTON));
                 router.navigateTo(new Screens.ChangePasswordScreen());
+                break;
+            case BACK:
+                this.backButtonPressed(false);
                 break;
         }
     }
@@ -216,7 +220,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                                    @Override
                                    public void onError(Throwable e) {
                                        getViewState().hideProgressBar();
-                                       getViewState().showMessage("Ошибка при загрузке видео");
+                                       getViewState().showMessage("Ошибка при загрузке видео. Попробуйте позже");
                                    }
                                }
                     );
