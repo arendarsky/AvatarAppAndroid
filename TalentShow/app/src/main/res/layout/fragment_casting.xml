@@ -43,7 +43,6 @@
                 android:id="@+id/casting_fragment_progress_bar"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:visibility="invisible"
                 android:elevation="20dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"

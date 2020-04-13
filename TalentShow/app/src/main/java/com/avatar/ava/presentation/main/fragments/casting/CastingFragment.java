@@ -150,9 +150,13 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         player.addAnalyticsListener(new AnalyticsListener() {
             @Override
             public void onPlayerStateChanged(EventTime eventTime, boolean playWhenReady, int playbackState) {
-                if(playbackState == Player.STATE_ENDED){
+                if(playWhenReady && playbackState == Player.STATE_ENDED){
                     restartBtn.setVisibility(View.VISIBLE);
                 }
+                else if (playWhenReady && playbackState == Player.STATE_READY){
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+                else progressBar.setVisibility(View.VISIBLE);
             }
         });
 
@@ -204,13 +208,10 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         int start = (int)personDTO.getVideo().getStartTime() * 1000;
         int end = (int)personDTO.getVideo().getEndTime() * 1000;
         Log.d("Casting link", videoLink);
-        //video.setVideoURI(Uri.parse(videoLink));
         player.stop();
-        //player.release();
         MediaSource videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
                 .createMediaSource(Uri.parse(videoLink));
         ClippingMediaSource clippingMediaSource =  new ClippingMediaSource(videoSource, start, end);
-        //LoopingMediaSource loopingMediaSource = new LoopingMediaSource(clippingMediaSource, 3);
         player.prepare(clippingMediaSource);
 
         player.setPlayWhenReady(true);
@@ -219,6 +220,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
     @OnClick(R.id.casting_fragment_restart_btn)
     void restartVideo(){
+        restartBtn.setVisibility(View.INVISIBLE);
         player.seekTo(0);
         player.setPlayWhenReady(true);
     }

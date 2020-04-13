@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,9 @@ public class FragmentNotifications extends MvpAppCompatFragment implements Notif
 
     @BindView(R.id.notification_no_notification_text)
     TextView noNotificationsText;
+
+    @BindView(R.id.fragment_notifications_progressbar)
+    ProgressBar progressBar;
 
     @Inject
     Context appContext;
@@ -105,6 +109,11 @@ public class FragmentNotifications extends MvpAppCompatFragment implements Notif
     public void showNoNotifText() {
         recyclerView.setVisibility(View.INVISIBLE);
         noNotificationsText.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
 

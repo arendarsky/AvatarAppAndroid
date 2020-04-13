@@ -26,9 +26,13 @@ public class NotificationsPresenter extends MvpPresenter<NotificationsView> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         list -> {
+                            getViewState().hideProgressBar();
                             if (list.isEmpty()) getViewState().showNoNotifText();
                             else getViewState().addLike(list);
                         },
-                        error -> getViewState().showError("Сервер не отвечает. Попробуйте позже"));
+                        error -> {
+                            getViewState().hideProgressBar();
+                            getViewState().showError("Сервер не отвечает. Попробуйте позже");
+                        });
     }
 }

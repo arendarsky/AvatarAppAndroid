@@ -28,8 +28,14 @@ public class RatingPresenter extends MvpPresenter<RatingView> {
         Disposable disposable = interactor.getRating(20)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(arrayList -> getViewState().setData(arrayList),
-                        error -> Log.d("RatingFragmentLog", "error"));
+                .subscribe(arrayList -> {
+                            getViewState().hideProgressBar();
+                            getViewState().setData(arrayList);
+                        },
+                        error -> {
+                            getViewState().hideProgressBar();
+                            getViewState().showMessage("Не удалось загрузить рейтинг. Попробуйте позже");
+                        });
 
 
     }

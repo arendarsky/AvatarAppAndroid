@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,6 +47,8 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
     @BindView(R.id.rating_recycler)
     RecyclerView recycler;
 
+    @BindView(R.id.fragment_rating_progressbar)
+    ProgressBar progressBar;
 
     private RatingAdapter adapter;
 
@@ -84,6 +88,16 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
 
     public void setData(ArrayList<PersonRatingDTO> data){
         adapter.setItems(data);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(appContext, message, Toast.LENGTH_SHORT).show();
     }
 
 }

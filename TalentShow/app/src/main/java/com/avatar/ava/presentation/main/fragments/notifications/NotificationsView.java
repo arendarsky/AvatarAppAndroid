@@ -10,4 +10,5 @@ public interface NotificationsView extends MvpView {
     void addLike(List<NotificationsDTO> notificationsDTO);
     void showError(String error);
     void showNoNotifText();
+    void hideProgressBar();
 }

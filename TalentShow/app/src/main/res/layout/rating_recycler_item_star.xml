@@ -23,27 +23,45 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp">
+
             <com.google.android.exoplayer2.ui.PlayerView
                 android:id="@+id/rating_item_video"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_gravity="center_horizontal"
-                app:resize_mode="zoom"
-                />
+                android:layout_height="match_parent"
+                app:resize_mode="zoom"/>
 
+            <View
+                android:id="@+id/rating_item_restart"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:visibility="invisible"
+                android:background="@drawable/casting_fragment_restart"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
+            <ProgressBar
+                android:id="@+id/rating_item_progressbar"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <ImageView
             android:id="@+id/rating_item_ava"
             android:layout_width="28dp"
             android:layout_height="28dp"
-
-
             android:layout_marginStart="16dp"
-            android:layout_marginTop="310dp"
-             />
+            android:layout_marginTop="310dp"/>
 
         <TextView
             android:id="@+id/rating_item_pos"
@@ -52,11 +70,9 @@
             android:background="@drawable/rating_item_pos_bg"
             android:gravity="center"
             android:lineSpacingExtra="1sp"
-            android:text="1 место"
             android:textColor="@color/whiteText"
             android:layout_marginTop="265dp"
-            android:layout_marginStart="16dp"
-             />
+            android:layout_marginStart="16dp"/>
 
 
         <TextView
@@ -65,19 +81,18 @@
             android:layout_height="20dp"
             android:layout_marginTop="265dp"
             android:layout_marginStart="110dp"
-
             android:background="@drawable/rating_item_likes_bg"
             android:gravity="center"
             android:lineSpacingExtra="1sp"
-            android:text="1"
-            android:textColor="@color/whiteText" />
+            android:textColor="@color/whiteText"/>
 
         <ImageView
             android:layout_width="12dp"
             android:layout_height="12dp"
             android:src="@drawable/rating_item_like"
             android:layout_marginTop="270dp"
-            android:layout_marginStart="125dp"/>
+            android:layout_marginStart="125dp"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/rating_item_name"
@@ -94,15 +109,13 @@
             android:id="@+id/rating_item_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_marginTop="350dp"
             android:layout_marginStart="16dp"
-
             android:gravity="top"
             android:lineSpacingExtra="2sp"
             android:text="Это описание к видео, которое написал автор, чтобы было понятно, что он хочет сказать своим творчеством. Наверное, тут очень ограничен обхем текста."
             android:textColor="@color/whiteText"
-            android:translationY="-1.05sp" />
+            android:translationY="-1.05sp"/>
 
     </androidx.cardview.widget.CardView>
 

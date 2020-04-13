@@ -104,5 +104,13 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
     int getPersonId(){
         return currentPerson.getId();
     }
+
+    long getVideoBeginTime(){
+        return (long) currentPerson.getVideo().getStartTime();
+    }
+
+    long getVideoEndTime(){
+        return (long) currentPerson.getVideo().getEndTime();
+    }
 }
 
