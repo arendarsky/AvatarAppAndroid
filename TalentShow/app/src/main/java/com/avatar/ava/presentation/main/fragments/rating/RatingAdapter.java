@@ -78,6 +78,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         }
 
         holder.restartButton.setOnClickListener(v -> {
+            holder.restartButton.setVisibility(View.INVISIBLE);
             holder.player.seekTo((long) personRatingDTO.getVideo().getStartTime());
             holder.player.setPlayWhenReady(true);
         });
