@@ -15,6 +15,7 @@ import io.reactivex.schedulers.Schedulers;
 import ru.terrakok.cicerone.Router;
 
 
+@SuppressWarnings("FieldCanBeLocal")
 @InjectViewState
 public class EnterPresenter extends MvpPresenter<EnterView> {
 
@@ -23,15 +24,11 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
 
     private final int START_REG = 0;
     private final int START_AUTH = 1;
-    private final int SKIP_AUTH = 2;
     private final int CHOOSE_VIDEO = 3;
     private final int AUTH_FINISHED = 4;
-    private final int LOAD_AVATAR = 5;
     private final int VIDEO_SCREEN = 6;
     private final int BACK = 7;
-    private final int CHOOSE_SECONDS = 8;
     private final int VIDEO_SCREEN_JUST = 9;
-    private final int UPLOAD_VIDEO = 10;
     private final int CONFIRM_MAIL = 11;
 
     private boolean registration = false;
@@ -39,7 +36,7 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
     private Uri selectedFileUri;
 
     @Inject
-    public EnterPresenter(Interactor interactor, Router router) {
+    EnterPresenter(Interactor interactor, Router router) {
         this.interactor = interactor;
         this.router = router;
     }
@@ -58,7 +55,6 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
         switch (code){
             case START_AUTH:
                 router.navigateTo(new Screens.AuthorisationScreen());
-//                router.navigateTo(new Screens.FileLoadScreen());
                 break;
             case START_REG:
                 router.navigateTo(new Screens.RegistrationScreen());
@@ -67,9 +63,6 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
                 if (registration) router.newRootScreen(new Screens.FileLoadJustScreen());
                 else getViewState().startMain();
                 break;
-//            case LOAD_AVATAR:
-//                getViewState().loadPhotoForAvatar();
-//                break;
             case CHOOSE_VIDEO:
                 getViewState().pickVideo();
                 break;
@@ -79,9 +72,6 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
             case BACK:
                 router.exit();
                 break;
-//            case CHOOSE_SECONDS:
-//                router.navigateTo(new Screens.ChooseBestScreen(uri));
-//                break;
             case VIDEO_SCREEN_JUST:
                 router.newRootScreen(new Screens.FileLoadJustScreen());
                 break;
@@ -92,7 +82,6 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
     }
 
     void uploadVideoToServer(Float startTime, Float endTime){
-//        openSecondsScreen(videoUri);
         if (endTime - startTime < 30) {
             interactor.uploadAndSetInterval(selectedFileUri, startTime, endTime)
                     .subscribeOn(Schedulers.io())
@@ -108,9 +97,7 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
                                        getViewState().showingError("");
                                    }
                                }
-//                        () -> getViewState().startMain(),
-//                        e -> getViewState().showingError("")
-                    );
+               );
         }
         else getViewState().showingError("Выбранный фрагмент больше 30 секунд");
     }
@@ -118,9 +105,5 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
     void openSecondsScreen(Uri fileUri){
         selectedFileUri = fileUri;
         router.navigateTo(new Screens.ChooseBestScreen(fileUri));
-    }
-
-    void backPressed(){
-//        router.backTo();
     }
 }

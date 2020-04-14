@@ -28,7 +28,7 @@ import toothpick.config.Module;
 public class DataModule extends Module{
 
     public final static String SERVER_NAME = "https://xce-factor.ru";
-    //public final static String SERVER_NAME = "https://avatarapp.yambr.ru";
+
     DataModule(){
 
         final String CONNECT_TIMEOUT = "CONNECT_TIMEOUT";

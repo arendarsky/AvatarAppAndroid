@@ -17,12 +17,12 @@ import com.avatar.ava.presentation.signing.RegAuthPostman;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class ConfirmMailFragment extends Fragment {
 
     private Activity activity;
 
     private final int START_AUTH = 1;
-    private final int BACK = 7;
 
     @Nullable
     @Override
@@ -44,7 +44,7 @@ public class ConfirmMailFragment extends Fragment {
 
 
     @OnClick(R.id.fragment_mail_confirm_continue)
-    void continueCliked(){
+    void continueClicked(){
         try {
             ((RegAuthPostman) activity).fragmentMessage(START_AUTH);
         } catch (Exception e) {

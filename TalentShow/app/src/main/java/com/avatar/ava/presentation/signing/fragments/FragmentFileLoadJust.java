@@ -17,13 +17,13 @@ import com.avatar.ava.presentation.signing.RegAuthPostman;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class FragmentFileLoadJust extends Fragment {
 
     private Activity activity;
 
     private final int SKIP_AUTH = 2;
     private final int VIDEO_SCREEN = 6;
-    private final int BACK = 7;
 
     @Nullable
     @Override

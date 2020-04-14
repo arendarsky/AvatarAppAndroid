@@ -20,6 +20,7 @@ public class RegistrationPresenter extends MvpPresenter<RegistrationView> {
         this.interactor = interactor;
     }
 
+    @SuppressWarnings("unused")
     void registerUser(String name, String mail, String password){
         Disposable disposable = interactor.registerUser(name, mail, password)
                 .subscribeOn(Schedulers.io())

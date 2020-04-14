@@ -11,41 +11,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.avatar.ava.App;
-import com.avatar.ava.presentation.signing.RegAuthPostman;
 import com.avatar.ava.R;
-
-
-import javax.inject.Inject;
+import com.avatar.ava.presentation.signing.RegAuthPostman;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import ru.terrakok.cicerone.Router;
-import toothpick.Toothpick;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class ChooseAuthFragment extends Fragment {
-
-    public static ChooseAuthFragment newInstance(){
-        return new ChooseAuthFragment();
-    }
-
-    @Inject
-    Context appContext;
-
-    @Inject
-    Router router;
-
 
     private Activity activity;
     private int START_REG = 0;
     private int START_AUTH = 1;
-    private int SKIP_AUTH = 2;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Toothpick.inject(this, Toothpick.openScope(App.class));
-    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -69,7 +46,7 @@ public class ChooseAuthFragment extends Fragment {
     }
 
     @OnClick(R.id.choose_auth_auth)
-    public void authChoosed(){
+    void authChosen(){
         try {
             ((RegAuthPostman) activity).fragmentMessage(START_AUTH);
         } catch (Exception e) {
@@ -78,7 +55,7 @@ public class ChooseAuthFragment extends Fragment {
     }
 
     @OnClick(R.id.choose_auth_reg)
-    public void regChoosed() {
+    void regChosen() {
         try {
             ((RegAuthPostman) activity).fragmentMessage(START_REG);
         } catch (Exception e) {

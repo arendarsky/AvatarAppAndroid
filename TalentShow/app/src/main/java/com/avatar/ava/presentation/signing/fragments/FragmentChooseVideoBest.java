@@ -1,22 +1,20 @@
 package com.avatar.ava.presentation.signing.fragments;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.VideoView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.avatar.ava.App;
 import com.avatar.ava.R;
@@ -31,6 +29,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import toothpick.Toothpick;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class FragmentChooseVideoBest extends Fragment  {
 
 
@@ -51,37 +50,25 @@ public class FragmentChooseVideoBest extends Fragment  {
     @BindView(R.id.fragment_video_best_progressbar)
     ProgressBar progressBar;
 
-    float duration = 0;
-
-    MediaController mc;
-
-    String fileName = "filename";
+    private float duration = 0;
 
     private final int BACK = 7;
     private final int UPLOAD_VIDEO = 10;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Toothpick.inject(this, Toothpick.openScope(App.class));
 
-    }
-
-    //TODO переделать этот код
-
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        Uri uri = getArguments().getParcelable("uri");
+        Uri uri = null;
+        if (getArguments() != null) {
+            uri = getArguments().getParcelable("uri");
+        }
 
         video.setVideoURI(uri);
         video.seekTo(0);
-
-        //video.setVideoURI(Uri.parse(link));
-        //video.setVideoURI(uri);
-
 
         video.setOnPreparedListener(mp -> {
             video.start();
@@ -97,16 +84,9 @@ public class FragmentChooseVideoBest extends Fragment  {
                     (bar, minValue, maxValue) -> video.seekTo((int) (minValue * 1000))
             );
         });
-//        btn.setOnClickListener(v -> {
-//            List<Thumb> thums = rangeSeekBarView.getThumbs();
-//            float value1 = thums.get(0).getVal() / 100 * video.getDuration();
-//            float value2 = thums.get(1).getVal() / 100 * video.getDuration();
-//            Log.d("videoTrimmerLog", value1 + " " + value2);
-//            setInterval(fileName, (int)value1, (int)value2);
-//            startActivity(new Intent(getContext(), MainScreenActivity.class));
-//        });
     }
 
+    @SuppressLint("DefaultLocale")
     private String getTime(int seconds) {
         int hr = seconds/3600;
         int rem = seconds%3600;
@@ -118,9 +98,6 @@ public class FragmentChooseVideoBest extends Fragment  {
     }
 
     public List<Float> getInterval(){
-//        List<Thumb> thums = rangeSeekBarView.getThumbs();
-//        float value1 = thums.get(0).getVal() / 100 * video.getDuration();
-//        float value2 = thums.get(1).getVal() / 100 * video.getDuration();
         List<Float> tmp = new ArrayList<>();
         tmp.add(rangeSeekBar.getSelectedMinValue());
         tmp.add(rangeSeekBar.getSelectedMaxValue());
@@ -157,64 +134,4 @@ public class FragmentChooseVideoBest extends Fragment  {
         super.onAttach(context);
         if (context instanceof Activity) activity = (Activity) context;
     }
-    /*
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.fragment_video_best);
-            ButterKnife.bind(this);
-            Toothpick.inject(this, Toothpick.openScope(App.class));
-
-            //Intent intent = getIntent();
-            //String link = intent.getStringExtra("VideoLink");
-            //Log.d("Video linkk", link);
-
-
-
-            String url = "https://youtu.be/69FMw5OykjQ";
-
-
-
-            String fileName = "android.resource://"+ getPackageName()+"/raw/example";
-
-            Uri uri = Uri.parse(fileName);
-
-            //video.setVideoURI(Uri.parse(link));
-            //video.setVideoURI(uri);
-
-
-            videoTrimmer.setMaxDuration(30);
-            videoTrimmer.setVideoURI(uri);
-
-
-
-            rangeSeekBarView.addOnRangeSeekBarListener(this);
-
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    List<Thumb> thums = rangeSeekBarView.getThumbs();
-                    float value1 = thums.get(0).getVal() / 100 * video.getDuration();
-                    float value2 = thums.get(1).getVal() / 100 * video.getDuration();
-                    Log.d("videoTrimmerLog", value1 + " " + value2);
-                    setIntervak(fileName, (int)value1, (int)value2);
-                }
-            });
-
-
-
-
-
-
-        }
-    */
-
-
-//    private void setInterval(String name, int startTime, int endTime){
-//        Disposable disposable = interactor.setInterval(name, startTime, endTime)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(() -> startActivity(new Intent(getContext(), MainScreenActivity.class)),
-//                        e -> Log.d("Error", "error"));
-//    }
 }

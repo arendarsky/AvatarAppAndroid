@@ -123,8 +123,6 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        /*video.seekTo(startVideo);
-        video.start();*/
         CASTING_ID = this.getId();
 
         player = new SimpleExoPlayer.Builder(appContext).build();

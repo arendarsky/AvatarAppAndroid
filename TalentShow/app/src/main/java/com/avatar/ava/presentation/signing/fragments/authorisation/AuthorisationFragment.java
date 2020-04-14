@@ -29,6 +29,7 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import toothpick.Toothpick;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class AuthorisationFragment extends MvpAppCompatFragment implements AuthorisationView {
 
     private Activity activity;
@@ -86,7 +87,7 @@ public class AuthorisationFragment extends MvpAppCompatFragment implements Autho
     }
 
     @OnClick(R.id.fragment_auth_continue)
-    public void continueClicked(){
+    void continueClicked(){
         boolean flag = false;
         if (mailEdit.getText().length() == 0) {
             mailEdit.setTextColor(getResources().getColor(R.color.red_text));

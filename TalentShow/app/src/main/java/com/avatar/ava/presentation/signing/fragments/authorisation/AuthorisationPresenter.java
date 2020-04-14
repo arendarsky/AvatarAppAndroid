@@ -21,6 +21,7 @@ public class AuthorisationPresenter extends MvpPresenter<AuthorisationView>{
         this.interactor = interactor;
     }
 
+    @SuppressWarnings("unused")
     void auth(String mail, String password){
         Disposable disposable = interactor.authUser(mail, password)
                 .subscribeOn(Schedulers.io())
