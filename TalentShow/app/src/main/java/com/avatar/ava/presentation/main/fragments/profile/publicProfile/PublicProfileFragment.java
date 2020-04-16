@@ -126,8 +126,6 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_public_profile, container, false);
-        ButterKnife.bind(this, v);
-
         if (getContext() == null){
             try {
                 ((MainScreenPostman) activity).closeFragment();
@@ -135,16 +133,18 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
                 e.printStackTrace();
             }
         }
-        else{
+        else {
             video1 = new PlayerView(getContext());
-            video1.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
+            video1.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_ZOOM);
             video2 = new PlayerView(getContext());
-            video2.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
+            video2.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_ZOOM);
             video3 = new PlayerView(getContext());
-            video3.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
+            video3.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_ZOOM);
             video4 = new PlayerView(getContext());
-            video4.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
+            video4.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_ZOOM);
         }
+
+        ButterKnife.bind(this, v);
 
         DisplayMetrics displayMetrics = appContext.getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
@@ -157,14 +157,16 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
 
             constraintSet.applyTo(parent);
         }
-        if (getArguments() == null){
+
+        if (getArguments() == null) {
             try {
                 ((MainScreenPostman) activity).closeFragment();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        else this.id = getArguments().getInt("id");
+        else
+            this.id = getArguments().getInt("id");
 
         return v;
     }

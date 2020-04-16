@@ -205,7 +205,6 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         String videoLink = SERVER_NAME + "/api/video/" + personDTO.getVideo().getName();
         int start = (int)personDTO.getVideo().getStartTime() * 1000;
         int end = (int)personDTO.getVideo().getEndTime() * 1000;
-        Log.d("Casting link", videoLink);
         player.stop();
         MediaSource videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
                 .createMediaSource(Uri.parse(videoLink));
