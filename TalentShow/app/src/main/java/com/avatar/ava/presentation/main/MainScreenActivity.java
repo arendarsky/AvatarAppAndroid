@@ -160,6 +160,14 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     }
 
     @Override
+    public void closeFragment() {
+        presenter.backButtonPressed(
+                getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_container)
+                        instanceof FragmentFileLoadMain
+        );
+    }
+
+    @Override
     public void changeTitle(String title) {
         fragmentHeader.setText(title);
     }
@@ -462,6 +470,6 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
             castingFragment = (CastingFragment) fragmentManager.findFragmentById(CastingFragment.CASTING_ID);
         }
         if(castingFragment != null)
-        castingFragment.stopVideo();
+            castingFragment.stopVideo();
     }
 }

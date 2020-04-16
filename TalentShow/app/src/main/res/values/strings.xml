@@ -79,7 +79,7 @@
     <string name="ready">Готово</string>
     <string name="terms_of_using"> <a href="https://www.google.ru">условия пользования</a></string>
     <string name="enter_ur_name">Введите свое имя</string>
-    <string name="enter_ur_mail">Введите почту @edu.hse.ru</string>
+    <string name="enter_ur_mail">Введите почту</string>
     <string name="create_password">Придуймате пароль</string>
     <string name="number_likes_u_got">Это количество лайков, которые ты получил за все свои видео</string>
     <string name="open_settings">Открыть настройки</string>
@@ -98,4 +98,6 @@
     <string name="new_password">Нов. Пароль</string>
     <string name="cant_change_mail">По всем вопросам обращайтесь в поддержку на почту xcefactor@gmail.com</string>
     <string name="seven_points">●●●●●●●</string>
+    <string name="no_description">Этот человек ещё не добавил описание к своему профилю</string>
+    <string name="all_videos">Все видео автора</string>
 </resources>

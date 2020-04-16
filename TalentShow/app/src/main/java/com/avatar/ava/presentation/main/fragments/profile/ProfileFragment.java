@@ -34,6 +34,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
@@ -319,24 +320,28 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
             case 1:
                 player1 = new SimpleExoPlayer.Builder(appContext).build();
                 video1.setPlayer(player1);
+                video1.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_ZOOM);
                 player1.prepare(videoSource);
                 break;
 
             case 2:
                 player2 = new SimpleExoPlayer.Builder(appContext).build();
                 video2.setPlayer(player2);
+                video2.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_ZOOM);
                 player2.prepare(videoSource);
                 break;
 
             case 3:
                 player3 = new SimpleExoPlayer.Builder(appContext).build();
                 video3.setPlayer(player3);
+                video3.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_ZOOM);
                 player3.prepare(videoSource);
                 break;
 
             case 4:
                 player4 = new SimpleExoPlayer.Builder(appContext).build();
                 video4.setPlayer(player4);
+                video4.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_ZOOM);
                 player4.prepare(videoSource);
                 break;
         }

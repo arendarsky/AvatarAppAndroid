@@ -26,11 +26,7 @@ public class PublicProfilePresenter extends MvpPresenter<PublicProfileView> {
         Disposable disposable = interactor.getPublicProfile(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(person -> {
-                            Log.d("ProfileFragmentLog", person.getName());
-                            getViewState().setDataProfile(person);
-                        },
-                        error -> {
-                            Log.d("ProfileFragmentLog", "error");});
+                .subscribe(person -> getViewState().setDataProfile(person),
+                        error -> getViewState().showMessage("Упс. Произошла ошибка, попробуйте позже"));
     }
 }
