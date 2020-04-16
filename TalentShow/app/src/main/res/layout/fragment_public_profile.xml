@@ -97,7 +97,8 @@
             android:id="@+id/fragment_public_profile_video_1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            app:resize_mode="fill"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -117,7 +118,8 @@
             android:id="@+id/fragment_public_profile_video_2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            app:resize_mode="fill"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -136,7 +138,8 @@
             android:id="@+id/fragment_public_profile_video_3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            app:resize_mode="fill"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -156,7 +159,8 @@
             android:id="@+id/fragment_public_profile_video_4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            app:resize_mode="fill"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
