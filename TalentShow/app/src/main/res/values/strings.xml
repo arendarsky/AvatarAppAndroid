@@ -100,4 +100,5 @@
     <string name="seven_points">●●●●●●●</string>
     <string name="no_description">Этот человек ещё не добавил описание к своему профилю</string>
     <string name="all_videos">Все видео автора</string>
+    <string name="enter_password">Введите пароль</string>
 </resources>
