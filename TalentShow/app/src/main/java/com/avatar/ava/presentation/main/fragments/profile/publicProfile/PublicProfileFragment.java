@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
@@ -80,16 +81,16 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
     PlayerView video4;
 
     @BindView(R.id.fragment_public_profile_container1)
-    ConstraintLayout container1;
+    CardView container1;
 
     @BindView(R.id.fragment_public_profile_container2)
-    ConstraintLayout container2;
+    CardView container2;
 
     @BindView(R.id.fragment_public_profile_container3)
-    ConstraintLayout container3;
+    CardView container3;
 
     @BindView(R.id.fragment_public_profile_container4)
-    ConstraintLayout container4;
+    CardView container4;
 
     @BindView(R.id.fragment_profile_parent)
     ConstraintLayout parent;
@@ -195,8 +196,11 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
                     .circleCrop()
                     .into(profileImage);
         }
-
-        name.setText(person.getName());
+        if(person.getName() != null) {
+            name.setVisibility(View.VISIBLE);
+            name.setText(person.getName());
+        }
+        else name.setVisibility(View.VISIBLE);
         description.setVisibility(View.VISIBLE);
         if(person.getDescription() != null)
             description.setText(person.getDescription());
@@ -238,29 +242,33 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
     }
 
     private void showContainers(){
-        if(currCountVideos == 0){
-            container2.setVisibility(View.INVISIBLE);
-            container3.setVisibility(View.INVISIBLE);
-            container4.setVisibility(View.INVISIBLE);
-        }else if(currCountVideos == 1){
-            container3.setVisibility(View.INVISIBLE);
-            container4.setVisibility(View.INVISIBLE);
-        }else if(currCountVideos == 2){
-            container4.setVisibility(View.INVISIBLE);
-        }
+//        if(currCountVideos == 0){
+//            container2.setVisibility(View.INVISIBLE);
+//            container3.setVisibility(View.INVISIBLE);
+//            container4.setVisibility(View.INVISIBLE);
+//        }else if(currCountVideos == 1){
+//            container3.setVisibility(View.INVISIBLE);
+//            container4.setVisibility(View.INVISIBLE);
+//        }else if(currCountVideos == 2){
+//            container4.setVisibility(View.INVISIBLE);
+//        }
     }
     private void showVideos(){
         if(currCountVideos >= 1){
+            container1.setVisibility(View.VISIBLE);
             setupVideo(1, Uri.parse(SERVER_NAME + "/api/video/" + videos.get(0).getName()));
             video1.setVisibility(View.VISIBLE);
             if(currCountVideos >= 2){
+                container2.setVisibility(View.VISIBLE);
                 setupVideo(2, Uri.parse(SERVER_NAME + "/api/video/" + videos.get(1).getName()));
                 video2.setVisibility(View.VISIBLE);
                 if(currCountVideos >= 3){
+                    container3.setVisibility(View.VISIBLE);
                     setupVideo(3, Uri.parse(SERVER_NAME + "/api/video/" + videos.get(2).getName()));
                     video3.setVisibility(View.VISIBLE);
                 }
                 if(currCountVideos == 4){
+                    container4.setVisibility(View.VISIBLE);
                     setupVideo(4, Uri.parse(SERVER_NAME + "/api/video/" + videos.get(3).getName()));
                     video4.setVisibility(View.VISIBLE);
                 }

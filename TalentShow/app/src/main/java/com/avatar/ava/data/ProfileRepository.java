@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
+import com.arthenica.mobileffmpeg.FFmpeg;
 import com.avatar.ava.data.api.ProfileAPI;
 import com.avatar.ava.domain.entities.NotificationsDTO;
 import com.avatar.ava.domain.entities.ProfileDTO;
@@ -65,17 +66,36 @@ public class ProfileRepository implements IProfileRepository {
 
         File file = new File(getFilePathFromUri(appContext, photoUri));
 
-        RequestBody requestFile =
-                RequestBody.create(file, MediaType.parse("multipart/form-data"));
-        MultipartBody.Part body =
-                MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+        Log.d("AuthRep", String.valueOf(file.getTotalSpace()));
 
-        return profileAPI.uploadPhoto(preferencesRepository.getToken(), body)
-                .doOnSuccess(
-                        name -> {
-                            this.img = name;
-                            Log.d("Extension", img);
-                        })
+        File compressedFile = new File(file.getAbsolutePath().substring(0,
+                file.getAbsolutePath().lastIndexOf(".")) + "1" +
+                file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf(".")));
+        String command = "-i "
+                + file.getAbsolutePath() + " -compression_level 80 "
+                + compressedFile.getAbsolutePath();
+
+
+        return Single.fromCallable(() -> FFmpeg.execute(command)).ignoreElement()
+                .andThen(
+                        profileAPI.uploadPhoto(
+                                preferencesRepository.getToken(),
+                                MultipartBody.Part.createFormData(
+                                        "file",
+                                        compressedFile.getName(),
+                                        RequestBody.create(
+                                                compressedFile, MediaType.parse("multipart/form-data")
+                                        )
+                                )
+                        )
+                                .doOnSuccess(
+                                        name ->
+                                        {
+                                            this.img = name;
+                                            Log.d("Extension", img);
+                                        }
+                                )
+                )
                 .ignoreElement();
 
     }

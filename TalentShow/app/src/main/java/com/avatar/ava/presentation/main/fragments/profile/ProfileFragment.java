@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.util.Log;
@@ -111,16 +112,16 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     ImageButton addVideoBtn4;
 
     @BindView(R.id.fragment_profile_container1)
-    ConstraintLayout container1;
+    CardView container1;
 
     @BindView(R.id.fragment_profile_container2)
-    ConstraintLayout container2;
+    CardView container2;
 
     @BindView(R.id.fragment_profile_container3)
-    ConstraintLayout container3;
+    CardView container3;
 
     @BindView(R.id.fragment_profile_container4)
-    ConstraintLayout container4;
+    CardView container4;
 
     @BindView(R.id.fragment_profile_settings1)
     View settings1;

@@ -22,6 +22,7 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.analytics.AnalyticsListener;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
@@ -61,6 +62,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         PersonRatingDTO personRatingDTO = data.get(position);
 
         if(personRatingDTO.getVideo() != null){
+
             holder.player = new SimpleExoPlayer.Builder(holder.itemView.getContext()).build();
             holder.player.addAnalyticsListener(new AnalyticsListener() {
                 @Override
@@ -71,9 +73,11 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
                     else if (playWhenReady && playbackState == Player.STATE_READY){
                         holder.progressBar.setVisibility(View.INVISIBLE);
                     }
-                    else holder.progressBar.setVisibility(View.VISIBLE);
+                    else if (playbackState == Player.STATE_BUFFERING) holder.progressBar.setVisibility(View.VISIBLE);
                 }});
+            holder.video.setShowBuffering(PlayerView.SHOW_BUFFERING_WHEN_PLAYING);
             holder.video.setPlayer(holder.player);
+//            holder.video.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_ZOOM);
             holder.setVideoName(personRatingDTO.getVideo().getName());
         }
 
@@ -114,7 +118,6 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     @Override
     public void onViewRecycled(@NonNull ViewHolder holder) {
         super.onViewRecycled(holder);
-        Log.d("RatingAdapterLog", "viewRecycled " + holder.name.getText().toString());
     }
 
     int getPersonId(int index){
@@ -125,7 +128,6 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     public void onViewAttachedToWindow(@NonNull ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
 
-        Log.d("RatingAdapterLog", "viewAttach " + holder.name.getText().toString() + " " + holder.player.getPlaybackState());
         if(holder.player != null){
             holder.player.seekTo(0);
             holder.setVideoSource();
@@ -137,7 +139,6 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     @Override
     public void onViewDetachedFromWindow(@NonNull ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
-        Log.d("RatingAdapterLog", "viewDetached " + holder.name.getText().toString());
         if(holder.player != null){
             Log.d("RatingAdapterLog", "viewDetached " + holder.name.getText().toString());
             holder.player.stop(true);
@@ -179,7 +180,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
             likes = itemView.findViewById(R.id.rating_item_likes);
             progressBar = itemView.findViewById(R.id.rating_item_progressbar);
             restartButton = itemView.findViewById(R.id.rating_item_restart);
-
+            video.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
             DefaultBandwidthMeter defaultBandwidthMeter = new DefaultBandwidthMeter.Builder(itemView.getContext()).build();
 
             // Produces DataSource instances through which media data is loaded.

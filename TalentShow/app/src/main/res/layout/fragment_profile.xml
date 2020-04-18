@@ -161,146 +161,166 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fragment_profile_guideline"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:id="@+id/fragment_profile_container1"
+        app:cardBackgroundColor="@color/darkBackground"
         app:layout_constraintTop_toBottomOf="@id/fragment_profile_video_tv"
         app:layout_constraintStart_toStartOf="parent"
+        app:cardCornerRadius="9dp"
         app:layout_constraintBottom_toTopOf="@id/fragment_profile_container3"
         app:layout_constraintEnd_toStartOf="@id/fragment_profile_container2">
 
-        <View
-            android:id="@+id/fragment_profile_settings1"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:background="@drawable/three_points"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="10dp"
-            android:visibility="invisible"
-            android:elevation="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.exoplayer2.ui.PlayerView
-            android:id="@+id/fragment_profile_video_1"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            app:use_controller="false"
-            app:resize_mode="zoom"
+            android:layout_height="match_parent">
+            <View
+                android:id="@+id/fragment_profile_settings1"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:background="@drawable/three_points"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"
+                android:visibility="invisible"
+                android:elevation="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        />
+            <com.google.android.exoplayer2.ui.PlayerView
+                android:id="@+id/fragment_profile_video_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:background="@color/darkBackground"
+                app:buffered_color="@color/darkBackground"
+                app:default_artwork="@color/darkBackground"
+                app:scrubber_color="@color/darkBackground"
+                app:use_controller="false"
+                app:resize_mode="zoom"
 
-        <ImageButton
-            android:id="@+id/fragment_profile_add_video_btn_1"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:background="@drawable/fragment_profile_add_video_img"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/add" />
+                />
 
-        <TextView
-            android:id="@+id/fragment_profile_in_casting_1"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:text="@string/in_casting"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textColor="@color/whiteText"
-            android:background="#262626"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+            <ImageButton
+                android:id="@+id/fragment_profile_add_video_btn_1"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/fragment_profile_add_video_img"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/add" />
+
+            <TextView
+                android:id="@+id/fragment_profile_in_casting_1"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:text="@string/in_casting"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="@color/whiteText"
+                android:background="#262626"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginEnd="26dp"
         android:layout_marginTop="20dp"
         android:layout_marginStart="40dp"
         android:visibility="invisible"
+        app:cardCornerRadius="9dp"
         android:id="@+id/fragment_profile_container2"
+        app:cardBackgroundColor="@color/darkBackground"
         app:layout_constraintTop_toBottomOf="@id/fragment_profile_video_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/fragment_profile_container1"
-        app:layout_constraintBottom_toTopOf="@id/fragment_profile_container4"
-        >
+        app:layout_constraintBottom_toTopOf="@id/fragment_profile_container4">
 
-        <View
-            android:id="@+id/fragment_profile_settings2"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:background="@drawable/three_points"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="10dp"
-            android:visibility="invisible"
-            android:elevation="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.exoplayer2.ui.PlayerView
-            android:id="@+id/fragment_profile_video_2"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            app:use_controller="false"
-            app:resize_mode="zoom"
-            />
+            android:layout_height="match_parent">
 
-        <ImageButton
-            android:id="@+id/fragment_profile_add_video_btn_2"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:background="@drawable/fragment_profile_add_video_img"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/add" />
+            <View
+                android:id="@+id/fragment_profile_settings2"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:background="@drawable/three_points"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"
+                android:visibility="invisible"
+                android:elevation="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/fragment_profile_in_casting_2"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:text="@string/in_casting"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textColor="@color/whiteText"
-            android:background="#262626"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+            <com.google.android.exoplayer2.ui.PlayerView
+                android:id="@+id/fragment_profile_video_2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:use_controller="false"
+                app:resize_mode="zoom"
+                />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageButton
+                android:id="@+id/fragment_profile_add_video_btn_2"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/fragment_profile_add_video_img"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/add" />
+
+            <TextView
+                android:id="@+id/fragment_profile_in_casting_2"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:text="@string/in_casting"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="@color/whiteText"
+                android:background="#262626"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-
+    <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:visibility="invisible"
+        app:cardCornerRadius="9dp"
         android:id="@+id/fragment_profile_container3"
+        app:cardBackgroundColor="@color/darkBackground"
         app:layout_constraintTop_toBottomOf="@id/fragment_profile_container1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/fragment_profile_container4"
-        >
+        app:layout_constraintEnd_toStartOf="@id/fragment_profile_container4">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <View
             android:id="@+id/fragment_profile_settings3"
@@ -344,14 +364,16 @@
             android:textColor="@color/whiteText"
             android:background="#262626"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginEnd="26dp"
@@ -360,11 +382,16 @@
         android:layout_marginBottom="20dp"
         android:visibility="invisible"
         android:id="@+id/fragment_profile_container4"
+        app:cardCornerRadius="9dp"
+        app:cardBackgroundColor="@color/darkBackground"
         app:layout_constraintTop_toBottomOf="@id/fragment_profile_container2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/fragment_profile_container3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        >
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <View
             android:id="@+id/fragment_profile_settings4"
@@ -411,7 +438,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/fragment_profile_guideline"

@@ -74,7 +74,7 @@ public class DataModule extends Module{
                 .addInterceptor(timeoutInterceptor);
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.level(com.avatar.ava.BuildConfig.DEBUG ?
-                HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
+                HttpLoggingInterceptor.Level.HEADERS : HttpLoggingInterceptor.Level.NONE);
         httpClient.addInterceptor(loggingInterceptor);
 
         bind(Retrofit.class).toInstance(
