@@ -77,27 +77,28 @@ public class ProfileRepository implements IProfileRepository {
 
 
         return Single.fromCallable(() -> FFmpeg.execute(command)).ignoreElement()
-                .andThen(
-                        profileAPI.uploadPhoto(
-                                preferencesRepository.getToken(),
-                                MultipartBody.Part.createFormData(
-                                        "file",
-                                        compressedFile.getName(),
-                                        RequestBody.create(
-                                                compressedFile, MediaType.parse("multipart/form-data")
-                                        )
-                                )
-                        )
-                                .doOnSuccess(
-                                        name ->
-                                        {
-                                            this.img = name;
-                                            Log.d("Extension", img);
-                                        }
-                                )
+                .andThen(uploadPhotoFromFile(compressedFile))
+                .doOnSuccess(
+                        name ->
+                        {
+                            this.img = name;
+                            Log.d("Extension", img);
+                        }
                 )
                 .ignoreElement();
 
+    }
+
+    private Single<String> uploadPhotoFromFile(File file){
+        if (file.getTotalSpace() >= 8388608) throw new IllegalStateException("Too big");
+        return profileAPI.uploadPhoto(preferencesRepository.getToken(),
+                MultipartBody.Part.createFormData(
+                        "file",
+                        file.getName(),
+                        RequestBody.create(
+                                file, MediaType.parse("multipart/form-data")
+                        )
+                ));
     }
 
     @Override
