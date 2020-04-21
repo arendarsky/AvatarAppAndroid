@@ -317,6 +317,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
 
     @Override
     public void onBackPressed() {
+        loadVideoToServer = false;
         boolean closeApp = presenter.backButtonPressed(
                 getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_container)
                         instanceof FragmentFileLoadMain
@@ -339,6 +340,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
             List<Float> tmp = ((FragmentChooseBestMain) currentFragment).getInterval();
             Log.d("ActivityMainLog", "uploadVideoandSetInterval");
             loadVideoToServer = true;
+            saveButton.setVisibility(View.INVISIBLE);
             presenter.uploadAndSetInterval(tmp.get(0), tmp.get(1));
         }
 
@@ -409,6 +411,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         if (profileFragment != null) {
             profileFragment.backEdit();
         }
+        loadVideoToServer = false;
         clearTopView();
         changeTitle("Профиль");
         showMenuPoints();

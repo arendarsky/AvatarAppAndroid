@@ -52,11 +52,11 @@ public class VideoRepository implements IVideoRepository {
     public Completable uploadAndSetInterval(Uri fileURI, Float beginTime, Float endTime){
         File file = new File(getFilePathFromUri(appContext, fileURI));
         this.convertedFilePath = file.getAbsolutePath().substring(0,
-                file.getAbsolutePath().lastIndexOf("."))
+                file.getAbsolutePath().lastIndexOf(".")) + "1"
                 + ".mp4";
         File convertedFile = new File(this.convertedFilePath);
         String commands = "-i "
-                + file.getAbsolutePath() + " -q:v 20 "
+                + file.getAbsolutePath() + " -q:v 3 "
                 + convertedFile.getAbsolutePath();
         return Single.fromCallable(() -> FFmpeg.execute(commands)).ignoreElement()
                 .andThen(videoAPI.uploadVideo(
@@ -113,7 +113,6 @@ public class VideoRepository implements IVideoRepository {
                         if (list.size() == 0) throw new IllegalStateException("Empty list");
                         this.personDTOSet.addAll(list);
                         this.currentPerson = this.personDTOSet.iterator().next();
-                        this.personDTOSet.remove(this.currentPerson);
                         return Single.just(this.currentPerson);
                     });
         else{

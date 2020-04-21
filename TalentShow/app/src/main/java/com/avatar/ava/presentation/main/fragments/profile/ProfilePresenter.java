@@ -5,6 +5,8 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.avatar.ava.domain.Interactor;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -61,7 +63,11 @@ public class ProfilePresenter extends MvpPresenter<ProfileView> {
                             getViewState().hideProgressBar();
                             this.getProfile();
                         },
-                        e -> getViewState().showMessage(errorMessage));
+                        e -> {
+                            if (Objects.equals(e.getMessage(), "Too big"))
+                                getViewState().showMessage("Фото слишком большое");
+                            else getViewState().showMessage(errorMessage);
+                        });
     }
 
     void removeVideo(String name){

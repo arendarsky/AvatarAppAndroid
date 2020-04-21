@@ -120,6 +120,15 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     private SimpleExoPlayer player;
 
     @Override
+    public void onPause() {
+        super.onPause();
+        if (video.getPlayer() != null) {
+            if (video.getPlayer().isPlaying())
+                video.getPlayer().stop();
+        }
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
