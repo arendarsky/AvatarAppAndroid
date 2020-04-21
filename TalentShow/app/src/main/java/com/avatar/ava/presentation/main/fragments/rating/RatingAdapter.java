@@ -1,11 +1,13 @@
 package com.avatar.ava.presentation.main.fragments.rating;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -37,6 +39,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
 
     private List<PersonRatingDTO> data = new ArrayList<>();
     private RecyclerClickListener clickListener;
+    private SimpleExoPlayer player;
 
     @NonNull
     @Override
@@ -50,37 +53,71 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     }
 
 
-    RatingAdapter(RecyclerClickListener clickListener) {
+    RatingAdapter(Context context, RecyclerClickListener clickListener) {
         super();
         this.clickListener = clickListener;
+        player = new SimpleExoPlayer.Builder(context).build();
+        player.addListener(new Player.EventListener() {
+
+            @Override
+            public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+                Log.d("RatingPlayer", "changeState" + playbackState);
+                clickable = true;
+                if(playbackState == Player.STATE_BUFFERING){
+
+                }
+            }
+        });
     }
 
+    private boolean clickable = true;
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PersonRatingDTO personRatingDTO = data.get(position);
-
+        holder.start.setVisibility(View.VISIBLE);
         if(personRatingDTO.getVideo() != null){
-            holder.player = new SimpleExoPlayer.Builder(holder.itemView.getContext()).build();
-            holder.player.addAnalyticsListener(new AnalyticsListener() {
+
+            player.addAnalyticsListener(new AnalyticsListener() {
                 @Override
                 public void onPlayerStateChanged(EventTime eventTime, boolean playWhenReady, int playbackState) {
                     if(playWhenReady && playbackState == Player.STATE_ENDED){
                         holder.restartButton.setVisibility(View.VISIBLE);
+                        holder.start.setVisibility(View.VISIBLE);
                     }
                     else if (playWhenReady && playbackState == Player.STATE_READY){
                         holder.progressBar.setVisibility(View.INVISIBLE);
+                        holder.start.setVisibility(View.GONE);
                     }
-                    else holder.progressBar.setVisibility(View.VISIBLE);
+                    else {
+                        holder.start.setVisibility(View.VISIBLE);
+                        holder.progressBar.setVisibility(View.VISIBLE);
+                    }
                 }});
-            holder.video.setPlayer(holder.player);
-            holder.setVideoName(personRatingDTO.getVideo().getName());
+
+
+            holder.start.setOnClickListener(v -> {
+                if(clickable){
+                    clickable = false;
+                    holder.video.setPlayer(null);
+                    holder.video.setPlayer(player);
+                    holder.setVideoName(personRatingDTO.getVideo().getName());
+                    holder.setVideoSource();
+                    player.prepare(holder.videoSource);
+                    player.setPlayWhenReady(true);
+                    holder.start.setVisibility(View.GONE);
+                }
+
+
+            });
+
+
         }
 
         holder.restartButton.setOnClickListener(v -> {
             holder.restartButton.setVisibility(View.INVISIBLE);
-            holder.player.seekTo((long) personRatingDTO.getVideo().getStartTime());
-            holder.player.setPlayWhenReady(true);
+            player.seekTo((long) personRatingDTO.getVideo().getStartTime());
+            player.setPlayWhenReady(true);
         });
 
         holder.likes.setText("     " + personRatingDTO.getLikesNumber());
@@ -104,6 +141,12 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         Log.d("RatingAdapterLog", "onBindViewHolder " + holder.name.getText().toString());
 
 
+
+        //player.seekTo(0);
+
+        //holder.setVideoSource();
+        //player.prepare(holder.videoSource);
+
     }
 
     @Override
@@ -125,11 +168,9 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     public void onViewAttachedToWindow(@NonNull ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
 
-        Log.d("RatingAdapterLog", "viewAttach " + holder.name.getText().toString() + " " + holder.player.getPlaybackState());
-        if(holder.player != null){
-            holder.player.seekTo(0);
-            holder.setVideoSource();
-            holder.player.prepare(holder.videoSource);
+        Log.d("RatingAdapterLog", "viewAttach " + holder.name.getText().toString() + " " + player.getPlaybackState());
+        if(player != null){
+
         }
 
     }
@@ -138,9 +179,11 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     public void onViewDetachedFromWindow(@NonNull ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
         Log.d("RatingAdapterLog", "viewDetached " + holder.name.getText().toString());
-        if(holder.player != null){
+        if(player != null){
             Log.d("RatingAdapterLog", "viewDetached " + holder.name.getText().toString());
-            holder.player.stop(true);
+            //player.stop(true);
+            //player.release();
+
         }
 
 
@@ -161,17 +204,19 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         PlayerView video;
         TextView pos, name, description, likes;
         ImageView ava;
-        SimpleExoPlayer player;
+
         DataSource.Factory dataSourceFactory;
         MediaSource videoSource;
         String videoName;
         ProgressBar progressBar;
         View restartButton;
+        ImageButton start;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             video = new PlayerView(itemView.getContext());
             video = itemView.findViewById(R.id.rating_item_video);
+
             pos = itemView.findViewById(R.id.rating_item_pos);
             name = itemView.findViewById(R.id.rating_item_name);
             description = itemView.findViewById(R.id.rating_item_description);
@@ -179,6 +224,8 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
             likes = itemView.findViewById(R.id.rating_item_likes);
             progressBar = itemView.findViewById(R.id.rating_item_progressbar);
             restartButton = itemView.findViewById(R.id.rating_item_restart);
+
+            start = itemView.findViewById(R.id.rating_item_start);
 
             DefaultBandwidthMeter defaultBandwidthMeter = new DefaultBandwidthMeter.Builder(itemView.getContext()).build();
 

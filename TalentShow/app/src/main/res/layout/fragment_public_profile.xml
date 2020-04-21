@@ -126,7 +126,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="18dp"
         android:layout_marginTop="20dp"
         android:id="@+id/fragment_public_profile_container3"
         app:layout_constraintTop_toBottomOf="@id/fragment_public_profile_container1"

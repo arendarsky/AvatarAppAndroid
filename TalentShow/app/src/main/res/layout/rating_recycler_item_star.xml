@@ -48,6 +48,18 @@
                 android:id="@+id/rating_item_progressbar"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <ImageButton
+                android:id="@+id/rating_item_start"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/exo_controls_play"
+                android:elevation="20dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

@@ -73,7 +73,8 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Toothpick.inject(this, Toothpick.openScope(App.class));
-        adapter = new RatingAdapter((v, position) -> {
+
+        adapter = new RatingAdapter(appContext, (v, position) -> {
             try {
                 ((MainScreenPostman) activity).openPublicProfile(adapter.getPersonId(position));
             } catch (Exception e) {
