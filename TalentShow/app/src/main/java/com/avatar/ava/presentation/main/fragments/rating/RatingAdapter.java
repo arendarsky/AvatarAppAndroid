@@ -84,14 +84,17 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
                     if(playWhenReady && playbackState == Player.STATE_ENDED){
                         holder.restartButton.setVisibility(View.VISIBLE);
                         holder.start.setVisibility(View.VISIBLE);
+                        holder.image.setVisibility(View.VISIBLE);
                     }
                     else if (playWhenReady && playbackState == Player.STATE_READY){
                         holder.progressBar.setVisibility(View.INVISIBLE);
                         holder.start.setVisibility(View.GONE);
+                        holder.image.setVisibility(View.INVISIBLE);
                     }
                     else {
                         holder.start.setVisibility(View.VISIBLE);
                         holder.progressBar.setVisibility(View.VISIBLE);
+                        holder.image.setVisibility(View.VISIBLE);
                     }
                 }});
 
@@ -106,6 +109,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
                     player.prepare(holder.videoSource);
                     player.setPlayWhenReady(true);
                     holder.start.setVisibility(View.GONE);
+                    holder.image.setVisibility(View.INVISIBLE);
                 }
 
 
@@ -140,6 +144,9 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
 
         Log.d("RatingAdapterLog", "onBindViewHolder " + holder.name.getText().toString());
 
+        Glide.with(holder.itemView.getContext())
+                .load(SERVER_NAME + "/api/video/" + personRatingDTO.getVideo().getName())
+                .into(holder.image);
 
 
         //player.seekTo(0);
@@ -211,11 +218,15 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         ProgressBar progressBar;
         View restartButton;
         ImageButton start;
+        ImageView image;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             video = new PlayerView(itemView.getContext());
             video = itemView.findViewById(R.id.rating_item_video);
+            //video.setUseArtwork(true);
+            //video.setDefaultArtwork(itemView.getContext().getResources().getDrawable(R.drawable.logo));
+            image = itemView.findViewById(R.id.rating_item_image);
 
             pos = itemView.findViewById(R.id.rating_item_pos);
             name = itemView.findViewById(R.id.rating_item_name);

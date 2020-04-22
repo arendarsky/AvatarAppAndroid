@@ -8,6 +8,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +43,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import toothpick.Toothpick;
 
 import static com.avatar.ava.DataModule.SERVER_NAME;
@@ -69,16 +71,16 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
     TextView description;
 
     @BindView(R.id.fragment_public_profile_video_1)
-    PlayerView video1;
+    ImageView video1;
 
     @BindView(R.id.fragment_public_profile_video_2)
-    PlayerView video2;
+    ImageView video2;
 
     @BindView(R.id.fragment_public_profile_video_3)
-    PlayerView video3;
+    ImageView video3;
 
     @BindView(R.id.fragment_public_profile_video_4)
-    PlayerView video4;
+    ImageView video4;
 
     @BindView(R.id.fragment_public_profile_container1)
     CardView container1;
@@ -134,16 +136,7 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
                 e.printStackTrace();
             }
         }
-        else {
-            video1 = new PlayerView(getContext());
-            video1.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_ZOOM);
-            video2 = new PlayerView(getContext());
-            video2.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_ZOOM);
-            video3 = new PlayerView(getContext());
-            video3.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_ZOOM);
-            video4 = new PlayerView(getContext());
-            video4.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_ZOOM);
-        }
+
 
         ButterKnife.bind(this, v);
 
@@ -174,12 +167,76 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
 
 
 
+    SimpleExoPlayer player;
+
+    @BindView(R.id.fragment_public_profile_close_fullscreen)
+    ImageButton closeBtn;
+
+    @BindView(R.id.fragment_public_profile_fullscreen)
+    PlayerView playerView;
+
+    DataSource.Factory dataSourceFactory;
+    MediaSource videoSource;
+
+    @OnClick(R.id.fragment_public_profile_close_fullscreen)
+    public void closeFullscreen(){
+        //update();
+        player.stop();
+        playerView.setVisibility(View.INVISIBLE);
+        closeBtn.setVisibility(View.INVISIBLE);
+    }
+
+    private void toFullscreen(int id){
+        if(currCountVideos > id){
+            videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
+                    .createMediaSource(Uri.parse(SERVER_NAME + "/api/video/" + videos.get(id).getName()));
+            playerView.setPlayer(player);
+            player.prepare(videoSource);
+
+            playerView.setVisibility(View.VISIBLE);
+            closeBtn.setVisibility(View.VISIBLE);
+
+        /*container1.setVisibility(View.INVISIBLE);
+        container2.setVisibility(View.INVISIBLE);
+        container3.setVisibility(View.INVISIBLE);
+        container4.setVisibility(View.INVISIBLE);*/
+
+            player.setPlayWhenReady(true);
+        }
+
+    }
+
+    @OnClick(R.id.fragment_public_profile_container1)
+    public void container1Clicked(){
+        toFullscreen(0);
+    }
+
+    @OnClick(R.id.fragment_public_profile_container2)
+    public void container2Clicked(){
+        toFullscreen(1);
+    }
+
+    @OnClick(R.id.fragment_public_profile_container3)
+    public void container3Clicked(){
+        toFullscreen(2);
+    }
+
+    @OnClick(R.id.fragment_public_profile_container4)
+    public void container4Clicked(){
+        toFullscreen(3);
+    }
+
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Toothpick.inject(this, Toothpick.openScope(App.class));
         presenter.getProfile(id);
         description.setEnabled(false);
+        player = new SimpleExoPlayer.Builder(appContext).build();
+        dataSourceFactory = new DefaultDataSourceFactory(appContext,
+                Util.getUserAgent(appContext, "XCE FACTOR"));
     }
 
 
@@ -223,10 +280,10 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
     @Override
     public void onPause() {
         super.onPause();
-        stopVideos();
+        //stopVideos();
     }
 
-    private void stopVideos(){
+    /*private void stopVideos(){
         if(video1.getPlayer() != null) {
             if (video1.getPlayer().isPlaying()) video1.getPlayer().stop();
         }
@@ -239,7 +296,7 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
         if(video4.getPlayer() != null) {
             if (video4.getPlayer().isPlaying()) video4.getPlayer().stop();
         }
-    }
+    }*/
 
     private void showContainers(){
 //        if(currCountVideos == 0){
@@ -275,42 +332,32 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
             }
         }
     }
+
+    private void showImage(int id, ImageView iv){
+        Glide.with(this)
+                .load(SERVER_NAME + "/api/video/" + videos.get(id).getName())
+                .into(iv);
+    }
+
     private void setupVideo(int num, Uri uri){
-        PlayerView playerView;
+
         switch (num){
             case 1:
-                playerView = video1;
+                showImage(0, video1);
                 break;
+
             case 2:
-                playerView = video2;
+                showImage(1, video2);
                 break;
+
             case 3:
-                playerView = video3;
+                showImage(2, video3);
                 break;
+
             case 4:
-                playerView = video4;
+                showImage(30, video4);
                 break;
-            default:
-                playerView = null;
         }
-
-        SimpleExoPlayer player = new SimpleExoPlayer.Builder(appContext).build();
-        if (playerView == null){
-            try {
-                ((MainScreenPostman) activity).closeFragment();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        else playerView.setPlayer(player);
-
-        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(appContext,
-                Util.getUserAgent(appContext, "com.avatar.ava"));
-        MediaSource videoSource =
-                new ProgressiveMediaSource.Factory(dataSourceFactory)
-                        .createMediaSource(uri);
-
-        player.prepare(videoSource);
     }
 
 }
