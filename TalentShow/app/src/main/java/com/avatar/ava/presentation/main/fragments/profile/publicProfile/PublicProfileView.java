@@ -7,4 +7,5 @@ import com.avatar.ava.domain.entities.PublicProfileDTO;
 public interface PublicProfileView extends MvpView {
     void setDataProfile(PublicProfileDTO person);
     void showMessage(String message);
+    void hideProgressBar();
 }

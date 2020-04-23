@@ -9,6 +9,15 @@
     tools:context=".presentation.main.fragments.profile.ProfileFragment"
     android:id="@+id/fragment_profile_parent">
 
+    <ProgressBar
+        android:id="@+id/public_profile_progressbar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
     <ImageView
         android:id="@+id/fragment_public_profile_image"
         android:layout_width="73dp"
@@ -191,7 +200,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:resize_mode="fit" />
+        app:resize_mode="zoom" />
 
     <ImageButton
         android:layout_width="wrap_content"

@@ -56,7 +56,7 @@ public class VideoRepository implements IVideoRepository {
                 + ".mp4";
         File convertedFile = new File(this.convertedFilePath);
         String commands = "-i "
-                + file.getAbsolutePath() + " -q:v 3 "
+                + file.getAbsolutePath() + " -preset ultrafast "
                 + convertedFile.getAbsolutePath();
         return Single.fromCallable(() -> FFmpeg.execute(commands)).ignoreElement()
                 .andThen(videoAPI.uploadVideo(

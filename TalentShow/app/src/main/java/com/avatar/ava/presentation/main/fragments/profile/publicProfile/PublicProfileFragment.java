@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +64,9 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
 
     @BindView(R.id.fragment_public_profile_image)
     ImageView profileImage;
+
+    @BindView(R.id.public_profile_progressbar)
+    ProgressBar progressBar;
 
     @BindView(R.id.fragment_public_profile_name)
     TextView name;
@@ -278,6 +282,11 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
     }
 
     @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         //stopVideos();
@@ -313,20 +322,20 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
     private void showVideos(){
         if(currCountVideos >= 1){
             container1.setVisibility(View.VISIBLE);
-            setupVideo(1, Uri.parse(SERVER_NAME + "/api/video/" + videos.get(0).getName()));
+            setupVideo(1);
             video1.setVisibility(View.VISIBLE);
             if(currCountVideos >= 2){
                 container2.setVisibility(View.VISIBLE);
-                setupVideo(2, Uri.parse(SERVER_NAME + "/api/video/" + videos.get(1).getName()));
+                setupVideo(2);
                 video2.setVisibility(View.VISIBLE);
                 if(currCountVideos >= 3){
                     container3.setVisibility(View.VISIBLE);
-                    setupVideo(3, Uri.parse(SERVER_NAME + "/api/video/" + videos.get(2).getName()));
+                    setupVideo(3);
                     video3.setVisibility(View.VISIBLE);
                 }
                 if(currCountVideos == 4){
                     container4.setVisibility(View.VISIBLE);
-                    setupVideo(4, Uri.parse(SERVER_NAME + "/api/video/" + videos.get(3).getName()));
+                    setupVideo(4);
                     video4.setVisibility(View.VISIBLE);
                 }
             }
@@ -336,10 +345,12 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
     private void showImage(int id, ImageView iv){
         Glide.with(this)
                 .load(SERVER_NAME + "/api/video/" + videos.get(id).getName())
+                .placeholder(appContext.getResources().getDrawable(R.drawable.activity_add_new_video_bg))
+                .centerCrop()
                 .into(iv);
     }
 
-    private void setupVideo(int num, Uri uri){
+    private void setupVideo(int num){
 
         switch (num){
             case 1:
@@ -355,7 +366,7 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
                 break;
 
             case 4:
-                showImage(30, video4);
+                showImage(3, video4);
                 break;
         }
     }

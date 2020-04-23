@@ -172,11 +172,11 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     @BindView(R.id.fragment_profile_fullscreen)
     PlayerView playerView;
 
-    DataSource.Factory dataSourceFactory;
-    MediaSource videoSource;
+    private DataSource.Factory dataSourceFactory;
+    private MediaSource videoSource;
 
     @OnClick(R.id.fragment_profile_close_fullscreen)
-    public void closeFullscreen(){
+    void closeFullscreen(){
         //update();
         exoPlayer.stop();
         playerView.setVisibility(View.INVISIBLE);
@@ -205,22 +205,22 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
 
 
     @OnClick(R.id.fragment_profile_container1)
-    public void container1Clicked(){
+    void container1Clicked(){
         toFullscreen(0);
     }
 
     @OnClick(R.id.fragment_profile_container2)
-    public void container2Clicked(){
+    void container2Clicked(){
         toFullscreen(1);
     }
 
     @OnClick(R.id.fragment_profile_container3)
-    public void container3Clicked(){
+    void container3Clicked(){
         toFullscreen(2);
     }
 
     @OnClick(R.id.fragment_profile_container4)
-    public void container4Clicked(){
+    void container4Clicked(){
         toFullscreen(3);
     }
 
@@ -377,6 +377,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     private void showImage(int id, ImageView iv){
         Glide.with(this)
                 .load(SERVER_NAME + "/api/video/" + videos.get(id).getName())
+                .centerCrop()
                 .into(iv);
     }
 
