@@ -397,7 +397,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
                 break;
 
             case 4:
-                showImage(30, video4);
+                showImage(3, video4);
                 break;
         }
     }

@@ -179,7 +179,7 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
     @BindView(R.id.fragment_public_profile_fullscreen)
     PlayerView playerView;
 
-    DataSource.Factory dataSourceFactory;
+    private DataSource.Factory dataSourceFactory;
     MediaSource videoSource;
 
     @OnClick(R.id.fragment_public_profile_close_fullscreen)
@@ -192,20 +192,20 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
 
     private void toFullscreen(int id){
         if(currCountVideos > id){
-            videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
-                    .createMediaSource(Uri.parse(SERVER_NAME + "/api/video/" + videos.get(id).getName()));
-            playerView.setPlayer(player);
-            player.prepare(videoSource);
-
-            playerView.setVisibility(View.VISIBLE);
-            closeBtn.setVisibility(View.VISIBLE);
-
-        /*container1.setVisibility(View.INVISIBLE);
-        container2.setVisibility(View.INVISIBLE);
-        container3.setVisibility(View.INVISIBLE);
-        container4.setVisibility(View.INVISIBLE);*/
-
-            player.setPlayWhenReady(true);
+            try {
+                ((MainScreenPostman) activity).openFullScreen(videos.get(id).getName());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+//            videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
+//                    .createMediaSource(Uri.parse(SERVER_NAME + "/api/video/" + videos.get(id).getName()));
+//            playerView.setPlayer(player);
+//            player.prepare(videoSource);
+//
+//            playerView.setVisibility(View.VISIBLE);
+//            closeBtn.setVisibility(View.VISIBLE);
+//
+//            player.setPlayWhenReady(true);
         }
 
     }
@@ -291,21 +291,6 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
         super.onPause();
         //stopVideos();
     }
-
-    /*private void stopVideos(){
-        if(video1.getPlayer() != null) {
-            if (video1.getPlayer().isPlaying()) video1.getPlayer().stop();
-        }
-        if(video2.getPlayer() != null){
-            if(video2.getPlayer().isPlaying()) video2.getPlayer().stop();
-        }
-        if(video3.getPlayer() != null){
-            if(video3.getPlayer().isPlaying()) video3.getPlayer().stop();
-        }
-        if(video4.getPlayer() != null) {
-            if (video4.getPlayer().isPlaying()) video4.getPlayer().stop();
-        }
-    }*/
 
     private void showContainers(){
 //        if(currCountVideos == 0){
