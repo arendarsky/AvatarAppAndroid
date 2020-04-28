@@ -40,6 +40,8 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     private List<PersonRatingDTO> data = new ArrayList<>();
     private RecyclerClickListener clickListener;
     private SimpleExoPlayer player;
+    private ArrayList<MediaSource> mediaSources = new ArrayList<MediaSource>();
+    private DataSource.Factory factory;
 
     @NonNull
     @Override
@@ -68,6 +70,8 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
                 }
             }
         });
+        factory = new DefaultDataSourceFactory(context,
+                Util.getUserAgent(context, "XCE FACTOR"));
     }
 
     private boolean clickable = true;
@@ -104,9 +108,13 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
                     clickable = false;
                     holder.video.setPlayer(null);
                     holder.video.setPlayer(player);
-                    holder.setVideoName(personRatingDTO.getVideo().getName());
+
+                    /*holder.setVideoName(personRatingDTO.getVideo().getName());
                     holder.setVideoSource();
-                    player.prepare(holder.videoSource);
+                    player.prepare(holder.videoSource);*/
+
+                    player.prepare(mediaSources.get(position));
+
                     player.setPlayWhenReady(true);
                     holder.start.setVisibility(View.GONE);
                     holder.image.setVisibility(View.INVISIBLE);
@@ -195,6 +203,11 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
 
     void setItems(List<PersonRatingDTO> newData){
         data.addAll(newData);
+        for(PersonRatingDTO person : data){
+            String videoName = person.getVideo().getName();
+            mediaSources.add(new ProgressiveMediaSource.Factory(factory)
+                    .createMediaSource(Uri.parse(SERVER_NAME + "/api/video/" + videoName)));
+        }
         notifyDataSetChanged();
     }
 
@@ -235,11 +248,11 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
 
             start = itemView.findViewById(R.id.rating_item_start);
 
-            DefaultBandwidthMeter defaultBandwidthMeter = new DefaultBandwidthMeter.Builder(itemView.getContext()).build();
+            /*DefaultBandwidthMeter defaultBandwidthMeter = new DefaultBandwidthMeter.Builder(itemView.getContext()).build();
 
             // Produces DataSource instances through which media data is loaded.
             dataSourceFactory = new DefaultDataSourceFactory(itemView.getContext(),
-                    Util.getUserAgent(itemView.getContext(), "XCE FACTOR"), defaultBandwidthMeter);
+                    Util.getUserAgent(itemView.getContext(), "XCE FACTOR"), defaultBandwidthMeter);*/
 
 
 
