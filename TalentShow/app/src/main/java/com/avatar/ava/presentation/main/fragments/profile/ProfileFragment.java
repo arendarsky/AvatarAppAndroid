@@ -31,6 +31,7 @@ import com.avatar.ava.domain.entities.ProfileDTO;
 import com.avatar.ava.domain.entities.VideoDTO;
 import com.avatar.ava.presentation.main.BottomSheetFragments.ProfileVideoBottomSheet;
 import com.avatar.ava.presentation.main.MainScreenActivity;
+import com.avatar.ava.presentation.main.MainScreenPostman;
 import com.bumptech.glide.Glide;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaSource;
@@ -162,43 +163,9 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         // Required empty public constructor
     }
 
-
-
-    private SimpleExoPlayer exoPlayer;
-
-    @BindView(R.id.fragment_profile_close_fullscreen)
-    ImageButton closeBtn;
-
-    @BindView(R.id.fragment_profile_fullscreen)
-    PlayerView playerView;
-
-    private DataSource.Factory dataSourceFactory;
-    private MediaSource videoSource;
-
-    @OnClick(R.id.fragment_profile_close_fullscreen)
-    void closeFullscreen(){
-        //update();
-        exoPlayer.stop();
-        playerView.setVisibility(View.INVISIBLE);
-        closeBtn.setVisibility(View.INVISIBLE);
-    }
-
     private void toFullscreen(int id){
         if(currCountVideos > id){
-            videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
-                    .createMediaSource(Uri.parse(SERVER_NAME + "/api/video/" + videos.get(id).getName()));
-            playerView.setPlayer(exoPlayer);
-            exoPlayer.prepare(videoSource);
-
-            playerView.setVisibility(View.VISIBLE);
-            closeBtn.setVisibility(View.VISIBLE);
-
-        /*container1.setVisibility(View.INVISIBLE);
-        container2.setVisibility(View.INVISIBLE);
-        container3.setVisibility(View.INVISIBLE);
-        container4.setVisibility(View.INVISIBLE);*/
-
-            exoPlayer.setPlayWhenReady(true);
+            ((MainScreenPostman) activity).openFullScreen(videos.get(id).getName());
         }
 
     }
@@ -248,9 +215,6 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         activity = (MainScreenActivity) getActivity();
         if (activity != null) activity.showExit();
         //playerView = new PlayerView(appContext);
-        exoPlayer = new SimpleExoPlayer.Builder(appContext).build();
-        dataSourceFactory = new DefaultDataSourceFactory(appContext,
-                Util.getUserAgent(appContext, "XCE FACTOR"));
     }
 
     @Override
@@ -258,7 +222,6 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         super.onDetach();
 
 
-        exoPlayer.release();
     }
 
     private String delNameVideo = "";
