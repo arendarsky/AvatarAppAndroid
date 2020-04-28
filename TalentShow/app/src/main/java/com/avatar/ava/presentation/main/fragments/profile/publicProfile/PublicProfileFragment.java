@@ -2,7 +2,6 @@ package com.avatar.ava.presentation.main.fragments.profile.publicProfile;
 
 import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -29,14 +28,7 @@ import com.avatar.ava.domain.entities.PublicProfileDTO;
 import com.avatar.ava.domain.entities.VideoDTO;
 import com.avatar.ava.presentation.main.MainScreenPostman;
 import com.bumptech.glide.Glide;
-import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.source.MediaSource;
-import com.google.android.exoplayer2.source.ProgressiveMediaSource;
-import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.PlayerView;
-import com.google.android.exoplayer2.upstream.DataSource;
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
-import com.google.android.exoplayer2.util.Util;
 
 import java.util.ArrayList;
 
@@ -171,24 +163,11 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
 
 
 
-    SimpleExoPlayer player;
-
     @BindView(R.id.fragment_public_profile_close_fullscreen)
     ImageButton closeBtn;
 
     @BindView(R.id.fragment_public_profile_fullscreen)
     PlayerView playerView;
-
-    private DataSource.Factory dataSourceFactory;
-    MediaSource videoSource;
-
-    @OnClick(R.id.fragment_public_profile_close_fullscreen)
-    public void closeFullscreen(){
-        //update();
-        player.stop();
-        playerView.setVisibility(View.INVISIBLE);
-        closeBtn.setVisibility(View.INVISIBLE);
-    }
 
     private void toFullscreen(int id){
         if(currCountVideos > id){
@@ -196,37 +175,27 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
                 ((MainScreenPostman) activity).openFullScreen(videos.get(id).getName());
             } catch (Exception e) {
                 e.printStackTrace();
-            }
-//            videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
-//                    .createMediaSource(Uri.parse(SERVER_NAME + "/api/video/" + videos.get(id).getName()));
-//            playerView.setPlayer(player);
-//            player.prepare(videoSource);
-//
-//            playerView.setVisibility(View.VISIBLE);
-//            closeBtn.setVisibility(View.VISIBLE);
-//
-//            player.setPlayWhenReady(true);
-        }
+            }}
 
     }
 
     @OnClick(R.id.fragment_public_profile_container1)
-    public void container1Clicked(){
+    void container1Clicked(){
         toFullscreen(0);
     }
 
     @OnClick(R.id.fragment_public_profile_container2)
-    public void container2Clicked(){
+    void container2Clicked(){
         toFullscreen(1);
     }
 
     @OnClick(R.id.fragment_public_profile_container3)
-    public void container3Clicked(){
+    void container3Clicked(){
         toFullscreen(2);
     }
 
     @OnClick(R.id.fragment_public_profile_container4)
-    public void container4Clicked(){
+    void container4Clicked(){
         toFullscreen(3);
     }
 
@@ -238,9 +207,6 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
         Toothpick.inject(this, Toothpick.openScope(App.class));
         presenter.getProfile(id);
         description.setEnabled(false);
-        player = new SimpleExoPlayer.Builder(appContext).build();
-        dataSourceFactory = new DefaultDataSourceFactory(appContext,
-                Util.getUserAgent(appContext, "XCE FACTOR"));
     }
 
 
@@ -272,7 +238,6 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
             currCountVideos = 0;
         }
 
-        showContainers();
         showVideos();
     }
 
@@ -286,24 +251,6 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
         progressBar.setVisibility(View.INVISIBLE);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        //stopVideos();
-    }
-
-    private void showContainers(){
-//        if(currCountVideos == 0){
-//            container2.setVisibility(View.INVISIBLE);
-//            container3.setVisibility(View.INVISIBLE);
-//            container4.setVisibility(View.INVISIBLE);
-//        }else if(currCountVideos == 1){
-//            container3.setVisibility(View.INVISIBLE);
-//            container4.setVisibility(View.INVISIBLE);
-//        }else if(currCountVideos == 2){
-//            container4.setVisibility(View.INVISIBLE);
-//        }
-    }
     private void showVideos(){
         if(currCountVideos >= 1){
             container1.setVisibility(View.VISIBLE);

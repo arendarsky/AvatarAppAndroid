@@ -39,6 +39,7 @@ public class VideoRepository implements IVideoRepository {
     private PersonDTO currentPerson;
     private Set<PersonDTO> personDTOSet = new LinkedHashSet<>();
     private String convertedFilePath;
+    private Uri loadingVideo;
 
 
     @Inject
@@ -50,6 +51,7 @@ public class VideoRepository implements IVideoRepository {
 
     @Override
     public Completable uploadAndSetInterval(Uri fileURI, Float beginTime, Float endTime){
+        loadingVideo = fileURI;
         File file = new File(getFilePathFromUri(appContext, fileURI));
         this.convertedFilePath = file.getAbsolutePath().substring(0,
                 file.getAbsolutePath().lastIndexOf(".")) + "1"
@@ -72,7 +74,7 @@ public class VideoRepository implements IVideoRepository {
                         preferencesRepository.getToken(),
                         name,
                         (double) beginTime * 1000,
-                        (double) endTime * 1000)));
+                        (double) endTime * 1000))).doOnComplete(() -> loadingVideo = null);
     }
 
     @SuppressWarnings("unused")
@@ -182,4 +184,7 @@ public class VideoRepository implements IVideoRepository {
     }
 
 
+    public Uri getLoadingVideo() {
+        return loadingVideo;
+    }
 }

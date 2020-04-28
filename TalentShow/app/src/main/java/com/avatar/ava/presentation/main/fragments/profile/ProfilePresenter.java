@@ -91,4 +91,8 @@ public class ProfilePresenter extends MvpPresenter<ProfileView> {
                         },
                         error -> getViewState().showMessage(errorMessage));
     }
+
+    Uri getLoadingVideo() {
+        return interactor.getLoadingVideo();
+    }
 }

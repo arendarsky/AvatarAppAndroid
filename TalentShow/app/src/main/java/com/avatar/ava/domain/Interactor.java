@@ -114,4 +114,8 @@ public class Interactor {
     public Single<PublicProfileDTO> getPublicProfile(int id){
         return this.profileRepository.getPublicProfile(id);
     }
+
+    public Uri getLoadingVideo(){
+        return videoRepository.getLoadingVideo();
+    }
 }

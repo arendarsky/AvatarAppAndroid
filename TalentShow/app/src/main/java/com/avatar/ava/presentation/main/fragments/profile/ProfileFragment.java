@@ -214,7 +214,6 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         presenter.getProfile();
         activity = (MainScreenActivity) getActivity();
         if (activity != null) activity.showExit();
-        //playerView = new PlayerView(appContext);
     }
 
     @Override
@@ -275,13 +274,39 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         likes.setText(person.getLikesNumber() + " Лайков");
         description.setText(person.getDescription());
         videos = person.getVideos();
+        Uri loadingVideo = presenter.getLoadingVideo();
+
         currCountVideos = videos.size();
+
+        if (loadingVideo != null) currCountVideos += 1;
+
         showContainers();
         showHints();
         showVideos();
 
 
-
+        if (loadingVideo != null) {
+            Log.d("Profile", loadingVideo.toString());
+            switch (currCountVideos){
+                case (1):
+                    videoHint1.setVisibility(View.VISIBLE);
+                    videoHint1.setText("Загружается");
+                    break;
+                case (2):
+                    videoHint2.setVisibility(View.VISIBLE);
+                    videoHint2.setText("Загружается");
+                    break;
+                case (3):
+                    videoHint3.setVisibility(View.VISIBLE);
+                    videoHint3.setText("Загружается");
+                    break;
+                case (4):
+                    videoHint4.setVisibility(View.VISIBLE);
+                    videoHint4.setText("Загружается");
+                    break;
+            }
+            setupVideo(currCountVideos, loadingVideo);
+        }
     }
 
     private void showHints(){
@@ -337,53 +362,55 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     }
 
 
-    private void showImage(int id, ImageView iv){
-        Glide.with(this)
-                .load(SERVER_NAME + "/api/video/" + videos.get(id).getName())
-                .centerCrop()
-                .into(iv);
+    private void showImage(int id, ImageView iv, Uri uri){
+        if (uri != null || id < videos.size())
+            Glide.with(this)
+                    .load(uri == null ? SERVER_NAME + "/api/video/" + videos.get(id).getName() : uri)
+                    .centerCrop()
+                    .into(iv);
+
     }
 
     private void setupVideo(int num, Uri uri){
 
         switch (num){
             case 1:
-                showImage(0, video1);
+                showImage(0, video1, uri);
                 break;
 
             case 2:
-                showImage(1, video2);
+                showImage(1, video2, uri);
                 break;
 
             case 3:
-                showImage(2, video3);
+                showImage(2, video3, uri);
                 break;
 
             case 4:
-                showImage(3, video4);
+                showImage(3, video4, uri);
                 break;
         }
     }
 
     private void showVideos(){
         if(currCountVideos >= 1){
-            setupVideo(1, Uri.parse(SERVER_NAME + "/api/video/" + videos.get(0).getName()));
+            setupVideo(1, null);
             video1.setVisibility(View.VISIBLE);
             addVideoBtn1.setVisibility(View.INVISIBLE);
             settings1.setVisibility(View.VISIBLE);
             if(currCountVideos >= 2){
-                setupVideo(2, Uri.parse(SERVER_NAME + "/api/video/" + videos.get(1).getName()));
+                setupVideo(2, null);
                 video2.setVisibility(View.VISIBLE);
                 addVideoBtn2.setVisibility(View.INVISIBLE);
                 settings2.setVisibility(View.VISIBLE);
                 if(currCountVideos >= 3){
-                    setupVideo(3, Uri.parse(SERVER_NAME + "/api/video/" + videos.get(2).getName()));
+                    setupVideo(3, null);
                     video3.setVisibility(View.VISIBLE);
                     addVideoBtn3.setVisibility(View.INVISIBLE);
                     settings3.setVisibility(View.VISIBLE);
                 }
                 if(currCountVideos == 4){
-                    setupVideo(4, Uri.parse(SERVER_NAME + "/api/video/" + videos.get(3).getName()));
+                    setupVideo(4, null);
                     video4.setVisibility(View.VISIBLE);
                     addVideoBtn4.setVisibility(View.INVISIBLE);
                     settings4.setVisibility(View.VISIBLE);

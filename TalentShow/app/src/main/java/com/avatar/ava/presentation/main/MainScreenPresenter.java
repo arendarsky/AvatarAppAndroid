@@ -23,6 +23,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.schedulers.Schedulers;
 import ru.terrakok.cicerone.Router;
@@ -60,6 +61,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
 
     private List<PrevState> previousStates = new ArrayList<>();
     private Uri selectedFileUri;
+
 
     @Inject
     MainScreenPresenter(Router router, Interactor interactor){
@@ -225,7 +227,6 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
 
                                    @Override
                                    public void onError(Throwable e) {
-                                       getViewState().hideProgressBar();
                                        getViewState().showMessage("Ошибка при загрузке видео. Попробуйте позже");
                                    }
                                }
