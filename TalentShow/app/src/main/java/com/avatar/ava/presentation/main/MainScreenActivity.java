@@ -2,9 +2,11 @@ package com.avatar.ava.presentation.main;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.icu.util.BuddhistCalendar;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,6 +36,7 @@ import com.avatar.ava.presentation.main.BottomSheetFragments.ProfileBottomSheet;
 import com.avatar.ava.presentation.main.BottomSheetFragments.ProfileVideoBottomSheet;
 import com.avatar.ava.presentation.main.fragments.FragmentChooseBestMain;
 import com.avatar.ava.presentation.main.fragments.FragmentFileLoadMain;
+import com.avatar.ava.presentation.main.fragments.FullScreenVideoDialog;
 import com.avatar.ava.presentation.main.fragments.casting.CastingFragment;
 import com.avatar.ava.presentation.main.fragments.profile.ProfileFragment;
 import com.avatar.ava.presentation.main.fragments.profile.profileSettings.ProfileSettingsFragment;
@@ -127,7 +130,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         setContentView(R.layout.activity_main_frame);
         ButterKnife.bind(this);
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
-        bottomNavigationView.setSelectedItemId(R.id.nav_casting);
+        if (savedInstanceState == null) bottomNavigationView.setSelectedItemId(R.id.nav_casting);
     }
 
     @Override
@@ -137,8 +140,8 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     }
 
     @Override
-    protected void onResumeFragments() {
-        super.onResumeFragments();
+    protected void onResume() {
+        super.onResume();
         navigatorHolder.setNavigator(navigator);
     }
 
@@ -165,6 +168,17 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
                 getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_container)
                         instanceof FragmentFileLoadMain
         );
+    }
+
+    @Override
+    public void openFullScreen(String videoName) {
+        FullScreenVideoDialog dialog = new FullScreenVideoDialog();
+        Bundle bundle = new Bundle();
+        bundle.putString("videoName", videoName);
+//        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        dialog.setArguments(bundle);
+        dialog.show(getSupportFragmentManager(), FullScreenVideoDialog.TAG);
+
     }
 
     @Override
@@ -317,12 +331,16 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
 
     @Override
     public void onBackPressed() {
-        loadVideoToServer = false;
-        boolean closeApp = presenter.backButtonPressed(
-                getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_container)
-                        instanceof FragmentFileLoadMain
-        );
-        if (closeApp) super.onBackPressed();
+        if (!(getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_container)
+                instanceof FullScreenVideoDialog)) {
+            loadVideoToServer = false;
+            boolean closeApp = presenter.backButtonPressed(
+                    getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_container)
+                            instanceof FragmentFileLoadMain
+            );
+            if (closeApp) super.onBackPressed();
+        }
+        else super.onBackPressed();
     }
 
     private boolean loadVideoToServer = false;

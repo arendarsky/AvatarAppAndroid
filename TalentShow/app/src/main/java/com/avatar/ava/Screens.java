@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 
 import com.avatar.ava.presentation.main.fragments.FragmentChooseBestMain;
 import com.avatar.ava.presentation.main.fragments.FragmentFileLoadMain;
+import com.avatar.ava.presentation.main.fragments.FullScreenVideoDialog;
 import com.avatar.ava.presentation.main.fragments.casting.CastingFragment;
 import com.avatar.ava.presentation.main.fragments.notifications.FragmentNotifications;
 import com.avatar.ava.presentation.main.fragments.profile.ProfileFragment;
@@ -29,10 +30,7 @@ public class Screens {
     public static final class AuthorisationScreen extends SupportAppScreen{
         @Override
         public Fragment getFragment() {
-            Bundle bundle = new Bundle();
-            AuthorisationFragment fragment = AuthorisationFragment.newInstance();
-            fragment.setArguments(bundle);
-            return fragment;
+            return AuthorisationFragment.newInstance();
         }
     }
 
@@ -40,10 +38,7 @@ public class Screens {
 
         @Override
         public Fragment getFragment() {
-            Bundle bundle = new Bundle();
-            FragmentRegistration fragmentRegistration = FragmentRegistration.newInstance();
-            fragmentRegistration.setArguments(bundle);
-            return fragmentRegistration;
+            return FragmentRegistration.newInstance();
         }
     }
 
@@ -51,10 +46,7 @@ public class Screens {
 
         @Override
         public Fragment getFragment() {
-            Bundle bundle = new Bundle();
-            RatingFragment ratingFragment = new RatingFragment();
-            ratingFragment.setArguments(bundle);
-            return ratingFragment;
+            return new RatingFragment();
         }
     }
 
@@ -62,20 +54,14 @@ public class Screens {
 
         @Override
         public Fragment getFragment() {
-            Bundle bundle = new Bundle();
-            ChooseAuthFragment chooseAuthFragment = new ChooseAuthFragment();
-            chooseAuthFragment.setArguments(bundle);
-            return chooseAuthFragment;
+            return new ChooseAuthFragment();
         }
     }
 
     public static final class FileLoadScreen extends SupportAppScreen{
         @Override
         public Fragment getFragment() {
-            Bundle bundle = new Bundle();
-            FragmentEnterFileLoad fragment = new FragmentEnterFileLoad();
-            fragment.setArguments(bundle);
-            return fragment;
+            return new FragmentEnterFileLoad();
         }
     }
 
@@ -83,10 +69,7 @@ public class Screens {
     public static final class CastingScreen extends SupportAppScreen{
         @Override
         public Fragment getFragment() {
-            Bundle bundle = new Bundle();
-            CastingFragment fragment = new CastingFragment();
-            fragment.setArguments(bundle);
-            return fragment;
+            return new CastingFragment();
         }
     }
 
@@ -131,30 +114,21 @@ public class Screens {
     public static final class ChangePasswordScreen extends SupportAppScreen{
         @Override
         public Fragment getFragment() {
-            Bundle bundle = new Bundle();
-            ChangePasswordFragment fragment = new ChangePasswordFragment();
-            fragment.setArguments(bundle);
-            return fragment;
+            return new ChangePasswordFragment();
         }
     }
 
     public static final class FileLoadMainScreen extends SupportAppScreen{
         @Override
         public Fragment getFragment() {
-            Bundle bundle = new Bundle();
-            FragmentFileLoadMain fragment = new FragmentFileLoadMain();
-            fragment.setArguments(bundle);
-            return fragment;
+            return new FragmentFileLoadMain();
         }
     }
 
     public static final class ProfileSettingsScreen extends SupportAppScreen{
         @Override
         public Fragment getFragment() {
-            Bundle bundle = new Bundle();
-            ProfileSettingsFragment fragment = new ProfileSettingsFragment();
-            fragment.setArguments(bundle);
-            return fragment;
+            return new ProfileSettingsFragment();
         }
     }
 
@@ -162,10 +136,7 @@ public class Screens {
 
         @Override
         public Fragment getFragment() {
-            Bundle bundle = new Bundle();
-            FragmentFileLoadJust fragment = new FragmentFileLoadJust();
-            fragment.setArguments(bundle);
-            return fragment;
+            return new FragmentFileLoadJust();
         }
     }
 
@@ -173,10 +144,7 @@ public class Screens {
 
         @Override
         public Fragment getFragment() {
-            Bundle bundle = new Bundle();
-            ProfileFragment fragment = new ProfileFragment();
-            fragment.setArguments(bundle);
-            return fragment;
+            return new ProfileFragment();
         }
     }
 
@@ -184,10 +152,7 @@ public class Screens {
 
         @Override
         public Fragment getFragment() {
-            Bundle bundle = new Bundle();
-            FragmentNotifications fragment = new FragmentNotifications();
-            fragment.setArguments(bundle);
-            return fragment;
+            return new FragmentNotifications();
         }
     }
 
@@ -195,10 +160,7 @@ public class Screens {
 
         @Override
         public Fragment getFragment() {
-            Bundle bundle = new Bundle();
-            ConfirmMailFragment fragment = new ConfirmMailFragment();
-            fragment.setArguments(bundle);
-            return fragment;
+            return new ConfirmMailFragment();
         }
     }
 

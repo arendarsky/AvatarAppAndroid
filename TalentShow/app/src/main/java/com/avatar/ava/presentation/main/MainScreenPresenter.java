@@ -6,6 +6,9 @@ import androidx.fragment.app.Fragment;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
+import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
+import com.arellomobile.mvp.viewstate.strategy.SingleStateStrategy;
+import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 import com.avatar.ava.Screens;
 import com.avatar.ava.R;
 import com.avatar.ava.domain.Interactor;
@@ -55,7 +58,6 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
     private final boolean SHOW_BACK = true;
     private final boolean HIDE_BACK = false;
 
-
     private List<PrevState> previousStates = new ArrayList<>();
     private Uri selectedFileUri;
 
@@ -65,6 +67,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
         this.interactor = interactor;
     }
 
+    @StateStrategyType(SingleStateStrategy.class)
     boolean onNavClicked(int id){
         getViewState().clearTopView();
         getViewState().stopVideoFromCasting();
@@ -91,6 +94,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
         return false;
     }
 
+    @StateStrategyType(AddToEndSingleStrategy.class)
     void changeFragment(int code){
         getViewState().clearTopView();
         switch (code){
@@ -128,6 +132,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
         }
     }
 
+    @StateStrategyType(AddToEndSingleStrategy.class)
     void openBest30Screen(Uri uri){
         selectedFileUri = uri;
         getViewState().clearTopView();
@@ -138,6 +143,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
         router.navigateTo(new Screens.ChooseBestMainScreen(uri));
     }
 
+    @StateStrategyType(AddToEndSingleStrategy.class)
     void openPublicProfile(int id, Fragment prevScreen){
         getViewState().clearTopView();
         getViewState().showBackButton();
@@ -151,6 +157,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
         router.navigateTo(new Screens.PublicProfileScreen(id));
     }
 
+    @StateStrategyType(AddToEndSingleStrategy.class)
     boolean backButtonPressed(boolean fileLoad){
         if(!previousStates.isEmpty()) {
             decodePrevState(previousStates.remove(previousStates.size() - 1));
@@ -205,9 +212,15 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new DisposableCompletableObserver() {
                                    @Override
+                                   protected void onStart() {
+                                       super.onStart();
+                                       returnToRoot();
+                                   }
+
+                                   @Override
                                    public void onComplete() {
                                        getViewState().setLoadVideoToServer(false);
-                                       returnToRoot();
+                                       getViewState().showMessage("Видео успешно загрузилось");
                                    }
 
                                    @Override
