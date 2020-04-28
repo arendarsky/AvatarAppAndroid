@@ -101,4 +101,9 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
         Toast.makeText(appContext, message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        adapter.stopPlayer();
+    }
 }

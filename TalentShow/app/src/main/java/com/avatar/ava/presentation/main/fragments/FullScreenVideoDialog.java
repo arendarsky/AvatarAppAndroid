@@ -93,6 +93,7 @@ public class FullScreenVideoDialog extends DialogFragment {
 
         playerView.showController();
 
+
         player.setPlayWhenReady(true);
 
         return v;

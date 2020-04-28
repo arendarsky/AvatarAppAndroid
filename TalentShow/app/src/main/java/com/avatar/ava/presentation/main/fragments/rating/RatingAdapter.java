@@ -176,9 +176,6 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         super.onViewAttachedToWindow(holder);
 
         Log.d("RatingAdapterLog", "viewAttach " + holder.name.getText().toString() + " " + player.getPlaybackState());
-        if(player != null){
-
-        }
 
     }
 
@@ -257,5 +254,11 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
             this.videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
                     .createMediaSource(Uri.parse(SERVER_NAME + "/api/video/" + videoName));
         }
+    }
+
+    void stopPlayer(){
+        if (player.isPlaying())
+            player.stop();
+
     }
 }

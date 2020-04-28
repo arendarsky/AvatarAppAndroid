@@ -231,6 +231,8 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         player.setPlayWhenReady(true);
     }
 
+
+
     public void stopVideo(){
         if(player != null)
             player.stop();
