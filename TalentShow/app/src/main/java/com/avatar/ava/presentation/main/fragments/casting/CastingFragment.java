@@ -177,7 +177,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         if (context instanceof Activity) activity = (Activity) context;
     }
 
-    @OnClick(R.id.casting_activity_avatar)
+    @OnClick({R.id.casting_activity_avatar, R.id.activity_casting_name})
     void avatarClicked(){
         try {
             ((MainScreenPostman) activity).openPublicProfile(presenter.getPersonId());

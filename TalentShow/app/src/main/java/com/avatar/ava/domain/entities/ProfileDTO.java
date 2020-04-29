@@ -1,5 +1,7 @@
 package com.avatar.ava.domain.entities;
 
+import android.net.Uri;
+
 import com.google.gson.annotations.SerializedName;
 
 import org.parceler.ParcelConstructor;
@@ -81,5 +83,12 @@ public class ProfileDTO {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public void addLoadingVideo(Uri uri){
+        VideoDTO tmp = new VideoDTO();
+        tmp.setName(uri.toString());
+        tmp.setStartTime(-1);
+        this.videos.add(tmp);
     }
 }

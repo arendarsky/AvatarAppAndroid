@@ -31,11 +31,16 @@ public class ProfilePresenter extends MvpPresenter<ProfileView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(person -> {
+                            if (this.getLoadingVideo() != null)
+                                person.addLoadingVideo(this.getLoadingVideo());
                             getViewState().setDataProfile(person);
                             getViewState().hideProgressBar();
                             getViewState().update();
                         },
-                        error -> getViewState().showMessage(errorMessage));
+                        error -> {
+                            getViewState().hideProgressBar();
+                            getViewState().showMessage(errorMessage);
+                        });
     }
 
     void setDescription(String description){
@@ -43,7 +48,10 @@ public class ProfilePresenter extends MvpPresenter<ProfileView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> getViewState().hideProgressBar(),
-                        error -> getViewState().showMessage(errorMessage));
+                        error -> {
+                            getViewState().hideProgressBar();
+                            getViewState().showMessage(errorMessage);
+                        });
 
     }
 
@@ -78,7 +86,10 @@ public class ProfilePresenter extends MvpPresenter<ProfileView> {
                             getViewState().hideProgressBar();
                             this.getProfile();
                         },
-                        error -> getViewState().showMessage(errorMessage));
+                        error -> {
+                            getViewState().hideProgressBar();
+                            getViewState().showMessage(errorMessage);
+                        });
     }
 
     void setActive(String fileName){
@@ -89,7 +100,10 @@ public class ProfilePresenter extends MvpPresenter<ProfileView> {
                             getViewState().hideProgressBar();
                             this.getProfile();
                         },
-                        error -> getViewState().showMessage(errorMessage));
+                        error -> {
+                            getViewState().hideProgressBar();
+                            getViewState().showMessage(errorMessage);
+                        });
     }
 
     Uri getLoadingVideo() {

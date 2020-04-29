@@ -9,4 +9,5 @@ public interface ProfileView extends MvpView {
     void update();
     void showMessage(String message);
     void hideProgressBar();
+    void hideLoadingString();
 }

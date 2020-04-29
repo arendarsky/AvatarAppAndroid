@@ -313,6 +313,13 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     }
 
     @Override
+    public void hideProfileLoadingString() {
+        Fragment fragment = getSupportFragmentManager().
+                findFragmentById(R.id.activity_main_frame_container);
+        if (fragment instanceof ProfileFragment) ((ProfileFragment) fragment).hideLoadingString();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_PICK_IMAGE && data != null)

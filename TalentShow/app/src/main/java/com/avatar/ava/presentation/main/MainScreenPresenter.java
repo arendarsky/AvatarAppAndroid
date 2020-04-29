@@ -221,12 +221,13 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
 
                                    @Override
                                    public void onComplete() {
-                                       getViewState().setLoadVideoToServer(false);
+                                       getViewState().hideProfileLoadingString();
                                        getViewState().showMessage("Видео успешно загрузилось");
                                    }
 
                                    @Override
                                    public void onError(Throwable e) {
+                                       getViewState().hideProfileLoadingString();
                                        getViewState().showMessage("Ошибка при загрузке видео. Попробуйте позже");
                                    }
                                }

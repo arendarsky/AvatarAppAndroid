@@ -22,4 +22,5 @@ public interface MainScreenView extends MvpView {
     void pickVideo();
     void captureVideo();
     void hideProgressBar();
+    void hideProfileLoadingString();
 }

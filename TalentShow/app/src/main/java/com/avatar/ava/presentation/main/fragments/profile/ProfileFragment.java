@@ -9,9 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,14 +31,6 @@ import com.avatar.ava.presentation.main.BottomSheetFragments.ProfileVideoBottomS
 import com.avatar.ava.presentation.main.MainScreenActivity;
 import com.avatar.ava.presentation.main.MainScreenPostman;
 import com.bumptech.glide.Glide;
-import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.source.MediaSource;
-import com.google.android.exoplayer2.source.ProgressiveMediaSource;
-import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
-import com.google.android.exoplayer2.ui.PlayerView;
-import com.google.android.exoplayer2.upstream.DataSource;
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
-import com.google.android.exoplayer2.util.Util;
 
 import java.util.ArrayList;
 
@@ -151,6 +141,8 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     @BindView(R.id.profile_progress_bar)
     ProgressBar progressBar;
 
+    private TextView loadingTextView;
+
 
 
     @ProvidePresenter
@@ -216,13 +208,6 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         if (activity != null) activity.showExit();
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-
-
-    }
-
     private String delNameVideo = "";
 
     public void deleteVideo(){
@@ -274,79 +259,93 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         likes.setText(person.getLikesNumber() + " Лайков");
         description.setText(person.getDescription());
         videos = person.getVideos();
-        Uri loadingVideo = presenter.getLoadingVideo();
 
         currCountVideos = videos.size();
-
-        if (loadingVideo != null) currCountVideos += 1;
-
         showContainers();
         showHints();
         showVideos();
 
-
-        if (loadingVideo != null) {
-            Log.d("Profile", loadingVideo.toString());
-            switch (currCountVideos){
-                case (1):
-                    videoHint1.setVisibility(View.VISIBLE);
-                    videoHint1.setText("Загружается");
-                    break;
-                case (2):
-                    videoHint2.setVisibility(View.VISIBLE);
-                    videoHint2.setText("Загружается");
-                    break;
-                case (3):
-                    videoHint3.setVisibility(View.VISIBLE);
-                    videoHint3.setText("Загружается");
-                    break;
-                case (4):
-                    videoHint4.setVisibility(View.VISIBLE);
-                    videoHint4.setText("Загружается");
-                    break;
-            }
-            setupVideo(currCountVideos, loadingVideo);
-        }
     }
 
     private void showHints(){
+        String loading = "Загружается";
+        String moderation = "На модерации";
+        String casting = "В кастинге";
+
         if(videos.size() >= 1){
-            String moderation = "На модерации";
-            if(!videos.get(0).isApproved()){
-                videoHint1.setText(moderation);
+
+            if(videos.get(0).getStartTime()==-1) {
                 videoHint1.setVisibility(View.VISIBLE);
+                settings1.setVisibility(View.INVISIBLE);
+                loadingTextView = videoHint1;
+                videoHint1.setText(loading);
             }
-            String casting = "В кастинге";
-            if(videos.get(0).isActive() && videos.get(0).isApproved()){
-                videoHint1.setText(casting);
-                videoHint1.setVisibility(View.VISIBLE);
+            else {
+                if (!videos.get(0).isApproved()) {
+                    videoHint1.setVisibility(View.VISIBLE);
+                    videoHint1.setText(moderation);
+                }
+                if (videos.get(0).isActive() && videos.get(0).isApproved()) {
+                    videoHint1.setText(casting);
+                    videoHint1.setVisibility(View.VISIBLE);
+                }
             }
+
             if(videos.size() >= 2){
-                if(!videos.get(1).isApproved()){
-                    videoHint2.setText(moderation);
+
+                if(videos.get(1).getStartTime() == -1) {
                     videoHint2.setVisibility(View.VISIBLE);
+                    videoHint2.setText(loading);
+                    loadingTextView = videoHint2;
+                    settings2.setVisibility(View.INVISIBLE);
                 }
-                if(videos.get(1).isActive() && videos.get(1).isApproved()){
-                    videoHint2.setText(casting);
-                    videoHint2.setVisibility(View.VISIBLE);
+                else {
+                    if (!videos.get(1).isApproved()) {
+                        videoHint2.setVisibility(View.VISIBLE);
+                        videoHint2.setText(moderation);
+                    }
+                    if (videos.get(1).isActive() && videos.get(1).isApproved()) {
+                        videoHint2.setVisibility(View.VISIBLE);
+                        videoHint2.setText(casting);
+                    }
                 }
+
                 if(videos.size() >= 3){
-                    if(!videos.get(2).isApproved()){
-                        videoHint3.setText(moderation);
+
+                    if(videos.get(2).getStartTime() == -1){
                         videoHint3.setVisibility(View.VISIBLE);
+                        videoHint3.setText(loading);
+                        loadingTextView = videoHint3;
+                        settings3.setVisibility(View.INVISIBLE);
                     }
-                    if(videos.get(2).isActive() && videos.get(2).isApproved()){
-                        videoHint3.setText(casting);
-                        videoHint3.setVisibility(View.VISIBLE);
-                    }
-                    if(videos.size() >= 4){
-                        if(!videos.get(3).isApproved()){
-                            videoHint4.setText(moderation);
-                            videoHint4.setVisibility(View.VISIBLE);
+                    else {
+                        if (!videos.get(2).isApproved()){
+                            videoHint3.setVisibility(View.VISIBLE);
+                            videoHint3.setText(moderation);
                         }
-                        if(videos.get(3).isActive() && videos.get(3).isApproved()){
-                            videoHint4.setText(casting);
+                        if (videos.get(2).isActive() && videos.get(2).isApproved()){
+                            videoHint3.setVisibility(View.VISIBLE);
+                            videoHint3.setText(casting);
+                        }
+                    }
+
+                    if(videos.size() >= 4){
+
+                        if (videos.get(3).getStartTime() == -1) {
                             videoHint4.setVisibility(View.VISIBLE);
+                            videoHint4.setText(loading);
+                            loadingTextView = videoHint4;
+                            settings4.setVisibility(View.INVISIBLE);
+                        }
+                        else {
+                            if (!videos.get(3).isApproved()){
+                                videoHint4.setVisibility(View.VISIBLE);
+                                videoHint4.setText(moderation);
+                            }
+                            if (videos.get(3).isActive() && videos.get(3).isApproved()) {
+                                videoHint4.setVisibility(View.VISIBLE);
+                                videoHint4.setText(casting);
+                            }
                         }
                     }
                 }
@@ -362,55 +361,60 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     }
 
 
-    private void showImage(int id, ImageView iv, Uri uri){
-        if (uri != null || id < videos.size())
+    private void showImage(int id, ImageView iv){
+        if (!(videos.get(id).getStartTime() == -1))
             Glide.with(this)
-                    .load(uri == null ? SERVER_NAME + "/api/video/" + videos.get(id).getName() : uri)
+                    .load(SERVER_NAME + "/api/video/" + videos.get(id).getName())
+                    .centerCrop()
+                    .into(iv);
+        else
+            Glide.with(this)
+                    .load(Uri.parse(videos.get(id).getName()))
                     .centerCrop()
                     .into(iv);
 
     }
 
-    private void setupVideo(int num, Uri uri){
+    private void setupVideo(int num){
 
         switch (num){
             case 1:
-                showImage(0, video1, uri);
+                showImage(0, video1);
                 break;
 
             case 2:
-                showImage(1, video2, uri);
+                showImage(1, video2);
                 break;
 
             case 3:
-                showImage(2, video3, uri);
+                showImage(2, video3);
                 break;
 
             case 4:
-                showImage(3, video4, uri);
+                showImage(3, video4);
                 break;
         }
     }
 
     private void showVideos(){
         if(currCountVideos >= 1){
-            setupVideo(1, null);
+            setupVideo(1);
             video1.setVisibility(View.VISIBLE);
             addVideoBtn1.setVisibility(View.INVISIBLE);
             settings1.setVisibility(View.VISIBLE);
             if(currCountVideos >= 2){
-                setupVideo(2, null);
+                setupVideo(2);
                 video2.setVisibility(View.VISIBLE);
                 addVideoBtn2.setVisibility(View.INVISIBLE);
                 settings2.setVisibility(View.VISIBLE);
                 if(currCountVideos >= 3){
-                    setupVideo(3, null);
+                    setupVideo(3);
                     video3.setVisibility(View.VISIBLE);
                     addVideoBtn3.setVisibility(View.INVISIBLE);
                     settings3.setVisibility(View.VISIBLE);
                 }
                 if(currCountVideos == 4){
-                    setupVideo(4, null);
+                    setupVideo(4);
                     video4.setVisibility(View.VISIBLE);
                     addVideoBtn4.setVisibility(View.INVISIBLE);
                     settings4.setVisibility(View.VISIBLE);
@@ -527,6 +531,11 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     @Override
     public void hideProgressBar() {
         progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void hideLoadingString() {
+        loadingTextView.setVisibility(View.INVISIBLE);
     }
 
     @OnClick(R.id.fragment_profile_edit_photo)
