@@ -15,12 +15,12 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="17dp"
         android:layout_marginEnd="17dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="18dp"
         app:cardCornerRadius="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/activity_casting_btn_like">
+        app:layout_constraintBottom_toBottomOf="parent">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_height="match_parent"
             android:layout_width="match_parent">
@@ -111,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="45dp"
+                    android:layout_marginBottom="65dp"
                     android:layout_marginTop="13dp"
                     android:fontFamily="@font/roboto"
                     android:gravity="start"
@@ -150,7 +150,7 @@
         android:id="@+id/activity_casting_btn_x"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/red_circle"
+        android:background="@drawable/activity_casting_btn_x"
         android:layout_marginStart="68dp"
         android:layout_marginBottom="28dp"
         android:layout_marginEnd="138dp"
@@ -159,22 +159,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <View
-        android:id="@+id/casting_view_x"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:background="@drawable/white_cross_x"
-        android:elevation="10dp"
-        app:layout_constraintStart_toStartOf="@id/activity_casting_btn_x"
-        app:layout_constraintEnd_toEndOf="@id/activity_casting_btn_x"
-        app:layout_constraintTop_toTopOf="@id/activity_casting_btn_x"
-        app:layout_constraintBottom_toBottomOf="@id/activity_casting_btn_x"/>
+
 
     <View
         android:id="@+id/activity_casting_btn_like"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/green_circle"
+        android:background="@drawable/activity_casting_btn_like"
         android:layout_marginEnd="68dp"
         android:layout_marginBottom="28dp"
         android:elevation="10dp"
@@ -182,15 +173,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <View
-        android:id="@+id/casting_view_heart"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:elevation="10dp"
-        android:background="@drawable/white_heart"
-        app:layout_constraintTop_toTopOf="@id/activity_casting_btn_like"
-        app:layout_constraintBottom_toBottomOf="@id/activity_casting_btn_like"
-        app:layout_constraintEnd_toEndOf="@id/activity_casting_btn_like"
-        app:layout_constraintStart_toStartOf="@id/activity_casting_btn_like"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

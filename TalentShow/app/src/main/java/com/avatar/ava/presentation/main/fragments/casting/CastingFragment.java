@@ -92,11 +92,6 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     @BindView(R.id.activity_casting_btn_x)
     View dislikeButton;
 
-    @BindView(R.id.casting_view_x)
-    View crossView;
-
-    @BindView(R.id.casting_view_heart)
-    View heartView;
 
     @BindView(R.id.casting_fragment_progress_bar)
     ProgressBar progressBar;
@@ -144,8 +139,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         noMoreVideos.setVisibility(View.INVISIBLE);
         likeButton.setVisibility(View.INVISIBLE);
         dislikeButton.setVisibility(View.INVISIBLE);
-        heartView.setVisibility(View.INVISIBLE);
-        crossView.setVisibility(View.INVISIBLE);
+
 
         player.addVideoListener(new VideoListener() {
             @Override
@@ -208,8 +202,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         noMoreVideos.setVisibility(View.INVISIBLE);
         likeButton.setVisibility(View.VISIBLE);
         dislikeButton.setVisibility(View.VISIBLE);
-        heartView.setVisibility(View.VISIBLE);
-        crossView.setVisibility(View.VISIBLE);
+
 
         String videoLink = SERVER_NAME + "/api/video/" + personDTO.getVideo().getName();
         int start = (int)personDTO.getVideo().getStartTime() * 1000;
@@ -274,8 +267,6 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         noMoreVideos.setVisibility(View.VISIBLE);
         likeButton.setVisibility(View.INVISIBLE);
         dislikeButton.setVisibility(View.INVISIBLE);
-        crossView.setVisibility(View.INVISIBLE);
-        heartView.setVisibility(View.INVISIBLE);
         stopVideo();
     }
 

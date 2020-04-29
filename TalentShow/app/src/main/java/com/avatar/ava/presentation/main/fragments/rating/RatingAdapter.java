@@ -86,19 +86,24 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
                 @Override
                 public void onPlayerStateChanged(EventTime eventTime, boolean playWhenReady, int playbackState) {
                     if(playWhenReady && playbackState == Player.STATE_ENDED){
-                        holder.restartButton.setVisibility(View.VISIBLE);
-                        holder.start.setVisibility(View.VISIBLE);
-                        holder.image.setVisibility(View.VISIBLE);
+                        if(holder.video.getPlayer() == null){
+                            holder.start.setVisibility(View.VISIBLE);
+                            holder.image.setVisibility(View.VISIBLE);
+                            holder.restartButton.setVisibility(View.VISIBLE);
+                        }
                     }
                     else if (playWhenReady && playbackState == Player.STATE_READY){
                         holder.progressBar.setVisibility(View.INVISIBLE);
                         holder.start.setVisibility(View.GONE);
                         holder.image.setVisibility(View.INVISIBLE);
+
                     }
                     else {
-                        holder.start.setVisibility(View.VISIBLE);
-                        holder.progressBar.setVisibility(View.VISIBLE);
-                        holder.image.setVisibility(View.VISIBLE);
+                        if(holder.video.getPlayer() == null){
+                            holder.image.setVisibility(View.VISIBLE);
+                            holder.start.setVisibility(View.VISIBLE);
+                            holder.progressBar.setVisibility(View.VISIBLE);
+                        }
                     }
                 }});
 
@@ -132,11 +137,11 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
             player.setPlayWhenReady(true);
         });
 
-        holder.likes.setText("     " + personRatingDTO.getLikesNumber());
+        holder.likes.setText("" + personRatingDTO.getLikesNumber());
         holder.description.setText(personRatingDTO.getDescription());
         String name = personRatingDTO.getName();
         holder.name.setText(name);
-        holder.pos.setText((position + 1) + " место");
+        holder.pos.setText("#" + (position + 1));
         if(personRatingDTO.getPhoto() == null){
             Glide.with(holder.itemView.getContext())
                     .load(R.drawable.empty_profile_icon)
