@@ -208,7 +208,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
     }
 
     void uploadAndSetInterval(Float beginTime, Float endTime){
-        if (endTime - beginTime < 30) {
+        if (endTime - beginTime <= 30) {
             interactor.uploadAndSetInterval(selectedFileUri, beginTime, endTime)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

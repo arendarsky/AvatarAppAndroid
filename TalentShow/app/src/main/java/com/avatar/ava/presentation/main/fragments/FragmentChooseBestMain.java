@@ -87,6 +87,8 @@ public class FragmentChooseBestMain extends Fragment {
 
             rangeSeekBar.setRangeValues((float) 0, duration);
 
+            if(duration > 30)rangeSeekBar.setSelectedMaxValue(30f);
+
             rangeSeekBar.setOnRangeSeekBarChangeListener(
                     (bar, minValue, maxValue) -> {
                         video.seekTo((int) (minValue * 1000));
