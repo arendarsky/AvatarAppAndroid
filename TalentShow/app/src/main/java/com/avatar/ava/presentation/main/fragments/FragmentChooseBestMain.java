@@ -87,9 +87,15 @@ public class FragmentChooseBestMain extends Fragment {
 
             rangeSeekBar.setRangeValues((float) 0, duration);
 
-
             rangeSeekBar.setOnRangeSeekBarChangeListener(
-                    (bar, minValue, maxValue) -> video.seekTo((int) (minValue * 1000))
+                    (bar, minValue, maxValue) -> {
+                        video.seekTo((int) (minValue * 1000));
+                        Log.d("BestMain", minValue + " " + maxValue);
+                        if((maxValue - minValue)  > 30){
+                            Log.d("BestMain", minValue + " " + maxValue);
+                            rangeSeekBar.setSelectedMaxValue(minValue + 30);
+                        }
+                    }
             );
         });
 //        btn.setOnClickListener(v -> {
