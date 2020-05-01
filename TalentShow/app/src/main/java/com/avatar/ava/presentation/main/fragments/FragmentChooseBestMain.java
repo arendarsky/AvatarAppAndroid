@@ -128,7 +128,6 @@ public class FragmentChooseBestMain extends Fragment {
         tmp.add(rangeSeekBar.getSelectedMinValue());
         tmp.add(rangeSeekBar.getSelectedMaxValue());
         video.stopPlayback();
-        progressBar.setVisibility(View.VISIBLE);
         return tmp;
     }
 

@@ -175,7 +175,6 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         FullScreenVideoDialog dialog = new FullScreenVideoDialog();
         Bundle bundle = new Bundle();
         bundle.putString("videoName", videoName);
-//        FragmentTransaction ft = getFragmentManager().beginTransaction();
         dialog.setArguments(bundle);
         dialog.show(getSupportFragmentManager(), FullScreenVideoDialog.TAG);
 
@@ -297,9 +296,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     @Override
     public void captureVideo() {
         if (permissionAlreadyGranted()) {
-            //Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
             Intent intent = new Intent(android.provider.MediaStore.ACTION_VIDEO_CAPTURE);
-            //Intent intent = new Intent("android.media.action.VIDEO_CAMERA");
             startActivityForResult(intent, CAPTURE_VIDEO);
         }
         else requestPermission();
@@ -340,7 +337,6 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     public void onBackPressed() {
         if (!(getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_container)
                 instanceof FullScreenVideoDialog)) {
-            loadVideoToServer = false;
             boolean closeApp = presenter.backButtonPressed(
                     getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_container)
                             instanceof FragmentFileLoadMain
@@ -350,10 +346,9 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         else super.onBackPressed();
     }
 
-    private boolean loadVideoToServer = false;
     @Override
     public void setLoadVideoToServer(boolean loadVideoToServer) {
-        this.loadVideoToServer = loadVideoToServer;
+
     }
 
     @OnClick(R.id.main_frame_save)
@@ -361,10 +356,8 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         Fragment currentFragment = getSupportFragmentManager()
                 .findFragmentById(R.id.activity_main_frame_container);
 
-        if (currentFragment instanceof FragmentChooseBestMain && !loadVideoToServer){
+        if (currentFragment instanceof FragmentChooseBestMain){
             List<Float> tmp = ((FragmentChooseBestMain) currentFragment).getInterval();
-            Log.d("ActivityMainLog", "uploadVideoandSetInterval");
-            loadVideoToServer = true;
             saveButton.setVisibility(View.INVISIBLE);
             presenter.uploadAndSetInterval(tmp.get(0), tmp.get(1));
         }
@@ -436,7 +429,6 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         if (profileFragment != null) {
             profileFragment.backEdit();
         }
-        loadVideoToServer = false;
         clearTopView();
         changeTitle("Профиль");
         showMenuPoints();
