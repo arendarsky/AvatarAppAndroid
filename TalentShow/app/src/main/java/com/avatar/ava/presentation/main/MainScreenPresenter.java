@@ -1,6 +1,7 @@
 package com.avatar.ava.presentation.main;
 
 import android.net.Uri;
+import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
@@ -15,6 +16,7 @@ import com.avatar.ava.domain.Interactor;
 import com.avatar.ava.presentation.main.fragments.casting.CastingFragment;
 import com.avatar.ava.presentation.main.fragments.notifications.FragmentNotifications;
 import com.avatar.ava.presentation.main.fragments.rating.RatingFragment;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 
 import java.util.ArrayList;
@@ -34,6 +36,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
 
     private Router router;
     private Interactor interactor;
+    private FirebaseAnalytics analytics;
 
     private final int LOAD_NEW_VIDEO_SCREEN = 4;
     private final int LOAD_VIDEO = 5;
@@ -64,9 +67,10 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
 
 
     @Inject
-    MainScreenPresenter(Router router, Interactor interactor){
+    MainScreenPresenter(Router router, Interactor interactor, FirebaseAnalytics analitics){
         this.router = router;
         this.interactor = interactor;
+        this.analytics = analitics;
     }
 
     @StateStrategyType(SingleStateStrategy.class)
@@ -228,6 +232,10 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                                    @Override
                                    public void onError(Throwable e) {
                                        getViewState().hideProfileLoadingString();
+//                                       getViewState().showMessage(e.toString());
+                                       Bundle event = new Bundle();
+                                       event.putString("Video_loading_error", e.toString());
+                                       analytics.logEvent("loading_error", event);
                                        getViewState().showMessage("Ошибка при загрузке видео. Попробуйте позже");
                                    }
                                }

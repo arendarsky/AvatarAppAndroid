@@ -43,6 +43,7 @@ import com.avatar.ava.presentation.main.fragments.profile.profileSettings.Profil
 import com.avatar.ava.presentation.main.fragments.profile.profileSettings.changePassword.ChangePasswordFragment;
 import com.avatar.ava.presentation.signing.EnterActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.List;
 
@@ -122,6 +123,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
                     return presenter.onNavClicked(menuItem.getItemId());
                 }
             };
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
