@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "107242313791",
-    "firebase_url": "https://xce-factor.firebaseio.com",
-    "project_id": "xce-factor",
-    "storage_bucket": "xce-factor.appspot.com"
+    "project_number": "1005189346273",
+    "firebase_url": "https://xce-factor-85050.firebaseio.com",
+    "project_id": "xce-factor-85050",
+    "storage_bucket": "xce-factor-85050.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:107242313791:android:41ffb4f1c4c0053320408a",
+        "mobilesdk_app_id": "1:1005189346273:android:bd86e239085e59be9898a0",
         "android_client_info": {
           "package_name": "com.avatar.ava"
         }
       },
       "oauth_client": [
         {
-          "client_id": "107242313791-slhm97l8v9p0vaa3hd026oka4c99meo7.apps.googleusercontent.com",
+          "client_id": "1005189346273-55er606bgda3p9a6os2vhuqobh13glqp.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDxAPNNiH5IBM4mzSE3h-CuJjDBWFBnsz4"
+          "current_key": "AIzaSyBckUSSdUk8KF7moTcGzCYz9NrawZpwPJc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "107242313791-slhm97l8v9p0vaa3hd026oka4c99meo7.apps.googleusercontent.com",
+              "client_id": "1005189346273-55er606bgda3p9a6os2vhuqobh13glqp.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
