@@ -52,7 +52,11 @@ public class VideoRepository implements IVideoRepository {
     @Override
     public Completable uploadAndSetInterval(Uri fileURI, Float beginTime, Float endTime){
         loadingVideo = fileURI;
-        File file = new File(getFilePathFromUri(appContext, fileURI));
+        String path = getFilePathFromUri(appContext, fileURI);
+        if(path == null){
+            return null;
+        }
+        File file = new File(path);
         this.convertedFilePath = file.getAbsolutePath().substring(0,
                 file.getAbsolutePath().lastIndexOf(".")) + "1"
                 + ".mp4";

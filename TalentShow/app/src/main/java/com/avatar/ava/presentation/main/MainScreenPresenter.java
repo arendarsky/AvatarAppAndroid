@@ -24,6 +24,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableCompletableObserver;
@@ -213,8 +214,10 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
 
     void uploadAndSetInterval(Float beginTime, Float endTime){
         if (endTime - beginTime <= 30) {
-            interactor.uploadAndSetInterval(selectedFileUri, beginTime, endTime)
-                    .subscribeOn(Schedulers.io())
+            Completable completable = interactor.uploadAndSetInterval(selectedFileUri, beginTime, endTime);
+            if(completable == null){
+                getViewState().showMessage("Ошибка при загрузке видео. Видео не найдено");
+            }else completable.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new DisposableCompletableObserver() {
                                    @Override
