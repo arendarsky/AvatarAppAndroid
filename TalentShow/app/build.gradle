@@ -100,5 +100,11 @@ dependencies {
 
     //ExoPlayer
     implementation 'com.google.android.exoplayer:exoplayer:2.11.3'
+
+    //Firebase
     implementation 'com.google.firebase:firebase-core:17.0.1'
+
+    //SwipeHolder
+    implementation 'com.mindorks.android:placeholderview:1.0.3'
+    annotationProcessor 'com.mindorks.android:placeholderview-compiler:1.0.3'
 }
