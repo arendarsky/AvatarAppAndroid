@@ -234,6 +234,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
 
                                    @Override
                                    public void onError(Throwable e) {
+
                                        getViewState().hideProfileLoadingString();
 //                                       getViewState().showMessage(e.toString());
                                        Bundle event = new Bundle();
