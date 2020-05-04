@@ -24,6 +24,7 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
     private Interactor interactor;
     private PersonDTO currentPerson;
 
+
     @Inject
     CastingPresenter(Interactor interactor) {
         this.interactor = interactor;

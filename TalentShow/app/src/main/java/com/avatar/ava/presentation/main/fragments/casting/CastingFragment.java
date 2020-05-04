@@ -99,6 +99,13 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         Toothpick.inject(this, Toothpick.openScope(App.class));
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d("CastingFragment", "OnStop");
+        mSwipeView.removeAllViews();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -118,6 +125,13 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     }
 
     @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.d("CastingFragment", "OnDetach");
+        mSwipeView.removeAllViews();
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
@@ -131,7 +145,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
 
         mSwipeView.getBuilder()
-                .setDisplayViewCount(3)
+                .setDisplayViewCount(1)
                 .setSwipeDecor(new SwipeDecor()
                         .setPaddingTop(20)
                         .setRelativeScale(0.01f)
@@ -214,6 +228,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         mSwipeView.doSwipe(false);
     }
 
+
     @Override
     public void loadNewVideo(PersonDTO personDTO){
         //castingCard.setVisibility(View.VISIBLE);
@@ -222,6 +237,8 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         dislikeButton.setVisibility(View.VISIBLE);
 
         Log.d("CastingSwipe", "loadVideo " + personDTO.getName());
+
+
         mSwipeView.addView(new CastingCard(appContext, personDTO, mSwipeView, player, dataSourceFactory, this));
         /*String videoLink = SERVER_NAME + "/api/video/" + personDTO.getVideo().getName();
 
