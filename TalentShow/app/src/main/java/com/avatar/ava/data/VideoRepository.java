@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
+import android.util.Log;
 import android.webkit.MimeTypeMap;
 
 import com.arthenica.mobileffmpeg.FFmpeg;
@@ -53,6 +54,7 @@ public class VideoRepository implements IVideoRepository {
     public Completable uploadAndSetInterval(Uri fileURI, Float beginTime, Float endTime){
         loadingVideo = fileURI;
         String path = getFilePathFromUri(appContext, fileURI);
+        Log.d("VideoRep", "toString() " + fileURI.toString() + " getPath()  " + fileURI.getPath() + " getFilePathFromUri " + path);
         if(path == null){
             return null;
         }
