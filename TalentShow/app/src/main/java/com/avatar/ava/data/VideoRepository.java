@@ -53,7 +53,9 @@ public class VideoRepository implements IVideoRepository {
     @Override
     public Completable uploadAndSetInterval(Uri fileURI, Float beginTime, Float endTime){
         loadingVideo = fileURI;
+
         String path = getFilePathFromUri(appContext, fileURI);
+//        String path = FileUtils.getPath(appContext, fileURI);
         Log.d("VideoRep", "toString() " + fileURI.toString() + " getPath()  " + fileURI.getPath() + " getFilePathFromUri " + path);
         if(path == null){
             return null;
@@ -167,7 +169,7 @@ public class VideoRepository implements IVideoRepository {
             String tempFilename = outputFile.getAbsolutePath();
             output = new FileOutputStream(tempFilename);
             int read;
-            byte[] bytes = new byte[input.available()];
+            byte[] bytes = new byte[1024];
             while ((read = input.read(bytes)) != -1) {
                 output.write(bytes, 0, read);
             }
