@@ -536,6 +536,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     @Override
     public void hideLoadingString() {
         loadingTextView.setVisibility(View.INVISIBLE);
+        presenter.getProfile();
     }
 
     @OnClick(R.id.fragment_profile_edit_photo)

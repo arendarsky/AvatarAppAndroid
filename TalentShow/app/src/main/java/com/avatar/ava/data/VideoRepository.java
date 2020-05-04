@@ -56,7 +56,6 @@ public class VideoRepository implements IVideoRepository {
 
         String path = getFilePathFromUri(appContext, fileURI);
 //        String path = FileUtils.getPath(appContext, fileURI);
-        Log.d("VideoRep", "toString() " + fileURI.toString() + " getPath()  " + fileURI.getPath() + " getFilePathFromUri " + path);
         if(path == null){
             return null;
         }
@@ -66,7 +65,7 @@ public class VideoRepository implements IVideoRepository {
                 + ".mp4";
         File convertedFile = new File(this.convertedFilePath);
         String commands = "-i "
-                + file.getAbsolutePath() + " -preset ultrafast "
+                + file.getAbsolutePath() + " -b:v 250k "
                 + convertedFile.getAbsolutePath();
         return Single.fromCallable(() -> FFmpeg.execute(commands)).ignoreElement()
                 .andThen(videoAPI.uploadVideo(
