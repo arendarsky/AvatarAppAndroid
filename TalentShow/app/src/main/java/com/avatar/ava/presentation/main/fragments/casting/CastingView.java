@@ -13,4 +13,5 @@ public interface CastingView extends MvpView {
     void setDescription(String description);
     void setName(String name);
     void showNoMoreVideos();
+    void doSwipe(boolean swipe);
 }

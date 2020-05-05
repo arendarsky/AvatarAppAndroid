@@ -38,6 +38,10 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.google.android.exoplayer2.video.VideoListener;
+import com.mindorks.placeholderview.SwipeDecor;
+import com.mindorks.placeholderview.SwipePlaceHolderView;
+import com.mindorks.placeholderview.annotations.swipe.SwipeIn;
+import com.mindorks.placeholderview.annotations.swipe.SwipeOut;
 
 import javax.inject.Inject;
 
@@ -49,10 +53,13 @@ import toothpick.Toothpick;
 import static com.avatar.ava.DataModule.SERVER_NAME;
 
 
-public class CastingFragment extends MvpAppCompatFragment implements CastingView {
+public class CastingFragment extends MvpAppCompatFragment implements CastingView, CastingCard.Callback {
 
     public static int CASTING_ID;
     private Activity activity;
+
+    @BindView(R.id.casting_swipe_view)
+    SwipePlaceHolderView mSwipeView;
 
     @Inject
     Context appContext;
@@ -65,23 +72,10 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         return Toothpick.openScope(App.class).getInstance(CastingPresenter.class);
     }
 
-    @BindView(R.id.activity_casting_video)
-    PlayerView video;
-
-    @BindView(R.id.activity_casting_name)
-    TextView name;
-
-    @BindView(R.id.casting_activity_avatar)
-    ImageView avatar;
-
-    @BindView(R.id.activity_casting_description)
-    TextView description;
 
     @BindView(R.id.activity_casting_layout)
     ConstraintLayout layout;
 
-    @BindView(R.id.activity_casting_card)
-    CardView castingCard;
 
     @BindView(R.id.casting_no_more_videos)
     TextView noMoreVideos;
@@ -93,16 +87,23 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     View dislikeButton;
 
 
-    @BindView(R.id.casting_fragment_progress_bar)
+    /*@BindView(R.id.casting_fragment_progress_bar)
     ProgressBar progressBar;
 
     @BindView(R.id.casting_fragment_restart_btn)
-    ImageButton restartBtn;
+    ImageButton restartBtn;*/
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Toothpick.inject(this, Toothpick.openScope(App.class));
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d("CastingFragment", "OnStop");
+        mSwipeView.removeAllViews();
     }
 
     @Nullable
@@ -117,10 +118,17 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     @Override
     public void onPause() {
         super.onPause();
-        if (video.getPlayer() != null) {
-            if (video.getPlayer().isPlaying())
-                video.getPlayer().stop();
+        if (player != null) {
+            if (player.isPlaying())
+                player.stop();
         }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.d("CastingFragment", "OnDetach");
+        mSwipeView.removeAllViews();
     }
 
     @Override
@@ -130,12 +138,22 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         CASTING_ID = this.getId();
 
         player = new SimpleExoPlayer.Builder(appContext).build();
-        video.setPlayer(player);
+        //video.setPlayer(player);
         // Produces DataSource instances through which media data is loaded.
         dataSourceFactory = new DefaultDataSourceFactory(appContext,
                 Util.getUserAgent(appContext, getResources().getString(R.string.app_name)));
 
-        castingCard.setVisibility(View.INVISIBLE);
+
+        mSwipeView.getBuilder()
+                .setDisplayViewCount(1)
+                .setSwipeDecor(new SwipeDecor()
+                        .setPaddingTop(20)
+                        .setRelativeScale(0.01f)
+                        .setSwipeInMsgLayoutId(R.layout.casting_swipe_in_msg_view)
+                        .setSwipeOutMsgLayoutId(R.layout.casting_swipe_out_msg_view));
+
+
+        //castingCard.setVisibility(View.INVISIBLE);
         noMoreVideos.setVisibility(View.INVISIBLE);
         likeButton.setVisibility(View.INVISIBLE);
         dislikeButton.setVisibility(View.INVISIBLE);
@@ -144,25 +162,30 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         player.addVideoListener(new VideoListener() {
             @Override
             public void onRenderedFirstFrame() {
-                progressBar.setVisibility(View.INVISIBLE);
-                restartBtn.setVisibility(View.INVISIBLE);
+                //progressBar.setVisibility(View.INVISIBLE);
+                //restartBtn.setVisibility(View.INVISIBLE);
             }
         });
         player.addAnalyticsListener(new AnalyticsListener() {
             @Override
             public void onPlayerStateChanged(EventTime eventTime, boolean playWhenReady, int playbackState) {
                 if(playWhenReady && playbackState == Player.STATE_ENDED){
-                    restartBtn.setVisibility(View.VISIBLE);
+                    //restartBtn.setVisibility(View.VISIBLE);
                 }
                 else if (playWhenReady && playbackState == Player.STATE_READY){
-                    progressBar.setVisibility(View.INVISIBLE);
+                    //progressBar.setVisibility(View.INVISIBLE);
                 }
-                else progressBar.setVisibility(View.VISIBLE);
+                //else progressBar.setVisibility(View.VISIBLE);
             }
         });
 
 
         presenter.getFirstVideo();
+
+        mSwipeView.addItemRemoveListener(count -> {
+            Log.d("CastingSwipe", "SwipeRemove");
+
+        });
     }
 
     @Override
@@ -171,40 +194,54 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         if (context instanceof Activity) activity = (Activity) context;
     }
 
-    @OnClick({R.id.casting_activity_avatar, R.id.activity_casting_name})
+    /*@OnClick({R.id.casting_activity_avatar, R.id.activity_casting_name})
     void avatarClicked(){
         try {
             ((MainScreenPostman) activity).openPublicProfile(presenter.getPersonId());
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public void showError(String error){
         Toast.makeText(appContext, error, Toast.LENGTH_SHORT).show();
     }
 
+
     @OnClick(R.id.activity_casting_btn_like)
     public void likeClicked(){
-        progressBar.setVisibility(View.VISIBLE);
+        //progressBar.setVisibility(View.VISIBLE);
         presenter.likeVideo();
+        mSwipeView.doSwipe(true);
     }
+
+    @SwipeIn
+    public void swipeLike(){
+        Log.d("CastingSwipe", "Swipe:ike");
+    }
+
 
     @OnClick(R.id.activity_casting_btn_x)
     public void dislikeClicked() {
-        progressBar.setVisibility(View.VISIBLE);
+        //progressBar.setVisibility(View.VISIBLE);
         presenter.dislikeVideo();
+        mSwipeView.doSwipe(false);
     }
+
 
     @Override
     public void loadNewVideo(PersonDTO personDTO){
-        castingCard.setVisibility(View.VISIBLE);
+        //castingCard.setVisibility(View.VISIBLE);
         noMoreVideos.setVisibility(View.INVISIBLE);
         likeButton.setVisibility(View.VISIBLE);
         dislikeButton.setVisibility(View.VISIBLE);
 
+        Log.d("CastingSwipe", "loadVideo " + personDTO.getName());
 
-        String videoLink = SERVER_NAME + "/api/video/" + personDTO.getVideo().getName();
+
+        mSwipeView.addView(new CastingCard(appContext, personDTO, mSwipeView, player, dataSourceFactory, this));
+        /*String videoLink = SERVER_NAME + "/api/video/" + personDTO.getVideo().getName();
+
         int start = (int)personDTO.getVideo().getStartTime() * 1000;
         int end = (int)personDTO.getVideo().getEndTime() * 1000;
         player.stop();
@@ -213,16 +250,16 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         ClippingMediaSource clippingMediaSource =  new ClippingMediaSource(videoSource, start, end);
         player.prepare(clippingMediaSource);
 
-        player.setPlayWhenReady(true);
+        player.setPlayWhenReady(true);*/
 
     }
 
-    @OnClick(R.id.casting_fragment_restart_btn)
+    /*@OnClick(R.id.casting_fragment_restart_btn)
     void restartVideo(){
-        restartBtn.setVisibility(View.INVISIBLE);
+        //restartBtn.setVisibility(View.INVISIBLE);
         player.seekTo(0);
         player.setPlayWhenReady(true);
-    }
+    }*/
 
 
 
@@ -236,7 +273,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
     @Override
     public void setAvatar(String avatarLink) {
-        if(avatarLink.equals("null")){
+        /*if(avatarLink.equals("null")){
             Glide.with(this)
                     .load(R.drawable.empty_profile_icon)
                     .circleCrop()
@@ -247,28 +284,58 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
                     .load(avatarLink)
                     .circleCrop()
                     .into(avatar);
-        }
+        }*/
 
     }
 
     @Override
     public void setDescription(String description) {
-        this.description.setText(description);
+        //this.description.setText(description);
     }
 
     @Override
     public void setName(String name) {
-        this.name.setText(name);
+        //this.name.setText(name);
     }
 
     @Override
     public void showNoMoreVideos() {
-        castingCard.setVisibility(View.INVISIBLE);
+        //castingCard.setVisibility(View.INVISIBLE);
         noMoreVideos.setVisibility(View.VISIBLE);
         likeButton.setVisibility(View.INVISIBLE);
         dislikeButton.setVisibility(View.INVISIBLE);
         stopVideo();
     }
 
+    @Override
+    public void doSwipe(boolean swipe) {
+        mSwipeView.doSwipe(swipe);
+    }
 
+
+    @Override
+    public void onSwipeLike() {
+        presenter.likeVideo();
+        //mSwipeView.doSwipe(true);
+    }
+
+    @Override
+    public void onSwipeDisLike() {
+        presenter.dislikeVideo();
+        //mSwipeView.doSwipe(false);
+    }
+
+    @Override
+    public void openProfile() {
+        try {
+            ((MainScreenPostman) activity).openPublicProfile(presenter.getPersonId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void restartVideo() {
+
+    }
 }
