@@ -3,6 +3,7 @@ package com.avatar.ava.data;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.webkit.MimeTypeMap;
 
@@ -10,6 +11,7 @@ import com.arthenica.mobileffmpeg.FFmpeg;
 import com.avatar.ava.data.api.VideoAPI;
 import com.avatar.ava.domain.entities.PersonDTO;
 import com.avatar.ava.domain.repository.IVideoRepository;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -40,20 +42,27 @@ public class VideoRepository implements IVideoRepository {
     private Set<PersonDTO> personDTOSet = new LinkedHashSet<>();
     private String convertedFilePath;
     private Uri loadingVideo;
-
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Inject
-    VideoRepository(Retrofit retrofit, SharedPreferencesRepository preferencesRepository, Context appContext){
+    VideoRepository(Retrofit retrofit, SharedPreferencesRepository preferencesRepository, Context appContext, FirebaseAnalytics mFirebaseAnalytics){
         this.videoAPI = retrofit.create(VideoAPI.class);
         this.preferencesRepository = preferencesRepository;
         this.appContext = appContext;
+        this.mFirebaseAnalytics = mFirebaseAnalytics;
     }
 
     @Override
     public Completable uploadAndSetInterval(Uri fileURI, Float beginTime, Float endTime){
         loadingVideo = fileURI;
+
         String path = getFilePathFromUri(appContext, fileURI);
+//        String path = FileUtils.getPath(appContext, fileURI);
         if(path == null){
+            Bundle params = new Bundle();
+            params.putString("image_name", "video_repository");
+            params.putString("full_text", "file_null");
+            mFirebaseAnalytics.logEvent("share_image", params);
             return null;
         }
         File file = new File(path);
@@ -62,7 +71,7 @@ public class VideoRepository implements IVideoRepository {
                 + ".mp4";
         File convertedFile = new File(this.convertedFilePath);
         String commands = "-i "
-                + file.getAbsolutePath() + " -preset ultrafast "
+                + file.getAbsolutePath() + " -b:v 250k "
                 + convertedFile.getAbsolutePath();
         return Single.fromCallable(() -> FFmpeg.execute(commands)).ignoreElement()
                 .andThen(videoAPI.uploadVideo(
@@ -165,7 +174,7 @@ public class VideoRepository implements IVideoRepository {
             String tempFilename = outputFile.getAbsolutePath();
             output = new FileOutputStream(tempFilename);
             int read;
-            byte[] bytes = new byte[input.available()];
+            byte[] bytes = new byte[1024];
             while ((read = input.read(bytes)) != -1) {
                 output.write(bytes, 0, read);
             }
