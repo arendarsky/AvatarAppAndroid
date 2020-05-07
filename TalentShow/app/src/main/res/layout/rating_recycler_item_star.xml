@@ -121,7 +121,7 @@
             android:id="@+id/rating_item_heart_icon"
             android:layout_width="12dp"
             android:layout_height="12dp"
-            android:src="@drawable/rating_item_like"
+            android:src="@drawable/heart_like_icon"
             android:layout_marginTop="270dp"
             android:layout_marginStart="16dp"
             tools:ignore="ContentDescription"
