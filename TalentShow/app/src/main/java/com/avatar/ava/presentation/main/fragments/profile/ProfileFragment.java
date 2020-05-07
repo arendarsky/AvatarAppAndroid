@@ -256,7 +256,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         }
 
         name.setText(person.getName());
-        likes.setText(String.valueOf(person.getLikesNumber()));
+        likes.setText(person.getLikesNumber() + " Лайков");
         description.setText(person.getDescription());
         videos = person.getVideos();
 

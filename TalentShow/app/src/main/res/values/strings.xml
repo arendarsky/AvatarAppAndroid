@@ -92,7 +92,7 @@
     <string name="description">Описание</string>
     <string name="uploaded_videos">Загруженные видео</string>
     <string name="in_casting">В кастинге</string>
-    <string name="zero_likes">0</string>
+    <string name="zero_likes">0 Лайков</string>
     <string name="edit">Редактировать</string>
     <string name="old_password">Ст. Пароль</string>
     <string name="new_password">Нов. Пароль</string>
