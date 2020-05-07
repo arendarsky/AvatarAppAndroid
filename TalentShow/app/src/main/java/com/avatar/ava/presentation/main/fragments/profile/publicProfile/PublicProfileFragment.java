@@ -136,18 +136,6 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
 
         ButterKnife.bind(this, v);
 
-        DisplayMetrics displayMetrics = appContext.getResources().getDisplayMetrics();
-        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
-        if (dpHeight < 1000){
-            ConstraintSet constraintSet = new ConstraintSet();
-            constraintSet.clone(parent);
-
-            constraintSet.connect(container3.getId(), ConstraintSet.BOTTOM, parent.getId(), ConstraintSet.BOTTOM, 18);
-            constraintSet.connect(container4.getId(), ConstraintSet.BOTTOM, parent.getId(), ConstraintSet.BOTTOM, 18);
-
-            constraintSet.applyTo(parent);
-        }
-
         if (getArguments() == null) {
             try {
                 ((MainScreenPostman) activity).closeFragment();
