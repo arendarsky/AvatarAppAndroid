@@ -9,8 +9,8 @@ android {
         applicationId "com.avatar.ava"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 10
-        versionName "1.0.9"
+        versionCode 11
+        versionName "1.0.10"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
@@ -100,5 +100,13 @@ dependencies {
 
     //ExoPlayer
     implementation 'com.google.android.exoplayer:exoplayer:2.11.3'
+
+    //Firebase
     implementation 'com.google.firebase:firebase-core:17.0.1'
+
+    //SwipeHolder
+    implementation 'com.mindorks.android:placeholderview:1.0.3'
+    annotationProcessor 'com.mindorks.android:placeholderview-compiler:1.0.3'
+
+    implementation 'com.google.firebase:firebase-messaging:20.1.6'
 }
