@@ -87,11 +87,11 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     View dislikeButton;
 
 
-    /*@BindView(R.id.casting_fragment_progress_bar)
+    @BindView(R.id.casting_fragment_progress_bar)
     ProgressBar progressBar;
 
     @BindView(R.id.casting_fragment_restart_btn)
-    ImageButton restartBtn;*/
+    ImageButton restartBtn;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -145,6 +145,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
 
         mSwipeView.getBuilder()
+                .setSwipeType(SwipePlaceHolderView.SWIPE_TYPE_HORIZONTAL)
                 .setDisplayViewCount(1)
                 .setSwipeDecor(new SwipeDecor()
                         .setPaddingTop(20)
@@ -170,12 +171,13 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
             @Override
             public void onPlayerStateChanged(EventTime eventTime, boolean playWhenReady, int playbackState) {
                 if(playWhenReady && playbackState == Player.STATE_ENDED){
-                    //restartBtn.setVisibility(View.VISIBLE);
+                    restartBtn.setVisibility(View.VISIBLE);
                 }
                 else if (playWhenReady && playbackState == Player.STATE_READY){
-                    //progressBar.setVisibility(View.INVISIBLE);
+                    progressBar.setVisibility(View.INVISIBLE);
+                    restartBtn.setVisibility(View.INVISIBLE);
                 }
-                //else progressBar.setVisibility(View.VISIBLE);
+                else progressBar.setVisibility(View.VISIBLE);
             }
         });
 
@@ -210,7 +212,8 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
     @OnClick(R.id.activity_casting_btn_like)
     public void likeClicked(){
-        //progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+        restartBtn.setVisibility(View.INVISIBLE);
         presenter.likeVideo();
         mSwipeView.doSwipe(true);
     }
@@ -223,7 +226,8 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
     @OnClick(R.id.activity_casting_btn_x)
     public void dislikeClicked() {
-        //progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+        restartBtn.setVisibility(View.INVISIBLE);
         presenter.dislikeVideo();
         mSwipeView.doSwipe(false);
     }
@@ -254,12 +258,12 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
     }
 
-    /*@OnClick(R.id.casting_fragment_restart_btn)
-    void restartVideo(){
-        //restartBtn.setVisibility(View.INVISIBLE);
+    @OnClick(R.id.casting_fragment_restart_btn)
+    void restartVideoClicked(){
+        restartBtn.setVisibility(View.INVISIBLE);
         player.seekTo(0);
         player.setPlayWhenReady(true);
-    }*/
+    }
 
 
 
@@ -304,6 +308,8 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         noMoreVideos.setVisibility(View.VISIBLE);
         likeButton.setVisibility(View.INVISIBLE);
         dislikeButton.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
+        restartBtn.setVisibility(View.INVISIBLE);
         stopVideo();
     }
 
@@ -317,12 +323,16 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     public void onSwipeLike() {
         presenter.likeVideo();
         //mSwipeView.doSwipe(true);
+        progressBar.setVisibility(View.VISIBLE);
+        restartBtn.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void onSwipeDisLike() {
         presenter.dislikeVideo();
         //mSwipeView.doSwipe(false);
+        progressBar.setVisibility(View.VISIBLE);
+        restartBtn.setVisibility(View.INVISIBLE);
     }
 
     @Override
