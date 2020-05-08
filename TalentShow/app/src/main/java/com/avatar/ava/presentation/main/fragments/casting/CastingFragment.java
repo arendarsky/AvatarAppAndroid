@@ -177,6 +177,9 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
                     progressBar.setVisibility(View.INVISIBLE);
                     restartBtn.setVisibility(View.INVISIBLE);
                 }
+                else if(playbackState == Player.STATE_IDLE){
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
                 else progressBar.setVisibility(View.VISIBLE);
             }
         });
@@ -308,9 +311,9 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         noMoreVideos.setVisibility(View.VISIBLE);
         likeButton.setVisibility(View.INVISIBLE);
         dislikeButton.setVisibility(View.INVISIBLE);
+        stopVideo();
         progressBar.setVisibility(View.INVISIBLE);
         restartBtn.setVisibility(View.INVISIBLE);
-        stopVideo();
     }
 
     @Override
