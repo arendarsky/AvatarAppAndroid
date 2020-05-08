@@ -63,7 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/rating_item_image"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 />
 
             <ImageButton
@@ -86,7 +86,7 @@
             android:layout_height="28dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="310dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="2dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/rating_item_description"
             />
@@ -121,7 +121,7 @@
             android:id="@+id/rating_item_heart_icon"
             android:layout_width="12dp"
             android:layout_height="12dp"
-            android:src="@drawable/rating_item_like"
+            android:src="@drawable/heart_like_icon"
             android:layout_marginTop="270dp"
             android:layout_marginStart="16dp"
             tools:ignore="ContentDescription"
@@ -147,14 +147,12 @@
             android:id="@+id/rating_item_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="350dp"
-            android:layout_marginStart="16dp"
-            android:gravity="top"
             android:lineSpacingExtra="2sp"
             android:text="Это описание к видео, которое написал автор, чтобы было понятно, что он хочет сказать своим творчеством. Наверное, тут очень ограничен обхем текста."
             android:textColor="@color/whiteText"
-            android:translationY="-1.05sp"
-            android:layout_marginBottom="3dp"
+            android:padding="16dp"
+            android:maxLines="3"
+            android:ellipsize="end"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
