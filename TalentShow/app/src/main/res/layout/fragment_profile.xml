@@ -183,7 +183,6 @@
             app:layout_constraintTop_toBottomOf="@id/fragment_profile_video_tv"
             app:layout_constraintStart_toStartOf="parent"
             app:cardCornerRadius="9dp"
-            app:layout_constraintBottom_toTopOf="@id/fragment_profile_container3"
             app:layout_constraintEnd_toStartOf="@id/fragment_profile_container2">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -253,8 +252,7 @@
             app:cardBackgroundColor="@color/darkBackground"
             app:layout_constraintTop_toBottomOf="@id/fragment_profile_video_tv"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/fragment_profile_container1"
-            app:layout_constraintBottom_toTopOf="@id/fragment_profile_container4">
+            app:layout_constraintStart_toEndOf="@+id/fragment_profile_container1">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -308,21 +306,21 @@
         </androidx.cardview.widget.CardView>
 
 
-
         <androidx.cardview.widget.CardView
+            android:id="@+id/fragment_profile_container3"
             android:layout_width="0dp"
             android:layout_height="105dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="11dp"
             android:layout_marginBottom="11dp"
             android:visibility="invisible"
-            app:cardCornerRadius="9dp"
-            android:id="@+id/fragment_profile_container3"
             app:cardBackgroundColor="@color/darkBackground"
-            app:layout_constraintTop_toBottomOf="@id/fragment_profile_container1"
-            app:layout_constraintStart_toStartOf="parent"
+            app:cardCornerRadius="9dp"
+            app:layout_constraintVertical_bias="0.0"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/fragment_profile_container4">
+            app:layout_constraintEnd_toStartOf="@id/fragment_profile_container4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_profile_container1">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -376,22 +374,22 @@
         </androidx.cardview.widget.CardView>
 
 
-        
         <androidx.cardview.widget.CardView
+            android:id="@+id/fragment_profile_container4"
             android:layout_width="0dp"
             android:layout_height="105dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="15dp"
             android:layout_marginStart="11dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="11dp"
             android:visibility="invisible"
-            android:id="@+id/fragment_profile_container4"
-            app:cardCornerRadius="9dp"
             app:cardBackgroundColor="@color/darkBackground"
-            app:layout_constraintTop_toBottomOf="@id/fragment_profile_container2"
+            app:cardCornerRadius="9dp"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/fragment_profile_container3"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/fragment_profile_container2">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
