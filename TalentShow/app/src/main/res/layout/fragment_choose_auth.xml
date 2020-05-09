@@ -1,65 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/darkBackground">
+    android:fillViewport="true">
 
-    <View
-        android:id="@+id/choose_auth_logo"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:background="@drawable/logo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2" />
-
-    <TextView
-        android:id="@+id/choose_auth_logo_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textColor="@color/whiteText"
-        android:fontFamily="@font/quantico"
-        android:textSize="36sp"
-        android:text="@string/xce_factor"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/choose_auth_logo"/>
-
-    <TextView
-        android:id="@+id/choose_auth_auth"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/buttons_background"
-        android:gravity="center"
-        android:text="@string/sing_in"
-        android:textColor="@color/whiteText"
-        android:textSize="17sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/choose_auth_logo_text"
-        app:layout_constraintVertical_bias="0.35" />
+        android:layout_height="match_parent"
+        android:background="@color/darkBackground">
 
-    <TextView
-        android:id="@+id/choose_auth_reg"
-        android:text="@string/sign_up"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
-        android:background="@drawable/buttons_background"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:gravity="center"
-        android:textColor="@color/whiteText"
-        android:textSize="17sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/choose_auth_auth"/>
+        <View
+            android:id="@+id/choose_auth_logo"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@drawable/logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.2" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/choose_auth_logo_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/whiteText"
+            android:fontFamily="@font/quantico"
+            android:textSize="36sp"
+            android:text="@string/xce_factor"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/choose_auth_logo"/>
+
+        <TextView
+            android:id="@+id/choose_auth_auth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/buttons_background"
+            android:gravity="center"
+            android:text="@string/sing_in"
+            android:textColor="@color/whiteText"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/choose_auth_logo_text"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <TextView
+            android:id="@+id/choose_auth_reg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="23dp"
+            android:background="@drawable/buttons_background"
+            android:gravity="center"
+            android:text="@string/sign_up"
+            android:textColor="@color/whiteText"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/choose_auth_auth"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
