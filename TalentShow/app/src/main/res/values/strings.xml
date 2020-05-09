@@ -45,7 +45,7 @@
     <string name="sing_in">Войти</string>
     <string name="sign_up">Зарегистрироваться</string>
     <string name="skip_auth">Пропустить</string>
-    <string name="auth"><b>Авторизация</b></string>
+    <string name="auth">Авторизация</string>
     <string name="password">Пароль</string>
     <string name="fields_empty">Поля не должны быть пустыми</string>
     <string name="name">Имя</string>
