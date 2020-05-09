@@ -150,13 +150,6 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
     }
 
 
-
-    @BindView(R.id.fragment_public_profile_close_fullscreen)
-    ImageButton closeBtn;
-
-    @BindView(R.id.fragment_public_profile_fullscreen)
-    PlayerView playerView;
-
     private void toFullscreen(int id){
         if(currCountVideos > id){
             try {
