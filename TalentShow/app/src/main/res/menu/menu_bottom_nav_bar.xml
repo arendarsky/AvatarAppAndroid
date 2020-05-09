@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/nav_casting"
-        android:icon="@drawable/casting_icon"
+        android:icon="@drawable/casting_heart_icon"
         android:title="@string/casting"/>
 
 

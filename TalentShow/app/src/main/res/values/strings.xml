@@ -32,7 +32,7 @@
     <string name="talant_video"><b>Видео таланта</b></string>
     <string name="step_4">Шаг 4 из 6</string>
     <string name="add_ur_video">Добавте\nваше видео</string>
-    <string name="rating"><b>Рейтинг</b></string>
+    <string name="rating">Рейтинг</string>
     <string name="stars">Звезды</string>
     <string name="producers">Продюсеры</string>
     <string name="top_20"><b>Топ-20</b></string>
