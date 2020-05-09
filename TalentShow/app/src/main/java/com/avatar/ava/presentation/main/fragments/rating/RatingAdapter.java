@@ -147,7 +147,12 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         });
 
         holder.likes.setText("" + personRatingDTO.getLikesNumber());
-        holder.description.setText(personRatingDTO.getDescription());
+        if (personRatingDTO.getDescription() != null){
+            holder.description.setText(personRatingDTO.getDescription().trim().replaceAll("[\\t\\s]*\\n[{1}]*\\n", "\n"));
+        } else {
+            holder.description.setText("");
+            holder.description.setPadding(0, 0, 0, 0);
+        }
         String name = personRatingDTO.getName();
         holder.name.setText(name);
         holder.pos.setText("#" + (position + 1));
