@@ -2,6 +2,9 @@ package com.avatar.ava.presentation.main.fragments.rating;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +33,8 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,9 +45,11 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     private List<PersonRatingDTO> data = new ArrayList<>();
     private RecyclerClickListener clickListener;
     private SimpleExoPlayer player;
-    private ArrayList<MediaSource> mediaSources = new ArrayList<MediaSource>();
+    private ArrayList<MediaSource> mediaSources = new ArrayList<>();
+    private ArrayList<Bitmap> bitmaps = new ArrayList<>();
     private DataSource.Factory factory;
     private boolean videoPLaying = false;
+    private ViewHolder prevHolder;
 
     @NonNull
     @Override
@@ -84,15 +91,16 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         if(personRatingDTO.getVideo() != null){
 
             if (videoPLaying){
-                Glide.with(holder.itemView.getContext())
+                /*Glide.with(holder.itemView.getContext())
                         .load(personRatingDTO.getVideo())
-                        .into(holder.image);
+                        .into(holder.image);*/
             }
             else {
                 videoPLaying = true;
                 player.addAnalyticsListener(new AnalyticsListener() {
                     @Override
                     public void onPlayerStateChanged(EventTime eventTime, boolean playWhenReady, int playbackState) {
+                        if(playWhenReady)holder.progressBar.setVisibility(View.INVISIBLE);
                         if (playWhenReady && playbackState == Player.STATE_ENDED) {
                             if (holder.video.getPlayer() == null) {
                                 holder.start.setVisibility(View.VISIBLE);
@@ -109,7 +117,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
                             if (holder.video.getPlayer() == null) {
                                 holder.image.setVisibility(View.VISIBLE);
                                 holder.start.setVisibility(View.VISIBLE);
-                                holder.progressBar.setVisibility(View.VISIBLE);
+                                //holder.progressBar.setVisibility(View.VISIBLE);
                             }
                         }
                     }
@@ -119,19 +127,24 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
 
             holder.start.setOnClickListener(v -> {
                 if(clickable){
+
+                    if(prevHolder != null){
+                        prevHolder.image.setVisibility(View.VISIBLE);
+                        prevHolder.start.setVisibility(View.VISIBLE);
+                        prevHolder.video.setPlayer(null);
+                        Log.d("RatingAdapater", prevHolder.name.getText().toString() + " " + holder.name.getText().toString());
+                    }
+
                     clickable = false;
                     holder.video.setPlayer(null);
                     holder.video.setPlayer(player);
-
-                    /*holder.setVideoName(personRatingDTO.getVideo().getName());
-                    holder.setVideoSource();
-                    player.prepare(holder.videoSource);*/
 
                     player.prepare(mediaSources.get(position));
 
                     player.setPlayWhenReady(true);
                     holder.start.setVisibility(View.GONE);
                     holder.image.setVisibility(View.INVISIBLE);
+                    prevHolder = holder;
                 }
 
 
@@ -171,11 +184,17 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
 
         Log.d("RatingAdapterLog", "onBindViewHolder " + holder.name.getText().toString());
 
-        Glide.with(holder.itemView.getContext())
-                .load(SERVER_NAME + "/api/video/" + personRatingDTO.getVideo().getName())
-                .into(holder.image);
 
 
+        if(position >= bitmaps.size()){
+            Glide.with(holder.itemView.getContext())
+                    .load(SERVER_NAME + "/api/video/" + personRatingDTO.getVideo().getName())
+                    .into(holder.image);
+            if(holder.image.getDrawable() != null)
+                bitmaps.add(((BitmapDrawable)holder.image.getDrawable()).getBitmap());
+        }else{
+            holder.image.setImageBitmap(bitmaps.get(position));
+        }
         //player.seekTo(0);
 
         //holder.setVideoSource();
@@ -210,7 +229,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     public void onViewDetachedFromWindow(@NonNull ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
         if(holder.video.getPlayer() != null){
-            if (holder.video.getPlayer().isPlaying()) holder.video.getPlayer().stop(true);
+            //if (holder.video.getPlayer().isPlaying()) holder.video.getPlayer().stop(true);
 //            holder.video.getPlayer().release();
             //player.stop(true);
             //player.release();
@@ -224,6 +243,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
             String videoName = person.getVideo().getName();
             mediaSources.add(new ProgressiveMediaSource.Factory(factory)
                     .createMediaSource(Uri.parse(SERVER_NAME + "/api/video/" + videoName)));
+
         }
         notifyDataSetChanged();
     }
@@ -265,25 +285,8 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
 
             start = itemView.findViewById(R.id.rating_item_start);
 
-            /*DefaultBandwidthMeter defaultBandwidthMeter = new DefaultBandwidthMeter.Builder(itemView.getContext()).build();
-
-            // Produces DataSource instances through which media data is loaded.
-            dataSourceFactory = new DefaultDataSourceFactory(itemView.getContext(),
-                    Util.getUserAgent(itemView.getContext(), "XCE FACTOR"), defaultBandwidthMeter);*/
-
-
-
-
         }
 
-        void setVideoName(String videoName) {
-            this.videoName = videoName;
-        }
-
-        void setVideoSource() {
-            this.videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
-                    .createMediaSource(Uri.parse(SERVER_NAME + "/api/video/" + videoName));
-        }
     }
 
     void stopPlayer(){
@@ -291,4 +294,6 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
             player.stop();
 
     }
+
+
 }
