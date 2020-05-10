@@ -35,8 +35,8 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
     @StateStrategyType(SkipStrategy.class)
     void getFirstVideo(){
         if (currentPerson != null){
-            this.loadNewPerson(currentPerson);
-            getViewState().loadNewVideo(currentPerson);
+            /*this.loadNewPerson(currentPerson);
+            getViewState().loadNewVideo(currentPerson);*/
         }
         else {
             Disposable disposable = interactor.getVideoLinkOnCreate()
@@ -100,7 +100,7 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
 
     private void loadNewPerson(PersonDTO person){
 
-        currentPerson = person;
+        this.currentPerson = person;
 
         if(person.getPhoto() != null)
             getViewState().setAvatar(SERVER_NAME + "/api/profile/photo/get/" + person.getPhoto());

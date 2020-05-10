@@ -52,11 +52,13 @@ public class CastingCard {
     private DataSource.Factory mDataSourceFactory;
     private SimpleExoPlayer mPlayer;
     private Callback mCallback;
+    private PersonDTO prevPerson ;
 
     public CastingCard(Context context, PersonDTO profile, SwipePlaceHolderView swipeView,
                        SimpleExoPlayer exoPlayer, DataSource.Factory dataSourceFactory,
                        Callback callback) {
         mContext = context;
+        prevPerson = mProfile;
         mProfile = profile;
         mSwipeView = swipeView;
         mDataSourceFactory = dataSourceFactory;
@@ -67,33 +69,37 @@ public class CastingCard {
     @Resolve
     public void onResolved(){
         //init
-        Log.d("CastingSwipe", "OnResolved " + mProfile.getName());
-        if(mProfile.getPhoto() == null){
-            Glide.with(mContext)
-                    .load(R.drawable.empty_profile_icon)
-                    .circleCrop()
-                    .into(ava);
-        }
-        else{
-            Glide.with(mContext)
-                    .load(SERVER_NAME + "/api/profile/photo/get/" + mProfile.getPhoto())
-                    .circleCrop()
-                    .into(ava);
-        }
-        name.setText(mProfile.getName());
-        description.setText(mProfile.getDescription());
-        playerView.setPlayer(mPlayer);
 
-        String videoLink = SERVER_NAME + "/api/video/" + mProfile.getVideo().getName();
-        int start = (int)mProfile.getVideo().getStartTime() * 1000;
-        int end = (int)mProfile.getVideo().getEndTime() * 1000;
-        mPlayer.stop();
-        MediaSource videoSource = new ProgressiveMediaSource.Factory(mDataSourceFactory)
-                .createMediaSource(Uri.parse(videoLink));
-        ClippingMediaSource clippingMediaSource =  new ClippingMediaSource(videoSource, start, end);
-        mPlayer.prepare(clippingMediaSource);
+        if(prevPerson != mProfile){
+            Log.d("CastingSwipe", "OnResolved " + mProfile.getName());
+            if(mProfile.getPhoto() == null){
+                Glide.with(mContext)
+                        .load(R.drawable.empty_profile_icon)
+                        .circleCrop()
+                        .into(ava);
+            }
+            else{
+                Glide.with(mContext)
+                        .load(SERVER_NAME + "/api/profile/photo/get/" + mProfile.getPhoto())
+                        .circleCrop()
+                        .into(ava);
+            }
+            name.setText(mProfile.getName());
+            description.setText(mProfile.getDescription());
+            playerView.setPlayer(mPlayer);
 
-        mPlayer.setPlayWhenReady(true);
+            String videoLink = SERVER_NAME + "/api/video/" + mProfile.getVideo().getName();
+            int start = (int)mProfile.getVideo().getStartTime() * 1000;
+            int end = (int)mProfile.getVideo().getEndTime() * 1000;
+            mPlayer.stop();
+            MediaSource videoSource = new ProgressiveMediaSource.Factory(mDataSourceFactory)
+                    .createMediaSource(Uri.parse(videoLink));
+            ClippingMediaSource clippingMediaSource =  new ClippingMediaSource(videoSource, start, end);
+            mPlayer.prepare(clippingMediaSource);
+
+            mPlayer.setPlayWhenReady(true);
+        }
+
     }
 
     @SwipeOut

@@ -100,10 +100,19 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if(mSwipeView != null)
+        mSwipeView.unlockViews();
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
         Log.d("CastingFragment", "OnStop");
         mSwipeView.removeAllViews();
+        mSwipeView.lockViews();
+
     }
 
     @Nullable
@@ -129,7 +138,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         super.onDetach();
         if (player != null)
             player.release();
-        mSwipeView.removeAllViews();
+        //mSwipeView.removeAllViews();
     }
 
     @Override
@@ -185,7 +194,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
             }
         });
 
-
+        Log.d("CastingFragment", "OnViewCreated");
         presenter.getFirstVideo();
 
         mSwipeView.addItemRemoveListener(count -> {
@@ -197,6 +206,8 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        Log.d("CastingFragment", "OnAttach");
+
         if (context instanceof Activity) activity = (Activity) context;
     }
 
@@ -230,7 +241,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         mSwipeView.doSwipe(false);
     }
 
-
+    private CastingCard castingCard;
     @Override
     public void loadNewVideo(PersonDTO personDTO){
         //castingCard.setVisibility(View.VISIBLE);
@@ -241,8 +252,8 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
             Log.d("CastingSwipe", "loadVideo " + personDTO.getName());
 
-
-            mSwipeView.addView(new CastingCard(appContext, personDTO, mSwipeView, player, dataSourceFactory, this));
+            castingCard = new CastingCard(appContext, personDTO, mSwipeView, player, dataSourceFactory, this);
+            mSwipeView.addView(castingCard);
         }
         /*String videoLink = SERVER_NAME + "/api/video/" + personDTO.getVideo().getName();
 
@@ -338,6 +349,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     @Override
     public void openProfile() {
         try {
+
             ((MainScreenPostman) activity).openPublicProfile(presenter.getPersonId());
         } catch (Exception e) {
             e.printStackTrace();
