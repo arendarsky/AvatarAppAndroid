@@ -119,7 +119,8 @@ public class VideoRepository implements IVideoRepository {
     public Completable setLiked(boolean liked) {
         PersonDTO tmp = this.currentPerson;
         this.currentPerson = null;
-        this.personDTOList.add(this.personDTOList.size() - 1, this.personDTOList.remove(0));
+        if(this.personDTOList.size() > 0)
+            this.personDTOList.add(this.personDTOList.size() - 1, this.personDTOList.remove(0));
         return videoAPI.setLiked(preferencesRepository.getToken(), tmp.getVideo().getName(), liked)
                 .doOnComplete(() -> this.personDTOList.remove(tmp));
     }
