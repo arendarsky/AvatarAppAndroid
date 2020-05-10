@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
+import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
+import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 import com.avatar.ava.domain.Interactor;
 import com.avatar.ava.domain.entities.PersonDTO;
 
@@ -30,7 +32,7 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
         this.interactor = interactor;
     }
 
-
+    @StateStrategyType(SkipStrategy.class)
     void getFirstVideo(){
         if (currentPerson != null){
             this.loadNewPerson(currentPerson);
@@ -119,6 +121,10 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
 
     long getVideoEndTime(){
         return (long) currentPerson.getVideo().getEndTime();
+    }
+
+    public boolean checkPeronDTO(PersonDTO personDTO) {
+        return personDTO == this.currentPerson;
     }
 }
 

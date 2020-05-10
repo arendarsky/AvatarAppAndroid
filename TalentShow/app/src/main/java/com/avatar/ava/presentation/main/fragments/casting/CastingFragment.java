@@ -234,14 +234,16 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     @Override
     public void loadNewVideo(PersonDTO personDTO){
         //castingCard.setVisibility(View.VISIBLE);
-        noMoreVideos.setVisibility(View.INVISIBLE);
-        likeButton.setVisibility(View.VISIBLE);
-        dislikeButton.setVisibility(View.VISIBLE);
+        if(presenter.checkPeronDTO(personDTO)){
+            noMoreVideos.setVisibility(View.INVISIBLE);
+            likeButton.setVisibility(View.VISIBLE);
+            dislikeButton.setVisibility(View.VISIBLE);
 
-        Log.d("CastingSwipe", "loadVideo " + personDTO.getName());
+            Log.d("CastingSwipe", "loadVideo " + personDTO.getName());
 
 
-        mSwipeView.addView(new CastingCard(appContext, personDTO, mSwipeView, player, dataSourceFactory, this));
+            mSwipeView.addView(new CastingCard(appContext, personDTO, mSwipeView, player, dataSourceFactory, this));
+        }
         /*String videoLink = SERVER_NAME + "/api/video/" + personDTO.getVideo().getName();
 
         int start = (int)personDTO.getVideo().getStartTime() * 1000;
