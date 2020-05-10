@@ -482,6 +482,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     public void exitFromAcc(){
         presenter.exitAcc();
         startActivity(new Intent(appContext, EnterActivity.class));
+        finish();
     }
 
     @Override

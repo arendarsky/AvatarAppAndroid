@@ -18,8 +18,8 @@ import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.net.URLConnection;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -39,7 +39,7 @@ public class VideoRepository implements IVideoRepository {
     private SharedPreferencesRepository preferencesRepository;
     private Context appContext;
     private PersonDTO currentPerson;
-    private Set<PersonDTO> personDTOSet = new LinkedHashSet<>();
+    private List<PersonDTO> personDTOList = new ArrayList<>();
     private String convertedFilePath;
     private Uri loadingVideo;
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -93,21 +93,22 @@ public class VideoRepository implements IVideoRepository {
     @SuppressWarnings("unused")
     @Override
     public Single<PersonDTO> getNewVideoLink() {
-        if (personDTOSet.size() <= 10){
+        if (personDTOList.size() <= 10){
             Disposable disposable = videoAPI.getUnwatched(preferencesRepository.getToken(), 20)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             list -> {
                                 list.remove(this.currentPerson);
-                                this.personDTOSet = new LinkedHashSet<>(list);
+                                this.personDTOList = list;
                             },
                             error -> {});
         }
         return  Single.fromCallable(() -> {
-            if (personDTOSet.isEmpty()) throw new Exception("Empty list");
+            if (personDTOList.isEmpty()) throw new Exception("Empty list");
             else {
-                this.currentPerson = personDTOSet.iterator().next();
+
+                this.currentPerson = personDTOList.get(0);
                 return this.currentPerson;
             }
         });
@@ -116,22 +117,27 @@ public class VideoRepository implements IVideoRepository {
 
     @Override
     public Completable setLiked(boolean liked) {
-        this.personDTOSet.remove(this.currentPerson);
-        return videoAPI.setLiked(preferencesRepository.getToken(), currentPerson.getVideo().getName(), liked);
+        PersonDTO tmp = this.currentPerson;
+        this.currentPerson = null;
+        if(this.personDTOList.size() > 0)
+            this.personDTOList.add(this.personDTOList.size() - 1, this.personDTOList.remove(0));
+        return videoAPI.setLiked(preferencesRepository.getToken(), tmp.getVideo().getName(), liked)
+                .doOnComplete(() -> this.personDTOList.remove(tmp));
     }
 
     @Override
     public Single<PersonDTO> getVideoLinkOnCreate() {
-        if (this.personDTOSet.isEmpty())
+        if (this.personDTOList.isEmpty())
             return videoAPI.getUnwatched(preferencesRepository.getToken(), 10)
                     .flatMap(list -> {
                         if (list.size() == 0) throw new IllegalStateException("Empty list");
-                        this.personDTOSet.addAll(list);
-                        this.currentPerson = this.personDTOSet.iterator().next();
+                        this.personDTOList.addAll(list);
+                        this.currentPerson = this.personDTOList.get(0);
                         return Single.just(this.currentPerson);
                     });
         else{
-            this.currentPerson = personDTOSet.iterator().next();
+            if (this.currentPerson == null)
+                this.currentPerson = personDTOList.iterator().next();
             return Single.just(this.currentPerson);
         }
     }
