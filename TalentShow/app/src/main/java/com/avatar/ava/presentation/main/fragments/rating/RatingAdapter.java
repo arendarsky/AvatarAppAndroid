@@ -42,6 +42,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     private SimpleExoPlayer player;
     private ArrayList<MediaSource> mediaSources = new ArrayList<MediaSource>();
     private DataSource.Factory factory;
+    private boolean videoPLaying = false;
 
     @NonNull
     @Override
@@ -82,30 +83,38 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         holder.start.setVisibility(View.VISIBLE);
         if(personRatingDTO.getVideo() != null){
 
-            player.addAnalyticsListener(new AnalyticsListener() {
-                @Override
-                public void onPlayerStateChanged(EventTime eventTime, boolean playWhenReady, int playbackState) {
-                    if(playWhenReady && playbackState == Player.STATE_ENDED){
-                        if(holder.video.getPlayer() == null){
-                            holder.start.setVisibility(View.VISIBLE);
-                            holder.image.setVisibility(View.VISIBLE);
-                            holder.restartButton.setVisibility(View.VISIBLE);
-                        }
-                    }
-                    else if (playWhenReady && playbackState == Player.STATE_READY){
-                        holder.progressBar.setVisibility(View.INVISIBLE);
-                        holder.start.setVisibility(View.GONE);
-                        holder.image.setVisibility(View.INVISIBLE);
+            if (videoPLaying){
+                Glide.with(holder.itemView.getContext())
+                        .load(personRatingDTO.getVideo())
+                        .into(holder.image);
+            }
+            else {
+                videoPLaying = true;
+                player.addAnalyticsListener(new AnalyticsListener() {
+                    @Override
+                    public void onPlayerStateChanged(EventTime eventTime, boolean playWhenReady, int playbackState) {
+                        if (playWhenReady && playbackState == Player.STATE_ENDED) {
+                            if (holder.video.getPlayer() == null) {
+                                holder.start.setVisibility(View.VISIBLE);
+                                videoPLaying = false;
+                                holder.image.setVisibility(View.VISIBLE);
+                                holder.restartButton.setVisibility(View.VISIBLE);
+                            }
+                        } else if (playWhenReady && playbackState == Player.STATE_READY) {
+                            holder.progressBar.setVisibility(View.INVISIBLE);
+                            holder.start.setVisibility(View.GONE);
+                            holder.image.setVisibility(View.INVISIBLE);
 
-                    }
-                    else {
-                        if(holder.video.getPlayer() == null){
-                            holder.image.setVisibility(View.VISIBLE);
-                            holder.start.setVisibility(View.VISIBLE);
-                            holder.progressBar.setVisibility(View.VISIBLE);
+                        } else {
+                            if (holder.video.getPlayer() == null) {
+                                holder.image.setVisibility(View.VISIBLE);
+                                holder.start.setVisibility(View.VISIBLE);
+                                holder.progressBar.setVisibility(View.VISIBLE);
+                            }
                         }
                     }
-                }});
+                });
+            }
 
 
             holder.start.setOnClickListener(v -> {
@@ -200,15 +209,13 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     @Override
     public void onViewDetachedFromWindow(@NonNull ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
-        Log.d("RatingAdapterLog", "viewDetached " + holder.name.getText().toString());
-        if(player != null){
-            Log.d("RatingAdapterLog", "viewDetached " + holder.name.getText().toString());
+        if(holder.video.getPlayer() != null){
+            if (holder.video.getPlayer().isPlaying()) holder.video.getPlayer().stop(true);
+//            holder.video.getPlayer().release();
             //player.stop(true);
             //player.release();
 
         }
-
-
     }
 
     void setItems(List<PersonRatingDTO> newData){

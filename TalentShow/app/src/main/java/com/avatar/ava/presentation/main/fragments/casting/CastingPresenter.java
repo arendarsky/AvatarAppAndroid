@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
+import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
+import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 import com.avatar.ava.domain.Interactor;
 import com.avatar.ava.domain.entities.PersonDTO;
 
@@ -30,26 +32,32 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
         this.interactor = interactor;
     }
 
-
+    @StateStrategyType(SkipStrategy.class)
     void getFirstVideo(){
-        Disposable disposable = interactor.getVideoLinkOnCreate()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(person -> {
-                            if (person.getVideo() != null) {
-                                this.loadNewPerson(person);
-                                getViewState().loadNewVideo(person);
-                            }
-                            else getViewState().showNoMoreVideos();
-                        },
-                        error -> {
-                            if (Objects.equals(error.getMessage(), "Empty list")){
-                                getViewState().showNoMoreVideos();
-                            }
-                        });
+        if (currentPerson != null){
+            /*this.loadNewPerson(currentPerson);
+            getViewState().loadNewVideo(currentPerson);*/
+        }
+        else {
+            Disposable disposable = interactor.getVideoLinkOnCreate()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(person -> {
+                                if (person.getVideo() != null) {
+                                    this.loadNewPerson(person);
+                                    getViewState().loadNewVideo(person);
+                                } else getViewState().showNoMoreVideos();
+                            },
+                            error -> {
+                                if (Objects.equals(error.getMessage(), "Empty list")) {
+                                    getViewState().showNoMoreVideos();
+                                }
+                            });
+        }
     }
 
     void likeVideo(){
+        this.currentPerson = null;
         Disposable disposable = interactor.setLiked(true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -71,6 +79,7 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
     }
 
     void dislikeVideo(){
+        this.currentPerson = null;
         Disposable disposable = interactor.setLiked(true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -91,7 +100,7 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
 
     private void loadNewPerson(PersonDTO person){
 
-        currentPerson = person;
+        this.currentPerson = person;
 
         if(person.getPhoto() != null)
             getViewState().setAvatar(SERVER_NAME + "/api/profile/photo/get/" + person.getPhoto());
@@ -112,6 +121,10 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
 
     long getVideoEndTime(){
         return (long) currentPerson.getVideo().getEndTime();
+    }
+
+    public boolean checkPeronDTO(PersonDTO personDTO) {
+        return personDTO == this.currentPerson;
     }
 }
 
