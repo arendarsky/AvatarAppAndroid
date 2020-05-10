@@ -127,7 +127,8 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d("CastingFragment", "OnDetach");
+        if (player != null)
+            player.release();
         mSwipeView.removeAllViews();
     }
 
@@ -217,21 +218,15 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     public void likeClicked(){
         progressBar.setVisibility(View.VISIBLE);
         restartBtn.setVisibility(View.INVISIBLE);
-        presenter.likeVideo();
+//        presenter.likeVideo();
         mSwipeView.doSwipe(true);
     }
-
-    @SwipeIn
-    public void swipeLike(){
-        Log.d("CastingSwipe", "Swipe:ike");
-    }
-
 
     @OnClick(R.id.activity_casting_btn_x)
     public void dislikeClicked() {
         progressBar.setVisibility(View.VISIBLE);
         restartBtn.setVisibility(View.INVISIBLE);
-        presenter.dislikeVideo();
+//        presenter.dislikeVideo();
         mSwipeView.doSwipe(false);
     }
 

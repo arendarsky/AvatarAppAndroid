@@ -32,24 +32,30 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
 
 
     void getFirstVideo(){
-        Disposable disposable = interactor.getVideoLinkOnCreate()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(person -> {
-                            if (person.getVideo() != null) {
-                                this.loadNewPerson(person);
-                                getViewState().loadNewVideo(person);
-                            }
-                            else getViewState().showNoMoreVideos();
-                        },
-                        error -> {
-                            if (Objects.equals(error.getMessage(), "Empty list")){
-                                getViewState().showNoMoreVideos();
-                            }
-                        });
+        if (currentPerson != null){
+            this.loadNewPerson(currentPerson);
+            getViewState().loadNewVideo(currentPerson);
+        }
+        else {
+            Disposable disposable = interactor.getVideoLinkOnCreate()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(person -> {
+                                if (person.getVideo() != null) {
+                                    this.loadNewPerson(person);
+                                    getViewState().loadNewVideo(person);
+                                } else getViewState().showNoMoreVideos();
+                            },
+                            error -> {
+                                if (Objects.equals(error.getMessage(), "Empty list")) {
+                                    getViewState().showNoMoreVideos();
+                                }
+                            });
+        }
     }
 
     void likeVideo(){
+        this.currentPerson = null;
         Disposable disposable = interactor.setLiked(true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -71,6 +77,7 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
     }
 
     void dislikeVideo(){
+        this.currentPerson = null;
         Disposable disposable = interactor.setLiked(true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
