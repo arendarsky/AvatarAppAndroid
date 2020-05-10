@@ -86,7 +86,6 @@
             android:layout_height="28dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="310dp"
-            android:layout_marginBottom="2dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/rating_item_description"
             />
@@ -143,19 +142,22 @@
             app:layout_constraintBottom_toBottomOf="@+id/rating_item_ava"
             />
 
-        <TextView
-            android:id="@+id/rating_item_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:lineSpacingExtra="2sp"
-            android:text="Это описание к видео, которое написал автор, чтобы было понятно, что он хочет сказать своим творчеством. Наверное, тут очень ограничен обхем текста."
-            android:textColor="@color/whiteText"
-            android:padding="16dp"
-            android:maxLines="3"
-            android:ellipsize="end"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            <TextView
+                android:id="@+id/rating_item_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:paddingEnd="16dp"
+                android:paddingStart="0dp"
+                android:paddingBottom="14dp"
+                android:paddingTop="8dp"
+                android:lineSpacingExtra="2sp"
+                android:maxLines="3"
+                android:text="Это описание к видео, которое написал автор, чтобы было понятно, что он хочет сказать своим творчеством. Наверное, тут очень ограничен обхем текста."
+                android:textColor="@color/whiteText"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/rating_item_ava" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
