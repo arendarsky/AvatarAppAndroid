@@ -1,7 +1,5 @@
 package com.avatar.ava.presentation.main.fragments.rating;
 
-import android.util.Log;
-
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.avatar.ava.domain.Interactor;

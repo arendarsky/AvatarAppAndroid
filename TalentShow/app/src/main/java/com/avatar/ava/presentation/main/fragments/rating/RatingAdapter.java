@@ -42,7 +42,6 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     private SimpleExoPlayer player;
     private ArrayList<MediaSource> mediaSources = new ArrayList<>();
     private DataSource.Factory factory;
-    private boolean videoPLaying = false;
     private ViewHolder previousPlaying = null;
     private PersonRatingDTO previousPlayingPerson = null;
 
@@ -94,6 +93,29 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
                     player.setPlayWhenReady(true);
                     holder.start.setVisibility(View.GONE);
                     holder.image.setVisibility(View.INVISIBLE);
+                    player.addAnalyticsListener(new AnalyticsListener() {
+                        @Override
+                        public void onPlayerStateChanged(EventTime eventTime, boolean playWhenReady, int playbackState) {
+                            if (playWhenReady && playbackState == Player.STATE_ENDED) {
+                                if (holder.video.getPlayer() == null) {
+                                    holder.start.setVisibility(View.VISIBLE);
+                                    holder.image.setVisibility(View.VISIBLE);
+                                    holder.restartButton.setVisibility(View.VISIBLE);
+                                }
+                            } else if (playWhenReady && playbackState == Player.STATE_READY) {
+                                holder.progressBar.setVisibility(View.INVISIBLE);
+                                holder.start.setVisibility(View.GONE);
+                                holder.image.setVisibility(View.INVISIBLE);
+
+                            } else {
+                                if (holder.video.getPlayer() == null) {
+                                    holder.image.setVisibility(View.VISIBLE);
+                                    holder.start.setVisibility(View.VISIBLE);
+                                    holder.progressBar.setVisibility(View.VISIBLE);
+                                }
+                            }
+                        }
+                    });
                 }
 
 
@@ -103,34 +125,6 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
                         .load(SERVER_NAME + "/api/video/" + personRatingDTO.getVideo().getName())
                         .into(holder.image);
 
-
-            if (!videoPLaying){
-                videoPLaying = true;
-                player.addAnalyticsListener(new AnalyticsListener() {
-                    @Override
-                    public void onPlayerStateChanged(EventTime eventTime, boolean playWhenReady, int playbackState) {
-                        if (playWhenReady && playbackState == Player.STATE_ENDED) {
-                            if (holder.video.getPlayer() == null) {
-                                holder.start.setVisibility(View.VISIBLE);
-                                videoPLaying = false;
-                                holder.image.setVisibility(View.VISIBLE);
-                                holder.restartButton.setVisibility(View.VISIBLE);
-                            }
-                        } else if (playWhenReady && playbackState == Player.STATE_READY) {
-                            holder.progressBar.setVisibility(View.INVISIBLE);
-                            holder.start.setVisibility(View.GONE);
-                            holder.image.setVisibility(View.INVISIBLE);
-
-                        } else {
-                            if (holder.video.getPlayer() == null) {
-                                holder.image.setVisibility(View.VISIBLE);
-                                holder.start.setVisibility(View.VISIBLE);
-                                holder.progressBar.setVisibility(View.VISIBLE);
-                            }
-                        }
-                    }
-                });
-            }
         }
 
         holder.restartButton.setOnClickListener(v -> {
