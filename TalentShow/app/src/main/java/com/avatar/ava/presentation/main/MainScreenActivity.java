@@ -27,6 +27,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.amplitude.api.Amplitude;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
@@ -133,6 +134,9 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         ButterKnife.bind(this);
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
         if (savedInstanceState == null) bottomNavigationView.setSelectedItemId(R.id.nav_casting);
+        Amplitude.getInstance().initialize(this, "YOUR_API_KEY_HERE")
+                .enableForegroundTracking(getApplication())
+                .setLogLevel(Log.VERBOSE);
     }
 
     @Override

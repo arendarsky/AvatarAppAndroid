@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.amplitude.api.Amplitude;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
@@ -64,6 +66,9 @@ public class EnterActivity extends MvpAppCompatActivity implements EnterView, Re
         presenter.checkAuth();
         setContentView(R.layout.enter_activty);
         Toothpick.inject(this, Toothpick.openScope(App.class));
+        Amplitude.getInstance().initialize(this, "YOUR_API_KEY_HERE")
+                .enableForegroundTracking(getApplication())
+                .setLogLevel(Log.VERBOSE);
     }
 
     @Override
@@ -71,20 +76,6 @@ public class EnterActivity extends MvpAppCompatActivity implements EnterView, Re
         startActivity(new Intent(appContext, MainScreenActivity.class));
         finish();
     }
-
-//    @Override
-//    public void loadPhotoForAvatar() {
-//        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
-//        getIntent.setType("image/*");
-//
-//        Intent pickIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//        pickIntent.setType("image/*");
-//
-//        Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
-//        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
-//
-//        startActivityForResult(chooserIntent, PICK_IMAGE);
-//    }
 
     @Override
     public void pickVideo() {

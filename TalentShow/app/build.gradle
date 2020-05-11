@@ -108,5 +108,6 @@ dependencies {
     implementation 'com.mindorks.android:placeholderview:1.0.3'
     annotationProcessor 'com.mindorks.android:placeholderview-compiler:1.0.3'
 
+    implementation 'com.amplitude:android-sdk:2.9.2'
     implementation 'com.google.firebase:firebase-messaging:20.1.6'
 }
