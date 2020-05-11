@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.avatar.ava.BuildConfig;
 import com.avatar.ava.R;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
 import com.avatar.ava.presentation.main.fragments.RecyclerClickListener;
@@ -26,7 +27,6 @@ import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
-import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
@@ -40,9 +40,11 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     private List<PersonRatingDTO> data = new ArrayList<>();
     private RecyclerClickListener clickListener;
     private SimpleExoPlayer player;
-    private ArrayList<MediaSource> mediaSources = new ArrayList<MediaSource>();
+    private ArrayList<MediaSource> mediaSources = new ArrayList<>();
     private DataSource.Factory factory;
     private boolean videoPLaying = false;
+    private ViewHolder previousPlaying = null;
+    private PersonRatingDTO previousPlayingPerson = null;
 
     @NonNull
     @Override
@@ -64,11 +66,9 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
 
             @Override
             public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-                Log.d("RatingPlayer", "changeState" + playbackState);
+                if(BuildConfig.DEBUG)
+                    Log.d("RatingPlayer", "changeState" + playbackState);
                 clickable = true;
-                if(playbackState == Player.STATE_BUFFERING){
-
-                }
             }
         });
         factory = new DefaultDataSourceFactory(context,
@@ -83,12 +83,28 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         holder.start.setVisibility(View.VISIBLE);
         if(personRatingDTO.getVideo() != null){
 
-            if (videoPLaying){
-                Glide.with(holder.itemView.getContext())
-                        .load(personRatingDTO.getVideo())
+            holder.start.setOnClickListener(v -> {
+                if(clickable){
+                    clickable = false;
+                    removePreviousPlaying();
+                    previousPlaying = holder;
+                    previousPlayingPerson = personRatingDTO;
+                    holder.video.setPlayer(player);
+                    player.prepare(mediaSources.get(position));
+                    player.setPlayWhenReady(true);
+                    holder.start.setVisibility(View.GONE);
+                    holder.image.setVisibility(View.INVISIBLE);
+                }
+
+
+            });
+
+            Glide.with(holder.itemView.getContext())
+                        .load(SERVER_NAME + "/api/video/" + personRatingDTO.getVideo().getName())
                         .into(holder.image);
-            }
-            else {
+
+
+            if (!videoPLaying){
                 videoPLaying = true;
                 player.addAnalyticsListener(new AnalyticsListener() {
                     @Override
@@ -115,29 +131,6 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
                     }
                 });
             }
-
-
-            holder.start.setOnClickListener(v -> {
-                if(clickable){
-                    clickable = false;
-                    holder.video.setPlayer(null);
-                    holder.video.setPlayer(player);
-
-                    /*holder.setVideoName(personRatingDTO.getVideo().getName());
-                    holder.setVideoSource();
-                    player.prepare(holder.videoSource);*/
-
-                    player.prepare(mediaSources.get(position));
-
-                    player.setPlayWhenReady(true);
-                    holder.start.setVisibility(View.GONE);
-                    holder.image.setVisibility(View.INVISIBLE);
-                }
-
-
-            });
-
-
         }
 
         holder.restartButton.setOnClickListener(v -> {
@@ -153,15 +146,18 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
             holder.description.setText("");
             holder.description.setPadding(0, 0, 0, 0);
         }
+
         String name = personRatingDTO.getName();
         holder.name.setText(name);
         holder.pos.setText("#" + (position + 1));
+
         if(personRatingDTO.getPhoto() == null){
             Glide.with(holder.itemView.getContext())
                     .load(R.drawable.empty_profile_icon)
                     .circleCrop()
                     .into(holder.ava);
-        }else{
+        }
+        else{
             Glide.with(holder.itemView.getContext())
                     .load(SERVER_NAME + "/api/profile/photo/get/"
                             + personRatingDTO.getPhoto())
@@ -169,18 +165,12 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
                     .into(holder.ava);
         }
 
-        Log.d("RatingAdapterLog", "onBindViewHolder " + holder.name.getText().toString());
+        if(BuildConfig.DEBUG)
+            Log.d("RatingAdapterLog", "onBindViewHolder " + holder.name.getText().toString());
 
         Glide.with(holder.itemView.getContext())
                 .load(SERVER_NAME + "/api/video/" + personRatingDTO.getVideo().getName())
                 .into(holder.image);
-
-
-        //player.seekTo(0);
-
-        //holder.setVideoSource();
-        //player.prepare(holder.videoSource);
-
     }
 
     @Override
@@ -191,7 +181,9 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     @Override
     public void onViewRecycled(@NonNull ViewHolder holder) {
         super.onViewRecycled(holder);
-        Log.d("RatingAdapterLog", "viewRecycled " + holder.name.getText().toString());
+        removePreviousPlaying();
+        if (BuildConfig.DEBUG)
+            Log.d("RatingAdapterLog", "viewRecycled " + holder.name.getText().toString());
     }
 
     int getPersonId(int index){
@@ -201,21 +193,14 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     @Override
     public void onViewAttachedToWindow(@NonNull ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
-
-        Log.d("RatingAdapterLog", "viewAttach " + holder.name.getText().toString() + " " + player.getPlaybackState());
+        if (BuildConfig.DEBUG)
+            Log.d("RatingAdapterLog", "viewAttach " + holder.name.getText().toString() + " " + player.getPlaybackState());
 
     }
 
     @Override
     public void onViewDetachedFromWindow(@NonNull ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
-        if(holder.video.getPlayer() != null){
-            if (holder.video.getPlayer().isPlaying()) holder.video.getPlayer().stop(true);
-//            holder.video.getPlayer().release();
-            //player.stop(true);
-            //player.release();
-
-        }
     }
 
     void setItems(List<PersonRatingDTO> newData){
@@ -228,20 +213,12 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         notifyDataSetChanged();
     }
 
-    public void addItem(PersonRatingDTO p){
-        data.add(p);
-        notifyDataSetChanged();
-    }
-
-    class ViewHolder extends RecyclerView.ViewHolder{
+    static class ViewHolder extends RecyclerView.ViewHolder{
 
         PlayerView video;
         TextView pos, name, description, likes;
         ImageView ava;
 
-        DataSource.Factory dataSourceFactory;
-        MediaSource videoSource;
-        String videoName;
         ProgressBar progressBar;
         View restartButton;
         ImageButton start;
@@ -251,8 +228,6 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
             super(itemView);
             video = new PlayerView(itemView.getContext());
             video = itemView.findViewById(R.id.rating_item_video);
-            //video.setUseArtwork(true);
-            //video.setDefaultArtwork(itemView.getContext().getResources().getDrawable(R.drawable.logo));
             image = itemView.findViewById(R.id.rating_item_image);
 
             pos = itemView.findViewById(R.id.rating_item_pos);
@@ -264,25 +239,6 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
             restartButton = itemView.findViewById(R.id.rating_item_restart);
 
             start = itemView.findViewById(R.id.rating_item_start);
-
-            /*DefaultBandwidthMeter defaultBandwidthMeter = new DefaultBandwidthMeter.Builder(itemView.getContext()).build();
-
-            // Produces DataSource instances through which media data is loaded.
-            dataSourceFactory = new DefaultDataSourceFactory(itemView.getContext(),
-                    Util.getUserAgent(itemView.getContext(), "XCE FACTOR"), defaultBandwidthMeter);*/
-
-
-
-
-        }
-
-        void setVideoName(String videoName) {
-            this.videoName = videoName;
-        }
-
-        void setVideoSource() {
-            this.videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
-                    .createMediaSource(Uri.parse(SERVER_NAME + "/api/video/" + videoName));
         }
     }
 
@@ -290,5 +246,36 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         if (player.isPlaying())
             player.stop();
 
+    }
+
+    private void removePreviousPlaying(){
+        if (previousPlaying != null) {
+            if (previousPlaying.video.getPlayer() != null){
+                if (previousPlaying.video.getPlayer().isPlaying())
+                    previousPlaying.video.getPlayer().stop(true);
+                previousPlaying.video.getPlayer().release();
+                clickable = true;
+                player = new SimpleExoPlayer.Builder(previousPlaying.itemView.getContext()).build();
+                player.addListener(new Player.EventListener() {
+
+                    @Override
+                    public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+                        if(BuildConfig.DEBUG)
+                            Log.d("RatingPlayer", "changeState" + playbackState);
+                    }
+                });
+
+                Glide.with(previousPlaying.itemView.getContext())
+                        .load(SERVER_NAME + "/api/video/" + previousPlayingPerson.getVideo().getName())
+                        .into(previousPlaying.image);
+
+                previousPlaying.start.setVisibility(View.VISIBLE);
+                previousPlaying.image.setVisibility(View.VISIBLE);
+
+                previousPlaying = null;
+                previousPlayingPerson = null;
+            }
+
+        }
     }
 }

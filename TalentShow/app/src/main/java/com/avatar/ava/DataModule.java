@@ -48,13 +48,13 @@ public class DataModule extends Module{
             String writeNew = request.header(WRITE_TIMEOUT);
 
             if (!TextUtils.isEmpty(connectNew)) {
-                connectTimeout = Integer.valueOf(connectNew);
+                connectTimeout = Integer.parseInt(connectNew);
             }
             if (!TextUtils.isEmpty(readNew)) {
-                readTimeout = Integer.valueOf(readNew);
+                readTimeout = Integer.parseInt(readNew);
             }
             if (!TextUtils.isEmpty(writeNew)) {
-                writeTimeout = Integer.valueOf(writeNew);
+                writeTimeout = Integer.parseInt(writeNew);
             }
 
             Response response = chain

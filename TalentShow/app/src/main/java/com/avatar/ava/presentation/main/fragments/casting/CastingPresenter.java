@@ -6,6 +6,7 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
+import com.avatar.ava.BuildConfig;
 import com.avatar.ava.domain.Interactor;
 import com.avatar.ava.domain.entities.PersonDTO;
 
@@ -34,26 +35,20 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
 
     @StateStrategyType(SkipStrategy.class)
     void getFirstVideo(){
-        if (currentPerson != null){
-            /*this.loadNewPerson(currentPerson);
-            getViewState().loadNewVideo(currentPerson);*/
-        }
-        else {
-            Disposable disposable = interactor.getVideoLinkOnCreate()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(person -> {
-                                if (person.getVideo() != null) {
-                                    this.loadNewPerson(person);
-                                    getViewState().loadNewVideo(person);
-                                } else getViewState().showNoMoreVideos();
-                            },
-                            error -> {
-                                if (Objects.equals(error.getMessage(), "Empty list")) {
-                                    getViewState().showNoMoreVideos();
-                                }
-                            });
-        }
+        Disposable disposable = interactor.getVideoLinkOnCreate()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(person -> {
+                            if (person.getVideo() != null) {
+                                this.currentPerson = person;
+                                getViewState().loadNewVideo(person);
+                            } else getViewState().showNoMoreVideos();
+                        },
+                        error -> {
+                            if (Objects.equals(error.getMessage(), "Empty list")) {
+                                getViewState().showNoMoreVideos();
+                            }
+                        });
     }
 
     void likeVideo(){
@@ -65,14 +60,15 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
                         () ->
                                 interactor.getNewVideoLink().subscribe(
                                         personDTO -> {
-                                            this.loadNewPerson(personDTO);
+                                            this.currentPerson = personDTO;
                                             getViewState().loadNewVideo(personDTO);
                                         },
                                         error -> {
                                             if (Objects.equals(error.getMessage(), "Empty list")){
                                                 getViewState().showNoMoreVideos();
                                             }
-                                            Log.d("Casting presenter", Objects.requireNonNull(error.getMessage()));
+                                            if(BuildConfig.DEBUG)
+                                                Log.d("Casting presenter", Objects.requireNonNull(error.getMessage()));
                                         }),
                         error -> getViewState().showError("Не удалось оценить видео, попробуйте позже"));
 
@@ -86,7 +82,7 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
                 .subscribe(
                         () -> interactor.getNewVideoLink().subscribe(
                                 personDTO -> {
-                                    this.loadNewPerson(personDTO);
+                                    this.currentPerson = personDTO;
                                     getViewState().loadNewVideo(personDTO);
                                 },
                                 error -> {
@@ -96,19 +92,6 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
                                 }),
                         error -> getViewState().showError("Не удалось оценить видео, попробуйте позже")
                 );
-    }
-
-    private void loadNewPerson(PersonDTO person){
-
-        this.currentPerson = person;
-
-        if(person.getPhoto() != null)
-            getViewState().setAvatar(SERVER_NAME + "/api/profile/photo/get/" + person.getPhoto());
-
-        else getViewState().setAvatar("null");
-
-        getViewState().setName(person.getName());
-        getViewState().setDescription(person.getDescription());
     }
 
     int getPersonId(){
@@ -123,7 +106,7 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
         return (long) currentPerson.getVideo().getEndTime();
     }
 
-    public boolean checkPeronDTO(PersonDTO personDTO) {
+    boolean checkPeronDTO(PersonDTO personDTO) {
         return personDTO == this.currentPerson;
     }
 }
