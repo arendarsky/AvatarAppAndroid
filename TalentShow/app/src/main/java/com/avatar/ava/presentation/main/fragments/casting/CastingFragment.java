@@ -215,6 +215,13 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         mSwipeView.doSwipe(false);
     }
 
+    @OnClick(R.id.casting_fragment_restart_btn)
+    public void restartClicked(){
+        player.seekTo(presenter.getVideoBeginTime());
+        player.setPlayWhenReady(true);
+        restartBtn.setVisibility(View.INVISIBLE);
+    }
+
     @Override
     public void loadNewVideo(PersonDTO personDTO){
         if(presenter.checkPeronDTO(personDTO)){
