@@ -134,9 +134,6 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         ButterKnife.bind(this);
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
         if (savedInstanceState == null) bottomNavigationView.setSelectedItemId(R.id.nav_casting);
-        Amplitude.getInstance().initialize(this, "YOUR_API_KEY_HERE")
-                .enableForegroundTracking(getApplication())
-                .setLogLevel(Log.VERBOSE);
     }
 
     @Override
@@ -261,6 +258,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         FragmentManager fragmentManager = getSupportFragmentManager();
         ProfileFragment profileFragment = (ProfileFragment) fragmentManager.findFragmentById(ProfileFragment.ProfileID);
         if (profileFragment != null) {
+            Amplitude.getInstance().logEvent("saveprofile_button_tapped");
             profileFragment.editProfile();
         }
         clearTopView();
@@ -363,6 +361,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
                 .findFragmentById(R.id.activity_main_frame_container);
 
         if (currentFragment instanceof FragmentChooseBestMain){
+            Amplitude.getInstance().logEvent("newvideo_save_button_tapped");
             List<Float> tmp = ((FragmentChooseBestMain) currentFragment).getInterval();
             saveButton.setVisibility(View.INVISIBLE);
             presenter.uploadAndSetInterval(tmp.get(0), tmp.get(1));
@@ -444,6 +443,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     public void onItemClick(int item) {
         switch (item){
             case ProfileBottomSheet.EDIT:
+                Amplitude.getInstance().logEvent("editprofile_button_tapped");
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 ProfileFragment profileFragment = (ProfileFragment) fragmentManager.findFragmentById(ProfileFragment.ProfileID);
                 if (profileFragment != null) {

@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amplitude.api.Amplitude;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
@@ -219,6 +220,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     private boolean castingIsApproved = false;
 
     public void setCastingVideo(){
+        Amplitude.getInstance().logEvent("sendtocasting_button_tapped");
         if(castingIsApproved){
             presenter.setActive(castingVideoName);
         }else{
@@ -445,6 +447,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
 
     @OnClick(R.id.fragment_profile_btn_edit)
     public void editProfile(){
+
         if(!edit){
             edit = true;
             description.setEnabled(true);
@@ -541,6 +544,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
 
     @OnClick(R.id.fragment_profile_edit_photo)
     void changePhoto(){
+        Amplitude.getInstance().logEvent("editphoto_button_tapped");
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, 1);

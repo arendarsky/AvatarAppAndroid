@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amplitude.api.Amplitude;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
@@ -81,6 +82,7 @@ public class FragmentNotifications extends MvpAppCompatFragment implements Notif
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         adapter = new NotificationsAdapter((v, position) -> {
+            Amplitude.getInstance().logEvent("notificationprofile_button_tapped");
             try {
                 ((MainScreenPostman) activity).openPublicProfile(adapter.getPersonId(position));
             } catch (Exception e) {

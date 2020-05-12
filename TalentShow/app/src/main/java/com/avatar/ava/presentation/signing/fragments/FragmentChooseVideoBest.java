@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.amplitude.api.Amplitude;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
 import com.avatar.ava.presentation.signing.RegAuthPostman;
@@ -106,6 +107,7 @@ public class FragmentChooseVideoBest extends Fragment  {
 
     @OnClick(R.id.fragment_video_best_save)
     void saveClicked(){
+        Amplitude.getInstance().logEvent("newvideo_save_button_tapped");
         try {
             ((RegAuthPostman) activity).fragmentMessage(UPLOAD_VIDEO);
         } catch (Exception e) {

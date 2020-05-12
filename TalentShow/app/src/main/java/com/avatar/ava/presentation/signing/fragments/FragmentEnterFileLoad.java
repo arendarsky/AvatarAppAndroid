@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.amplitude.api.Amplitude;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
 
@@ -48,6 +49,7 @@ public class FragmentEnterFileLoad extends Fragment{
 
     @OnClick(R.id.fragment_file_load_button_add)
     void loadFileClicked(){
+        Amplitude.getInstance().logEvent("newvideo_squared_button_tapped");
         try {
             ((RegAuthPostman) activity).fragmentMessage(LOAD_VIDEO);
         } catch (Exception e) {

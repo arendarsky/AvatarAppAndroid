@@ -66,9 +66,6 @@ public class EnterActivity extends MvpAppCompatActivity implements EnterView, Re
         presenter.checkAuth();
         setContentView(R.layout.enter_activty);
         Toothpick.inject(this, Toothpick.openScope(App.class));
-        Amplitude.getInstance().initialize(this, "YOUR_API_KEY_HERE")
-                .enableForegroundTracking(getApplication())
-                .setLogLevel(Log.VERBOSE);
     }
 
     @Override

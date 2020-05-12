@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amplitude.api.Amplitude;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
@@ -75,6 +76,7 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
         Toothpick.inject(this, Toothpick.openScope(App.class));
 
         adapter = new RatingAdapter(appContext, (v, position) -> {
+            Amplitude.getInstance().logEvent("ratingprofile_button_tapped");
             try {
                 ((MainScreenPostman) activity).openPublicProfile(adapter.getPersonId(position));
             } catch (Exception e) {

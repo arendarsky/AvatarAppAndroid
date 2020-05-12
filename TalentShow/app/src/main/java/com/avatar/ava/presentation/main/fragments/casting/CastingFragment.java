@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.amplitude.api.Amplitude;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
@@ -203,6 +204,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
     @OnClick(R.id.activity_casting_btn_like)
     public void likeClicked(){
+        Amplitude.getInstance().logEvent("heart_button_tapped");
         progressBar.setVisibility(View.VISIBLE);
         restartBtn.setVisibility(View.INVISIBLE);
         mSwipeView.doSwipe(true);
@@ -210,6 +212,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
     @OnClick(R.id.activity_casting_btn_x)
     public void dislikeClicked() {
+        Amplitude.getInstance().logEvent("x_button_tapped");
         progressBar.setVisibility(View.VISIBLE);
         restartBtn.setVisibility(View.INVISIBLE);
         mSwipeView.doSwipe(false);
@@ -279,6 +282,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
     @Override
     public void openProfile() {
+        Amplitude.getInstance().logEvent("castingprofile_button_tapped");
         try {
 
             ((MainScreenPostman) activity).openPublicProfile(presenter.getPersonId());

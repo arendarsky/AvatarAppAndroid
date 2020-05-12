@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.amplitude.api.Amplitude;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
@@ -102,6 +103,7 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
 
     @OnClick(R.id.fragment_reg_continue)
     public void continueClicked(){
+        Amplitude.getInstance().logEvent("registration_button_tapped");
         continuePressed = true;
         boolean flag = true;
         if (nameEdit.getText().toString().length() < 2){
