@@ -268,6 +268,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
     @Override
     public void onSwipeLike() {
+        Amplitude.getInstance().logEvent("heart_button_tapped");
         presenter.likeVideo();
         progressBar.setVisibility(View.VISIBLE);
         restartBtn.setVisibility(View.INVISIBLE);
@@ -275,6 +276,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
     @Override
     public void onSwipeDisLike() {
+        Amplitude.getInstance().logEvent("x_button_tapped");
         presenter.dislikeVideo();
         progressBar.setVisibility(View.VISIBLE);
         restartBtn.setVisibility(View.INVISIBLE);
