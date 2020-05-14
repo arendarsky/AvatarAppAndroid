@@ -16,4 +16,6 @@ public interface IVideoRepository {
     Single<PersonDTO> getVideoLinkOnCreate();
     Completable setActive(String fileName);
     Uri getLoadingVideo();
+
+    void clearVideoList();
 }

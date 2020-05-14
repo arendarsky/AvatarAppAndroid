@@ -108,6 +108,7 @@ public class Interactor {
     }
 
     public void exitFromAccount(){
+        this.videoRepository.clearVideoList();
         this.preferencesRepository.exitAcc();
     }
 

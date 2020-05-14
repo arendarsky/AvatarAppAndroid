@@ -226,6 +226,12 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.setVideoNull();
+    }
+
+    @Override
     public void loadNewVideo(PersonDTO personDTO){
         if(presenter.checkPeronDTO(personDTO)){
             noMoreVideos.setVisibility(View.INVISIBLE);

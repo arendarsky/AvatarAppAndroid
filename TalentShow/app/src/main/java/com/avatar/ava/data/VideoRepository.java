@@ -137,7 +137,7 @@ public class VideoRepository implements IVideoRepository {
                     });
         else{
             if (this.currentPerson == null)
-                this.currentPerson = personDTOList.iterator().next();
+                this.currentPerson = personDTOList.get(0);
             return Single.just(this.currentPerson);
         }
     }
@@ -205,5 +205,10 @@ public class VideoRepository implements IVideoRepository {
 
     public Uri getLoadingVideo() {
         return loadingVideo;
+    }
+
+    @Override
+    public void clearVideoList() {
+        this.personDTOList.clear();
     }
 }

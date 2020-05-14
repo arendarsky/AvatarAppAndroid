@@ -109,5 +109,10 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
     boolean checkPeronDTO(PersonDTO personDTO) {
         return personDTO == this.currentPerson;
     }
+
+
+    public void setVideoNull() {
+        this.currentPerson = null;
+    }
 }
 
