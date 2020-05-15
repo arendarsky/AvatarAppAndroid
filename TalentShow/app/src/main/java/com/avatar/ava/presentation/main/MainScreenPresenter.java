@@ -247,7 +247,6 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
         }
         else {
             getViewState().showSaveButton();
-            getViewState().showMessage("Выбранный фрагмент больше 30 секунд");
         }
     }
 

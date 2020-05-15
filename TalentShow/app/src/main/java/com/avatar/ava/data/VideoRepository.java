@@ -70,8 +70,8 @@ public class VideoRepository implements IVideoRepository {
                 file.getAbsolutePath().lastIndexOf(".")) + "1"
                 + ".mp4";
         File convertedFile = new File(this.convertedFilePath);
-        String commands = "-i "
-                + file.getAbsolutePath() + " -b:v 2500k "
+        String commands = "-threads 0 -i "
+                + file.getAbsolutePath() + " -b:v 2500k -preset veryfast "
                 + convertedFile.getAbsolutePath();
         return Single.fromCallable(() -> FFmpeg.execute(commands)).ignoreElement()
                 .andThen(videoAPI.uploadVideo(
@@ -86,8 +86,8 @@ public class VideoRepository implements IVideoRepository {
                                 )).flatMapCompletable(name -> videoAPI.setInterval(
                         preferencesRepository.getToken(),
                         name,
-                        (double) beginTime * 1000,
-                        (double) endTime * 1000))).doOnComplete(() -> loadingVideo = null);
+                        (int) ((double) beginTime * 1000),
+                        (int)((double) endTime * 1000)))).doOnComplete(() -> loadingVideo = null);
     }
 
     @SuppressWarnings("unused")
