@@ -21,10 +21,21 @@ import androidx.fragment.app.Fragment;
 
 import com.avatar.ava.App;
 import com.avatar.ava.R;
+import com.google.android.exoplayer2.Player;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.analytics.AnalyticsListener;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.ProgressiveMediaSource;
+import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 import com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,8 +45,11 @@ public class FragmentChooseBestMain extends Fragment {
 
     private Activity activity;
 
+    @Inject
+    Context appContext;
+
     @BindView(R.id.fragment_video_best_main_video)
-    VideoView video;
+    PlayerView video;
 
     @BindView(R.id.fragment_video_best_main_bar)
     RangeSeekBar<Float> rangeSeekBar;
@@ -55,6 +69,9 @@ public class FragmentChooseBestMain extends Fragment {
 
     String fileName = "filename";
 
+    SimpleExoPlayer player;
+    private DataSource.Factory dataSourceFactory;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +80,7 @@ public class FragmentChooseBestMain extends Fragment {
     }
 
     //TODO переделать этот код
-
+    private boolean firstPlay = true;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -71,14 +88,53 @@ public class FragmentChooseBestMain extends Fragment {
 
         Uri uri = getArguments().getParcelable("uri");
 
-        video.setVideoURI(uri);
-        video.seekTo(0);
 
+
+        player = new SimpleExoPlayer.Builder(appContext).build();
+        dataSourceFactory = new DefaultDataSourceFactory(appContext,
+                Util.getUserAgent(appContext, getResources().getString(R.string.app_name)));
+
+        video.setPlayer(player);
+
+        MediaSource videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
+                .createMediaSource(uri);
+        player.prepare(videoSource);
+
+        //video.setVideoURI(uri);
+        //video.seekTo(0);
+        player.setPlayWhenReady(true);
         //video.setVideoURI(Uri.parse(link));
         //video.setVideoURI(uri);
+        player.addAnalyticsListener(new AnalyticsListener() {
+            @Override
+            public void onPlayerStateChanged(EventTime eventTime, boolean playWhenReady, int playbackState) {
+                if (playWhenReady && playbackState == Player.STATE_READY){
+                    duration = player.getDuration() / 1000;
+                    startText.setText("00:00:00");
+                    endText.setText(getTime((int)duration));
+
+                    rangeSeekBar.setRangeValues((float) 0, duration);
+                    if(firstPlay){
+                        if(duration > 30)rangeSeekBar.setSelectedMaxValue(30f);
+                        firstPlay = false;
+                    }
 
 
-        video.setOnPreparedListener(mp -> {
+                    rangeSeekBar.setOnRangeSeekBarChangeListener(
+                            (bar, minValue, maxValue) -> {
+                                player.seekTo((int) (minValue * 1000));
+                                Log.d("BestMain", minValue + " " + maxValue);
+                                if((maxValue - minValue)  > 30){
+                                    Log.d("BestMain", minValue + " " + maxValue);
+                                    rangeSeekBar.setSelectedMaxValue(minValue + 30);
+                                }
+                            }
+                    );
+                }
+            }
+        });
+
+        /*video.setOnPreparedListener(mp -> {
             video.start();
 
             duration = mp.getDuration()/1000;
@@ -99,7 +155,7 @@ public class FragmentChooseBestMain extends Fragment {
                         }
                     }
             );
-        });
+        });*/
 //        btn.setOnClickListener(v -> {
 //            List<Thumb> thums = rangeSeekBarView.getThumbs();
 //            float value1 = thums.get(0).getVal() / 100 * video.getDuration();
@@ -127,7 +183,8 @@ public class FragmentChooseBestMain extends Fragment {
         List<Float> tmp = new ArrayList<>();
         tmp.add(rangeSeekBar.getSelectedMinValue());
         tmp.add(rangeSeekBar.getSelectedMaxValue());
-        video.stopPlayback();
+        //video.stopPlayback();
+        player.stop();
         return tmp;
     }
 
