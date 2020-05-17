@@ -27,14 +27,22 @@ public class ProfileDTO {
     @SerializedName("profilePhoto")
     private String photo;
 
+    @SerializedName("email")
+    private String email;
+
     @ParcelConstructor
-    public ProfileDTO(int likesNumber, ArrayList<VideoDTO> videos, int id,  String name, String description, String photo) {
+    public ProfileDTO(int likesNumber, ArrayList<VideoDTO> videos, int id,  String name, String description, String photo, String email) {
         this.likesNumber = likesNumber;
         this.videos = videos;
         this.id = id;
         this.name = name;
         this.description = description;
         this.photo = photo;
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public int getLikesNumber() {
@@ -92,3 +100,4 @@ public class ProfileDTO {
         this.videos.add(tmp);
     }
 }
+
