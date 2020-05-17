@@ -24,6 +24,7 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
 
     private final int START_REG = 0;
     private final int START_AUTH = 1;
+    private final int SKIP_AUTH = 2;
     private final int CHOOSE_VIDEO = 3;
     private final int AUTH_FINISHED = 4;
     private final int VIDEO_SCREEN = 6;
@@ -33,6 +34,7 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
     private final int SECOND_ONBOARD = 12;
     private static final int START_MAIN = 13;
     private static final int FIRST_ONBOARD = 14;
+
 
     private boolean registration = false;
 
@@ -61,9 +63,11 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
                 break;
             case START_REG:
                 router.navigateTo(new Screens.RegistrationScreen());
+                registration = true;
                 break;
             case AUTH_FINISHED:
-                if (registration) router.newRootScreen(new Screens.FileLoadJustScreen());
+//                if (registration) router.newRootScreen(new Screens.FileLoadJustScreen());
+                if (registration) router.newRootScreen(new Screens.OnBoarding1Screen());
                 else getViewState().startMain();
                 break;
             case CHOOSE_VIDEO:
@@ -82,6 +86,7 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
                 router.newRootScreen(new Screens.ConfirmMailScreen());
                 break;
             case START_MAIN:
+            case SKIP_AUTH:
                 getViewState().startMain();
                 break;
             case SECOND_ONBOARD:
@@ -89,6 +94,7 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
                 break;
             case FIRST_ONBOARD:
                 router.navigateTo(new Screens.OnBoarding1Screen());
+                break;
         }
     }
 

@@ -20,6 +20,7 @@ import butterknife.OnClick;
 public class OnBoarding2Fragment extends Fragment {
 
     private static final int START_MAIN = 13;
+    private final int VIDEO_SCREEN_JUST = 9;
     private Activity activity;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class OnBoarding2Fragment extends Fragment {
     @OnClick(R.id.fragment_instruction_btn)
     void addVideo(){
         try {
-            ((RegAuthPostman) activity).fragmentMessage(START_MAIN);
+            ((RegAuthPostman) activity).fragmentMessage(VIDEO_SCREEN_JUST);
         } catch (Exception e) {
             e.printStackTrace();
         }
