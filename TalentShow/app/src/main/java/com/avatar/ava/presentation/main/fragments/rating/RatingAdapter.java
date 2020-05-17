@@ -200,6 +200,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     void setItems(List<PersonRatingDTO> newData){
         if (!newData.isEmpty())
         {
+            data.clear();
             data.addAll(newData);
             for(PersonRatingDTO person : data){
                 if (person.getVideo() != null) {

@@ -20,20 +20,25 @@ public class ChangePasswordPresenter extends MvpPresenter<ChangePasswordView> {
         this.interactor = interactor;
     }
 
-    void changePassword(String oldPassword, String newPassword){
-        Disposable disposable = interactor.setPassword(oldPassword, newPassword)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result ->
-                        {
-                            if (result)
-                            {
-                                getViewState().showMessage("Пароль успешно изменён");
-                                getViewState().changePass();
-                            }
-
-                            else getViewState().showMessage("Старый пароль введён неверно");
-                        },
-                        error -> getViewState().showMessage("При смене пароля произошла ошибка. Попробуйте позже"));
+    void changePassword(String oldPassword, String newPassword) {
+        if (newPassword.length() >= 6) {
+            if (newPassword.equals(oldPassword))
+                getViewState().showMessage("Новый пароль должен отличаться от старого");
+            else {
+                Disposable disposable = interactor.setPassword(oldPassword, newPassword)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(result ->
+                                {
+                                    if (result) {
+                                        getViewState().showMessage("Пароль успешно изменён");
+                                        getViewState().changePass();
+                                    } else getViewState().showMessage("Старый пароль введён неверно");
+                                },
+                                error -> getViewState().showMessage("При смене пароля произошла ошибка. Попробуйте позже"));
+            }
+        }
+        else getViewState().showMessage("Пароль должен быть длиной 6 или более символов");
     }
+
 }
