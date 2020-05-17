@@ -6,10 +6,12 @@ import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 
+import com.avatar.ava.presentation.main.MainScreenTitles;
 import com.avatar.ava.presentation.main.fragments.FragmentChooseBestMain;
 import com.avatar.ava.presentation.main.fragments.FragmentFileLoadMain;
 import com.avatar.ava.presentation.main.fragments.FullScreenVideoDialog;
 import com.avatar.ava.presentation.main.fragments.casting.CastingFragment;
+import com.avatar.ava.presentation.main.fragments.instruction.InstructionFragment;
 import com.avatar.ava.presentation.main.fragments.notifications.FragmentNotifications;
 import com.avatar.ava.presentation.main.fragments.profile.ProfileFragment;
 import com.avatar.ava.presentation.main.fragments.profile.profileSettings.changePassword.ChangePasswordFragment;
@@ -87,13 +89,13 @@ public class Screens {
         }
 
         @Override
-           public Fragment getFragment() {
-               Bundle bundle = new Bundle();
-               bundle.putParcelable("uri", uri);
-               FragmentChooseVideoBest fragment = new FragmentChooseVideoBest();
-               fragment.setArguments(bundle);
-               return fragment;
-           }
+        public Fragment getFragment() {
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("uri", uri);
+            FragmentChooseVideoBest fragment = new FragmentChooseVideoBest();
+            fragment.setArguments(bundle);
+            return fragment;
+        }
     }
 
     public static final class ChooseBestMainScreen extends SupportAppScreen{
@@ -200,4 +202,22 @@ public class Screens {
             return new OnBoarding2Fragment();
         }
     }
+
+    public static final class InstructionScreen extends SupportAppScreen {
+        private MainScreenTitles title;
+
+        public InstructionScreen(MainScreenTitles title) {
+            this.title = title;
+        }
+
+        @Override
+        public Fragment getFragment() {
+            Bundle bundle = new Bundle();
+            bundle.putString("title", title.name());
+            InstructionFragment fragment = new InstructionFragment();
+            fragment.setArguments(bundle);
+            return fragment;
+        }
+    }
 }
+

@@ -11,14 +11,13 @@ import com.arellomobile.mvp.MvpPresenter;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
 import com.arellomobile.mvp.viewstate.strategy.SingleStateStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
-import com.avatar.ava.Screens;
 import com.avatar.ava.R;
+import com.avatar.ava.Screens;
 import com.avatar.ava.domain.Interactor;
 import com.avatar.ava.presentation.main.fragments.casting.CastingFragment;
 import com.avatar.ava.presentation.main.fragments.notifications.FragmentNotifications;
 import com.avatar.ava.presentation.main.fragments.rating.RatingFragment;
 import com.google.firebase.analytics.FirebaseAnalytics;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,6 @@ import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.schedulers.Schedulers;
 import ru.terrakok.cicerone.Router;
@@ -46,15 +44,6 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
     private final int PROFILE_SETTINGS = 6;
     private final int PROFILE_CHANGE_PASSWORD = 7;
     private final int BACK = 9;
-
-    private final String new_video = "Новое видео";
-    private final String casting = "Кастинг";
-    private final String rating = "Рейтинг";
-    private final String profile = "Профиль";
-    private final String notifications = "Уведомления";
-    private final String best30 = "Лучшие 30";
-    private final String settings = "Настройки";
-    private final String change_password = "Изм. пароля";
 
     private final int SAVE_BUTTON = 0;
     private final int ADD_BUTTON = 1;
@@ -81,23 +70,23 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
         getViewState().stopVideoFromCasting();
         switch (id){
             case R.id.nav_casting:
-                getViewState().changeTitle(casting);
+                getViewState().changeTitle(MainScreenTitles.CASTING);
                 getViewState().showAddButton();
                 getViewState().showInfoIcon();
                 router.newRootScreen(new Screens.CastingScreen());
                 return true;
             case R.id.nav_rating:
-                getViewState().changeTitle(rating);
+                getViewState().changeTitle(MainScreenTitles.RATING);
                 getViewState().showInfoIcon();
                 router.newRootScreen(new Screens.RatingScreen());
                 return true;
             case R.id.nav_notify:
-                getViewState().changeTitle(notifications);
+                getViewState().changeTitle(MainScreenTitles.NOTIFICATIONS);
                 getViewState().showInfoIcon();
                 router.newRootScreen(new Screens.NotificationsScreen());
                 return true;
             case R.id.nav_profile:
-                getViewState().changeTitle(profile);
+                getViewState().changeTitle(MainScreenTitles.PROFILE);
                 getViewState().showMenuPoints();
                 getViewState().showInfoIcon();
                 router.newRootScreen(new Screens.ProfileScreen());
@@ -114,8 +103,8 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                 getViewState().hideBottomNavBar();
                 getViewState().showBackButton();
                 getViewState().showSaveButton();
-                getViewState().changeTitle(new_video);
-                previousStates.add(new PrevState(HIDE_BACK, casting, ADD_BUTTON));
+                getViewState().changeTitle(MainScreenTitles.NEW_VIDEO);
+                previousStates.add(new PrevState(HIDE_BACK, MainScreenTitles.CASTING, ADD_BUTTON));
                 router.navigateTo(new Screens.FileLoadMainScreen());
                 break;
             case LOAD_VIDEO:
@@ -125,17 +114,17 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                 getViewState().captureVideo();
                 break;
             case PROFILE_SETTINGS:
-                getViewState().changeTitle(settings);
+                getViewState().changeTitle(MainScreenTitles.SETTINGS);
                 getViewState().showBackButton();
                 getViewState().showSaveButton();
-                previousStates.add(new PrevState(HIDE_BACK, profile, MENU_POINTS));
+                previousStates.add(new PrevState(HIDE_BACK, MainScreenTitles.PROFILE, MENU_POINTS));
                 router.navigateTo(new Screens.ProfileSettingsScreen());
                 break;
             case PROFILE_CHANGE_PASSWORD:
-                getViewState().changeTitle(change_password);
+                getViewState().changeTitle(MainScreenTitles.CHANGE_PASSWORD);
                 getViewState().showSavePassword();
                 getViewState().showBackButton();
-                previousStates.add(new PrevState(SHOW_BACK, settings, SAVE_BUTTON));
+                previousStates.add(new PrevState(SHOW_BACK, MainScreenTitles.SETTINGS, SAVE_BUTTON));
                 router.navigateTo(new Screens.ChangePasswordScreen());
                 break;
             case BACK:
@@ -149,9 +138,9 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
         selectedFileUri = uri;
         getViewState().clearTopView();
         getViewState().showBackButton();
-        getViewState().changeTitle(best30);
+        getViewState().changeTitle(MainScreenTitles.BEST30);
         getViewState().showSaveButton();
-        previousStates.add(new PrevState(SHOW_BACK, new_video, SAVE_BUTTON));
+        previousStates.add(new PrevState(SHOW_BACK, MainScreenTitles.NEW_VIDEO, SAVE_BUTTON));
         router.navigateTo(new Screens.ChooseBestMainScreen(uri));
     }
 
@@ -159,14 +148,34 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
     void openPublicProfile(int id, Fragment prevScreen){
         getViewState().clearTopView();
         getViewState().showBackButton();
-        getViewState().changeTitle(profile);
+        getViewState().changeTitle(MainScreenTitles.PUBLIC_PROFILE);
         if (prevScreen instanceof CastingFragment)
-            previousStates.add(new PrevState(HIDE_BACK, casting, ADD_BUTTON));
+            previousStates.add(new PrevState(HIDE_BACK, MainScreenTitles.CASTING, ADD_BUTTON));
         if (prevScreen instanceof RatingFragment)
-            previousStates.add(new PrevState(HIDE_BACK, rating, NOTHING));
+            previousStates.add(new PrevState(HIDE_BACK, MainScreenTitles.RATING, NOTHING));
         if (prevScreen instanceof FragmentNotifications)
-            previousStates.add(new PrevState(HIDE_BACK, notifications, NOTHING));
+            previousStates.add(new PrevState(HIDE_BACK, MainScreenTitles.NOTIFICATIONS, NOTHING));
         router.navigateTo(new Screens.PublicProfileScreen(id));
+    }
+
+    @StateStrategyType(AddToEndSingleStrategy.class)
+    void openInstruction(MainScreenTitles title) {
+        getViewState().clearTopView();
+        switch (title) {
+            case CASTING: {
+                previousStates.add(new PrevState(HIDE_BACK, title, ADD_BUTTON));
+                break;
+            }
+            case PROFILE: {
+                previousStates.add(new PrevState(HIDE_BACK, title, MENU_POINTS));
+                break;
+            }
+            default: {
+                previousStates.add(new PrevState(HIDE_BACK, title, NOTHING));
+                break;
+            }
+        }
+        router.navigateTo(new Screens.InstructionScreen(title));
     }
 
     @StateStrategyType(AddToEndSingleStrategy.class)
@@ -185,9 +194,9 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
 
     private class PrevState {
         boolean backButton;
-        String title;
+        MainScreenTitles title;
         int code;
-        PrevState(boolean a, String b, int c){
+        PrevState(boolean a, MainScreenTitles b, int c) {
             backButton = a;
             title = b;
             code = c;

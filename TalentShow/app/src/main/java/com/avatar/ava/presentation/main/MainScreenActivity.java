@@ -2,11 +2,9 @@ package com.avatar.ava.presentation.main;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.icu.util.BuddhistCalendar;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -40,15 +38,13 @@ import com.avatar.ava.presentation.main.fragments.FragmentChooseBestMain;
 import com.avatar.ava.presentation.main.fragments.FragmentFileLoadMain;
 import com.avatar.ava.presentation.main.fragments.FullScreenVideoDialog;
 import com.avatar.ava.presentation.main.fragments.casting.CastingFragment;
-import com.avatar.ava.presentation.main.fragments.notifications.FragmentNotifications;
 import com.avatar.ava.presentation.main.fragments.profile.ProfileFragment;
 import com.avatar.ava.presentation.main.fragments.profile.profileSettings.ProfileSettingsFragment;
 import com.avatar.ava.presentation.main.fragments.profile.profileSettings.changePassword.ChangePasswordFragment;
-import com.avatar.ava.presentation.main.fragments.rating.RatingFragment;
 import com.avatar.ava.presentation.signing.EnterActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.analytics.FirebaseAnalytics;
 
+import java.util.EnumSet;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -115,6 +111,14 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     private final int REQUEST_PICK_IMAGE = 2;
     private final int CAPTURE_VIDEO = 3;
 
+    private final EnumSet<MainScreenTitles> infoTitle = EnumSet.of(
+            MainScreenTitles.CASTING,
+            MainScreenTitles.RATING,
+            MainScreenTitles.PROFILE,
+            MainScreenTitles.NOTIFICATIONS);
+
+    private MainScreenTitles currentScreen;
+
     @ProvidePresenter
     MainScreenPresenter providePresenter(){
         return Toothpick.openScope(App.class).getInstance(MainScreenPresenter.class);
@@ -131,6 +135,8 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
                 }
             };
 
+    private View.OnClickListener openInstructionListener = view ->
+            presenter.openInstruction(currentScreen);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -139,6 +145,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         setContentView(R.layout.activity_main_frame);
         ButterKnife.bind(this);
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
+        info.setOnClickListener(openInstructionListener);
         if (savedInstanceState == null) bottomNavigationView.setSelectedItemId(R.id.nav_casting);
     }
 
@@ -190,8 +197,12 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     }
 
     @Override
-    public void changeTitle(String title) {
-        fragmentHeader.setText(title);
+    public void changeTitle(MainScreenTitles title) {
+        fragmentHeader.setText(title.toString());
+        if (infoTitle.contains(title)) {
+            info.setVisibility(View.VISIBLE);
+        }
+        currentScreen = title;
     }
 
     @Override
@@ -274,8 +285,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
             profileFragment.editProfile();
         }
         clearTopView();
-        changeTitle("Профиль");
-        showInfoIcon();
+        changeTitle(MainScreenTitles.PROFILE);
         showExit();
         showMenuPoints();
     }
@@ -288,7 +298,6 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         if (changePasswordFragment != null) {
             changePasswordFragment.changePassword();
         }
-        showInfoIcon();
     }
 
     @Override
@@ -384,7 +393,6 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
 
         if (currentFragment instanceof ProfileSettingsFragment) presenter.backButtonPressed(false);
 
-        showInfoIcon();
     }
 
     private boolean permissionAlreadyGranted() {
@@ -452,8 +460,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
             profileFragment.backEdit();
         }
         clearTopView();
-        changeTitle("Профиль");
-        showInfoIcon();
+        changeTitle(MainScreenTitles.PROFILE);
         showExit();
         showMenuPoints();
     }
@@ -469,7 +476,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
                     profileFragment.editProfile();
                 }
                 clearTopView();
-                changeTitle("Ред. профиля");
+                changeTitle(MainScreenTitles.CHANGE_PROFILE);
                 showProfileBack();
                 showSaveProfile();
                 break;
