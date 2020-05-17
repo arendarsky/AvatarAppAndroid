@@ -97,16 +97,16 @@
 
         <TextView
             android:id="@+id/main_frame_text1"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/quantico"
+            android:gravity="center"
             android:text="@string/new_video"
             android:textColor="@color/whiteText"
             android:textSize="17sp"
-            android:gravity="center"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
@@ -182,6 +182,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/main_frame_text1"
+            app:layout_constraintStart_toEndOf="@+id/main_frame_text1"
+            app:layout_constraintTop_toTopOf="@+id/main_frame_text1"
+            app:srcCompat="@drawable/info" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
