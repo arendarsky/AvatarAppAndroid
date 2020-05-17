@@ -15,6 +15,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,9 +40,11 @@ import com.avatar.ava.presentation.main.fragments.FragmentChooseBestMain;
 import com.avatar.ava.presentation.main.fragments.FragmentFileLoadMain;
 import com.avatar.ava.presentation.main.fragments.FullScreenVideoDialog;
 import com.avatar.ava.presentation.main.fragments.casting.CastingFragment;
+import com.avatar.ava.presentation.main.fragments.notifications.FragmentNotifications;
 import com.avatar.ava.presentation.main.fragments.profile.ProfileFragment;
 import com.avatar.ava.presentation.main.fragments.profile.profileSettings.ProfileSettingsFragment;
 import com.avatar.ava.presentation.main.fragments.profile.profileSettings.changePassword.ChangePasswordFragment;
+import com.avatar.ava.presentation.main.fragments.rating.RatingFragment;
 import com.avatar.ava.presentation.signing.EnterActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -89,6 +92,9 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
 
     @BindView(R.id.main_frame_exit)
     TextView exit;
+
+    @BindView(R.id.main_frame_info_icon)
+    ImageView info;
 
     @BindView(R.id.main_frame_profile_back)
     ConstraintLayout backProfileButton;
@@ -224,6 +230,11 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     }
 
     @Override
+    public void showInfoIcon(){
+        info.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void showProfileBack(){
         backProfileButton.setVisibility(View.VISIBLE);
     }
@@ -237,6 +248,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         saveProfile.setVisibility(View.INVISIBLE);
         savePassword.setVisibility(View.INVISIBLE);
         exit.setVisibility(View.INVISIBLE);
+        info.setVisibility(View.INVISIBLE);
         backProfileButton.setVisibility(View.INVISIBLE);
     }
 
@@ -263,6 +275,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         }
         clearTopView();
         changeTitle("Профиль");
+        showInfoIcon();
         showExit();
         showMenuPoints();
     }
@@ -275,6 +288,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         if (changePasswordFragment != null) {
             changePasswordFragment.changePassword();
         }
+        showInfoIcon();
     }
 
     @Override
@@ -369,6 +383,8 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         }
 
         if (currentFragment instanceof ProfileSettingsFragment) presenter.backButtonPressed(false);
+
+        showInfoIcon();
     }
 
     private boolean permissionAlreadyGranted() {
@@ -437,6 +453,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         }
         clearTopView();
         changeTitle("Профиль");
+        showInfoIcon();
         showExit();
         showMenuPoints();
     }

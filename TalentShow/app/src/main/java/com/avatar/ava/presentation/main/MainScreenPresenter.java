@@ -82,19 +82,23 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
             case R.id.nav_casting:
                 getViewState().changeTitle(casting);
                 getViewState().showAddButton();
+                getViewState().showInfoIcon();
                 router.newRootScreen(new Screens.CastingScreen());
                 return true;
             case R.id.nav_rating:
                 getViewState().changeTitle(rating);
+                getViewState().showInfoIcon();
                 router.newRootScreen(new Screens.RatingScreen());
                 return true;
             case R.id.nav_notify:
                 getViewState().changeTitle(notifications);
+                getViewState().showInfoIcon();
                 router.newRootScreen(new Screens.NotificationsScreen());
                 return true;
             case R.id.nav_profile:
                 getViewState().changeTitle(profile);
                 getViewState().showMenuPoints();
+                getViewState().showInfoIcon();
                 router.newRootScreen(new Screens.ProfileScreen());
                 return true;
         }
@@ -175,6 +179,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
             return false;
         }
         else return true;
+
     }
 
     private class PrevState {
