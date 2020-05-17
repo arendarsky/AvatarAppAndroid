@@ -2,6 +2,7 @@ package com.avatar.ava.presentation.main;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 
@@ -241,6 +242,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                                    public void onError(Throwable e) {
 
                                        getViewState().hideProfileLoadingString();
+                                       Log.d("Video_loading_error", e.toString());
 //                                       getViewState().showMessage(e.toString());
                                        Bundle event = new Bundle();
                                        event.putString("Video_loading_error", e.toString());

@@ -122,8 +122,8 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
             });
 
             Glide.with(holder.itemView.getContext())
-                        .load(SERVER_NAME + "/api/video/" + personRatingDTO.getVideo().getName())
-                        .into(holder.image);
+                    .load(SERVER_NAME + "/api/video/" + personRatingDTO.getVideo().getName())
+                    .into(holder.image);
 
         }
 
@@ -198,11 +198,16 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     }
 
     void setItems(List<PersonRatingDTO> newData){
-        data.addAll(newData);
-        for(PersonRatingDTO person : data){
-            String videoName = person.getVideo().getName();
-            mediaSources.add(new ProgressiveMediaSource.Factory(factory)
-                    .createMediaSource(Uri.parse(SERVER_NAME + "/api/video/" + videoName)));
+        if (!newData.isEmpty())
+        {
+            data.addAll(newData);
+            for(PersonRatingDTO person : data){
+                if (person.getVideo() != null) {
+                    String videoName = person.getVideo().getName();
+                    mediaSources.add(new ProgressiveMediaSource.Factory(factory)
+                            .createMediaSource(Uri.parse(SERVER_NAME + "/api/video/" + videoName)));
+                }
+            }
         }
         notifyDataSetChanged();
     }
