@@ -263,6 +263,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         }
         clearTopView();
         changeTitle("Профиль");
+        showExit();
         showMenuPoints();
     }
 
@@ -436,6 +437,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         }
         clearTopView();
         changeTitle("Профиль");
+        showExit();
         showMenuPoints();
     }
 
