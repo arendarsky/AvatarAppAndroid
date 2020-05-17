@@ -30,6 +30,9 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
     private final int BACK = 7;
     private final int VIDEO_SCREEN_JUST = 9;
     private final int CONFIRM_MAIL = 11;
+    private final int SECOND_ONBOARD = 12;
+    private static final int START_MAIN = 13;
+    private static final int FIRST_ONBOARD = 14;
 
     private boolean registration = false;
 
@@ -78,6 +81,14 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
             case CONFIRM_MAIL:
                 router.newRootScreen(new Screens.ConfirmMailScreen());
                 break;
+            case START_MAIN:
+                getViewState().startMain();
+                break;
+            case SECOND_ONBOARD:
+                router.navigateTo(new Screens.OnBoarding2Screen());
+                break;
+            case FIRST_ONBOARD:
+                router.navigateTo(new Screens.OnBoarding1Screen());
         }
     }
 
@@ -89,7 +100,7 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
                     .subscribe(new DisposableCompletableObserver() {
                                    @Override
                                    public void onComplete() {
-                                       getViewState().startMain();
+                                       startFragment(FIRST_ONBOARD);
                                    }
 
                                    @Override

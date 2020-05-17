@@ -17,6 +17,8 @@ import com.avatar.ava.presentation.main.fragments.profile.profileSettings.Profil
 import com.avatar.ava.presentation.main.fragments.profile.publicProfile.PublicProfileFragment;
 import com.avatar.ava.presentation.signing.fragments.ConfirmMailFragment;
 import com.avatar.ava.presentation.signing.fragments.FragmentFileLoadJust;
+import com.avatar.ava.presentation.signing.fragments.OnBoarding1Fragment;
+import com.avatar.ava.presentation.signing.fragments.OnBoarding2Fragment;
 import com.avatar.ava.presentation.signing.fragments.authorisation.AuthorisationFragment;
 import com.avatar.ava.presentation.signing.fragments.registration.FragmentRegistration;
 import com.avatar.ava.presentation.signing.fragments.ChooseAuthFragment;
@@ -24,6 +26,7 @@ import com.avatar.ava.presentation.signing.fragments.FragmentChooseVideoBest;
 import com.avatar.ava.presentation.signing.fragments.FragmentEnterFileLoad;
 import com.avatar.ava.presentation.main.fragments.rating.RatingFragment;
 
+import ru.terrakok.cicerone.Screen;
 import ru.terrakok.cicerone.android.support.SupportAppScreen;
 
 public class Screens {
@@ -181,6 +184,20 @@ public class Screens {
             bundle.putInt("id", this.id);
             fragment.setArguments(bundle);
             return fragment;
+        }
+    }
+
+    public static final class OnBoarding1Screen extends SupportAppScreen {
+        @Override
+        public Fragment getFragment() {
+            return new OnBoarding1Fragment();
+        }
+    }
+
+    public static final class OnBoarding2Screen extends SupportAppScreen{
+        @Override
+        public Fragment getFragment() {
+            return new OnBoarding2Fragment();
         }
     }
 }
