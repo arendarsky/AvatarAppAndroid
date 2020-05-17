@@ -96,7 +96,7 @@
     <string name="edit">Редактировать</string>
     <string name="old_password">Ст. Пароль</string>
     <string name="new_password">Нов. Пароль</string>
-    <string name="cant_change_mail">По всем вопросам обращайтесь в поддержку на почту xcefactor@gmail.com</string>
+    <string name="cant_change_mail">Пока редактировать Email нельзя. Но в будущих обновлениях мы добавим эту функцию. А пока можешь написать нам на почту xcefactor@gmail.com и мы поменяем почту вручную.</string>
     <string name="seven_points">●●●●●●●</string>
     <string name="no_description">Этот человек ещё не добавил описание к своему профилю</string>
     <string name="all_videos">Все видео автора</string>

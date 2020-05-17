@@ -72,7 +72,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="14dp"
-        android:background="@drawable/edit_text_border"
+        android:background="@drawable/auth_filed_backgroud"
         app:layout_constraintTop_toBottomOf="@+id/fragment_profile_settings_password"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -122,15 +122,17 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:textSize="12sp"
         android:autoLink="email"
-        android:textColor="@color/whiteText"
+        android:gravity="left"
         android:text="@string/cant_change_mail"
-        app:layout_constraintTop_toBottomOf="@id/fragment_profile_settings_mail"
+        android:textColorLink="@color/whiteText"
+        android:textColor="@color/whiteText"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/fragment_profile_settings_mail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
