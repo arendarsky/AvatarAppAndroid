@@ -64,11 +64,11 @@
     <string name="xce_factor">XCE FACTOR</string>
     <string name="want_load_video"><b>Хочешь загрузить видео?</b></string>
     <string name="add_video">Добавить видео</string>
-    <string name="no_more_videos">Непросмотренные видео кончились, повторите попытку позднее</string>
+    <string name="no_more_videos">Ого! Вы посмотрели все видео в Кастинге. Лучшие из них вы можете пересмотреть в Рейтинге, а еще можете загрузить свое!</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="no_like_rn">У вас пока нет лайков. Загляните позже</string>
+    <string name="no_like_rn">Здесь отображаются голоса тех, кто хочет видеть вас в финале шоу\nXCE FACTOR 2020.\nЗагрузите видео и отправьте его в Кастинг, чтобы получить первые лайки!</string>
     <string name="casting_video_fragment">Выбранный вами фрагмент будет отображаться в разделах Кастинг и Рейтинг.</string>
     <string name="best_30_seconds">Лучшие 30 секунд</string>
     <string name="capture_by_camera">Снять с камеры</string>
