@@ -28,7 +28,7 @@
         android:layout_marginEnd="20dp"
         android:text="@string/no_like_rn"
         android:textColor="@color/whiteText"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
