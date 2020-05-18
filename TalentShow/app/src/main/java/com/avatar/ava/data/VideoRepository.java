@@ -10,6 +10,7 @@ import android.webkit.MimeTypeMap;
 
 import com.abedelazizshe.lightcompressorlibrary.CompressionListener;
 import com.abedelazizshe.lightcompressorlibrary.VideoCompressor;
+import com.arthenica.mobileffmpeg.FFmpeg;
 import com.avatar.ava.data.api.VideoAPI;
 import com.avatar.ava.domain.entities.PersonDTO;
 import com.avatar.ava.domain.repository.IVideoRepository;
@@ -80,87 +81,21 @@ public class VideoRepository implements IVideoRepository {
         String commands = "-threads 0 -i "
                 + file.getAbsolutePath() + " -b:v 2500k -preset veryfast "
                 + convertedFile.getAbsolutePath();
-        try {
-            convertedFile.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        VideoCompressor videoCompressor = VideoCompressor.INSTANCE;
-//        return Single.fromCallable(() -> FFmpeg.execute(commands)).ignoreElement()
-                return Completable.fromAction(() -> videoCompressor.start(
-                        file.getPath(),
-                        convertedFile.getPath(),
-                        new CompressionListener() {
-                            @Override
-                            public void onStart() {
-                            }
-
-                            @Override
-                            public void onSuccess() {
-                                Log.d("VideoCompressingProg", String.valueOf(convertedFile.getTotalSpace()));
-                                FileDescriptor fileDescriptor = null;
-                                try {
-                                    fileDescriptor = appContext
-                                            .getContentResolver()
-                                            .openFileDescriptor(Uri.fromFile(convertedFile), "r")
-                                            .getFileDescriptor();
-                                } catch (FileNotFoundException e) {
-                                    e.printStackTrace();
-                                }
-                                MediaTranscoder.Listener listener = new MediaTranscoder.Listener() {
-                                    @Override
-                                    public void onTranscodeProgress(double progress) {
-                                        Log.d("VideoCompressing", String.valueOf(convertedFile.getTotalSpace()));
-                                    }
-
-                                    @Override
-                                    public void onTranscodeCompleted() {
-                                        Completable file1 = videoAPI.uploadVideo(
-                                                preferencesRepository.getToken(),
-                                                MultipartBody.Part.
-                                                        createFormData("file",
-                                                                convertedFile.getName(),
-                                                                RequestBody.create(
-                                                                        convertedFile,
-                                                                        MediaType.parse("multipart/form-data")
-                                                                )
-                                                        )).flatMapCompletable(name -> videoAPI.setInterval(
-                                                preferencesRepository.getToken(),
-                                                name,
-                                                (int) ((double) beginTime * 1000),
-                                                (int) ((double) endTime * 1000))).doOnComplete(() -> loadingVideo = null);
-                                    }
-
-                                    @Override
-                                    public void onTranscodeCanceled() {
-
-                                    }
-
-                                    @Override
-                                    public void onTranscodeFailed(Exception exception) {
-                                        throw new IllegalStateException();
-                                    }
-                                };
-                                MediaTranscoder.getInstance().transcodeVideo(fileDescriptor, convertedFile.getAbsolutePath(),
-                                        MediaFormatStrategyPresets.createAndroid720pStrategy(2000000), listener);
-                            }
-
-                            @Override
-                            public void onFailure() {
-                                Log.d("VideoCompressingProg", "failed");
-                                throw new IllegalStateException();
-                            }
-
-                            @Override
-                            public void onProgress(float v) {
-
-                            }
-
-                            @Override
-                            public void onCancelled() {
-
-                            }
-                        }));
+        return Single.fromCallable(() -> FFmpeg.execute(commands)).ignoreElement()
+                .andThen(videoAPI.uploadVideo(
+                        preferencesRepository.getToken(),
+                        MultipartBody.Part.
+                                createFormData("file",
+                                        convertedFile.getName(),
+                                        RequestBody.create(
+                                                convertedFile,
+                                                MediaType.parse("multipart/form-data")
+                                        )
+                                )).flatMapCompletable(name -> videoAPI.setInterval(
+                        preferencesRepository.getToken(),
+                        name,
+                        (int) ((double) beginTime * 1000),
+                        (int)((double) endTime * 1000)))).doOnComplete(() -> loadingVideo = null);
     }
 
     @SuppressWarnings("unused")
