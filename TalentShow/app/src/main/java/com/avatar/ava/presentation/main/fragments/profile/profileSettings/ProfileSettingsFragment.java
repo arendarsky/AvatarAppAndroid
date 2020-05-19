@@ -1,6 +1,8 @@
 package com.avatar.ava.presentation.main.fragments.profile.profileSettings;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.text.method.ScrollingMovementMethod;
@@ -78,7 +80,14 @@ public class ProfileSettingsFragment extends MvpAppCompatFragment implements Pro
         Toothpick.inject(this, Toothpick.openScope(App.class));
         presenter.showEmail();
         email.setEnabled(false);
-        info.setMovementMethod(LinkMovementMethod.getInstance());
+        //info.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
+    @OnClick(R.id.fragment_profile_settings_info)
+    public void onLinkClicked(){
+        Uri adress= Uri.parse("https://vk.com/xcefactor2020");
+        Intent browser = new Intent(Intent.ACTION_VIEW, adress);
+        startActivity(browser);
     }
 
     @OnClick(R.id.fragment_profile_settings_password)
