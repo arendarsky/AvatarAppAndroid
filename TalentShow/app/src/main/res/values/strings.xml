@@ -49,7 +49,8 @@
     <string name="password">Пароль</string>
     <string name="fields_empty">Поля не должны быть пустыми</string>
     <string name="name">Имя</string>
-    <string name="i_accept_terms">Регистрируясь, я принимаю <a href="https://www.xce-factor.ru/TermsOfUse.html" />условия пользования</string>
+    <string name="i_accept_terms">Регистрируясь, я принимаю <a href="https://www.xce-factor.ru/TermsOfUse.html">условия пользования</a></string>
+    <string name="i_accept_terms_auth">Авторизуясь, я принимаю <a href="https://www.xce-factor.ru/TermsOfUse.html">условия пользования</a></string>
     <string name="to_sign_in">Зарегистрироваться</string>
     <string name="back">Назад</string>
     <string name="load_new_video"><b>Загрузка нового видео</b></string>

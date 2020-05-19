@@ -2,6 +2,8 @@ package com.avatar.ava.presentation.signing.fragments.registration;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
@@ -188,5 +190,12 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
     public void passwordChanged(){
         if (passwordEdit.getText().toString().length() >= 6)
             passwordEdit.setTextColor(getResources().getColor(R.color.whiteText));
+    }
+
+    @OnClick(R.id.fragment_registration_text1)
+    public void onTermOfUseClicked(){
+        Uri adress= Uri.parse("https://xce-factor.ru/TermsOfUse.html");
+        Intent browser = new Intent(Intent.ACTION_VIEW, adress);
+        startActivity(browser);
     }
 }

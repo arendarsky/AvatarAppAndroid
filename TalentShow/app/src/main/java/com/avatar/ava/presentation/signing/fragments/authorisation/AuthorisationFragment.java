@@ -2,6 +2,8 @@ package com.avatar.ava.presentation.signing.fragments.authorisation;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -146,6 +148,13 @@ public class AuthorisationFragment extends MvpAppCompatFragment implements Autho
     public void passwordChanged(){
         if (passwordEdit.getText().toString().length() >= 1)
             passwordEdit.setTextColor(getResources().getColor(R.color.whiteText));
+    }
+
+    @OnClick(R.id.fragment_auth_text11)
+    public void onTermsClicked(){
+        Uri adress= Uri.parse("https://xce-factor.ru/TermsOfUse.html");
+        Intent browser = new Intent(Intent.ACTION_VIEW, adress);
+        startActivity(browser);
     }
 
 }
