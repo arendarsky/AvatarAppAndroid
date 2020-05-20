@@ -100,7 +100,7 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
         ButterKnife.bind(this, view);
         DisplayMetrics displayMetrics = appContext.getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
-        termsOfUse.setMovementMethod(LinkMovementMethod.getInstance());
+//        termsOfUse.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @OnClick(R.id.fragment_reg_continue)
