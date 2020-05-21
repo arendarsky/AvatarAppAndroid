@@ -42,7 +42,11 @@ import com.avatar.ava.presentation.main.fragments.profile.ProfileFragment;
 import com.avatar.ava.presentation.main.fragments.profile.profileSettings.ProfileSettingsFragment;
 import com.avatar.ava.presentation.main.fragments.profile.profileSettings.changePassword.ChangePasswordFragment;
 import com.avatar.ava.presentation.signing.EnterActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -138,6 +142,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     private View.OnClickListener openInstructionListener = view ->
             presenter.openInstruction(currentScreen);
 
+    String TAG = "FirebaseMessage";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         Toothpick.inject(this, Toothpick.openScope(App.class));
@@ -147,6 +152,26 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
         info.setOnClickListener(openInstructionListener);
         if (savedInstanceState == null) bottomNavigationView.setSelectedItemId(R.id.nav_casting);
+
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+                        String id = task.getResult().getId();
+                        Log.d(TAG, token + " " + id);
+                        // Log and toast
+                        /*String msg = getString(R.string.msg, token);
+                        Log.d(TAG, msg);*/
+                        Toast.makeText(MainScreenActivity.this, token, Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     @Override
