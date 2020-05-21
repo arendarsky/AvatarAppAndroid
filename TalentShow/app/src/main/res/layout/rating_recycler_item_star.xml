@@ -37,6 +37,17 @@
                 app:resize_mode="zoom"/>
 
 
+            <ImageView
+                android:id="@+id/rating_item_share_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/share_btn"
+                android:layout_marginTop="19dp"
+                android:layout_marginEnd="10dp"
+                android:elevation="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
 
             <View
                 android:id="@+id/rating_item_restart"

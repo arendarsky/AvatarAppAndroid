@@ -1,6 +1,7 @@
 package com.avatar.ava.presentation.main.fragments.casting;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.ImageView;
@@ -44,6 +45,8 @@ public class CastingCard {
     @View(R.id.activity_casting_description)
     public TextView description;
 
+    @View(R.id.activity_casting_share_btn)
+    public ImageView share;
 
 
     private PersonDTO mProfile;
@@ -98,6 +101,10 @@ public class CastingCard {
             mPlayer.prepare(clippingMediaSource);
 
             mPlayer.setPlayWhenReady(true);
+
+            share.setOnClickListener(view -> {
+                mCallback.shareVideoLink("https://web.xce-factor.ru/#/video/" + mProfile.getVideo().getName());
+            });
         }
 
     }
@@ -144,5 +151,6 @@ public class CastingCard {
         void onSwipeDisLike();
         void openProfile();
         void restartVideo();
+        void shareVideoLink(String link);
     }
 }

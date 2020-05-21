@@ -2,6 +2,7 @@ package com.avatar.ava.presentation.main.fragments.rating;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -145,6 +146,17 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         holder.name.setText(name);
         holder.pos.setText("#" + (position + 1));
 
+        holder.share.setOnClickListener(view -> {
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            //sharingIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            String shareBody = "https://web.xce-factor.ru/#/video/" + personRatingDTO.getVideo().getName();
+            //String shareSub = link;
+            //sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+            holder.itemView.getContext().startActivity(Intent.createChooser(sharingIntent, "Share using"));
+        });
+
         if(personRatingDTO.getPhoto() == null){
             Glide.with(holder.itemView.getContext())
                     .load(R.drawable.empty_profile_icon)
@@ -223,13 +235,14 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         View restartButton;
         ImageButton start;
         ImageView image;
+        ImageView share;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             video = new PlayerView(itemView.getContext());
             video = itemView.findViewById(R.id.rating_item_video);
             image = itemView.findViewById(R.id.rating_item_image);
-
+            share = itemView.findViewById(R.id.rating_item_share_btn);
             pos = itemView.findViewById(R.id.rating_item_pos);
             name = itemView.findViewById(R.id.rating_item_name);
             description = itemView.findViewById(R.id.rating_item_description);

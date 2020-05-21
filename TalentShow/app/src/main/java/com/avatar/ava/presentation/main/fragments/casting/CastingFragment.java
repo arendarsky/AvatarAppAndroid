@@ -2,6 +2,7 @@ package com.avatar.ava.presentation.main.fragments.casting;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -302,5 +303,17 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     @Override
     public void restartVideo() {
 
+    }
+
+    @Override
+    public void shareVideoLink(String link) {
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        //sharingIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        String shareBody = link;
+        //String shareSub = link;
+        //sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, "Share using"));
     }
 }
