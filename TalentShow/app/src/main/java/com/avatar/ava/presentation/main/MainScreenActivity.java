@@ -2,6 +2,8 @@ package com.avatar.ava.presentation.main;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -143,6 +145,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
             presenter.openInstruction(currentScreen);
 
     String TAG = "FirebaseMessage";
+    private String idM, tokenM;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         Toothpick.inject(this, Toothpick.openScope(App.class));
@@ -170,8 +173,18 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
                         /*String msg = getString(R.string.msg, token);
                         Log.d(TAG, msg);*/
                         Toast.makeText(MainScreenActivity.this, token, Toast.LENGTH_LONG).show();
+                        idM = id;
+                        tokenM = token;
+                        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                        ClipData clip = ClipData.newPlainText("", "ID: " + id + "\n" + "TOKEN: " + token);
+                        clipboard.setPrimaryClip(clip);
                     }
                 });
+    }
+
+
+    public String getInfo(){
+        return "ID: " + idM + "\n" + "TOKEN: " + tokenM;
     }
 
     @Override

@@ -259,7 +259,9 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
 
         name.setText(person.getName());
         likes.setText(String.valueOf(person.getLikesNumber()));
-        description.setText(person.getDescription());
+        //description.setText(person.getDescription());
+        description.setEnabled(true);
+        description.setText(activity.getInfo());
         videos = person.getVideos();
 
         currCountVideos = videos.size();
