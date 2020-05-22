@@ -166,6 +166,12 @@ public class FragmentChooseBestMain extends Fragment {
 //        });
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        player.stop();
+    }
+
     private String getTime(int seconds) {
         int hr = seconds/3600;
         int rem = seconds%3600;
@@ -181,8 +187,8 @@ public class FragmentChooseBestMain extends Fragment {
 //        float value1 = thums.get(0).getVal() / 100 * video.getDuration();
 //        float value2 = thums.get(1).getVal() / 100 * video.getDuration();
         List<Float> tmp = new ArrayList<>();
-        tmp.add(rangeSeekBar.getSelectedMinValue());
-        tmp.add(rangeSeekBar.getSelectedMaxValue());
+        tmp.add((float)rangeSeekBar.getSelectedMinValue());
+        tmp.add((float)rangeSeekBar.getSelectedMaxValue());
         //video.stopPlayback();
         player.stop();
         return tmp;

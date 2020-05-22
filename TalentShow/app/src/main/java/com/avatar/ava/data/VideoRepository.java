@@ -102,7 +102,7 @@ public class VideoRepository implements IVideoRepository {
 
     @Override
     public Completable setInterval(String fileName, Float beginTime, Float endTime) {
-        return videoAPI.setInterval(preferencesRepository.getToken(), fileName, 1000 * beginTime, 1000 * endTime);
+        return videoAPI.setInterval(preferencesRepository.getToken(), fileName, (int)1000 * beginTime, (int)1000 * endTime);
     }
 
     @SuppressWarnings("unused")

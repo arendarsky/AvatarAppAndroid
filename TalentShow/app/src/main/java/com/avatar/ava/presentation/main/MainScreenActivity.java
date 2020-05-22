@@ -418,7 +418,8 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
             if(changeInterval){
                 changeInterval = false;
                 List<Float> tmp = ((FragmentChooseBestMain) currentFragment).getInterval();
-                presenter.setInterval(videoName, tmp.get(0), tmp.get(1));
+                saveButton.setVisibility(View.INVISIBLE);
+                presenter.setInterval(videoName, Float.valueOf(tmp.get(0)), Float.valueOf(tmp.get(1)));
             }else{
                 Amplitude.getInstance().logEvent("newvideo_save_button_tapped");
                 List<Float> tmp = ((FragmentChooseBestMain) currentFragment).getInterval();

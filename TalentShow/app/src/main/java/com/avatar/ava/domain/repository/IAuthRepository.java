@@ -7,4 +7,5 @@ public interface IAuthRepository {
     Completable sendCodeToMail(String mail);
     Single<Object> auth(String mail, String password);
     Single<Object> registerUser(String name, String mail, String password);
+    Completable resetPassword(String email);
 }

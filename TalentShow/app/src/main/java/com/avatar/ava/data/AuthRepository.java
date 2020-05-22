@@ -58,4 +58,9 @@ public class AuthRepository implements IAuthRepository {
                         }
                 );
     }
+
+    @Override
+    public Completable resetPassword(String email) {
+        return authAPI.resetPassword(email);
+    }
 }

@@ -157,4 +157,9 @@ public class AuthorisationFragment extends MvpAppCompatFragment implements Autho
         startActivity(browser);
     }
 
+    @OnClick(R.id.fragment_auth_reset_password)
+    public void onResetClicked(){
+        presenter.resetPassword(mailEdit.getText().toString());
+    }
+
 }
