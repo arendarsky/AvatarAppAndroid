@@ -61,6 +61,8 @@ import ru.terrakok.cicerone.NavigatorHolder;
 import ru.terrakok.cicerone.android.support.SupportAppNavigator;
 import toothpick.Toothpick;
 
+import static com.avatar.ava.DataModule.SERVER_NAME;
+
 
 @SuppressWarnings("FieldCanBeLocal")
 public class MainScreenActivity extends MvpAppCompatActivity implements MainScreenView,
@@ -107,6 +109,9 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
 
     @InjectPresenter
     MainScreenPresenter presenter;
+
+    private boolean changeInterval = false;
+    private String videoName;
 
     private final int LOAD_NEW_VIDEO_SCREEN = 4;
     private final int PROFILE_SETTINGS = 6;
@@ -169,7 +174,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
                         // Log and toast
                         /*String msg = getString(R.string.msg, token);
                         Log.d(TAG, msg);*/
-                        Toast.makeText(MainScreenActivity.this, token, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(MainScreenActivity.this, token, Toast.LENGTH_LONG).show();
                     }
                 });
     }
@@ -410,10 +415,17 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
                 .findFragmentById(R.id.activity_main_frame_container);
 
         if (currentFragment instanceof FragmentChooseBestMain){
-            Amplitude.getInstance().logEvent("newvideo_save_button_tapped");
-            List<Float> tmp = ((FragmentChooseBestMain) currentFragment).getInterval();
-            saveButton.setVisibility(View.INVISIBLE);
-            presenter.uploadAndSetInterval(tmp.get(0), tmp.get(1));
+            if(changeInterval){
+                changeInterval = false;
+                List<Float> tmp = ((FragmentChooseBestMain) currentFragment).getInterval();
+                presenter.setInterval(videoName, tmp.get(0), tmp.get(1));
+            }else{
+                Amplitude.getInstance().logEvent("newvideo_save_button_tapped");
+                List<Float> tmp = ((FragmentChooseBestMain) currentFragment).getInterval();
+                saveButton.setVisibility(View.INVISIBLE);
+                presenter.uploadAndSetInterval(tmp.get(0), tmp.get(1));
+            }
+
         }
 
         if (currentFragment instanceof ProfileSettingsFragment) presenter.backButtonPressed(false);
@@ -514,6 +526,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         return presenter;
     }
 
+
     @Override
     public void onItemVideoClick(int item) {
         Log.d("ProfileLog", "main");
@@ -528,6 +541,13 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
             case ProfileVideoBottomSheet.CASTING:
                 if (profileFragment != null) {
                     profileFragment.setCastingVideo();
+                }
+                break;
+            case ProfileVideoBottomSheet.INTERVAL:
+                if(profileFragment != null){
+                    videoName = profileFragment.getCurrentVideo();
+                    changeInterval = true;
+                    presenter.openBest30Screen(Uri.parse(SERVER_NAME + "/api/video/" + videoName));
                 }
                 break;
         }

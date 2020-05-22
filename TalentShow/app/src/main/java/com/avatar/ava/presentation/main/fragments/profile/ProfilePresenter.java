@@ -106,6 +106,10 @@ public class ProfilePresenter extends MvpPresenter<ProfileView> {
                         });
     }
 
+    void changeInterval(String fileName, Float start, Float end){
+
+    }
+
     Uri getLoadingVideo() {
         return interactor.getLoadingVideo();
     }

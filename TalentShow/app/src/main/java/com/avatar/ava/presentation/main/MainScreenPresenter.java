@@ -26,6 +26,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.schedulers.Schedulers;
 import ru.terrakok.cicerone.Router;
@@ -264,6 +265,17 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
         else {
             getViewState().showSaveButton();
         }
+    }
+
+    void setInterval(String name, Float start, Float end){
+        Disposable disposable = interactor.setInterval(name, start, end).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {
+                            returnToRoot();
+                        },
+                        error -> {
+
+                        });
     }
 
     void exitAcc(){

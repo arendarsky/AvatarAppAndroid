@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -261,6 +262,8 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         likes.setText(String.valueOf(person.getLikesNumber()));
         description.setText(person.getDescription());
         videos = person.getVideos();
+        Log.d("ProfileFrag", "here");
+        if(videos.size() > 0) Log.d("ProfileFrag", videos.get(0).getStartTime() + " ");
 
         currCountVideos = videos.size();
         showContainers();
@@ -360,6 +363,14 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
                 ProfileVideoBottomSheet.newInstance();
         profileVideoBottomSheet.show(getParentFragmentManager(),
                 ProfileVideoBottomSheet.TAG);
+    }
+
+    public void changeInterval(){
+
+    }
+
+    public String getCurrentVideo(){
+        return castingVideoName;
     }
 
 

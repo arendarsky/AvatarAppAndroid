@@ -25,4 +25,7 @@ public interface AuthAPI {
 
     @POST("api/auth/authorize")
     Single<AuthResponse> authUser(@Query("email") String mail, @Query("password") String password);
+
+    @GET("/api/auth/send_reset")
+    Completable resetPassword(@Query("email") String email);
 }

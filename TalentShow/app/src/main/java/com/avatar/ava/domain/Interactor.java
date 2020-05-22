@@ -39,6 +39,10 @@ public class Interactor {
         this.profileRepository = profileRepository;
     }
 
+    public Completable setInterval(String fileName, Float beginTime, Float endTime){
+        return videoRepository.setInterval(fileName, beginTime, endTime);
+    }
+
     public Completable setActive(String fileName){
         return videoRepository.setActive(fileName);
     }

@@ -22,6 +22,7 @@ public class ProfileVideoBottomSheet extends BottomSheetDialogFragment
     public static final String TAG = "ProfileVideoBottomDialog";
     public static final int CASTING = R.id.profile_video_bottom_sheet_casting;
     public static final int DELETE = R.id.profile_video_bottom_sheet_delete;
+    public static final int INTERVAL = R.id.profile_video_bottom_sheet_interval;
 
     private ProfileVideoBottomSheet.ItemClickListener mListener;
     public static ProfileVideoBottomSheet newInstance() {
@@ -37,7 +38,7 @@ public class ProfileVideoBottomSheet extends BottomSheetDialogFragment
         super.onViewCreated(view, savedInstanceState);
         view.findViewById(CASTING).setOnClickListener(this);
         view.findViewById(DELETE).setOnClickListener(this);
-
+        view.findViewById(INTERVAL).setOnClickListener(this);
     }
     @Override
     public void onAttach(Context context) {

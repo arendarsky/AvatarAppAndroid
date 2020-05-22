@@ -60,6 +60,8 @@ public class VideoRepository implements IVideoRepository {
         this.mFirebaseAnalytics = mFirebaseAnalytics;
     }
 
+
+
     @Override
     public Completable uploadAndSetInterval(Uri fileURI, Float beginTime, Float endTime){
         loadingVideo = fileURI;
@@ -96,6 +98,11 @@ public class VideoRepository implements IVideoRepository {
                         name,
                         (int) ((double) beginTime * 1000),
                         (int)((double) endTime * 1000)))).doOnComplete(() -> loadingVideo = null);
+    }
+
+    @Override
+    public Completable setInterval(String fileName, Float beginTime, Float endTime) {
+        return videoAPI.setInterval(preferencesRepository.getToken(), fileName, 1000 * beginTime, 1000 * endTime);
     }
 
     @SuppressWarnings("unused")
