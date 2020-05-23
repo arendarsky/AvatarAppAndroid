@@ -557,7 +557,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
 
     @OnClick(R.id.main_frame_exit)
     public void exitFromAcc(){
-        presenter.setFirebaseToken("");
+        presenter.setFirebaseToken(null);
         presenter.exitAcc();
         startActivity(new Intent(appContext, EnterActivity.class));
         finish();
