@@ -13,6 +13,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.schedulers.Schedulers;
 import ru.terrakok.cicerone.Router;
+import ru.terrakok.cicerone.Screen;
 
 
 @SuppressWarnings("FieldCanBeLocal")
@@ -34,6 +35,7 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
     private final int SECOND_ONBOARD = 12;
     private static final int START_MAIN = 13;
     private static final int FIRST_ONBOARD = 14;
+    private static final int RESET_PASSWORD = 15;
 
 
     private boolean registration = false;
@@ -94,6 +96,9 @@ public class EnterPresenter extends MvpPresenter<EnterView> {
                 break;
             case FIRST_ONBOARD:
                 router.navigateTo(new Screens.OnBoarding1Screen());
+                break;
+            case RESET_PASSWORD:
+                router.navigateTo(new Screens.ResetPasswordScreen());
                 break;
         }
     }

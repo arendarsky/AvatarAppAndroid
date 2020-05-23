@@ -39,13 +39,5 @@ public class AuthorisationPresenter extends MvpPresenter<AuthorisationView>{
                         });
     }
 
-    void resetPassword(String email){
-        Disposable disposable = interactor.resetPassword(email)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        () -> getViewState().showError("Проверьте свою почту"),
-                        error -> getViewState().showError("Введите почтку корректно")
-                );
-    }
+
 }

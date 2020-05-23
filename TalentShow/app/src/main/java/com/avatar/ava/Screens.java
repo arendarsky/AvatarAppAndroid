@@ -27,11 +27,14 @@ import com.avatar.ava.presentation.signing.fragments.ChooseAuthFragment;
 import com.avatar.ava.presentation.signing.fragments.FragmentChooseVideoBest;
 import com.avatar.ava.presentation.signing.fragments.FragmentEnterFileLoad;
 import com.avatar.ava.presentation.main.fragments.rating.RatingFragment;
+import com.avatar.ava.presentation.signing.fragments.resetpassword.ResetPasswordFragment;
 
 import ru.terrakok.cicerone.Screen;
 import ru.terrakok.cicerone.android.support.SupportAppScreen;
 
 public class Screens {
+
+
 
     public static final class AuthorisationScreen extends SupportAppScreen{
         @Override
@@ -217,6 +220,13 @@ public class Screens {
             InstructionFragment fragment = new InstructionFragment();
             fragment.setArguments(bundle);
             return fragment;
+        }
+    }
+
+    public static final class ResetPasswordScreen extends SupportAppScreen{
+        @Override
+        public Fragment getFragment() {
+            return new ResetPasswordFragment();
         }
     }
 }

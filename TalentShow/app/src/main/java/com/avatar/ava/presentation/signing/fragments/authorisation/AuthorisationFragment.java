@@ -36,6 +36,7 @@ public class AuthorisationFragment extends MvpAppCompatFragment implements Autho
 
     private Activity activity;
     private final int AUTH_FINISHED = 4;
+    private final int RESET_PASSWORD = 15;
     private final int BACK = 7;
 
     @BindView(R.id.auth_email_edit)
@@ -159,7 +160,12 @@ public class AuthorisationFragment extends MvpAppCompatFragment implements Autho
 
     @OnClick(R.id.fragment_auth_reset_password)
     public void onResetClicked(){
-        presenter.resetPassword(mailEdit.getText().toString());
+        //presenter.resetPassword(mailEdit.getText().toString());
+        try {
+            ((RegAuthPostman) activity).fragmentMessage(RESET_PASSWORD);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
