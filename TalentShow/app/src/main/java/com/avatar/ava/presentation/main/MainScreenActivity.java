@@ -171,6 +171,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
                         String token = task.getResult().getToken();
                         String id = task.getResult().getId();
                         Log.d(TAG, token + " " + id);
+                        presenter.setFirebaseToken(token);
                         // Log and toast
                         /*String msg = getString(R.string.msg, token);
                         Log.d(TAG, msg);*/

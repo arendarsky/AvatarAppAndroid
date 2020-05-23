@@ -278,6 +278,18 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                         });
     }
 
+    void setFirebaseToken(String token){
+        Disposable disposable = interactor.setFirebaseToken(token)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {
+
+                        },
+                        error -> {
+
+                        });
+    }
+
     void exitAcc(){
         interactor.exitFromAccount();
     }

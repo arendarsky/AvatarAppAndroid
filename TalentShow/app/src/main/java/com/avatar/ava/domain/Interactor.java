@@ -38,6 +38,11 @@ public class Interactor {
         this.ratingRepository = ratingRepository;
         this.profileRepository = profileRepository;
     }
+
+    public Completable setFirebaseToken(String token){
+        return authRepository.setFirebaseToken(token);
+    }
+
     public Completable resetPassword(String email){
         return authRepository.resetPassword(email);
     }

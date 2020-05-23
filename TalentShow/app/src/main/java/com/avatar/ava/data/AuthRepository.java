@@ -63,4 +63,9 @@ public class AuthRepository implements IAuthRepository {
     public Completable resetPassword(String email) {
         return authAPI.resetPassword(email);
     }
+
+    @Override
+    public Completable setFirebaseToken(String token) {
+        return authAPI.setFirebaseToken(preferencesRepository.getToken(), token);
+    }
 }
