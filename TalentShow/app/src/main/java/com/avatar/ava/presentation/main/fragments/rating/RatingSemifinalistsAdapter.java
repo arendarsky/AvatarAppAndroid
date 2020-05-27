@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -53,15 +54,27 @@ public class RatingSemifinalistsAdapter extends RecyclerView.Adapter<RatingSemif
     public void onBindViewHolder(@NonNull SemiViewHolder holder, int position) {
         ProfileSemifinalistsDTO profileSemifinalistsDTO = data.get(position);
 
+        holder.userName.setText(profileSemifinalistsDTO.getName());
+
+        if(profileSemifinalistsDTO.getPhoto() != null)
         Glide.with(holder.itemView.getContext())
                 .load(SERVER_NAME + "/api/profile/photo/get/" + profileSemifinalistsDTO.getPhoto())
                 .circleCrop()
                 .into(holder.userAva);
+        else
+            Glide.with(holder.itemView.getContext())
+                    .load(R.drawable.empty_profile_icon)
+                    .circleCrop()
+                    .into(holder.userAva);
     }
 
     @Override
     public int getItemCount() {
         return data.size();
+    }
+
+    int getPersonId(int index){
+        return data.get(index).getId();
     }
 
     void setItems(List<ProfileSemifinalistsDTO> newData){
@@ -76,10 +89,12 @@ public class RatingSemifinalistsAdapter extends RecyclerView.Adapter<RatingSemif
 
     static class SemiViewHolder extends RecyclerView.ViewHolder{
         ImageView userAva;
+        TextView userName;
 
         public SemiViewHolder(@NonNull View itemView) {
             super(itemView);
             userAva = (ImageView) itemView.findViewById(R.id.rating_recycler_semifinalists_ava_item);
+            userName = (TextView) itemView.findViewById(R.id.rating_recycler_semifinalists_name_item);
         }
     }
 }

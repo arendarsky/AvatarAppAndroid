@@ -94,7 +94,7 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
 
         ratingSemifinalistsAdapter = new RatingSemifinalistsAdapter(appContext, (v, position) -> {
             try {
-                ((MainScreenPostman) activity).openPublicProfile(adapter.getPersonId(position));
+                ((MainScreenPostman) activity).openPublicProfile(ratingSemifinalistsAdapter.getPersonId(position));
             } catch (Exception e) {
                 e.printStackTrace();
             }
