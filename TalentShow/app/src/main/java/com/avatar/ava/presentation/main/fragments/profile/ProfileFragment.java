@@ -369,6 +369,17 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
 
     }
 
+    public void shareVideo(){
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        //sharingIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        String shareBody = "https://web.xce-factor.ru/#/video/" + castingVideoName;
+        //String shareSub = link;
+        //sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, "Share using"));
+    }
+
     public String getCurrentVideo(){
         return castingVideoName;
     }

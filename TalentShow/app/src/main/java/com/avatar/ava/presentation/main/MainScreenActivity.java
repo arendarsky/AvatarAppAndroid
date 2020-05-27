@@ -552,6 +552,11 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
                     presenter.openBest30Screen(Uri.parse(SERVER_NAME + "/api/video/" + videoName));
                 }
                 break;
+            case ProfileVideoBottomSheet.SHARE:
+                if (profileFragment != null) {
+                    profileFragment.shareVideo();
+                }
+                break;
         }
     }
 

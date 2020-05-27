@@ -2,6 +2,7 @@ package com.avatar.ava.presentation.main.fragments.profile.publicProfile;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -282,6 +283,37 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
                 showImage(3, video4);
                 break;
         }
+    }
+
+    private void shareVideo(int num){
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        //sharingIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        String shareBody = "https://web.xce-factor.ru/#/video/" + videos.get(num).getName();
+        //String shareSub = link;
+        //sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, "Share using"));
+    }
+
+    @OnClick(R.id.rating_item_share_btn1)
+    public void onShare1Clicked(){
+        shareVideo(0);
+    }
+
+    @OnClick(R.id.rating_item_share_btn2)
+    public void onShare2Clicked(){
+        shareVideo(1);
+    }
+
+    @OnClick(R.id.rating_item_share_btn3)
+    public void onShare3Clicked(){
+        shareVideo(2);
+    }
+
+    @OnClick(R.id.rating_item_share_btn4)
+    public void onShare4Clicked(){
+        shareVideo(3);
     }
 
 }

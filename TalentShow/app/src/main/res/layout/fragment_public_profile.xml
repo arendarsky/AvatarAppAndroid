@@ -108,6 +108,17 @@
             app:layout_constraintEnd_toStartOf="@id/fragment_public_profile_container2">
 
             <ImageView
+                android:id="@+id/rating_item_share_btn1"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/share_btn"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:elevation="20dp"
+                android:layout_gravity="end|top"
+                />
+
+            <ImageView
                 android:id="@+id/fragment_public_profile_video_1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -128,6 +139,17 @@
             app:layout_constraintTop_toBottomOf="@id/fragment_public_profile_video_tv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/fragment_public_profile_container1">
+
+            <ImageView
+                android:id="@+id/rating_item_share_btn2"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/share_btn"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:elevation="20dp"
+                android:layout_gravity="end|top"
+                />
 
             <ImageView
                 android:id="@+id/fragment_public_profile_video_2"
@@ -154,6 +176,17 @@
             app:layout_constraintEnd_toStartOf="@id/fragment_public_profile_container4">
 
             <ImageView
+                android:id="@+id/rating_item_share_btn3"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/share_btn"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:elevation="20dp"
+                android:layout_gravity="end|top"
+                />
+
+            <ImageView
                 android:id="@+id/fragment_public_profile_video_3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -177,6 +210,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/fragment_public_profile_container3"
             app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:id="@+id/rating_item_share_btn4"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/share_btn"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:elevation="20dp"
+                android:layout_gravity="end|top"
+                />
 
             <ImageView
                 android:id="@+id/fragment_public_profile_video_4"
