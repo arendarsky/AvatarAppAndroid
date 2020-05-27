@@ -3,6 +3,7 @@ package com.avatar.ava.data.api;
 import com.avatar.ava.domain.entities.NotificationsDTO;
 import com.avatar.ava.domain.entities.PersonDTO;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
+import com.avatar.ava.domain.entities.ProfileSemifinalistsDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,4 +21,7 @@ public interface RatingAPI {
 
     @GET("/api/rating/likes/get")
     Single<List<NotificationsDTO>> getLikes(@Header("Authorization") String token, @Query("number") int number);
+
+    @GET("/api/rating/get_semifinalists")
+    Single<ArrayList<ProfileSemifinalistsDTO>> getSemifinalists(@Header("Authorization") String token);
 }

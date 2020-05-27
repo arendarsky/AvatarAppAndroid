@@ -21,6 +21,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
+import com.avatar.ava.domain.entities.ProfileSemifinalistsDTO;
 import com.avatar.ava.presentation.main.MainScreenPostman;
 
 import java.util.ArrayList;
@@ -48,10 +49,14 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
     @BindView(R.id.rating_recycler)
     RecyclerView recycler;
 
+    @BindView(R.id.rating_recycler_semifinalists)
+    RecyclerView recyclerSemifinalists;
+
     @BindView(R.id.fragment_rating_progressbar)
     ProgressBar progressBar;
 
     private RatingAdapter adapter;
+    private RatingSemifinalistsAdapter ratingSemifinalistsAdapter;
 
     private Activity activity;
 
@@ -87,10 +92,26 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
         presenter.getRating();
 
+        ratingSemifinalistsAdapter = new RatingSemifinalistsAdapter(appContext, (v, position) -> {
+            try {
+                ((MainScreenPostman) activity).openPublicProfile(adapter.getPersonId(position));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        recyclerSemifinalists.setAdapter(ratingSemifinalistsAdapter);
+        recyclerSemifinalists.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL,false));
+
+        presenter.getSemifinalists();
     }
 
     public void setData(ArrayList<PersonRatingDTO> data){
         adapter.setItems(data);
+    }
+
+    @Override
+    public void setSemifinalists(ArrayList<ProfileSemifinalistsDTO> data) {
+        ratingSemifinalistsAdapter.setItems(data);
     }
 
     @Override

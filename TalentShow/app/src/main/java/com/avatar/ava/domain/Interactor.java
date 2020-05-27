@@ -6,6 +6,7 @@ import com.avatar.ava.domain.entities.NotificationsDTO;
 import com.avatar.ava.domain.entities.PersonDTO;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
 import com.avatar.ava.domain.entities.ProfileDTO;
+import com.avatar.ava.domain.entities.ProfileSemifinalistsDTO;
 import com.avatar.ava.domain.entities.PublicProfileDTO;
 import com.avatar.ava.domain.repository.IAuthRepository;
 import com.avatar.ava.domain.repository.IProfileRepository;
@@ -37,6 +38,10 @@ public class Interactor {
         this.preferencesRepository = preferencesRepository;
         this.ratingRepository = ratingRepository;
         this.profileRepository = profileRepository;
+    }
+
+    public Single<ArrayList<ProfileSemifinalistsDTO>> getSemifinalists(){
+        return ratingRepository.getSemifinalists();
     }
 
     public Completable setFirebaseToken(String token){

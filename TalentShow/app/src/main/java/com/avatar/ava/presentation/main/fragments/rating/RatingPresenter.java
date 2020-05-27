@@ -37,4 +37,18 @@ public class RatingPresenter extends MvpPresenter<RatingView> {
 
 
     }
+
+    void getSemifinalists(){
+        Disposable disposable = interactor.getSemifinalists()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(arrayList -> {
+                            getViewState().hideProgressBar();
+                            getViewState().setSemifinalists(arrayList);
+                        },
+                        error -> {
+                            getViewState().hideProgressBar();
+                            getViewState().showMessage("Не удалось загрузить рейтинг. Попробуйте позже");
+                        });
+    }
 }
