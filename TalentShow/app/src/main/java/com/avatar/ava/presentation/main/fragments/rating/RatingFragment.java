@@ -3,10 +3,12 @@ package com.avatar.ava.presentation.main.fragments.rating;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -55,6 +57,9 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
     @BindView(R.id.fragment_rating_progressbar)
     ProgressBar progressBar;
 
+    @BindView(R.id.rating_no_semifinalists)
+    TextView noSemiText;
+
     private RatingAdapter adapter;
     private RatingSemifinalistsAdapter ratingSemifinalistsAdapter;
 
@@ -79,6 +84,9 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Toothpick.inject(this, Toothpick.openScope(App.class));
+
+        noSemiText.setVisibility(View.INVISIBLE);
+        recyclerSemifinalists.setVisibility(View.INVISIBLE);
 
         adapter = new RatingAdapter(appContext, (v, position) -> {
             Amplitude.getInstance().logEvent("ratingprofile_button_tapped");
@@ -111,7 +119,16 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
 
     @Override
     public void setSemifinalists(ArrayList<ProfileSemifinalistsDTO> data) {
-        ratingSemifinalistsAdapter.setItems(data);
+        Log.d("RatingFragmentLog", String.valueOf(data == null));
+        if(data != null && data.size() > 0){
+            ratingSemifinalistsAdapter.setItems(data);
+            noSemiText.setVisibility(View.INVISIBLE);
+            recyclerSemifinalists.setVisibility(View.VISIBLE);
+        }
+        else{
+            noSemiText.setVisibility(View.VISIBLE);
+            recyclerSemifinalists.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
