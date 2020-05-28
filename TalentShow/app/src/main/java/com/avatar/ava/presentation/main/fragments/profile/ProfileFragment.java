@@ -1,7 +1,9 @@
 package com.avatar.ava.presentation.main.fragments.profile;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -213,8 +216,25 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     private String delNameVideo = "";
 
     public void deleteVideo(){
-        progressBar.setVisibility(View.VISIBLE);
-        presenter.removeVideo(delNameVideo);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View view = inflater.inflate(R.layout.alertdialog_custom_view, null);
+        builder.setView(view);
+
+        Button btn_positive = (Button) view.findViewById(R.id.dialog_positive_btn);
+        Button btn_negative = (Button) view.findViewById(R.id.dialog_negative_btn);
+
+        AlertDialog alertDialog = builder.create();
+
+        btn_positive.setOnClickListener(v -> alertDialog.cancel());
+
+        btn_negative.setOnClickListener(v -> {
+            progressBar.setVisibility(View.VISIBLE);
+            presenter.removeVideo(delNameVideo);
+            alertDialog.cancel();
+        });
+
+        alertDialog.show();
     }
 
     private String castingVideoName = "";

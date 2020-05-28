@@ -125,6 +125,10 @@
     <string name="facebook_app_id">[APP_ID]</string>
     <string name="fb_login_protocol_scheme">fb[APP_ID]</string>
     <string name="xce_factor_semifinalists">Полуфиналисты XCE FACTOR 2020</string>
+    <string name="alertdialog_message">Вместе с этим видео из профиля также удалятся все лайки, полученные за него.</string>
+    <string name="alerdialog_title">Вы уверены?</string>
+    <string name="alerdialog_cancel">Отмена</string>
+    <string name="alerdialog_delete">Удалить</string>
 
 
 </resources>
