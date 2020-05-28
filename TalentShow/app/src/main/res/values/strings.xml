@@ -35,7 +35,7 @@
     <string name="rating">Рейтинг</string>
     <string name="stars">Звезды</string>
     <string name="producers">Продюсеры</string>
-    <string name="top_20"><b>Топ-20</b></string>
+    <string name="top_20"><b>Топ-50</b></string>
     <string name="name_hint">Иван Иванов</string>
     <string name="number_hint">1</string>
     <string name="casting">Кастинг</string>
