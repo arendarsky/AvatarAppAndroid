@@ -296,6 +296,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         String loading = "Загружается";
         String moderation = "На модерации";
         String casting = "В кастинге";
+        String failModeration = "Не прошло проверку";
 
         if(videos.size() >= 1){
 
@@ -306,14 +307,21 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
                 videoHint1.setText(loading);
             }
             else {
-                if (!videos.get(0).isApproved()) {
+                if(videos.get(0).isApproved() == null){
                     videoHint1.setVisibility(View.VISIBLE);
                     videoHint1.setText(moderation);
                 }
-                if (videos.get(0).isActive() && videos.get(0).isApproved()) {
-                    videoHint1.setText(casting);
-                    videoHint1.setVisibility(View.VISIBLE);
+                else{
+                    if (!videos.get(0).isApproved()) {
+                        videoHint1.setVisibility(View.VISIBLE);
+                        videoHint1.setText(failModeration);
+                    }
+                    if (videos.get(0).isActive() && videos.get(0).isApproved()) {
+                        videoHint1.setText(casting);
+                        videoHint1.setVisibility(View.VISIBLE);
+                    }
                 }
+
             }
 
             if(videos.size() >= 2){
@@ -325,14 +333,21 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
                     settings2.setVisibility(View.INVISIBLE);
                 }
                 else {
-                    if (!videos.get(1).isApproved()) {
+                    if(videos.get(1).isApproved() == null){
                         videoHint2.setVisibility(View.VISIBLE);
                         videoHint2.setText(moderation);
                     }
-                    if (videos.get(1).isActive() && videos.get(1).isApproved()) {
-                        videoHint2.setVisibility(View.VISIBLE);
-                        videoHint2.setText(casting);
+                    else{
+                        if (!videos.get(1).isApproved()) {
+                            videoHint2.setVisibility(View.VISIBLE);
+                            videoHint2.setText(failModeration);
+                        }
+                        if (videos.get(1).isActive() && videos.get(1).isApproved()) {
+                            videoHint2.setVisibility(View.VISIBLE);
+                            videoHint2.setText(casting);
+                        }
                     }
+
                 }
 
                 if(videos.size() >= 3){
@@ -344,14 +359,21 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
                         settings3.setVisibility(View.INVISIBLE);
                     }
                     else {
-                        if (!videos.get(2).isApproved()){
+                        if(videos.get(2).isApproved() == null){
                             videoHint3.setVisibility(View.VISIBLE);
                             videoHint3.setText(moderation);
                         }
-                        if (videos.get(2).isActive() && videos.get(2).isApproved()){
-                            videoHint3.setVisibility(View.VISIBLE);
-                            videoHint3.setText(casting);
+                        else{
+                            if (!videos.get(2).isApproved()){
+                                videoHint3.setVisibility(View.VISIBLE);
+                                videoHint3.setText(failModeration);
+                            }
+                            if (videos.get(2).isActive() && videos.get(2).isApproved()){
+                                videoHint3.setVisibility(View.VISIBLE);
+                                videoHint3.setText(casting);
+                            }
                         }
+
                     }
 
                     if(videos.size() >= 4){
@@ -363,14 +385,21 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
                             settings4.setVisibility(View.INVISIBLE);
                         }
                         else {
-                            if (!videos.get(3).isApproved()){
+                            if(videos.get(3).isApproved() == null){
                                 videoHint4.setVisibility(View.VISIBLE);
                                 videoHint4.setText(moderation);
                             }
-                            if (videos.get(3).isActive() && videos.get(3).isApproved()) {
-                                videoHint4.setVisibility(View.VISIBLE);
-                                videoHint4.setText(casting);
+                            else{
+                                if (!videos.get(3).isApproved()){
+                                    videoHint4.setVisibility(View.VISIBLE);
+                                    videoHint4.setText(failModeration);
+                                }
+                                if (videos.get(3).isActive() && videos.get(3).isApproved()) {
+                                    videoHint4.setVisibility(View.VISIBLE);
+                                    videoHint4.setText(casting);
+                                }
                             }
+
                         }
                     }
                 }

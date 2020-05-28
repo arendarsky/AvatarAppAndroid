@@ -11,7 +11,7 @@ public class VideoDTO {
     private boolean isActive;
 
     @SerializedName("isApproved")
-    private boolean isApproved;
+    private Boolean isApproved;
 
     @SerializedName("startTime")
     private double startTime;
@@ -46,11 +46,11 @@ public class VideoDTO {
         this.startTime = startTime;
     }
 
-    public boolean isApproved() {
+    public Boolean isApproved() {
         return isApproved;
     }
 
-    public void setApproved(boolean approved) {
+    public void setApproved(Boolean approved) {
         isApproved = approved;
     }
 
