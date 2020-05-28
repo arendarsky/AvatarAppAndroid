@@ -238,11 +238,11 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     }
 
     private String castingVideoName = "";
-    private boolean castingIsApproved = false;
+    private Boolean castingIsApproved = false;
 
     public void setCastingVideo(){
         Amplitude.getInstance().logEvent("sendtocasting_button_tapped");
-        if(castingIsApproved){
+        if(castingIsApproved != null && castingIsApproved){
             presenter.setActive(castingVideoName);
         }else{
             Toast.makeText(getContext(), "Видео ещё не прошло модерацию", Toast.LENGTH_LONG).show();
