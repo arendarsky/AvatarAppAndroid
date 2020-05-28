@@ -36,6 +36,18 @@
                 app:controller_layout_id="@layout/exo_playback_control_view"
                 app:resize_mode="zoom"/>
 
+            <TextView
+                android:id="@+id/rating_item_pos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:lineSpacingExtra="1sp"
+                android:textSize="24sp"
+                android:textColor="@color/whiteText"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <ImageView
                 android:id="@+id/rating_item_share_btn"
@@ -90,69 +102,66 @@
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_height="0dp"
+                android:layout_width="match_parent"
+                android:paddingTop="200dp"
+                android:elevation="10dp"
+                android:background="@drawable/casting_bottom_gradient"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
 
-        <ImageView
-            android:id="@+id/rating_item_ava"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="310dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/rating_item_description"
-            />
+            <ImageView
+                android:id="@+id/rating_item_ava"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="310dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/rating_item_description"
+                />
 
-        <TextView
-            android:id="@+id/rating_item_pos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:lineSpacingExtra="1sp"
-            android:textSize="24sp"
-            android:textColor="@color/whiteText"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            <TextView
+                android:id="@+id/rating_item_likes"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="2dp"
+                android:gravity="center"
+                android:lineSpacingExtra="1sp"
+                android:textColor="@color/whiteText"
+                app:layout_constraintStart_toEndOf="@+id/rating_item_heart_icon"
+                app:layout_constraintBottom_toBottomOf="@+id/rating_item_heart_icon"
+                app:layout_constraintTop_toTopOf="@+id/rating_item_heart_icon"/>
 
 
-        <TextView
-            android:id="@+id/rating_item_likes"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_marginStart="2dp"
-            android:gravity="center"
-            android:lineSpacingExtra="1sp"
-            android:textColor="@color/whiteText"
-            app:layout_constraintStart_toEndOf="@+id/rating_item_heart_icon"
-            app:layout_constraintBottom_toBottomOf="@+id/rating_item_heart_icon"
-            app:layout_constraintTop_toTopOf="@+id/rating_item_heart_icon"/>
 
-        <ImageView
-            android:id="@+id/rating_item_heart_icon"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:src="@drawable/heart_like_icon"
-            android:layout_marginTop="270dp"
-            android:layout_marginStart="16dp"
-            tools:ignore="ContentDescription"
-            android:layout_marginBottom="12dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/rating_item_ava"/>
+            <ImageView
+                android:id="@+id/rating_item_heart_icon"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/heart_like_icon"
+                android:layout_marginTop="270dp"
+                android:layout_marginStart="16dp"
+                tools:ignore="ContentDescription"
+                android:layout_marginBottom="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/rating_item_ava"/>
 
-        <TextView
-            android:id="@+id/rating_item_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:lineSpacingExtra="1sp"
-            android:text="@string/activity_casting_name"
-            android:textColor="@color/whiteText"
-            android:layout_marginStart="6dp"
-            app:layout_constraintStart_toEndOf="@+id/rating_item_ava"
-            app:layout_constraintTop_toTopOf="@+id/rating_item_ava"
-            app:layout_constraintBottom_toBottomOf="@+id/rating_item_ava"
-            />
+            <TextView
+                android:id="@+id/rating_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:lineSpacingExtra="1sp"
+                android:text="@string/activity_casting_name"
+                android:textColor="@color/whiteText"
+                android:layout_marginStart="6dp"
+                app:layout_constraintStart_toEndOf="@+id/rating_item_ava"
+                app:layout_constraintTop_toTopOf="@+id/rating_item_ava"
+                app:layout_constraintBottom_toBottomOf="@+id/rating_item_ava"
+                />
 
             <TextView
                 android:id="@+id/rating_item_description"
@@ -170,7 +179,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/rating_item_ava" />
-
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
