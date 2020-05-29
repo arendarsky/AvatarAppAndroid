@@ -47,7 +47,7 @@ public class RatingPresenter extends MvpPresenter<RatingView> {
                             getViewState().setSemifinalists(arrayList);
                         },
                         error -> {
-                            getViewState().hideProgressBar();
+                            //getViewState().hideProgressBar();
                             getViewState().showMessage("Не удалось загрузить рейтинг. Попробуйте позже");
                         });
     }

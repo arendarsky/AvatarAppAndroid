@@ -87,6 +87,7 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
 
         noSemiText.setVisibility(View.INVISIBLE);
         recyclerSemifinalists.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
 
         adapter = new RatingAdapter(appContext, (v, position) -> {
             Amplitude.getInstance().logEvent("ratingprofile_button_tapped");
