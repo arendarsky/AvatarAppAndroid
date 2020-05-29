@@ -3,7 +3,9 @@ package com.avatar.ava.presentation.main.fragments.rating;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.avatar.ava.BuildConfig;
@@ -76,6 +79,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     }
 
     private boolean clickable = true;
+    @RequiresApi(api = Build.VERSION_CODES.P)
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
@@ -172,11 +176,16 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         }
 
         if(BuildConfig.DEBUG)
-            Log.d("RatingAdapterLog", "onBindViewHolder " + holder.name.getText().toString());
+            Log.d("RatingAdapterLog", "onBindViewHolder " + holder.name.getText().toString() + " " + position);
 
-        Glide.with(holder.itemView.getContext())
+
+
+
+
+
+        /*Glide.with(holder.itemView.getContext())
                 .load(SERVER_NAME + "/api/video/" + personRatingDTO.getVideo().getName())
-                .into(holder.image);
+                .into(holder.image);*/
     }
 
     @Override
