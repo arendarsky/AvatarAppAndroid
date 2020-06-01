@@ -5,8 +5,8 @@
     android:layout_width="350dp"
     android:layout_height="425dp">
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/like_swipe_ic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/activity_casting_like"
         android:layout_margin="50dp" />
 </LinearLayout>
