@@ -7,6 +7,6 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/activity_casting_like"
+        android:src="@drawable/like"
         android:layout_margin="50dp" />
 </LinearLayout>

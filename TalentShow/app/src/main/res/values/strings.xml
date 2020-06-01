@@ -90,6 +90,7 @@
     <string name="edit_short">Ред.</string>
     <string name="add">Add</string>
     <string name="name_surname">Имя Фамилия</string>
+    <string name="you_have_no_description">Вы еще не добавили описание</string>
     <string name="description">Описание</string>
     <string name="uploaded_videos">Загруженные видео</string>
     <string name="in_casting">В кастинге</string>
@@ -125,10 +126,10 @@
     <string name="facebook_app_id">[APP_ID]</string>
     <string name="fb_login_protocol_scheme">fb[APP_ID]</string>
     <string name="xce_factor_semifinalists">Полуфиналисты XCE FACTOR 2020</string>
-    <string name="alertdialog_message">Вместе с этим видео из профиля также удалятся все лайки, полученные за него.</string>
-    <string name="alerdialog_title">Вы уверены?</string>
-    <string name="alerdialog_cancel">Отмена</string>
-    <string name="alerdialog_delete">Удалить</string>
+    <string name="alert_dialog_message">Вместе с этим видео из профиля также удалятся все лайки, полученные за него.</string>
+    <string name="alert_dialog_title">Вы уверены?</string>
+    <string name="alert_dialog_cancel">Отмена</string>
+    <string name="alert_dialog_delete">Удалить</string>
 
 
 </resources>

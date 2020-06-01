@@ -280,7 +280,8 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
 
         name.setText(person.getName());
         likes.setText(String.valueOf(person.getLikesNumber()));
-        description.setText(person.getDescription());
+        if(person.getDescription() != null)
+            description.setText(person.getDescription());
         videos = person.getVideos();
         Log.d("ProfileFrag", "here");
         if(videos.size() > 0) Log.d("ProfileFrag", videos.get(0).getStartTime() + " ");

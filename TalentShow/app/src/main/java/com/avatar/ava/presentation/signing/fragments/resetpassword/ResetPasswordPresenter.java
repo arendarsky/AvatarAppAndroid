@@ -29,7 +29,7 @@ public class ResetPasswordPresenter extends MvpPresenter<ResetPasswordView> {
                             getViewState().showError("Проверьте свою почту");
                             getViewState().nextScreen();
                         },
-                        error -> getViewState().showError("Введите почтку корректно")
+                        error -> getViewState().showError("Введите почту корректно")
                 );
     }
 }
