@@ -29,7 +29,7 @@
         </activity>
         <activity android:name="com.avatar.ava.presentation.main.fragments.casting.CastingFragment">
         </activity>
-        <activity android:name="com.avatar.ava.presentation.main.MainScreenActivity">
+        <activity android:name="com.avatar.ava.presentation.main.MainScreenActivity"  android:theme="@style/NavigationTheme">
         </activity>
         <activity android:name="com.avatar.ava.presentation.signing.EnterActivity">
 
