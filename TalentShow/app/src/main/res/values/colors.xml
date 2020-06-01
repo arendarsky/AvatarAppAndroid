@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#000000</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#D11AE5</color>
+    <color name="colorAccent">#FF33CC</color>
     <color name="darkBackground">#000000</color>
     <color name="whiteText">#FFFFFF</color>
     <color name="whiteEditableText">#F1F1F1</color>
@@ -20,8 +20,8 @@
     <color name="greyText">#ABABAB</color>
     <color name="hintTextColor">#000000</color>
     <color name="none_color">#00000000</color>
-    <color name="pink">#D11AE5</color>
-    <color name="darkPink">#AA3DFB</color>
+    <color name="pink">#FF33CC</color>
+    <color name="darkPink">#FF7F1EC6</color>
     <color name="navBarColor">#141516</color>
 
 

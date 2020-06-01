@@ -30,7 +30,7 @@
                 android:layout_width="12dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="16dp"
-                android:background="@drawable/blue_arrow_back"
+                android:background="@drawable/arrow_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
@@ -62,7 +62,7 @@
                 android:layout_width="12dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="16dp"
-                android:background="@drawable/blue_arrow_back"
+                android:background="@drawable/arrow_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
@@ -111,8 +111,8 @@
 
         <View
             android:layout_width="120dp"
-            android:layout_height="1.5dp"
-            android:background="@drawable/main_title_line"
+            android:layout_height="1dp"
+            android:background="@drawable/main_activity_line"
             app:layout_constraintStart_toStartOf="@+id/main_frame_text1"
             app:layout_constraintEnd_toEndOf="@+id/main_frame_text1"
             app:layout_constraintTop_toBottomOf="@+id/main_frame_text1"
@@ -177,7 +177,7 @@
             android:layout_height="18dp"
             android:padding="30dp"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/white_cross"
+            android:background="@drawable/plus_icon"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

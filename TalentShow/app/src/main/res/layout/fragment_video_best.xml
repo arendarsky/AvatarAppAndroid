@@ -30,7 +30,7 @@
             android:id="@+id/fragment_video_best_arrow"
             android:layout_width="12dp"
             android:layout_height="20dp"
-            android:background="@drawable/blue_arrow_back"
+            android:background="@drawable/arrow_back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>

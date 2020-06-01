@@ -34,7 +34,7 @@
     <View
         android:layout_width="22dp"
         android:layout_height="22dp"
-        android:background="@drawable/white_cross"
+        android:background="@drawable/plus_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

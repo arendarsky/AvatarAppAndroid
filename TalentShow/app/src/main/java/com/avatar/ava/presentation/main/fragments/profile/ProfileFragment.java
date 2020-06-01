@@ -624,19 +624,19 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     }
 
 
-    @OnClick(R.id.fragment_profile_add_video_btn_1)
+    @OnClick(R.id.fragment_profile_container1)
     void addVideo1(){
         activity.fragmentAction(LOAD_NEW_VIDEO_SCREEN);
     }
-    @OnClick(R.id.fragment_profile_add_video_btn_2)
+    @OnClick(R.id.fragment_profile_container2)
     void addVideo2(){
         activity.fragmentAction(LOAD_NEW_VIDEO_SCREEN);
     }
-    @OnClick(R.id.fragment_profile_add_video_btn_3)
+    @OnClick(R.id.fragment_profile_container3)
     void addVideo3(){
         activity.fragmentAction(LOAD_NEW_VIDEO_SCREEN);
     }
-    @OnClick(R.id.fragment_profile_add_video_btn_4)
+    @OnClick(R.id.fragment_profile_container4)
     void addVideo4(){
         activity.fragmentAction(LOAD_NEW_VIDEO_SCREEN);
     }
