@@ -5,6 +5,4 @@ android:shape="rectangle">
     android:centerColor="#4C000000"
     android:endColor="#7C000000"
     android:angle="90"/>
-<corners
-    android:radius="0dp"/>
 </shape>
