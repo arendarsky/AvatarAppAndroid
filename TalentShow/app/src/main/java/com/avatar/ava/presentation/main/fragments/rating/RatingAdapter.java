@@ -98,6 +98,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
                     player.setPlayWhenReady(true);
                     holder.start.setVisibility(View.GONE);
                     holder.image.setVisibility(View.INVISIBLE);
+                    holder.progressBar.setVisibility(View.VISIBLE);
                     player.addAnalyticsListener(new AnalyticsListener() {
                         @Override
                         public void onPlayerStateChanged(EventTime eventTime, boolean playWhenReady, int playbackState) {
@@ -163,7 +164,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
 
         if(personRatingDTO.getPhoto() == null){
             Glide.with(holder.itemView.getContext())
-                    .load(R.drawable.empty_profile_icon)
+                    .load(R.drawable.empty_profile)
                     .circleCrop()
                     .into(holder.ava);
         }

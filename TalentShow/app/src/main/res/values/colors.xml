@@ -2,28 +2,27 @@
 <resources>
     <color name="colorPrimary">#000000</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#FF33CC</color>
-    <color name="darkBackground">#000000</color>
-    <color name="whiteText">#FFFFFF</color>
-    <color name="whiteEditableText">#F1F1F1</color>
-    <color name="regGrayColor">#D2D2D2</color>
+    <color name="colorAccent">#C11AE5</color>
+
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
     <color name="hint_text_color">#A1A1A1</color>
-    <color name="lightDark">#262626</color>
-    <color name="blueTextColor">#007AFF</color>
-    <color name="whiteBackground">#FFFFFF</color>
     <color name="blackText">#060606</color>
     <color name="grayText">#9EA1A3</color>
-    <color name="red_text">#EE1E23</color>
-    <color name="lightGrayText">#ABABAB</color>
     <color name="darkGrayText">#686868</color>
-    <color name="medium_gray_text">#C4CACC</color>
-    <color name="greyText">#ABABAB</color>
-    <color name="hintTextColor">#000000</color>
+    <color name="red_text">#EE1E23</color>
+
     <color name="none_color">#00000000</color>
-    <color name="pink">#FF33CC</color>
-    <color name="darkPink">#FF7F1EC6</color>
+
+    <color name="pink">#C11AE5</color>
+    <color name="darkPink">#7F1EC6</color>
+
+    <color name="backgroundPink">#FF33CC</color>
+    <color name="backgroundDarkPink">#7F1EC6</color>
+
     <color name="navBarColor">#141516</color>
+    <color name="dialogBackground">#141516</color>
 
-
-
+    <color name="blurBackground">#50000000</color>
 </resources>

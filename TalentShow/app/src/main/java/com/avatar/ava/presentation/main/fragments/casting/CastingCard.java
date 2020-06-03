@@ -77,8 +77,8 @@ public class CastingCard {
             Log.d("CastingSwipe", "OnResolved " + mProfile.getName());
             if(mProfile.getPhoto() == null){
                 Glide.with(mContext)
-                        .load(R.drawable.empty_profile_icon)
-                        .circleCrop()
+                        .load(R.drawable.empty_profile)
+                        .centerCrop()
                         .into(ava);
             }
             else{

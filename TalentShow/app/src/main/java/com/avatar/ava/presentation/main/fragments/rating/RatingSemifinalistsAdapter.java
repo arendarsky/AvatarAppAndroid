@@ -63,8 +63,8 @@ public class RatingSemifinalistsAdapter extends RecyclerView.Adapter<RatingSemif
                 .into(holder.userAva);
         else
             Glide.with(holder.itemView.getContext())
-                    .load(R.drawable.empty_profile_icon)
-                    .circleCrop()
+                    .load(R.drawable.empty_profile)
+                    .centerCrop()
                     .into(holder.userAva);
     }
 

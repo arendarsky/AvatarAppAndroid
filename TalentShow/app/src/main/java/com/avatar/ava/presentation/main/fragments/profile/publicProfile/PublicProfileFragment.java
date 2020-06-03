@@ -196,8 +196,8 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
     public void setDataProfile(PublicProfileDTO person) {
         if(person.getPhoto() == null){
             Glide.with(this)
-                    .load(R.drawable.empty_profile_icon)
-                    .circleCrop()
+                    .load(R.drawable.empty_profile)
+                    .centerCrop()
                     .into(profileImage);
         }else{
             Glide.with(this)
@@ -210,9 +210,12 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
             name.setText(person.getName());
         }
         else name.setVisibility(View.VISIBLE);
-        description.setVisibility(View.VISIBLE);
-        if(person.getDescription() != null)
+        if(person.getDescription() != null){
+            description.setTextColor(getResources().getColor(R.color.white));
             description.setText(person.getDescription());
+        } else {
+            description.setText(getResources().getString(R.string.no_description));
+        }
         videos = person.getVideos();
         if(videos != null){
             currCountVideos = videos.size();

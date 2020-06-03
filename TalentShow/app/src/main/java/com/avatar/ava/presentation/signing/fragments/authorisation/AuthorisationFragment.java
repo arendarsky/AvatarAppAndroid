@@ -142,13 +142,13 @@ public class AuthorisationFragment extends MvpAppCompatFragment implements Autho
     @OnTextChanged(R.id.auth_email_edit)
     public void mailChanged(){
         if (mailEdit.getText().toString().length() >= 1)
-            mailEdit.setTextColor(getResources().getColor(R.color.whiteText));
+            mailEdit.setTextColor(getResources().getColor(R.color.white));
     }
 
     @OnTextChanged(R.id.auth_password_edit)
     public void passwordChanged(){
         if (passwordEdit.getText().toString().length() >= 1)
-            passwordEdit.setTextColor(getResources().getColor(R.color.whiteText));
+            passwordEdit.setTextColor(getResources().getColor(R.color.white));
     }
 
     @OnClick(R.id.fragment_auth_text11)

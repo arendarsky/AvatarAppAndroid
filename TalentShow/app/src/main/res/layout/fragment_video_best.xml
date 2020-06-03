@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/darkBackground"
+    android:background="@color/black"
     tools:context="com.avatar.ava.presentation.signing.fragments.FragmentChooseVideoBest">
 
     <ProgressBar
@@ -36,7 +36,7 @@
             app:layout_constraintStart_toStartOf="parent"/>
 
         <TextView
-            android:textColor="@color/whiteText"
+            android:textColor="@color/white"
             android:textSize="17sp"
             android:text="@string/back"
             android:gravity="center|top"
@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:textSize="17sp"
-        android:textColor="@color/whiteText"
+        android:textColor="@color/white"
         android:text="@string/save"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
@@ -81,7 +81,7 @@
         android:id="@+id/fragment_video_choose_text1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/whiteText"
+        android:textColor="@color/white"
         android:text="@string/best_30_seconds"
         android:textAppearance="@style/activity_star_video_best_heading"
         android:lineSpacingExtra="0sp"

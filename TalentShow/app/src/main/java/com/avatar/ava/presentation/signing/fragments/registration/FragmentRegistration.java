@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -173,7 +172,7 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
     @OnTextChanged(R.id.reg_name_edit)
     public void nameChanged(){
         if (nameEdit.getText().toString().length() >= 2)
-            nameEdit.setTextColor(getResources().getColor(R.color.whiteText));
+            nameEdit.setTextColor(getResources().getColor(R.color.white));
     }
 
     @OnTextChanged(R.id.reg_email_edit)
@@ -182,14 +181,14 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
             if (!Pattern.compile("\\w+@\\D+\\.\\D+")
                     .matcher(emailEdit.getText().toString()).find()) {
                 emailEdit.setTextColor(getResources().getColor(R.color.red_text));
-            } else emailEdit.setTextColor(getResources().getColor(R.color.whiteText));
+            } else emailEdit.setTextColor(getResources().getColor(R.color.white));
         }
     }
 
     @OnTextChanged(R.id.reg_password_edit)
     public void passwordChanged(){
         if (passwordEdit.getText().toString().length() >= 6)
-            passwordEdit.setTextColor(getResources().getColor(R.color.whiteText));
+            passwordEdit.setTextColor(getResources().getColor(R.color.white));
     }
 
     @OnClick(R.id.fragment_registration_text1)

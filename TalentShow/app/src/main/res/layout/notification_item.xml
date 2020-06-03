@@ -8,7 +8,7 @@
     android:paddingTop="7dp"
     android:paddingBottom="7dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/darkBackground">
+    android:background="@color/black">
 
     <ImageView
         android:id="@+id/notifications_item_avatar"
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="11dp"
         android:layout_marginEnd="10dp"
-        android:textColor="@color/whiteText"
+        android:textColor="@color/white"
         app:layout_constraintStart_toEndOf="@id/notifications_item_avatar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"

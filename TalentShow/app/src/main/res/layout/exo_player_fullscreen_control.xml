@@ -3,7 +3,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
     android:layoutDirection="ltr"
-    android:background="#CC000000"
+    android:background="@color/navBarColor"
     android:orientation="vertical">
 
     <LinearLayout
@@ -51,7 +51,7 @@
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
             android:includeFontPadding="false"
-            android:textColor="#FFBEBEBE"/>
+            android:textColor="@color/grayText"/>
 
         <com.google.android.exoplayer2.ui.DefaultTimeBar
             android:id="@id/exo_progress"
@@ -67,7 +67,7 @@
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
             android:includeFontPadding="false"
-            android:textColor="#FFBEBEBE"/>
+            android:textColor="@color/grayText"/>
 
         <FrameLayout
             android:id="@+id/exo_fullscreen_button"

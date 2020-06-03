@@ -96,16 +96,28 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     ImageView video4;
 
     @BindView(R.id.fragment_profile_add_video_btn_1)
-    ImageButton addVideoBtn1;
+    TextView addVideoBtn1;
 
     @BindView(R.id.fragment_profile_add_video_btn_2)
-    ImageButton addVideoBtn2;
+    TextView addVideoBtn2;
 
     @BindView(R.id.fragment_profile_add_video_btn_3)
-    ImageButton addVideoBtn3;
+    TextView addVideoBtn3;
 
     @BindView(R.id.fragment_profile_add_video_btn_4)
-    ImageButton addVideoBtn4;
+    TextView addVideoBtn4;
+
+    @BindView(R.id.fragment_profile_add_icon1)
+    ImageView addVideoIcon1;
+
+    @BindView(R.id.fragment_profile_add_icon2)
+    ImageView addVideoIcon2;
+
+    @BindView(R.id.fragment_profile_add_icon3)
+    ImageView addVideoIcon3;
+
+    @BindView(R.id.fragment_profile_add_icon4)
+    ImageView addVideoIcon4;
 
     @BindView(R.id.fragment_profile_container1)
     CardView container1;
@@ -268,8 +280,8 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         //set Data
         if(person.getPhoto() == null){
             Glide.with(this)
-                    .load(R.drawable.empty_profile_icon)
-                    .circleCrop()
+                    .load(R.drawable.empty_profile)
+                    .centerCrop()
                     .into(profileImage);
         }else{
             Glide.with(this)
@@ -280,8 +292,13 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
 
         name.setText(person.getName());
         likes.setText(String.valueOf(person.getLikesNumber()));
-        if(person.getDescription() != null)
+        if(person.getDescription() != null) {
+            description.setTextColor(getResources().getColor(R.color.white));
             description.setText(person.getDescription());
+        } else {
+            description.setHintTextColor(getResources().getColor(R.color.grayText));
+            description.setHint(getResources().getString(R.string.you_have_no_description));
+        }
         videos = person.getVideos();
         Log.d("ProfileFrag", "here");
         if(videos.size() > 0) Log.d("ProfileFrag", videos.get(0).getStartTime() + " ");
@@ -475,22 +492,26 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
             setupVideo(1);
             video1.setVisibility(View.VISIBLE);
             addVideoBtn1.setVisibility(View.INVISIBLE);
+            addVideoIcon1.setVisibility(View.INVISIBLE);
             settings1.setVisibility(View.VISIBLE);
             if(currCountVideos >= 2){
                 setupVideo(2);
                 video2.setVisibility(View.VISIBLE);
                 addVideoBtn2.setVisibility(View.INVISIBLE);
+                addVideoIcon2.setVisibility(View.INVISIBLE);
                 settings2.setVisibility(View.VISIBLE);
                 if(currCountVideos >= 3){
                     setupVideo(3);
                     video3.setVisibility(View.VISIBLE);
                     addVideoBtn3.setVisibility(View.INVISIBLE);
+                    addVideoIcon3.setVisibility(View.INVISIBLE);
                     settings3.setVisibility(View.VISIBLE);
                 }
                 if(currCountVideos == 4){
                     setupVideo(4);
                     video4.setVisibility(View.VISIBLE);
                     addVideoBtn4.setVisibility(View.INVISIBLE);
+                    addVideoIcon4.setVisibility(View.INVISIBLE);
                     settings4.setVisibility(View.VISIBLE);
                 }
             }
@@ -583,12 +604,16 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         container4.setVisibility(View.VISIBLE);
 
         addVideoBtn1.setVisibility(View.VISIBLE);
+        addVideoIcon1.setVisibility(View.VISIBLE);
         settings1.setVisibility(View.INVISIBLE);
         addVideoBtn2.setVisibility(View.VISIBLE);
+        addVideoIcon2.setVisibility(View.VISIBLE);
         settings2.setVisibility(View.INVISIBLE);
         addVideoBtn3.setVisibility(View.VISIBLE);
+        addVideoIcon3.setVisibility(View.VISIBLE);
         settings3.setVisibility(View.INVISIBLE);
         addVideoBtn4.setVisibility(View.VISIBLE);
+        addVideoIcon4.setVisibility(View.VISIBLE);
         settings4.setVisibility(View.INVISIBLE);
 
 
@@ -624,19 +649,19 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     }
 
 
-    @OnClick(R.id.fragment_profile_container1)
+    @OnClick(R.id.fragment_profile_add_video_btn_1)
     void addVideo1(){
         activity.fragmentAction(LOAD_NEW_VIDEO_SCREEN);
     }
-    @OnClick(R.id.fragment_profile_container2)
+    @OnClick(R.id.fragment_profile_add_video_btn_2)
     void addVideo2(){
         activity.fragmentAction(LOAD_NEW_VIDEO_SCREEN);
     }
-    @OnClick(R.id.fragment_profile_container3)
+    @OnClick(R.id.fragment_profile_add_video_btn_3)
     void addVideo3(){
         activity.fragmentAction(LOAD_NEW_VIDEO_SCREEN);
     }
-    @OnClick(R.id.fragment_profile_container4)
+    @OnClick(R.id.fragment_profile_add_video_btn_4)
     void addVideo4(){
         activity.fragmentAction(LOAD_NEW_VIDEO_SCREEN);
     }

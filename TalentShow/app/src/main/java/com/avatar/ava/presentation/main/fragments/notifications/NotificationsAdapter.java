@@ -54,8 +54,8 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
                     .into(holder.avatar);
         }else{
             Glide.with(holder.itemView.getContext())
-                    .load(R.drawable.empty_profile_icon)
-                    .circleCrop()
+                    .load(R.drawable.empty_profile)
+                    .centerCrop()
                     .into(holder.avatar);
         }
 

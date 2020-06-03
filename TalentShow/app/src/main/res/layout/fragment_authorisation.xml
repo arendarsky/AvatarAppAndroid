@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:background="@color/darkBackground"
+        android:background="@color/black"
         android:layout_height="match_parent">
 
         <ProgressBar
@@ -42,7 +42,7 @@
                 app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
-                android:textColor="@color/whiteText"
+                android:textColor="@color/white"
                 android:textSize="17sp"
                 android:text="@string/back"
                 android:gravity="center|top"
@@ -64,7 +64,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.2" />
+            app:layout_constraintVertical_bias="0.15" />
 
         <TextView
             android:id="@+id/fragment_auth_text1"
@@ -74,7 +74,7 @@
             android:layout_marginEnd="16dp"
             android:textSize="33sp"
             android:gravity="center"
-            android:textColor="@color/whiteText"
+            android:textColor="@color/white"
             android:text="@string/auth"
             android:focusable="false"
             app:layout_constraintStart_toStartOf="parent"
@@ -125,7 +125,7 @@
                 android:textColor="@color/blackText"
                 android:inputType="textEmailAddress"
                 android:background="@color/none_color"
-                android:textCursorDrawable="@color/whiteText"
+                android:textCursorDrawable="@color/white"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:textColorHint="@color/hint_text_color"
@@ -179,7 +179,7 @@
             android:textColor="@color/blackText"
             android:inputType="textPassword"
             android:background="@color/none_color"
-            android:textCursorDrawable="@color/whiteText"
+            android:textCursorDrawable="@color/white"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
             android:textColorHint="@color/hint_text_color"
@@ -196,11 +196,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="45dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="45dp"
             android:gravity="center"
             android:text="@string/i_accept_terms_auth"
-            android:textColor="@color/regGrayColor"
+            android:textColor="@color/darkGrayText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_auth_field_2" />
@@ -212,34 +212,35 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginTop="20dp"
+            android:focusable="false"
             android:gravity="center"
             android:text="Забыли пароль?"
-            android:textColor="@color/whiteText"
+            android:textColor="@color/white"
             android:textSize="14sp"
-            android:focusable="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/fragment_auth_continue" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_auth_text11" />
 
         <TextView
             android:id="@+id/fragment_auth_continue"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="32dp"
-            android:layout_marginTop="56dp"
             android:background="@drawable/buttons_background"
+            android:focusable="false"
             android:gravity="center"
             android:text="@string/sing_in"
-            android:textColor="@color/whiteText"
+            android:textColor="@color/white"
             android:textSize="17sp"
-            android:focusable="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_auth_field_2" />
+            app:layout_constraintTop_toBottomOf="@id/fragment_auth_reset_password"
+            app:layout_constraintVertical_bias="0.32" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
