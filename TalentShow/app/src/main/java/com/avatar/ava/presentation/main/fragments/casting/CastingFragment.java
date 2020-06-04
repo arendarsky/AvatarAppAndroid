@@ -316,4 +316,14 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, "Share using"));
     }
+
+    @Override
+    public void openFullscreen(String link) {
+        try {
+
+            ((MainScreenPostman) activity).openFullScreen(link);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

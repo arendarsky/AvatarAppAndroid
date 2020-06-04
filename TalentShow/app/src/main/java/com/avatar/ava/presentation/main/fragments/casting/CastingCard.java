@@ -48,6 +48,9 @@ public class CastingCard {
     @View(R.id.activity_casting_share_btn)
     public ImageView share;
 
+    @View(R.id.casting_fragment_fullscreen)
+    public android.view.View fullscreen;
+
 
     private PersonDTO mProfile;
     private Context mContext;
@@ -102,9 +105,10 @@ public class CastingCard {
 
             mPlayer.setPlayWhenReady(true);
 
-            share.setOnClickListener(view -> {
-                mCallback.shareVideoLink("https://web.xce-factor.ru/#/video/" + mProfile.getVideo().getName());
-            });
+            share.setOnClickListener(view -> mCallback.shareVideoLink("https://web.xce-factor.ru/#/video/" + mProfile.getVideo().getName()));
+
+            fullscreen.setOnClickListener(view ->
+                    mCallback.openFullscreen(mProfile.getVideo().getName()));
         }
 
     }
@@ -152,5 +156,6 @@ public class CastingCard {
         void openProfile();
         void restartVideo();
         void shareVideoLink(String link);
+        void openFullscreen(String link);
     }
 }

@@ -49,14 +49,13 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="19dp"
+
                     android:layout_marginEnd="300dp"
                     android:layout_marginBottom="15dp"
                     android:elevation="20dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@id/activity_casting_name" />
 
                 <ImageView
                     android:id="@+id/activity_casting_share_btn"
@@ -68,6 +67,20 @@
                     app:layout_constraintBottom_toBottomOf="@+id/casting_activity_avatar"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/casting_activity_avatar" />
+
+                <View
+                    android:id="@+id/casting_fragment_fullscreen"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="15dp"
+                    android:padding="15dp"
+                    android:elevation="16dp"
+                    android:foregroundGravity="center"
+                    android:background="@drawable/full_screen_white"
+                    app:layout_constraintTop_toBottomOf="@id/activity_casting_share_btn"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
 
                 <TextView
                     android:id="@+id/activity_casting_name"
