@@ -1,13 +1,14 @@
 package com.avatar.ava.presentation.main.fragments.casting;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.arellomobile.mvp.presenter.InjectPresenter;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.avatar.ava.R;
 import com.avatar.ava.domain.entities.PersonDTO;
 import com.bumptech.glide.Glide;
@@ -28,6 +29,10 @@ import com.mindorks.placeholderview.annotations.swipe.SwipeInState;
 import com.mindorks.placeholderview.annotations.swipe.SwipeOut;
 import com.mindorks.placeholderview.annotations.swipe.SwipeOutState;
 
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Completable;
+
 import static com.avatar.ava.DataModule.SERVER_NAME;
 
 @Layout(R.layout.casting_card_view)
@@ -42,15 +47,20 @@ public class CastingCard {
     @View(R.id.activity_casting_name)
     public TextView name;
 
-    @View(R.id.activity_casting_description)
-    public TextView description;
-
     @View(R.id.activity_casting_share_btn)
     public ImageView share;
 
     @View(R.id.casting_fragment_fullscreen)
     public android.view.View fullscreen;
 
+    @View(R.id.casting_fragment_volume)
+    public android.view.View volume;
+
+    @View(R.id.casting_fragment_control_buttons)
+    public ConstraintLayout controlButtons;
+
+    @View(R.id.activity_casting_card)
+    public CardView card;
 
     private PersonDTO mProfile;
     private Context mContext;
@@ -58,7 +68,9 @@ public class CastingCard {
     private DataSource.Factory mDataSourceFactory;
     private SimpleExoPlayer mPlayer;
     private Callback mCallback;
-    private PersonDTO prevPerson ;
+    private PersonDTO prevPerson;
+    private boolean volumeState = true;
+    private float volumeLevel;
 
     public CastingCard(Context context, PersonDTO profile, SwipePlaceHolderView swipeView,
                        SimpleExoPlayer exoPlayer, DataSource.Factory dataSourceFactory,
@@ -91,7 +103,6 @@ public class CastingCard {
                         .into(ava);
             }
             name.setText(mProfile.getName());
-            description.setText(mProfile.getDescription());
             playerView.setPlayer(mPlayer);
 
             String videoLink = SERVER_NAME + "/api/video/" + mProfile.getVideo().getName();
@@ -107,8 +118,32 @@ public class CastingCard {
 
             share.setOnClickListener(view -> mCallback.shareVideoLink("https://web.xce-factor.ru/#/video/" + mProfile.getVideo().getName()));
 
+            card.setOnClickListener(view ->{
+                controlButtons.setVisibility(android.view.View.VISIBLE);
+
+                Completable.timer(5, TimeUnit.SECONDS)
+                        .doOnComplete(() -> controlButtons.setVisibility(android.view.View.INVISIBLE))
+                        .subscribe();
+
+            });
+
             fullscreen.setOnClickListener(view ->
                     mCallback.openFullscreen(mProfile.getVideo().getName()));
+
+            volume.setOnClickListener(view ->{
+                if (volumeState) {
+                    volumeLevel = mPlayer.getVolume();
+                    volume.setBackground(mContext.getDrawable(R.drawable.volume_off_white));
+                    mPlayer.setVolume(0);
+                    volumeState = false;
+                }
+                else {
+                    volumeState = true;
+                    mPlayer.setVolume(volumeLevel);
+                    volume.setBackground(mContext.getDrawable(R.drawable.volume_on_white));
+                }
+            });
+
         }
 
     }
@@ -157,5 +192,6 @@ public class CastingCard {
         void restartVideo();
         void shareVideoLink(String link);
         void openFullscreen(String link);
+
     }
 }

@@ -319,8 +319,8 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
     @Override
     public void openFullscreen(String link) {
+        stopVideo();
         try {
-
             ((MainScreenPostman) activity).openFullScreen(link);
         } catch (Exception e) {
             e.printStackTrace();
