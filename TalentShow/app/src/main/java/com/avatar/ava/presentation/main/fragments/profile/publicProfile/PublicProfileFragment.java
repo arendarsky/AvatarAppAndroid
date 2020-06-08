@@ -28,6 +28,7 @@ import com.avatar.ava.R;
 import com.avatar.ava.domain.entities.PublicProfileDTO;
 import com.avatar.ava.domain.entities.VideoDTO;
 import com.avatar.ava.presentation.main.MainScreenPostman;
+import com.avatar.ava.presentation.main.videoCardView.VideoPublicCardView;
 import com.bumptech.glide.Glide;
 import com.google.android.exoplayer2.ui.PlayerView;
 
@@ -67,35 +68,30 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
     @BindView(R.id.fragment_public_profile_description)
     TextView description;
 
-    @BindView(R.id.fragment_public_profile_video_1)
-    ImageView video1;
 
-    @BindView(R.id.fragment_public_profile_video_2)
-    ImageView video2;
-
-    @BindView(R.id.fragment_public_profile_video_3)
-    ImageView video3;
-
-    @BindView(R.id.fragment_public_profile_video_4)
-    ImageView video4;
 
     @BindView(R.id.fragment_public_profile_container1)
-    CardView container1;
+    VideoPublicCardView videoPublicCardView1;
 
     @BindView(R.id.fragment_public_profile_container2)
-    CardView container2;
+    VideoPublicCardView videoPublicCardView2;
 
     @BindView(R.id.fragment_public_profile_container3)
-    CardView container3;
+    VideoPublicCardView videoPublicCardView3;
 
     @BindView(R.id.fragment_public_profile_container4)
-    CardView container4;
+    VideoPublicCardView videoPublicCardView4;
+
+    @BindView(R.id.fragment_public_profile_container5)
+    VideoPublicCardView videoPublicCardView5;
 
     @BindView(R.id.fragment_profile_parent)
     ConstraintLayout parent;
 
     private Activity activity;
 
+
+    ArrayList<VideoPublicCardView> videoPublicCardViews = new ArrayList<>();
 
     @ProvidePresenter
     PublicProfilePresenter getPresenter(){
@@ -161,7 +157,7 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
 
     }
 
-    @OnClick(R.id.fragment_public_profile_container1)
+    /*@OnClick(R.id.fragment_public_profile_container1)
     void container1Clicked(){
         toFullscreen(0);
     }
@@ -181,7 +177,10 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
         toFullscreen(3);
     }
 
-
+    @OnClick(R.id.fragment_public_profile_container5)
+    void container5Clicked(){
+        toFullscreen(4);
+    }*/
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -189,6 +188,18 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
         Toothpick.inject(this, Toothpick.openScope(App.class));
         presenter.getProfile(id);
         description.setEnabled(false);
+
+        videoPublicCardViews.add(videoPublicCardView1);
+        videoPublicCardViews.add(videoPublicCardView2);
+        videoPublicCardViews.add(videoPublicCardView3);
+        videoPublicCardViews.add(videoPublicCardView4);
+        videoPublicCardViews.add(videoPublicCardView5);
+
+
+
+        for(VideoPublicCardView videoPublicCardView : videoPublicCardViews){
+            videoPublicCardView.setActivity(activity);
+        }
     }
 
 
@@ -223,6 +234,13 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
             currCountVideos = 0;
         }
 
+        for(int i = 0; i < videos.size(); i++){
+            videoPublicCardViews.get(i).setVideoDTO(videos.get(i));
+        }
+        for(int i = videos.size(); i < videoPublicCardViews.size(); i++){
+            videoPublicCardViews.get(i).setVideoDTO(null);
+        }
+
         showVideos();
     }
 
@@ -237,29 +255,13 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
     }
 
     private void showVideos(){
-        if(currCountVideos >= 1){
-            container1.setVisibility(View.VISIBLE);
-            setupVideo(1);
-            video1.setVisibility(View.VISIBLE);
-            if(currCountVideos >= 2){
-                container2.setVisibility(View.VISIBLE);
-                setupVideo(2);
-                video2.setVisibility(View.VISIBLE);
-                if(currCountVideos >= 3){
-                    container3.setVisibility(View.VISIBLE);
-                    setupVideo(3);
-                    video3.setVisibility(View.VISIBLE);
-                }
-                if(currCountVideos == 4){
-                    container4.setVisibility(View.VISIBLE);
-                    setupVideo(4);
-                    video4.setVisibility(View.VISIBLE);
-                }
-            }
+        for(VideoPublicCardView videoPublicCardView : videoPublicCardViews){
+            if(videoPublicCardView.getVideoDTO() != null)
+            videoPublicCardView.showVideo();
         }
     }
 
-    private void showImage(int id, ImageView iv){
+    /*private void showImage(int id, ImageView iv){
         Glide.with(this)
                 .load(SERVER_NAME + "/api/video/" + videos.get(id).getName())
                 .placeholder(appContext.getResources().getDrawable(R.drawable.activity_add_new_video_bg))
@@ -284,6 +286,10 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
 
             case 4:
                 showImage(3, video4);
+                break;
+
+            case 5:
+                showImage(4, video5);
                 break;
         }
     }
@@ -319,4 +325,8 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
         shareVideo(3);
     }
 
+    @OnClick(R.id.rating_item_share_btn5)
+    public void onShare5Clicked(){
+        shareVideo(4);
+    }*/
 }

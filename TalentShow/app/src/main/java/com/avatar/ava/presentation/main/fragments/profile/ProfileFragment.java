@@ -35,6 +35,7 @@ import com.avatar.ava.domain.entities.VideoDTO;
 import com.avatar.ava.presentation.main.BottomSheetFragments.ProfileVideoBottomSheet;
 import com.avatar.ava.presentation.main.MainScreenActivity;
 import com.avatar.ava.presentation.main.MainScreenPostman;
+import com.avatar.ava.presentation.main.videoCardView.VideoCardView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -83,84 +84,27 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     @BindView(R.id.fragment_profile_btn_edit)
     TextView editProfile;
 
-    @BindView(R.id.fragment_profile_video_1)
-    ImageView video1;
+    @BindView(R.id.fragment_profile_video_card_view_1)
+    VideoCardView videoCardView1;
 
-    @BindView(R.id.fragment_profile_video_2)
-    ImageView video2;
+    @BindView(R.id.fragment_profile_video_card_view_2)
+    VideoCardView videoCardView2;
 
-    @BindView(R.id.fragment_profile_video_3)
-    ImageView video3;
+    @BindView(R.id.fragment_profile_video_card_view_3)
+    VideoCardView videoCardView3;
 
-    @BindView(R.id.fragment_profile_video_4)
-    ImageView video4;
+    @BindView(R.id.fragment_profile_video_card_view_4)
+    VideoCardView videoCardView4;
 
-    @BindView(R.id.fragment_profile_add_video_btn_1)
-    TextView addVideoBtn1;
-
-    @BindView(R.id.fragment_profile_add_video_btn_2)
-    TextView addVideoBtn2;
-
-    @BindView(R.id.fragment_profile_add_video_btn_3)
-    TextView addVideoBtn3;
-
-    @BindView(R.id.fragment_profile_add_video_btn_4)
-    TextView addVideoBtn4;
-
-    @BindView(R.id.fragment_profile_add_icon1)
-    ImageView addVideoIcon1;
-
-    @BindView(R.id.fragment_profile_add_icon2)
-    ImageView addVideoIcon2;
-
-    @BindView(R.id.fragment_profile_add_icon3)
-    ImageView addVideoIcon3;
-
-    @BindView(R.id.fragment_profile_add_icon4)
-    ImageView addVideoIcon4;
-
-    @BindView(R.id.fragment_profile_container1)
-    CardView container1;
-
-    @BindView(R.id.fragment_profile_container2)
-    CardView container2;
-
-    @BindView(R.id.fragment_profile_container3)
-    CardView container3;
-
-    @BindView(R.id.fragment_profile_container4)
-    CardView container4;
-
-    @BindView(R.id.fragment_profile_settings1)
-    View settings1;
-
-    @BindView(R.id.fragment_profile_settings2)
-    View settings2;
-
-    @BindView(R.id.fragment_profile_settings3)
-    View settings3;
-
-    @BindView(R.id.fragment_profile_settings4)
-    View settings4;
-
-    @BindView(R.id.fragment_profile_in_casting_1)
-    TextView videoHint1;
-
-    @BindView(R.id.fragment_profile_in_casting_2)
-    TextView videoHint2;
-
-    @BindView(R.id.fragment_profile_in_casting_3)
-    TextView videoHint3;
-
-    @BindView(R.id.fragment_profile_in_casting_4)
-    TextView videoHint4;
+    @BindView(R.id.fragment_profile_video_card_view_5)
+    VideoCardView videoCardView5;
 
     @BindView(R.id.profile_progress_bar)
     ProgressBar progressBar;
 
     private TextView loadingTextView;
 
-
+    ArrayList<VideoCardView> videoCardViews = new ArrayList<>();
 
     @ProvidePresenter
     ProfilePresenter getPresenter(){
@@ -172,7 +116,13 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         // Required empty public constructor
     }
 
-    private void toFullscreen(int id){
+    @Override
+    public void onResume() {
+        super.onResume();
+        update();
+    }
+
+    /*private void toFullscreen(int id){
         if(currCountVideos > id){
             ((MainScreenPostman) activity).openFullScreen(videos.get(id).getName());
         }
@@ -198,7 +148,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     @OnClick(R.id.fragment_profile_container4)
     void container4Clicked(){
         toFullscreen(3);
-    }
+    }*/
 
     private MainScreenActivity activity;
 
@@ -223,6 +173,17 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         presenter.getProfile();
         activity = (MainScreenActivity) getActivity();
         if (activity != null) activity.showExit();
+
+        videoCardViews.add(videoCardView1);
+        videoCardViews.add(videoCardView2);
+        videoCardViews.add(videoCardView3);
+        videoCardViews.add(videoCardView4);
+        videoCardViews.add(videoCardView5);
+
+        for(VideoCardView videoCardView : videoCardViews){
+            videoCardView.setActivity(activity);
+        }
+        Log.d("ProfileFragmentLog", videoCardViews.size() + " VideoCardViewSize " + currCountVideos);
     }
 
     private String delNameVideo = "";
@@ -242,7 +203,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
 
         btn_negative.setOnClickListener(v -> {
             progressBar.setVisibility(View.VISIBLE);
-            presenter.removeVideo(delNameVideo);
+            presenter.removeVideo(VideoCardView.delNameVideo);
             alertDialog.cancel();
         });
 
@@ -254,15 +215,15 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
 
     public void setCastingVideo(){
         Amplitude.getInstance().logEvent("sendtocasting_button_tapped");
-        if(castingIsApproved != null && castingIsApproved){
-            presenter.setActive(castingVideoName);
+        if(VideoCardView.castingIsApproved != null && VideoCardView.castingIsApproved){
+            presenter.setActive(VideoCardView.castingVideoName);
         }else{
             Toast.makeText(getContext(), "Видео ещё не прошло модерацию", Toast.LENGTH_LONG).show();
         }
     }
 
     private void showContainers(){
-        if(currCountVideos == 0){
+        /*if(currCountVideos == 0){
             container2.setVisibility(View.INVISIBLE);
             container3.setVisibility(View.INVISIBLE);
             container4.setVisibility(View.INVISIBLE);
@@ -271,6 +232,19 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
             container4.setVisibility(View.INVISIBLE);
         }else if(currCountVideos == 2){
             container4.setVisibility(View.INVISIBLE);
+        }*/
+        int del = currCountVideos;
+        for(int i = currCountVideos + 1; i < videoCardViews.size(); i++){
+            videoCardViews.get(i).setVis(View.INVISIBLE);
+            Log.d("ProfileFragmentLog", videoCardViews.get(i).getVisibility() + " VideoCardViewINV " + i);
+        }
+        if(currCountVideos == videoCardViews.size())    del -= 1;
+        for(int i = 0; i <= del; i++){
+            videoCardViews.get(i).setVis(View.VISIBLE);
+            Log.d("ProfileFragmentLog", videoCardViews.get(i).getVisibility() + " VideoCardViewVI " + i);
+        }
+        for(VideoCardView videoCardView : videoCardViews){
+            Log.d("ProfileFragmentLog", videoCardView.getVisibility() + " VideoCardView");
         }
     }
 
@@ -303,15 +277,22 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         Log.d("ProfileFrag", "here");
         if(videos.size() > 0) Log.d("ProfileFrag", videos.get(0).getStartTime() + " ");
 
+        for(int i = 0; i < videos.size(); i++){
+            videoCardViews.get(i).setVideoDTO(videos.get(i));
+        }
+        for(int i = videos.size(); i < videoCardViews.size(); i++){
+            videoCardViews.get(i).setVideoDTO(null);
+        }
         currCountVideos = videos.size();
+        Log.d("ProfileFragmentLog", videoCardViews.size() + " VideoCardViewSize " + currCountVideos);
         showContainers();
         showHints();
         showVideos();
-
+        update();
     }
 
     private void showHints(){
-        String loading = "Загружается";
+        /*String loading = "Загружается";
         String moderation = "На модерации";
         String casting = "В кастинге";
         String failModeration = "Не прошло проверку";
@@ -422,10 +403,13 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
                     }
                 }
             }
+        }*/
+        for(VideoCardView videoCardView: videoCardViews){
+            if(videoCardView.getVideoDTO() != null) videoCardView.showHint();
         }
     }
 
-    private void showBottomSheet(){
+    /*private void showBottomSheet(){
         ProfileVideoBottomSheet profileVideoBottomSheet =
                 ProfileVideoBottomSheet.newInstance();
         profileVideoBottomSheet.show(getParentFragmentManager(),
@@ -434,13 +418,13 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
 
     public void changeInterval(){
 
-    }
+    }*/
 
     public void shareVideo(){
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
         //sharingIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        String shareBody = "https://web.xce-factor.ru/#/video/" + castingVideoName;
+        String shareBody = "https://web.xce-factor.ru/#/video/" + VideoCardView.castingVideoName;
         //String shareSub = link;
         //sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
@@ -452,7 +436,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     }
 
 
-    private void showImage(int id, ImageView iv){
+    /*private void showImage(int id, ImageView iv){
         if (!(videos.get(id).getStartTime() == -1))
             Glide.with(this)
                     .load(SERVER_NAME + "/api/video/" + videos.get(id).getName())
@@ -464,9 +448,9 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
                     .centerCrop()
                     .into(iv);
 
-    }
+    }*/
 
-    private void setupVideo(int num){
+    /*private void setupVideo(int num){
 
         switch (num){
             case 1:
@@ -485,10 +469,10 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
                 showImage(3, video4);
                 break;
         }
-    }
+    }*/
 
     private void showVideos(){
-        if(currCountVideos >= 1){
+        /*if(currCountVideos >= 1){
             setupVideo(1);
             video1.setVisibility(View.VISIBLE);
             addVideoBtn1.setVisibility(View.INVISIBLE);
@@ -515,6 +499,10 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
                     settings4.setVisibility(View.VISIBLE);
                 }
             }
+        }*/
+        for(VideoCardView videoCardView : videoCardViews){
+            if(videoCardView.getVideoDTO() != null)
+            videoCardView.setupVideo();
         }
     }
 
@@ -588,7 +576,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
 
     @Override
     public void update(){
-        video1.setVisibility(View.INVISIBLE);
+        /*video1.setVisibility(View.INVISIBLE);
         video2.setVisibility(View.INVISIBLE);
         video3.setVisibility(View.INVISIBLE);
         video4.setVisibility(View.INVISIBLE);
@@ -614,10 +602,13 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         settings3.setVisibility(View.INVISIBLE);
         addVideoBtn4.setVisibility(View.VISIBLE);
         addVideoIcon4.setVisibility(View.VISIBLE);
-        settings4.setVisibility(View.INVISIBLE);
+        settings4.setVisibility(View.INVISIBLE);*/
 
+        for(VideoCardView videoCardView : videoCardViews){
+            videoCardView.update();
+        }
 
-
+        //presenter.getProfile();
         showContainers();
         showHints();
         showVideos();
@@ -649,7 +640,7 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     }
 
 
-    @OnClick(R.id.fragment_profile_add_video_btn_1)
+    /*@OnClick(R.id.fragment_profile_add_video_btn_1)
     void addVideo1(){
         activity.fragmentAction(LOAD_NEW_VIDEO_SCREEN);
     }
@@ -664,9 +655,9 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     @OnClick(R.id.fragment_profile_add_video_btn_4)
     void addVideo4(){
         activity.fragmentAction(LOAD_NEW_VIDEO_SCREEN);
-    }
+    }*/
 
-    @OnClick(R.id.fragment_profile_settings1)
+    /*@OnClick(R.id.fragment_profile_settings1)
     void showSettings1(){
         if(videos.size() >= 1){
             castingVideoName = videos.get(0).getName();
@@ -708,5 +699,5 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         }
 
         showBottomSheet();
-    }
+    }*/
 }

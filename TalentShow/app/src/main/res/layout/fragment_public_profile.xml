@@ -94,140 +94,73 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_public_profile_description"/>
 
-        <androidx.cardview.widget.CardView
+        <com.avatar.ava.presentation.main.videoCardView.VideoPublicCardView
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="11dp"
-            android:visibility="invisible"
             app:cardCornerRadius="9dp"
             android:id="@+id/fragment_public_profile_container1"
             app:layout_constraintTop_toBottomOf="@id/fragment_public_profile_video_tv"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/fragment_public_profile_container2">
+            app:layout_constraintEnd_toStartOf="@id/fragment_public_profile_container2"/>
 
-            <ImageView
-                android:id="@+id/rating_item_share_btn1"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/share_btn"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:elevation="20dp"
-                android:layout_gravity="end|top"
-                />
 
-            <ImageView
-                android:id="@+id/fragment_public_profile_video_1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/black"
-                android:visibility="gone" />
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
+        <com.avatar.ava.presentation.main.videoCardView.VideoPublicCardView
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="11dp"
             android:layout_marginStart="11dp"
-            android:visibility="invisible"
             app:cardCornerRadius="9dp"
             android:id="@+id/fragment_public_profile_container2"
             app:layout_constraintTop_toBottomOf="@id/fragment_public_profile_video_tv"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/fragment_public_profile_container1">
+            app:layout_constraintStart_toEndOf="@+id/fragment_public_profile_container1"/>
 
-            <ImageView
-                android:id="@+id/rating_item_share_btn2"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/share_btn"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:elevation="20dp"
-                android:layout_gravity="end|top"
-                />
 
-            <ImageView
-                android:id="@+id/fragment_public_profile_video_2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/black"
-                android:visibility="gone" />
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
+        <com.avatar.ava.presentation.main.videoCardView.VideoPublicCardView
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="11dp"
-            android:layout_marginBottom="11dp"
-            android:visibility="invisible"
             android:id="@+id/fragment_public_profile_container3"
             app:cardCornerRadius="9dp"
             app:layout_constraintVertical_bias="0.0"
             app:layout_constraintTop_toBottomOf="@id/fragment_public_profile_container1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/fragment_public_profile_container4">
 
-            <ImageView
-                android:id="@+id/rating_item_share_btn3"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/share_btn"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:elevation="20dp"
-                android:layout_gravity="end|top"
-                />
+            app:layout_constraintEnd_toStartOf="@id/fragment_public_profile_container4"/>
 
-            <ImageView
-                android:id="@+id/fragment_public_profile_video_3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/black"
-                android:visibility="gone" />
 
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
+        <com.avatar.ava.presentation.main.videoCardView.VideoPublicCardView
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="11dp"
             android:layout_marginStart="11dp"
             android:layout_marginBottom="11dp"
-            android:visibility="invisible"
             android:id="@+id/fragment_public_profile_container4"
             app:cardCornerRadius="9dp"
             app:layout_constraintVertical_bias="0.0"
             app:layout_constraintTop_toBottomOf="@id/fragment_public_profile_container2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/fragment_public_profile_container3"
-            app:layout_constraintBottom_toBottomOf="parent">
+            />
 
-            <ImageView
-                android:id="@+id/rating_item_share_btn4"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/share_btn"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:elevation="20dp"
-                android:layout_gravity="end|top"
-                />
 
-            <ImageView
-                android:id="@+id/fragment_public_profile_video_4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/black"
-                android:visibility="gone" />
+        <com.avatar.ava.presentation.main.videoCardView.VideoPublicCardView
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="11dp"
+            android:id="@+id/fragment_public_profile_container5"
+            app:cardCornerRadius="9dp"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintTop_toBottomOf="@id/fragment_public_profile_container3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/fragment_public_profile_container1"/>
 
-        </androidx.cardview.widget.CardView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
