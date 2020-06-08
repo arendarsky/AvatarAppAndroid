@@ -116,10 +116,14 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         // Required empty public constructor
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("ProfileCycle", "OnResume");
         update();
+        presenter.getProfile();
+
     }
 
     /*private void toFullscreen(int id){
