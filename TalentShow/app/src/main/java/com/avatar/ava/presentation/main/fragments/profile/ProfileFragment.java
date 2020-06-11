@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,6 +77,15 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
 
     @BindView(R.id.fragment_profile_description)
     EditText description;
+
+    @BindView(R.id.fragment_profile_inst_name)
+    EditText instName;
+
+    @BindView(R.id.fragment_profile_inst)
+    ImageView instIcon;
+
+    @BindView(R.id.fragment_profile_inst_name_tv)
+    TextView instNameTV;
 
 
     @BindView(R.id.fragment_profile_edit_photo)
@@ -172,6 +182,9 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         description.setEnabled(false);
+        instName.setVisibility(View.INVISIBLE);
+        instNameTV.setVisibility(View.INVISIBLE);
+        //description.setFocusable(false);
         name.setEnabled(false);
         progressBar.setVisibility(View.VISIBLE);
         presenter.getProfile();
@@ -270,9 +283,11 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
 
         name.setText(person.getName());
         likes.setText(String.valueOf(person.getLikesNumber()));
+        instName.setText(person.getInstagramLogin());
         if(person.getDescription() != null) {
             description.setTextColor(getResources().getColor(R.color.white));
             description.setText(person.getDescription());
+            Linkify.addLinks(description, Linkify.WEB_URLS);
         } else {
             description.setHintTextColor(getResources().getColor(R.color.grayText));
             description.setHint(getResources().getString(R.string.you_have_no_description));
@@ -293,6 +308,19 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         showHints();
         showVideos();
         update();
+    }
+
+    @OnClick(R.id.fragment_profile_inst)
+    void instIconClicked(){
+        if(instName.getText().toString() != null && !instName.getText().toString().equals("")){
+            Uri address = Uri.parse("https://www.instagram.com/" + instName.getText().toString() + "/");
+            Intent openLinkIntent = new Intent(Intent.ACTION_VIEW, address);
+            startActivity(openLinkIntent);
+        }
+        else{
+            Toast.makeText(appContext, "Не указан профиль в Instagram", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private void showHints(){
@@ -539,18 +567,25 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
             description.setBackgroundResource(R.drawable.profile_field_edit_back);
             name.setEnabled(true);
             name.setBackgroundResource(R.drawable.profile_field_edit_back);
+            instName.setVisibility(View.VISIBLE);
+            instNameTV.setVisibility(View.VISIBLE);
+            instIcon.setVisibility(View.INVISIBLE);
             editPhoto.setVisibility(View.VISIBLE);
             editProfile.setText("Применить");
             nameBack = name.getText().toString();
             descriptionBack = description.getText().toString();
         }else{
             edit = false;
-            presenter.setDescription(description.getText().toString());
-            presenter.setName(name.getText().toString());
+            //presenter.setDescription(description.getText().toString());
+            //presenter.setName(name.getText().toString());
+            presenter.updateProfile(name.getText().toString(), description.getText().toString(), instName.getText().toString().trim());
             description.setEnabled(false);
             description.setBackground(null);
             name.setEnabled(false);
             name.setBackground(null);
+            instName.setVisibility(View.INVISIBLE);
+            instNameTV.setVisibility(View.INVISIBLE);
+            instIcon.setVisibility(View.VISIBLE);
             editPhoto.setVisibility(View.GONE);
             editProfile.setText("Редактировать");
 
@@ -572,6 +607,10 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
 
         name.setText(nameBack);
         description.setText(descriptionBack);
+
+        instName.setVisibility(View.INVISIBLE);
+        instNameTV.setVisibility(View.INVISIBLE);
+        instIcon.setVisibility(View.VISIBLE);
 
         showContainers();
         showHints();

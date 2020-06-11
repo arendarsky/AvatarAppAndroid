@@ -40,6 +40,10 @@ public class Interactor {
         this.profileRepository = profileRepository;
     }
 
+    public Completable updateProfile(String name, String description, String instagramLogin){
+        return profileRepository.updateProfile(name, description, instagramLogin);
+    }
+
     public Single<ArrayList<ProfileSemifinalistsDTO>> getSemifinalists(){
         return ratingRepository.getSemifinalists();
     }

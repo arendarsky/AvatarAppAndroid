@@ -20,4 +20,5 @@ public interface IProfileRepository {
     Single<List<NotificationsDTO>> getNotifications(int number, int skipNumber);
     Completable removeVideo(String name);
     Single<PublicProfileDTO> getPublicProfile(int id);
+    Completable updateProfile(String name, String description, String instagramLogin);
 }

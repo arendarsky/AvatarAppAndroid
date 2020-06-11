@@ -4,12 +4,15 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,6 +51,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -178,7 +183,27 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
                         //Toast.makeText(MainScreenActivity.this, token, Toast.LENGTH_LONG).show();
                     }
                 });
+        //printKeyHash();
     }
+
+    /*private void printKeyHash() {
+        Log.d("MainScreenHash", "KeyHash: ");
+        try {
+            PackageInfo info = getPackageManager()
+                    .getPackageInfo("com.avatar.ava",
+                            PackageManager.GET_SIGNATURES);
+            for (Signature signature:info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("MainScreenHash", "KeyHash: " + Base64.encodeToString(md.digest(),Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.d("MainScreenHash", "KeyHash: Error " + e.getMessage());
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+    }*/
 
     @Override
     protected void onPause() {

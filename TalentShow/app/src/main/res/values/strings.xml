@@ -123,8 +123,10 @@
     <string name="begin">Начать</string>
 
 
-    <string name="facebook_app_id">[APP_ID]</string>
-    <string name="fb_login_protocol_scheme">fb[APP_ID]</string>
+    <string name="facebook_app_id">619726635306553</string>
+    <string name="fb_login_protocol_scheme">fb619726635306553</string>
+    <string name="facebook_login_protocol_scheme">fb619726635306553</string>
+
     <string name="xce_factor_semifinalists">Полуфиналисты XCE FACTOR 2020</string>
     <string name="alert_dialog_message">Вместе с этим видео из профиля также удалятся все лайки, полученные за него.</string>
     <string name="alert_dialog_title">Вы уверены?</string>

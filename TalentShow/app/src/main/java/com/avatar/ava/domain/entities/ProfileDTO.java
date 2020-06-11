@@ -30,8 +30,11 @@ public class ProfileDTO {
     @SerializedName("email")
     private String email;
 
+    @SerializedName("instagramLogin")
+    private String instagramLogin;
+
     @ParcelConstructor
-    public ProfileDTO(int likesNumber, ArrayList<VideoDTO> videos, int id,  String name, String description, String photo, String email) {
+    public ProfileDTO(int likesNumber, ArrayList<VideoDTO> videos, int id,  String name, String description, String photo, String email, String instagramLogin) {
         this.likesNumber = likesNumber;
         this.videos = videos;
         this.id = id;
@@ -39,6 +42,7 @@ public class ProfileDTO {
         this.description = description;
         this.photo = photo;
         this.email = email;
+        this.instagramLogin = instagramLogin;
     }
 
     public String getEmail() {
@@ -98,6 +102,18 @@ public class ProfileDTO {
         tmp.setName(uri.toString());
         tmp.setStartTime(-1);
         this.videos.add(tmp);
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getInstagramLogin() {
+        return instagramLogin;
+    }
+
+    public void setInstagramLogin(String instagramLogin) {
+        this.instagramLogin = instagramLogin;
     }
 }
 

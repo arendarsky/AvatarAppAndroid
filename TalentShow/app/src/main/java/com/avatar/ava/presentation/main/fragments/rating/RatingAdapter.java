@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Build;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -142,6 +143,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         holder.likes.setText("" + personRatingDTO.getLikesNumber());
         if (personRatingDTO.getDescription() != null){
             holder.description.setText(personRatingDTO.getDescription().trim().replaceAll("[\\t\\s]*\\n[{1}]*\\n", "\n"));
+            Linkify.addLinks(holder.description, Linkify.WEB_URLS);
         } else {
             holder.description.setText("");
             holder.description.setPadding(0, 0, 0, 0);

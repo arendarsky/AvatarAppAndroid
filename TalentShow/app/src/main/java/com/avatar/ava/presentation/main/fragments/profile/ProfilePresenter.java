@@ -63,6 +63,14 @@ public class ProfilePresenter extends MvpPresenter<ProfileView> {
                         error -> getViewState().showMessage(errorMessage));
     }
 
+    void updateProfile(String name, String description, String instagramLogin){
+        Disposable disposable = interactor.updateProfile(name, description, instagramLogin)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> getViewState().hideProgressBar(),
+                        error -> getViewState().showMessage(errorMessage));
+    }
+
     void uploadPhoto(Uri uri){
         Disposable disposable = interactor.uploadPhoto(uri)
                 .subscribeOn(Schedulers.io())

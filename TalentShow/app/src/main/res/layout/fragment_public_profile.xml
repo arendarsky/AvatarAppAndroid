@@ -65,6 +65,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
+        <ImageView
+            android:id="@+id/fragment_public_profile_inst"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:src="@drawable/instagram_icon"
+            android:layout_marginEnd="80dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/fragment_public_profile_text1"
+            app:layout_constraintBottom_toBottomOf="@id/fragment_public_profile_text1"
+            />
+
         <TextView
             android:id="@+id/fragment_public_profile_description"
             android:layout_width="0dp"

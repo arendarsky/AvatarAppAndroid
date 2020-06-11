@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.arthenica.mobileffmpeg.FFmpeg;
 import com.avatar.ava.data.api.ProfileAPI;
+import com.avatar.ava.domain.entities.EditUserDTO;
 import com.avatar.ava.domain.entities.NotificationsDTO;
 import com.avatar.ava.domain.entities.ProfileDTO;
 import com.avatar.ava.domain.entities.PublicProfileDTO;
@@ -114,6 +115,11 @@ public class ProfileRepository implements IProfileRepository {
     @Override
     public Single<PublicProfileDTO> getPublicProfile(int id) {
         return profileAPI.getPublicProfile(preferencesRepository.getToken(), id);
+    }
+
+    @Override
+    public Completable updateProfile(String name, String description, String instagramLogin) {
+        return profileAPI.updateProfile(preferencesRepository.getToken(), new EditUserDTO(name, description, instagramLogin));
     }
 
 

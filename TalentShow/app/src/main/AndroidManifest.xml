@@ -29,7 +29,12 @@
         </activity>
         <activity android:name="com.avatar.ava.presentation.main.fragments.casting.CastingFragment">
         </activity>
-        <activity android:name="com.avatar.ava.presentation.main.MainScreenActivity"  android:theme="@style/NavigationTheme">
+        <activity android:name="com.avatar.ava.presentation.main.MainScreenActivity"  android:theme="@style/NavigationTheme"
+            >
+            <intent-filter>
+                <data android:scheme="@string/facebook_login_protocol_scheme" />
+            </intent-filter>
+
         </activity>
         <activity android:name="com.avatar.ava.presentation.signing.EnterActivity">
 

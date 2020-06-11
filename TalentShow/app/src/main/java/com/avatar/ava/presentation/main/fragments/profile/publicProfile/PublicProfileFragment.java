@@ -3,6 +3,7 @@ package com.avatar.ava.presentation.main.fragments.profile.publicProfile;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -89,6 +90,8 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
     ConstraintLayout parent;
 
     private Activity activity;
+
+    String instName = null;
 
 
     ArrayList<VideoPublicCardView> videoPublicCardViews = new ArrayList<>();
@@ -216,6 +219,9 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
                     .circleCrop()
                     .into(profileImage);
         }
+        if(instName != null && !instName.equals(""))
+        instName = person.getInstagramLogin();
+
         if(person.getName() != null) {
             name.setVisibility(View.VISIBLE);
             name.setText(person.getName());
@@ -233,6 +239,7 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
         }else{
             currCountVideos = 0;
         }
+
 
         for(int i = 0; i < videos.size(); i++){
             videoPublicCardViews.get(i).setVideoDTO(videos.get(i));
@@ -259,6 +266,19 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
             if(videoPublicCardView.getVideoDTO() != null)
             videoPublicCardView.showVideo();
         }
+    }
+
+    @OnClick(R.id.fragment_public_profile_inst)
+    void instIconClicked(){
+        if(instName != null){
+            Uri address = Uri.parse("https://www.instagram.com/" + instName + "/");
+            Intent openLinkIntent = new Intent(Intent.ACTION_VIEW, address);
+            startActivity(openLinkIntent);
+        }
+        else{
+            Toast.makeText(appContext, "Не указан профиль в Instagram", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     /*private void showImage(int id, ImageView iv){

@@ -1,9 +1,11 @@
 package com.avatar.ava.data.api;
 
+import com.avatar.ava.domain.entities.EditUserDTO;
 import com.avatar.ava.domain.entities.NotificationsDTO;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
 import com.avatar.ava.domain.entities.ProfileDTO;
 import com.avatar.ava.domain.entities.PublicProfileDTO;
+import com.avatar.ava.domain.entities.RegisterDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,7 @@ import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import okhttp3.MultipartBody;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
@@ -55,5 +58,8 @@ public interface ProfileAPI {
 
     @GET("/api/profile/public/get")
     Single<PublicProfileDTO> getPublicProfile(@Header("Authorization") String token, @Query("id") int id);
+
+    @POST("/api/profile/update_profile")
+    Completable updateProfile(@Header("Authorization") String token, @Body EditUserDTO userInfo);
 
 }
