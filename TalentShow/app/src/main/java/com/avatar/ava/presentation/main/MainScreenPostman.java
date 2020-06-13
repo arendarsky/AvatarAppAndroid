@@ -5,4 +5,5 @@ public interface MainScreenPostman {
     void openPublicProfile(int id);
     void closeFragment();
     void openFullScreen(String videoName);
+    void checkRequestPermissions();
 }

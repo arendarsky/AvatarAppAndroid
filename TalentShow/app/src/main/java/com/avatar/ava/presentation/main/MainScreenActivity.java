@@ -253,6 +253,16 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     }
 
     @Override
+    public void checkRequestPermissions() {
+        if(!permissionAlreadyGranted()){
+            ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+            ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE}, CAMERA_CODE);
+        }
+    }
+
+    @Override
     public void changeTitle(MainScreenTitles title) {
         fragmentHeader.setText(title.toString());
         if (infoTitle.contains(title)) {

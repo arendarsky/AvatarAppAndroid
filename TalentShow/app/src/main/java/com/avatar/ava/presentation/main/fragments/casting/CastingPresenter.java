@@ -18,8 +18,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.avatar.ava.DataModule.SERVER_NAME;
-
 @SuppressWarnings({"ResultOfMethodCallIgnored", "unused"})
 @InjectViewState
 public class CastingPresenter extends MvpPresenter<CastingView> {
@@ -104,6 +102,10 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
 
     long getVideoEndTime(){
         return (long) currentPerson.getVideo().getEndTime();
+    }
+
+    String getVideoName(){
+        return currentPerson.getVideo().getName();
     }
 
     boolean checkPeronDTO(PersonDTO personDTO) {

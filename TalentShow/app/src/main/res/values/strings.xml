@@ -132,6 +132,9 @@
     <string name="alert_dialog_title">Вы уверены?</string>
     <string name="alert_dialog_cancel">Отмена</string>
     <string name="alert_dialog_delete">Удалить</string>
+    <string name="add_to_story">Добавить \nв историю</string>
+    <string name="send_message">Отправить \nсообщение</string>
+    <string name="wait_loading">Дождитесь окончания загрузки видео</string>
 
 
 </resources>

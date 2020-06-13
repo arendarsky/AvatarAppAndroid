@@ -3,7 +3,10 @@ package com.avatar.ava.presentation.main.fragments.casting;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,8 +36,16 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.google.android.exoplayer2.video.VideoListener;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
+
+import java.io.BufferedInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 import javax.inject.Inject;
 
@@ -59,7 +70,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     CastingPresenter presenter;
 
     @ProvidePresenter
-    CastingPresenter getPresenter(){
+    CastingPresenter getPresenter() {
         return Toothpick.openScope(App.class).getInstance(CastingPresenter.class);
     }
 
@@ -84,6 +95,14 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     @BindView(R.id.casting_fragment_restart_btn)
     ImageButton restartBtn;
 
+    @BindView(R.id.casting_loading)
+    ConstraintLayout videoLoading;
+
+    @BindView(R.id.casting_loading_progbar)
+    CircleProgressBar loadingProgbar;
+
+    private BottomSheetDialog bottomSheetDialog;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,8 +112,11 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     @Override
     public void onResume() {
         super.onResume();
-        if(mSwipeView != null)
+        if (mSwipeView != null)
             mSwipeView.unlockViews();
+        if (player != null)
+            player.setPlayWhenReady(true);
+
     }
 
     @Override
@@ -165,46 +187,67 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         player.addAnalyticsListener(new AnalyticsListener() {
             @Override
             public void onPlayerStateChanged(EventTime eventTime, boolean playWhenReady, int playbackState) {
-                if(playWhenReady && playbackState == Player.STATE_ENDED){
+                if (playWhenReady && playbackState == Player.STATE_ENDED) {
                     restartBtn.setVisibility(View.VISIBLE);
-                }
-                else if (playWhenReady && playbackState == Player.STATE_READY){
+                } else if (playWhenReady && playbackState == Player.STATE_READY) {
                     progressBar.setVisibility(View.INVISIBLE);
                     restartBtn.setVisibility(View.INVISIBLE);
-                }
-                else if(playbackState == Player.STATE_IDLE){
+                } else if (playbackState == Player.STATE_IDLE) {
                     progressBar.setVisibility(View.INVISIBLE);
-                }
-                else progressBar.setVisibility(View.VISIBLE);
+                } else progressBar.setVisibility(View.VISIBLE);
             }
         });
-        if(BuildConfig.DEBUG)
+        if (BuildConfig.DEBUG)
             Log.d("CastingFragment", "OnViewCreated");
         presenter.getFirstVideo();
 
         mSwipeView.addItemRemoveListener(count -> {
-            if(BuildConfig.DEBUG)
+            if (BuildConfig.DEBUG)
                 Log.d("CastingSwipe", "SwipeRemove");
 
+        });
+
+        bottomSheetDialog = new BottomSheetDialog(getActivity());
+        View sheetView = getActivity().getLayoutInflater().inflate(R.layout.share_bottomsheet, null);
+        bottomSheetDialog.setContentView(sheetView);
+        bottomSheetDialog.setCanceledOnTouchOutside(true);
+        ConstraintLayout inst = sheetView.findViewById(R.id.share_stories);
+        ConstraintLayout text = sheetView.findViewById(R.id.share_text);
+        inst.setOnClickListener(v -> {
+            try {
+                ((MainScreenPostman) activity).checkRequestPermissions();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            DownloadFileFromURL downloadFileFromURL = new DownloadFileFromURL();
+            downloadFileFromURL.execute(presenter.getVideoName());
+        });
+
+        text.setOnClickListener(v -> {
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            String shareBody = presenter.getVideoName();
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+            startActivity(Intent.createChooser(sharingIntent, "Share using"));
         });
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if(BuildConfig.DEBUG)
+        if (BuildConfig.DEBUG)
             Log.d("CastingFragment", "OnAttach");
 
         if (context instanceof Activity) activity = (Activity) context;
     }
 
-    public void showError(String error){
+    public void showError(String error) {
         Toast.makeText(appContext, error, Toast.LENGTH_SHORT).show();
     }
 
 
     @OnClick(R.id.activity_casting_btn_like)
-    public void likeClicked(){
+    public void likeClicked() {
         Amplitude.getInstance().logEvent("heart_button_tapped");
         progressBar.setVisibility(View.VISIBLE);
         restartBtn.setVisibility(View.INVISIBLE);
@@ -220,7 +263,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     }
 
     @OnClick(R.id.casting_fragment_restart_btn)
-    public void restartClicked(){
+    public void restartClicked() {
         player.seekTo(presenter.getVideoBeginTime());
         player.setPlayWhenReady(true);
         restartBtn.setVisibility(View.INVISIBLE);
@@ -233,13 +276,13 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     }
 
     @Override
-    public void loadNewVideo(PersonDTO personDTO){
-        if(presenter.checkPeronDTO(personDTO)){
+    public void loadNewVideo(PersonDTO personDTO) {
+        if (presenter.checkPeronDTO(personDTO)) {
             noMoreVideos.setVisibility(View.INVISIBLE);
             likeButton.setVisibility(View.VISIBLE);
             dislikeButton.setVisibility(View.VISIBLE);
 
-            if(BuildConfig.DEBUG)
+            if (BuildConfig.DEBUG)
                 Log.d("CastingSwipe", "loadVideo " + personDTO.getName());
 
             CastingCard castingCard = new CastingCard(appContext, personDTO, mSwipeView, player, dataSourceFactory, this);
@@ -249,8 +292,8 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     }
 
 
-    public void stopVideo(){
-        if(player != null)
+    public void stopVideo() {
+        if (player != null)
             player.stop();
         if (player != null) {
             player.release();
@@ -293,7 +336,6 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     public void openProfile() {
         Amplitude.getInstance().logEvent("castingprofile_button_tapped");
         try {
-
             ((MainScreenPostman) activity).openPublicProfile(presenter.getPersonId());
         } catch (Exception e) {
             e.printStackTrace();
@@ -305,16 +347,11 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
     }
 
+
     @Override
     public void shareVideoLink(String link) {
-        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-        sharingIntent.setType("text/plain");
-        //sharingIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        String shareBody = link;
-        //String shareSub = link;
-        //sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
-        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-        startActivity(Intent.createChooser(sharingIntent, "Share using"));
+        player.stop();
+        bottomSheetDialog.show();
     }
 
     @Override
@@ -324,6 +361,76 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
             ((MainScreenPostman) activity).openFullScreen(link);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+
+    private class DownloadFileFromURL extends AsyncTask<String, String, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            videoLoading.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected String doInBackground(String... f_url) {
+            int count;
+            try {
+                URL url = new URL(f_url[0]);
+                URLConnection connection = url.openConnection();
+                connection.connect();
+
+                int lengthOfFile = connection.getContentLength();
+
+                InputStream input = new BufferedInputStream(url.openStream(), 8192);
+
+                OutputStream output = new FileOutputStream(Environment.getDataDirectory()
+                        + presenter.getVideoName() + ".mp4");
+
+                byte data[] = new byte[1024];
+
+                long total = 0;
+
+                while ((count = input.read(data)) != -1) {
+                    total += count;
+                    publishProgress("" + (int) ((total * 100) / lengthOfFile));
+
+                    output.write(data, 0, count);
+                }
+
+                output.flush();
+
+                output.close();
+                input.close();
+
+            } catch (Exception e) {
+                Log.e("Error: ", e.getMessage());
+            }
+
+            return null;
+        }
+
+
+        protected void onProgressUpdate(String... progress) {
+            loadingProgbar.setProgress(Integer.parseInt(progress[0]));
+        }
+
+        @Override
+        protected void onPostExecute(String file_url) {
+            videoLoading.setVisibility(View.INVISIBLE);
+
+
+            Intent intent = new Intent("com.instagram.share.ADD_TO_STORY");
+            intent.setDataAndType(Uri.parse(Environment.getDataDirectory()
+                    + presenter.getVideoName() + ".mp4"), "video/mp4");
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+            if (activity.getPackageManager().resolveActivity(intent, 0) != null) {
+                activity.startActivityForResult(intent, 0);
+            }
+
         }
     }
 }
