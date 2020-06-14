@@ -5,26 +5,21 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
-import android.util.Log;
 import android.webkit.MimeTypeMap;
 
-import com.abedelazizshe.lightcompressorlibrary.CompressionListener;
-import com.abedelazizshe.lightcompressorlibrary.VideoCompressor;
 import com.arthenica.mobileffmpeg.FFmpeg;
 import com.avatar.ava.data.api.VideoAPI;
 import com.avatar.ava.domain.entities.PersonDTO;
 import com.avatar.ava.domain.repository.IVideoRepository;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-import net.ypresto.androidtranscoder.MediaTranscoder;
-import net.ypresto.androidtranscoder.format.MediaFormatStrategyPresets;
-
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,14 +27,21 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Response;
 import retrofit2.Retrofit;
+
+import static com.avatar.ava.DataModule.SERVER_NAME;
 
 public class VideoRepository implements IVideoRepository {
 
@@ -220,6 +222,54 @@ public class VideoRepository implements IVideoRepository {
 
     public Uri getLoadingVideo() {
         return loadingVideo;
+    }
+
+    @Override
+    public Observable<Float> downloadVideo(String videoToDownload, Uri fileToWrite) {
+        return videoAPI.downloadFile(SERVER_NAME + "/api/video/" + videoToDownload).
+                flatMap((Function<Response<ResponseBody>, ObservableSource<Float>>) responseBodyResponse -> Observable.create(sub -> {
+                        InputStream input = null;
+                        OutputStream output = null;
+                    try {
+                        if (responseBodyResponse.isSuccessful()) {
+                            input = responseBodyResponse.body().byteStream();
+                            long tlength= responseBodyResponse.body().contentLength();
+                            String t = String.valueOf(fileToWrite);
+                            File file = new File(t);
+                            output = new FileOutputStream(file.getAbsolutePath());
+                            byte data[] = new byte[1024];
+
+                            sub.onNext((float) 0);
+                            long total = 0;
+                            int count;
+                            while ((count = input.read(data)) != -1) {
+                                total += count;
+
+                                sub.onNext((float) (total * 100 / tlength));
+
+                                output.write(data, 0, count);
+                            }
+                            output.flush();
+                            output.close();
+                            input.close();
+                        }
+                    } catch(IOException e){
+                        sub.onError(e);
+                    } finally {
+                        if (input != null){
+                            try {
+                                input.close();
+                            }catch(IOException ioe){}
+                        }
+                        if (output != null){
+                            try{
+                                output.close();
+                            }catch (IOException e){}
+                        }
+                    }
+                    sub.onComplete();
+
+                }));
     }
 
     @Override

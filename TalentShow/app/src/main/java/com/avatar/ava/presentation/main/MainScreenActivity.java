@@ -4,15 +4,12 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
-import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,8 +48,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -258,8 +253,13 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
             ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE);
             ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
             ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE}, CAMERA_CODE);
+                    Manifest.permission.READ_EXTERNAL_STORAGE}, 2);
         }
+    }
+
+    @Override
+    public void setVideoLoading(boolean flag) {
+        videoLoading = flag;
     }
 
     @Override
@@ -427,8 +427,19 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         );
     }
 
+    private boolean videoLoading;
+
     @Override
     public void onBackPressed() {
+        if(getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_container)
+                instanceof CastingFragment){
+            CastingFragment fragment = (CastingFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.activity_main_frame_container);
+            if(videoLoading) {
+                fragment.enableLayout();
+                return;
+            }
+        }
         if (!(getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_container)
                 instanceof FullScreenVideoDialog)) {
             boolean closeApp = presenter.backButtonPressed(
@@ -437,6 +448,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
             );
             if (closeApp) super.onBackPressed();
         }
+
         else super.onBackPressed();
     }
 

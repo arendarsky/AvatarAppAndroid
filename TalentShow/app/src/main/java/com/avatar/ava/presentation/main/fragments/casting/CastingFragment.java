@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,13 +38,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
 
-import java.io.BufferedInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -68,6 +59,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
     @InjectPresenter
     CastingPresenter presenter;
+    private boolean videoDownloading = false;
 
     @ProvidePresenter
     CastingPresenter getPresenter() {
@@ -102,6 +94,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
     CircleProgressBar loadingProgbar;
 
     private BottomSheetDialog bottomSheetDialog;
+    private CastingCard castingCard;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -116,6 +109,9 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
             mSwipeView.unlockViews();
         if (player != null)
             player.setPlayWhenReady(true);
+//        layout.setEnabled(true);
+//        bottomSheetDialog.hide();
+        presenter.setOnResume();
 
     }
 
@@ -207,20 +203,22 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
         });
 
-        bottomSheetDialog = new BottomSheetDialog(getActivity());
+        bottomSheetDialog = new BottomSheetDialog(activity);
         View sheetView = getActivity().getLayoutInflater().inflate(R.layout.share_bottomsheet, null);
         bottomSheetDialog.setContentView(sheetView);
         bottomSheetDialog.setCanceledOnTouchOutside(true);
         ConstraintLayout inst = sheetView.findViewById(R.id.share_stories);
         ConstraintLayout text = sheetView.findViewById(R.id.share_text);
         inst.setOnClickListener(v -> {
+            videoDownloading = true;
+            bottomSheetDialog.hide();
             try {
                 ((MainScreenPostman) activity).checkRequestPermissions();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            DownloadFileFromURL downloadFileFromURL = new DownloadFileFromURL();
-            downloadFileFromURL.execute(presenter.getVideoName());
+            bottomSheetDialog.dismiss();
+            presenter.downloadVideo();
         });
 
         text.setOnClickListener(v -> {
@@ -285,7 +283,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
             if (BuildConfig.DEBUG)
                 Log.d("CastingSwipe", "loadVideo " + personDTO.getName());
 
-            CastingCard castingCard = new CastingCard(appContext, personDTO, mSwipeView, player, dataSourceFactory, this);
+            castingCard = new CastingCard(appContext, personDTO, mSwipeView, player, dataSourceFactory, this);
             mSwipeView.addView(castingCard);
         }
 
@@ -350,8 +348,10 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
     @Override
     public void shareVideoLink(String link) {
-        player.stop();
-        bottomSheetDialog.show();
+        if(!videoDownloading) {
+            player.setPlayWhenReady(false);
+            bottomSheetDialog.show();
+        }
     }
 
     @Override
@@ -364,73 +364,60 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         }
     }
 
+    @Override
+    public void showLoadingProgBar() {
+        videoLoading.setVisibility(View.VISIBLE);
+        mSwipeView.lockViews();
+        mSwipeView.disableTouchSwipe();
+        likeButton.setEnabled(false);
+        dislikeButton.setEnabled(false);
+//        activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+//                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
 
-    private class DownloadFileFromURL extends AsyncTask<String, String, String> {
+    @Override
+    public void changeLoadingState(Float aFloat) {
+        loadingProgbar.setProgress(aFloat);
+    }
 
+    @Override
+    public void loadingComplete(Uri uri) {
+        videoDownloading = false;
+        mSwipeView.unlockViews();
+        mSwipeView.enableTouchSwipe();
+        likeButton.setEnabled(true);
+        dislikeButton.setEnabled(true);
+//        activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        videoLoading.setVisibility(View.INVISIBLE);
+        Intent intent = new Intent("com.instagram.share.ADD_TO_STORY");
+        intent.setDataAndType(uri, "video/mp4");
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            videoLoading.setVisibility(View.VISIBLE);
-        }
+        activity.grantUriPermission(
+                "com.instagram.android", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-        @Override
-        protected String doInBackground(String... f_url) {
-            int count;
-            try {
-                URL url = new URL(f_url[0]);
-                URLConnection connection = url.openConnection();
-                connection.connect();
+        activity.startActivity(intent);
+    }
 
-                int lengthOfFile = connection.getContentLength();
+    @Override
+    public void enableLayout() {
+        videoDownloading = false;
+        mSwipeView.unlockViews();
+        mSwipeView.enableTouchSwipe();
+        likeButton.setEnabled(true);
+        dislikeButton.setEnabled(true);
+//        activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        player.setPlayWhenReady(true);
+        videoLoading.setVisibility(View.INVISIBLE);
+        presenter.disposeVideoLoading();
+    }
 
-                InputStream input = new BufferedInputStream(url.openStream(), 8192);
-
-                OutputStream output = new FileOutputStream(Environment.getDataDirectory()
-                        + presenter.getVideoName() + ".mp4");
-
-                byte data[] = new byte[1024];
-
-                long total = 0;
-
-                while ((count = input.read(data)) != -1) {
-                    total += count;
-                    publishProgress("" + (int) ((total * 100) / lengthOfFile));
-
-                    output.write(data, 0, count);
-                }
-
-                output.flush();
-
-                output.close();
-                input.close();
-
-            } catch (Exception e) {
-                Log.e("Error: ", e.getMessage());
-            }
-
-            return null;
-        }
-
-
-        protected void onProgressUpdate(String... progress) {
-            loadingProgbar.setProgress(Integer.parseInt(progress[0]));
-        }
-
-        @Override
-        protected void onPostExecute(String file_url) {
-            videoLoading.setVisibility(View.INVISIBLE);
-
-
-            Intent intent = new Intent("com.instagram.share.ADD_TO_STORY");
-            intent.setDataAndType(Uri.parse(Environment.getDataDirectory()
-                    + presenter.getVideoName() + ".mp4"), "video/mp4");
-            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-            if (activity.getPackageManager().resolveActivity(intent, 0) != null) {
-                activity.startActivityForResult(intent, 0);
-            }
-
+    @Override
+    public void setVideoLoading(boolean flag) {
+        try {
+            ((MainScreenPostman) activity).setVideoLoading(flag);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

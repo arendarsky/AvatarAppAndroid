@@ -134,7 +134,7 @@
     <string name="alert_dialog_delete">Удалить</string>
     <string name="add_to_story">Добавить \nв историю</string>
     <string name="send_message">Отправить \nсообщение</string>
-    <string name="wait_loading">Дождитесь окончания загрузки видео</string>
+    <string name="wait_loading">Дождитесь окончания\n загрузки видео</string>
 
 
 </resources>

@@ -185,6 +185,8 @@ public class CastingCard {
         mCallback.openProfile();
     }
 
+
+
     interface Callback {
         void onSwipeLike();
         void onSwipeDisLike();

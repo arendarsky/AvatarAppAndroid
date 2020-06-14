@@ -10,9 +10,9 @@ import com.avatar.ava.domain.entities.ProfileSemifinalistsDTO;
 import com.avatar.ava.domain.entities.PublicProfileDTO;
 import com.avatar.ava.domain.repository.IAuthRepository;
 import com.avatar.ava.domain.repository.IProfileRepository;
+import com.avatar.ava.domain.repository.IRatingRepository;
 import com.avatar.ava.domain.repository.ISharedPreferencesRepository;
 import com.avatar.ava.domain.repository.IVideoRepository;
-import com.avatar.ava.domain.repository.IRatingRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +20,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 
 public class Interactor {
@@ -139,5 +140,9 @@ public class Interactor {
 
     public Uri getLoadingVideo(){
         return videoRepository.getLoadingVideo();
+    }
+
+    public Observable<Float> downloadVideo(String name, Uri uri) {
+        return this.videoRepository.downloadVideo(name, uri);
     }
 }

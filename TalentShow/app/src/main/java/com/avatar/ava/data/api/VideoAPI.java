@@ -4,10 +4,13 @@ package com.avatar.ava.data.api;
 import com.avatar.ava.domain.entities.PersonDTO;
 
 import java.util.ArrayList;
+
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
+import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
@@ -15,6 +18,8 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
+import retrofit2.http.Streaming;
+import retrofit2.http.Url;
 
 public interface VideoAPI {
 
@@ -42,5 +47,9 @@ public interface VideoAPI {
     @GET("/api/video/set_active")
     Completable setActive(@Header("Authorization") String token,
                           @Query("fileName") String fileName);
+
+    @Streaming
+    @GET
+    Observable<Response<ResponseBody>> downloadFile(@Url String fileUrl);
 
 }

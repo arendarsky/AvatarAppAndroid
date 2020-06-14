@@ -4,9 +4,8 @@ import android.net.Uri;
 
 import com.avatar.ava.domain.entities.PersonDTO;
 
-import java.util.ArrayList;
-
 import io.reactivex.Completable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 
 public interface IVideoRepository {
@@ -17,6 +16,6 @@ public interface IVideoRepository {
     Single<PersonDTO> getVideoLinkOnCreate();
     Completable setActive(String fileName);
     Uri getLoadingVideo();
-
+    Observable<Float> downloadVideo(String videoToDownload, Uri fileToWrite);
     void clearVideoList();
 }

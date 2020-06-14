@@ -6,4 +6,5 @@ public interface MainScreenPostman {
     void closeFragment();
     void openFullScreen(String videoName);
     void checkRequestPermissions();
+    void setVideoLoading(boolean flag);
 }
