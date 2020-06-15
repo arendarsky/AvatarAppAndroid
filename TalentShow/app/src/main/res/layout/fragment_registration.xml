@@ -268,7 +268,7 @@
             android:layout_marginBottom="32dp"
             android:background="@drawable/buttons_background"
             android:gravity="center"
-            android:text="@string/to_sign_in"
+            android:text="@string/sign_up"
             android:textColor="@color/white"
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"

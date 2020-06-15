@@ -1,47 +1,13 @@
 <resources>
     <string name="app_name">XCE FACTOR</string>
-    <string name="choose_role"><b>Выбери роль</b></string>
-    <string name="different_tasks_different_role">В зависимости от роли тебе предстоят\n разные задачи</string>
-    <string name="star"><b>Звезда</b></string>
-    <string name="become_a_star">Стань новой супер-звездой. Выкладывай\n видео со своим талантом и участвуй в шоу</string>
-    <string name="producer"><b>Продюсер</b></string>
-    <string name="feel_urself_producer">Почувствуй себя настоящим продюсером. Смотри и оценивай видео звёзд.</string>
-    <string name="ur_mail"><b>Ваша почта</b></string>
-    <string name="leave_mail">Оставь свою почту и мы будем держать\n тебя в курсе событий.</string>
     <string name="email">Email</string>
-    <string name="recieve_letters">Получать письма</string>
-    <string name="enter_code"><b>Введите код</b></string>
-    <string name="code_sent_to_mail">Код проверки отправлен на указанную\n почту:</string>
-    <string name="email_code_hint">_ _ _ _ _ _</string>
-    <string name="didnt_get_code">Не получили код?</string>
-    <string name="wrong_mail">Ввели неправильную почту?</string>
-    <string name="next">Далее</string>
-    <string name="text_1">The concierge was rude and gave me attitude when I asked for information.</string>
-    <string name="activity_producer_name_heading">Ваше имя</string>
-    <string name="activity_producer_name_label">Введите имя</string>
-    <string name="activity_producer_name_btn">Далее</string>
-    <string name="activity_producer_yes_heading">Ура! Можно начинать</string>
-    <string name="activity_producer_yes_btn">Начать</string>
-    <string name="activity_casting_head">Кастинг</string>
-    <string name="activity_casting_tv">Лайкай звёзд, которые должны стать успеными</string>
-    <string name="activity_casting_tv1">Посмотреть видео полностью</string>
     <string name="activity_casting_name">Елизоветта Гранова</string>
-    <string name="ur_name"><b>Ваше имя</b></string>
     <string name="enter_name">Введите имя</string>
-    <string name="step_1">шаг 1 из 5</string>
-    <string name="talant_video"><b>Видео таланта</b></string>
-    <string name="step_4">Шаг 4 из 6</string>
     <string name="add_ur_video">Добавте\nВаше видео</string>
     <string name="rating">Рейтинг</string>
-    <string name="stars">Звезды</string>
-    <string name="producers">Продюсеры</string>
-    <string name="top_20"><b>Топ-50</b></string>
-    <string name="name_hint">Иван Иванов</string>
-    <string name="number_hint">1</string>
+    <string name="top_50"><b>Топ-50</b></string>
     <string name="casting">Кастинг</string>
-    <string name="statistics">Статистика</string>
     <string name="casting_dialog_text">Напишите Елизавете Грановой несколько хороших слов. Если ей понравится твоё сообщение, ты получишь её контакты.</string>
-    <string name="sing_or_log"><b>Войдите или зарегистрируйтесь</b></string>
     <string name="sing_in">Войти</string>
     <string name="sign_up">Зарегистрироваться</string>
     <string name="skip_auth">Пропустить</string>
@@ -51,24 +17,16 @@
     <string name="name">Имя</string>
     <string name="i_accept_terms">Регистрируясь, я принимаю <a href="https://www.xce-factor.ru/TermsOfUse.html">условия пользования</a></string>
     <string name="i_accept_terms_auth">Авторизуясь, я принимаю <a href="https://www.xce-factor.ru/TermsOfUse.html">условия пользования</a></string>
-    <string name="to_sign_in">Зарегистрироваться</string>
     <string name="back">Назад</string>
     <string name="load_new_video"><b>Загрузка нового видео</b></string>
     <string name="notifications">Уведомления</string>
-    <string name="contacts">Контакты</string>
     <string name="profile">Профиль</string>
     <string name="new_video"><b>Новое видео</b></string>
     <string name="save"><b>Сохранить</b></string>
-    <string name="profile_description">Описание для профиля</string>
-    <string name="tell_about_urself">Расскажите о себе (максимум 280 символов)</string>
-    <string name="text_for_casting">Это тот текст, который люди увидят в разделе кастинга</string>
     <string name="xce_factor">XCE FACTOR</string>
     <string name="want_load_video"><b>Хочешь загрузить видео?</b></string>
     <string name="add_video">Добавить видео</string>
     <string name="no_more_videos">Ого! Вы посмотрели все видео в Кастинге. Лучшие из них Вы можете пересмотреть в Рейтинге, а еще можете загрузить свое!</string>
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
     <string name="no_like_rn">Здесь отображаются голоса тех, кто хочет видеть Вас в финале шоу XCE FACTOR 2020. Загрузите видео и отправьте его в Кастинг, чтобы получить первые лайки!</string>
     <string name="casting_video_fragment">Выбранный Вами фрагмент будет отображаться в разделах Кастинг и Рейтинг.</string>
     <string name="best_30_seconds">Лучшие 30 секунд</string>
@@ -102,7 +60,6 @@
     <string name="seven_points">●●●●●●●</string>
     <string name="no_description">Этот человек ещё не добавил описание к своему профилю</string>
     <string name="all_videos">Все видео автора</string>
-    <string name="enter_password">Введите пароль</string>
     <string name="info_profile">Это Ваш личный профиль. Вы можете выбрать себе аватарку, заполнить описание и загрузить видео своего таланта. Максимальное количество загруженных видео — 4.\n\n
         Не забудьте указать свои соцсети, чтобы пользователи могли связаться с Вами и познакомиться.\n\n
         Чтобы все пользователи могли увидеть Ваше видео и проголосовать за него, нажмите “●●●” на видео и выберите «Отправить в кастинг». Одновременно находиться в Кастинге может только одно видео.\n\n
@@ -135,6 +92,5 @@
     <string name="add_to_story">Добавить \nв историю</string>
     <string name="send_message">Отправить \nсообщение</string>
     <string name="wait_loading">Дождитесь окончания\n загрузки видео</string>
-
 
 </resources>
