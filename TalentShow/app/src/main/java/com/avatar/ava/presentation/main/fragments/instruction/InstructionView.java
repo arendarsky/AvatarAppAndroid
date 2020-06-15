@@ -1,7 +1,10 @@
 package com.avatar.ava.presentation.main.fragments.instruction;
 
+import android.text.Spannable;
+
 import com.arellomobile.mvp.MvpView;
 
 interface InstructionView extends MvpView {
-    void setInfo(String text);
+    void setInfoText(String text);
+    void setInfoText(Spannable text);
 }

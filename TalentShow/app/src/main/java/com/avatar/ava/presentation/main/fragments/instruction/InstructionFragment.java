@@ -1,6 +1,7 @@
 package com.avatar.ava.presentation.main.fragments.instruction;
 
 import android.os.Bundle;
+import android.text.Spannable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,11 +52,18 @@ public class InstructionFragment extends MvpAppCompatFragment implements Instruc
         super.onViewCreated(view, savedInstanceState);
 
         ButterKnife.bind(this, view);
-        presenter.setInfo(MainScreenTitles.valueOf(getArguments().getString("title")));
+        if (getArguments() != null) {
+            presenter.setInfo(MainScreenTitles.valueOf(getArguments().getString("title")));
+        }
     }
 
     @Override
-    public void setInfo(String text) {
+    public void setInfoText(String text) {
+        infoText.setText(text);
+    }
+
+    @Override
+    public void setInfoText(Spannable text) {
         infoText.setText(text);
     }
 }
