@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -95,6 +96,8 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
 
     private BottomSheetDialog bottomSheetDialog;
     private CastingCard castingCard;
+
+    private long stopTime;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -371,8 +374,8 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         mSwipeView.disableTouchSwipe();
         likeButton.setEnabled(false);
         dislikeButton.setEnabled(false);
-//        activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-//                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        player.setPlayWhenReady(false);
+        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
     @Override
@@ -387,7 +390,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         mSwipeView.enableTouchSwipe();
         likeButton.setEnabled(true);
         dislikeButton.setEnabled(true);
-//        activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         videoLoading.setVisibility(View.INVISIBLE);
         Intent intent = new Intent("com.instagram.share.ADD_TO_STORY");
         intent.setDataAndType(uri, "video/mp4");
@@ -406,7 +409,8 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         mSwipeView.enableTouchSwipe();
         likeButton.setEnabled(true);
         dislikeButton.setEnabled(true);
-//        activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        player.seekTo(stopTime);
         player.setPlayWhenReady(true);
         videoLoading.setVisibility(View.INVISIBLE);
         presenter.disposeVideoLoading();

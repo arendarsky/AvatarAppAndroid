@@ -2,8 +2,6 @@ package com.avatar.ava.presentation.main.fragments.rating;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Build;
 import android.text.util.Linkify;
@@ -44,6 +42,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
 
     private List<PersonRatingDTO> data = new ArrayList<>();
     private RecyclerClickListener clickListener;
+    private RecyclerClickListener clickListener1;
     private SimpleExoPlayer player;
     private ArrayList<MediaSource> mediaSources = new ArrayList<>();
     private DataSource.Factory factory;
@@ -58,14 +57,17 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         ViewHolder viewHolder = new ViewHolder(v);
         viewHolder.ava.setOnClickListener(v1 ->
                 clickListener.itemClicked(v1, viewHolder.getAdapterPosition()));
+        viewHolder.share.setOnClickListener(v1 ->
+                clickListener1.itemClicked(v1, viewHolder.getAdapterPosition()));
         return viewHolder;
     }
 
 
-    RatingAdapter(Context context, RecyclerClickListener clickListener) {
+    RatingAdapter(Context context, RecyclerClickListener clickListener, RecyclerClickListener clickListener1) {
         super();
         this.clickListener = clickListener;
         player = new SimpleExoPlayer.Builder(context).build();
+        this.clickListener1 = clickListener1;
         player.addListener(new Player.EventListener() {
 
             @Override
@@ -153,16 +155,16 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         holder.name.setText(name);
         holder.pos.setText("#" + (position + 1));
 
-        holder.share.setOnClickListener(view -> {
-            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-            sharingIntent.setType("text/plain");
-            //sharingIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            String shareBody = "https://web.xce-factor.ru/#/video/" + personRatingDTO.getVideo().getName();
-            //String shareSub = link;
-            //sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
-            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-            holder.itemView.getContext().startActivity(Intent.createChooser(sharingIntent, "Share using"));
-        });
+//        holder.share.setOnClickListener(view -> {
+//            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+//            sharingIntent.setType("text/plain");
+//            //sharingIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            String shareBody = "https://web.xce-factor.ru/#/video/" + personRatingDTO.getVideo().getName();
+//            //String shareSub = link;
+//            //sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
+//            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+//            holder.itemView.getContext().startActivity(Intent.createChooser(sharingIntent, "Share using"));
+//        });
 
         if(personRatingDTO.getPhoto() == null){
             Glide.with(holder.itemView.getContext())
@@ -237,6 +239,10 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         notifyDataSetChanged();
     }
 
+    public PersonRatingDTO getPerson(int position) {
+        return data.get(position);
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder{
 
         PlayerView video;
@@ -269,8 +275,12 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
 
     void stopPlayer(){
         if (player.isPlaying())
-            player.stop();
+            player.setPlayWhenReady(false);
 
+    }
+
+    void startPlaying(){
+        player.setPlayWhenReady(true);
     }
 
     private void removePreviousPlaying(){
@@ -303,4 +313,5 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
 
         }
     }
+
 }

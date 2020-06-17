@@ -178,6 +178,7 @@ public class CastingPresenter extends MvpPresenter<CastingView> {
                             public void onComplete() {
                                 getViewState().setVideoLoading(false);
                                 getViewState().loadingComplete(uri);
+                                getViewState().enableLayout();
                             }
                         }
                 );

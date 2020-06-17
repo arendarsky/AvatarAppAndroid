@@ -41,6 +41,7 @@ import com.avatar.ava.presentation.main.fragments.casting.CastingFragment;
 import com.avatar.ava.presentation.main.fragments.profile.ProfileFragment;
 import com.avatar.ava.presentation.main.fragments.profile.profileSettings.ProfileSettingsFragment;
 import com.avatar.ava.presentation.main.fragments.profile.profileSettings.changePassword.ChangePasswordFragment;
+import com.avatar.ava.presentation.main.fragments.rating.RatingFragment;
 import com.avatar.ava.presentation.signing.EnterActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -434,6 +435,15 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         if(getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_container)
                 instanceof CastingFragment){
             CastingFragment fragment = (CastingFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.activity_main_frame_container);
+            if(videoLoading) {
+                fragment.enableLayout();
+                return;
+            }
+        }
+        if(getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_container)
+                instanceof RatingFragment){
+            RatingFragment fragment = (RatingFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.activity_main_frame_container);
             if(videoLoading) {
                 fragment.enableLayout();
