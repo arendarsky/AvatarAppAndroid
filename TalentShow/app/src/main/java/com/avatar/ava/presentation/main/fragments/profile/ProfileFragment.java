@@ -11,12 +11,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -36,8 +38,10 @@ import com.avatar.ava.domain.entities.VideoDTO;
 import com.avatar.ava.presentation.main.BottomSheetFragments.ProfileVideoBottomSheet;
 import com.avatar.ava.presentation.main.MainScreenActivity;
 import com.avatar.ava.presentation.main.MainScreenPostman;
+import com.avatar.ava.presentation.main.fragments.casting.CircleProgressBar;
 import com.avatar.ava.presentation.main.videoCardView.VideoCardView;
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 
@@ -57,6 +61,9 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     public static int ProfileID;
     private final int LOAD_NEW_VIDEO_SCREEN = 4;
     private int currCountVideos = 0;
+
+    private BottomSheetDialog bottomSheetDialog;
+    private boolean videoDownloading = false;
 
     private ArrayList<VideoDTO> videos = new ArrayList<>();
 
@@ -111,6 +118,12 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
 
     @BindView(R.id.profile_progress_bar)
     ProgressBar progressBar;
+
+    @BindView(R.id.profile_loading)
+    ConstraintLayout videoLoading;
+
+    @BindView(R.id.profile_loading_progbar)
+    CircleProgressBar loadingProgbar;
 
     private TextView loadingTextView;
 
@@ -201,6 +214,35 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
             videoCardView.setActivity(activity);
         }
         Log.d("ProfileFragmentLog", videoCardViews.size() + " VideoCardViewSize " + currCountVideos);
+
+        bottomSheetDialog = new BottomSheetDialog(activity);
+        View sheetView = getActivity().getLayoutInflater().inflate(R.layout.share_bottomsheet, null);
+        bottomSheetDialog.setContentView(sheetView);
+        bottomSheetDialog.setCanceledOnTouchOutside(true);
+        ConstraintLayout inst = sheetView.findViewById(R.id.share_stories);
+        ConstraintLayout text = sheetView.findViewById(R.id.share_text);
+        inst.setOnClickListener(v -> {
+            videoDownloading = true;
+            bottomSheetDialog.hide();
+            try {
+                ((MainScreenPostman) activity).checkRequestPermissions();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            bottomSheetDialog.dismiss();
+            presenter.downloadVideo(VideoCardView.castingVideoName);
+        });
+
+        text.setOnClickListener(v -> {
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            //sharingIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            String shareBody = "https://web.xce-factor.ru/#/video/" + VideoCardView.castingVideoName;
+            //String shareSub = link;
+            //sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+            startActivity(Intent.createChooser(sharingIntent, "Share using"));
+        });
     }
 
     private String delNameVideo = "";
@@ -453,14 +495,18 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     }*/
 
     public void shareVideo(){
-        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        /*Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
         //sharingIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         String shareBody = "https://web.xce-factor.ru/#/video/" + VideoCardView.castingVideoName;
         //String shareSub = link;
         //sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-        startActivity(Intent.createChooser(sharingIntent, "Share using"));
+        startActivity(Intent.createChooser(sharingIntent, "Share using"));*/
+
+        if(!videoDownloading) {
+            bottomSheetDialog.show();
+        }
     }
 
     public String getCurrentVideo(){
@@ -672,6 +718,49 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
         if (loadingTextView != null)
             loadingTextView.setVisibility(View.INVISIBLE);
         presenter.getProfile();
+    }
+
+    @Override
+    public void showLoadingProgBar() {
+        videoLoading.setVisibility(View.VISIBLE);
+        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
+
+    @Override
+    public void changeLoadingState(Float aFloat) {
+        loadingProgbar.setProgress(aFloat);
+    }
+
+    @Override
+    public void loadingComplete(Uri uri) {
+        videoDownloading = false;
+        activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        videoLoading.setVisibility(View.INVISIBLE);
+        Intent intent = new Intent("com.instagram.share.ADD_TO_STORY");
+        intent.setDataAndType(uri, "video/mp4");
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        activity.grantUriPermission(
+                "com.instagram.android", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        activity.startActivity(intent);
+    }
+
+    @Override
+    public void enableLayout() {
+        videoDownloading = false;
+        activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        videoLoading.setVisibility(View.INVISIBLE);
+        presenter.disposeVideoLoading();
+    }
+
+    @Override
+    public void setVideoLoading(boolean flag) {
+        try {
+            ((MainScreenPostman) activity).setVideoLoading(flag);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @OnClick(R.id.fragment_profile_edit_photo)

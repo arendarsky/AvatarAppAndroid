@@ -433,6 +433,15 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
     @Override
     public void onBackPressed() {
         if(getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_container)
+                instanceof ProfileFragment){
+            ProfileFragment fragment = (ProfileFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.activity_main_frame_container);
+            if(videoLoading) {
+                fragment.enableLayout();
+                return;
+            }
+        }
+        if(getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_container)
                 instanceof CastingFragment){
             CastingFragment fragment = (CastingFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.activity_main_frame_container);
