@@ -9,6 +9,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -29,9 +30,12 @@ import com.avatar.ava.R;
 import com.avatar.ava.domain.entities.PublicProfileDTO;
 import com.avatar.ava.domain.entities.VideoDTO;
 import com.avatar.ava.presentation.main.MainScreenPostman;
+import com.avatar.ava.presentation.main.fragments.casting.CircleProgressBar;
+import com.avatar.ava.presentation.main.videoCardView.VideoCardView;
 import com.avatar.ava.presentation.main.videoCardView.VideoPublicCardView;
 import com.bumptech.glide.Glide;
 import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 
@@ -53,6 +57,8 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
     PublicProfilePresenter presenter;
 
     private int currCountVideos = 0;
+    private BottomSheetDialog bottomSheetDialog;
+    private boolean videoDownloading = false;
 
     private ArrayList<VideoDTO> videos = new ArrayList<>();
     private int id = 0;
@@ -88,6 +94,12 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
 
     @BindView(R.id.fragment_profile_parent)
     ConstraintLayout parent;
+
+    @BindView(R.id.profile_public_loading)
+    ConstraintLayout videoLoading;
+
+    @BindView(R.id.profile_public_loading_progbar)
+    CircleProgressBar loadingProgbar;
 
     private Activity activity;
 
@@ -184,6 +196,7 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
     void container5Clicked(){
         toFullscreen(4);
     }*/
+    private String shareVideoName = "";
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -198,11 +211,53 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
         videoPublicCardViews.add(videoPublicCardView4);
         videoPublicCardViews.add(videoPublicCardView5);
 
-
+        bottomSheetDialog = new BottomSheetDialog(activity);
+        View sheetView = getActivity().getLayoutInflater().inflate(R.layout.share_bottomsheet, null);
+        bottomSheetDialog.setContentView(sheetView);
+        bottomSheetDialog.setCanceledOnTouchOutside(true);
 
         for(VideoPublicCardView videoPublicCardView : videoPublicCardViews){
             videoPublicCardView.setActivity(activity);
+            videoPublicCardView.setBottomSheetDialog(bottomSheetDialog);
         }
+
+
+        ConstraintLayout inst = sheetView.findViewById(R.id.share_stories);
+        ConstraintLayout text = sheetView.findViewById(R.id.share_text);
+        inst.setOnClickListener(v -> {
+            videoDownloading = true;
+            bottomSheetDialog.hide();
+            try {
+                ((MainScreenPostman) activity).checkRequestPermissions();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            bottomSheetDialog.dismiss();
+            for(VideoPublicCardView videoPublicCardView : videoPublicCardViews){
+                if(videoPublicCardView.isShare()){
+                    shareVideoName = videoPublicCardView.getVideoDTO().getName();
+                    videoPublicCardView.setShare(false);
+                }
+            }
+            presenter.downloadVideo(shareVideoName);
+        });
+
+        text.setOnClickListener(v -> {
+            for(VideoPublicCardView videoPublicCardView : videoPublicCardViews){
+                if(videoPublicCardView.isShare()){
+                    shareVideoName = videoPublicCardView.getVideoDTO().getName();
+                    videoPublicCardView.setShare(false);
+                }
+            }
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            //sharingIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            String shareBody = "https://web.xce-factor.ru/#/video/" + shareVideoName;
+            //String shareSub = link;
+            //sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+            startActivity(Intent.createChooser(sharingIntent, "Share using"));
+        });
     }
 
 
@@ -259,6 +314,58 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
     @Override
     public void hideProgressBar() {
         progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void showLoadingProgBar() {
+        videoLoading.setVisibility(View.VISIBLE);
+        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
+
+    @Override
+    public void changeLoadingState(Float aFloat) {
+        loadingProgbar.setProgress(aFloat);
+    }
+
+    @Override
+    public void loadingComplete(Uri uri) {
+        for(VideoPublicCardView videoPublicCardView : videoPublicCardViews){
+            videoPublicCardView.setShare(false);
+        }
+
+        videoDownloading = false;
+        activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        videoLoading.setVisibility(View.INVISIBLE);
+        Intent intent = new Intent("com.instagram.share.ADD_TO_STORY");
+        intent.setDataAndType(uri, "video/mp4");
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        activity.grantUriPermission(
+                "com.instagram.android", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        activity.startActivity(intent);
+
+    }
+
+    @Override
+    public void enableLayout() {
+        for(VideoPublicCardView videoPublicCardView : videoPublicCardViews){
+            videoPublicCardView.setShare(false);
+        }
+
+        videoDownloading = false;
+        activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        videoLoading.setVisibility(View.INVISIBLE);
+        presenter.disposeVideoLoading();
+    }
+
+    @Override
+    public void setVideoLoading(boolean flag) {
+        try {
+            ((MainScreenPostman) activity).setVideoLoading(flag);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void showVideos(){

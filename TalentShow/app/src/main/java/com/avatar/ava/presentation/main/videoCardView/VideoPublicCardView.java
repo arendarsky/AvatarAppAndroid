@@ -17,6 +17,7 @@ import com.avatar.ava.domain.entities.VideoDTO;
 import com.avatar.ava.presentation.main.MainScreenActivity;
 import com.avatar.ava.presentation.main.MainScreenPostman;
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import javax.inject.Inject;
 
@@ -36,6 +37,14 @@ public class VideoPublicCardView extends ConstraintLayout {
 
     VideoDTO videoDTO;
     Activity activity;
+
+    BottomSheetDialog bottomSheetDialog;
+
+    private boolean isShare = false;
+
+    public void setBottomSheetDialog(BottomSheetDialog bottomSheetDialog){
+        this.bottomSheetDialog = bottomSheetDialog;
+    }
 
     public void setActivity(Activity activity){
         this.activity = activity;
@@ -81,11 +90,16 @@ public class VideoPublicCardView extends ConstraintLayout {
         //sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         activity.startActivity(Intent.createChooser(sharingIntent, "Share using"));
+
+
     }
 
     @OnClick(R.id.video_public_card_view_share_btn)
     public void onShareClicked(){
-        shareVideo();
+        //shareVideo();
+        isShare = true;
+        bottomSheetDialog.show();
+
     }
 
     @OnClick(R.id.video_public_card_view)
@@ -105,5 +119,13 @@ public class VideoPublicCardView extends ConstraintLayout {
                 .centerCrop()
                 .into(video);
         video.setVisibility(View.VISIBLE);
+    }
+
+    public boolean isShare() {
+        return isShare;
+    }
+
+    public void setShare(boolean share) {
+        isShare = share;
     }
 }
