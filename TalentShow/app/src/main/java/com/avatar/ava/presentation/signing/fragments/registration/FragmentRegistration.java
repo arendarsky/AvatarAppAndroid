@@ -104,6 +104,7 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
         DisplayMetrics displayMetrics = appContext.getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
 //        termsOfUse.setMovementMethod(LinkMovementMethod.getInstance());
+        consentToGeneralEmail.setChecked(true);
     }
 
     @OnClick(R.id.fragment_reg_continue)
