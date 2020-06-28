@@ -46,9 +46,9 @@ public class AuthRepository implements IAuthRepository {
     }
 
     @Override
-    public Single<Object> registerUser(String name, String mail, String password) {
+    public Single<Object> registerUser(String name, String mail, String password, Boolean consentToGeneralEmail) {
 
-        return authAPI.registerUser(new RegisterDTO(name, mail, password))
+        return authAPI.registerUser(new RegisterDTO(name, mail, password, consentToGeneralEmail))
                 .flatMap(aBoolean -> {
                             if (aBoolean){
                                 return authAPI.sendCode(mail)

@@ -9,6 +9,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -61,6 +62,9 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
 
     @BindView(R.id.fragment_registration_text1)
     TextView termsOfUse;
+
+    @BindView(R.id.fragment_registration_consent)
+    CheckBox consentToGeneralEmail;
 
     @InjectPresenter
     RegistrationPresenter presenter;
@@ -137,7 +141,7 @@ public class FragmentRegistration extends MvpAppCompatFragment implements Regist
 
             progressBar.setVisibility(View.VISIBLE);
             presenter.registerUser(nameEdit.getText().toString(), emailEdit.getText().toString(),
-                    passwordEdit.getText().toString());
+                    passwordEdit.getText().toString(), consentToGeneralEmail.isChecked());
         }
     }
 

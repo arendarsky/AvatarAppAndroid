@@ -109,8 +109,8 @@ public class Interactor {
         return this.authRepository.auth(mail, password);
     }
 
-    public Single<Object> registerUser(String name, String mail, String password){
-        return this.authRepository.registerUser(name, mail, password);
+    public Single<Object> registerUser(String name, String mail, String password, Boolean consentToGeneralEmail){
+        return this.authRepository.registerUser(name, mail, password, consentToGeneralEmail);
     }
 
     public Single<PersonDTO> getNewVideoLink(){

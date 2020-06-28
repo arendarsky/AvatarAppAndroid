@@ -6,7 +6,7 @@ import io.reactivex.Single;
 public interface IAuthRepository {
     Completable sendCodeToMail(String mail);
     Single<Object> auth(String mail, String password);
-    Single<Object> registerUser(String name, String mail, String password);
+    Single<Object> registerUser(String name, String mail, String password, Boolean consentToGeneralEmail);
     Completable resetPassword(String email);
     Completable setFirebaseToken(String token);
 }

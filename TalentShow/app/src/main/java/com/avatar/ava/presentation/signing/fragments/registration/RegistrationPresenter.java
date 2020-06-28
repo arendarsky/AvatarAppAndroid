@@ -21,8 +21,8 @@ public class RegistrationPresenter extends MvpPresenter<RegistrationView> {
     }
 
     @SuppressWarnings("unused")
-    void registerUser(String name, String mail, String password){
-        Disposable disposable = interactor.registerUser(name, mail, password)
+    void registerUser(String name, String mail, String password, Boolean consentToGeneralEmail){
+        Disposable disposable = interactor.registerUser(name, mail, password, consentToGeneralEmail)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(flag -> {

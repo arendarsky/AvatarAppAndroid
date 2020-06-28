@@ -277,5 +277,27 @@
             app:layout_constraintTop_toBottomOf="@id/fragment_registration_text1"
             app:layout_constraintVertical_bias="0.0" />
 
+        <CheckBox
+            android:id="@+id/fragment_registration_consent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="75dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_reg_continue"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Я согласен на рассылку по почте"
+            android:gravity="center"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/fragment_registration_consent"
+            app:layout_constraintEnd_toStartOf="@+id/fragment_registration_consent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/fragment_registration_consent"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

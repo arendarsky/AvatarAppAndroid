@@ -13,9 +13,13 @@ public class RegisterDTO{
     @SerializedName("password")
     private String password;
 
-    public RegisterDTO(String name, String mail, String password) {
+    @SerializedName("ConsentToGeneralEmail")
+    private Boolean consentToGeneralEmail;
+
+    public RegisterDTO(String name, String mail, String password, Boolean consentToGeneralEmail) {
         this.name = name;
         this.mail = mail;
         this.password = password;
+        this.consentToGeneralEmail = consentToGeneralEmail;
     }
 }
