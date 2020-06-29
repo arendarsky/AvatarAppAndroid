@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 import org.parceler.ParcelConstructor;
 
 public class ProfileSemifinalistsDTO {
+    @SerializedName("likesNumber")
+    private int likes;
+
     @SerializedName("id")
     private int id;
 
@@ -17,12 +20,14 @@ public class ProfileSemifinalistsDTO {
     @SerializedName("profilePhoto")
     private String photo;
 
+
     @ParcelConstructor
-    public ProfileSemifinalistsDTO(int id, String name, String description, String photo) {
+    public ProfileSemifinalistsDTO(int likes, int id, String name, String description, String photo) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.photo = photo;
+        this.likes = likes;
     }
 
     public int getId() {
@@ -55,5 +60,13 @@ public class ProfileSemifinalistsDTO {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 }

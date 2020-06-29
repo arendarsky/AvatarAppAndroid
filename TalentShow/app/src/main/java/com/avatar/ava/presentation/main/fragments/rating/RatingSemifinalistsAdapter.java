@@ -55,6 +55,8 @@ public class RatingSemifinalistsAdapter extends RecyclerView.Adapter<RatingSemif
         ProfileSemifinalistsDTO profileSemifinalistsDTO = data.get(position);
 
         holder.userName.setText(profileSemifinalistsDTO.getName());
+        holder.userLikes.setText("" + profileSemifinalistsDTO.getLikes());
+
 
         if(profileSemifinalistsDTO.getPhoto() != null)
         Glide.with(holder.itemView.getContext())
@@ -90,11 +92,13 @@ public class RatingSemifinalistsAdapter extends RecyclerView.Adapter<RatingSemif
     static class SemiViewHolder extends RecyclerView.ViewHolder{
         ImageView userAva;
         TextView userName;
+        TextView userLikes;
 
         public SemiViewHolder(@NonNull View itemView) {
             super(itemView);
             userAva = (ImageView) itemView.findViewById(R.id.rating_recycler_semifinalists_ava_item);
             userName = (TextView) itemView.findViewById(R.id.rating_recycler_semifinalists_name_item);
+            userLikes = (TextView) itemView.findViewById(R.id.rating_recycler_semifinalists_likes_item);
         }
     }
 }
