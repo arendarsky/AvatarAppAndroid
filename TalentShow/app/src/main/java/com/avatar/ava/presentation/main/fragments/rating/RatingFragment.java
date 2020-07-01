@@ -137,7 +137,7 @@ public class RatingFragment extends MvpAppCompatFragment implements RatingView {
             text.setOnClickListener(v1 -> {
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                String shareBody = adapter.getPerson(position).getVideo().getName();
+                String shareBody = "https://web.xce-factor.ru/#/video/" + adapter.getPerson(position).getVideo().getName();
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share using"));
             });

@@ -227,7 +227,7 @@ public class CastingFragment extends MvpAppCompatFragment implements CastingView
         text.setOnClickListener(v -> {
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
-            String shareBody = presenter.getVideoName();
+            String shareBody = "https://web.xce-factor.ru/#/video/" + presenter.getVideoName();
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
             startActivity(Intent.createChooser(sharingIntent, "Share using"));
         });
