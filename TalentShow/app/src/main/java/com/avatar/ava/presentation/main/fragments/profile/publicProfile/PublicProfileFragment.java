@@ -277,7 +277,7 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
         }
         //if(instName != null && !instName.equals(""))
         instName = person.getInstagramLogin();
-        Log.d("PublicProfileLog", instName);
+        //Log.d("PublicProfileLog", instName);
 
         if(person.getName() != null) {
             name.setVisibility(View.VISIBLE);
