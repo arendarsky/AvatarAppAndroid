@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -274,8 +275,9 @@ public class PublicProfileFragment extends MvpAppCompatFragment implements Publi
                     .circleCrop()
                     .into(profileImage);
         }
-        if(instName != null && !instName.equals(""))
+        //if(instName != null && !instName.equals(""))
         instName = person.getInstagramLogin();
+        Log.d("PublicProfileLog", instName);
 
         if(person.getName() != null) {
             name.setVisibility(View.VISIBLE);
