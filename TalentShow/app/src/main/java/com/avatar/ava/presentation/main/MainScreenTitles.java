@@ -12,7 +12,9 @@ public enum MainScreenTitles {
     BEST30("Лучшие 30"),
     SETTINGS("Настройки"),
     CHANGE_PASSWORD("Изм. пароля"),
-    CHANGE_PROFILE("Ред. профиля");
+    CHANGE_PROFILE("Ред. профиля"),
+    SEMIFINALISTS("Полуфиналисты");
+
 
     MainScreenTitles(String title) {
         this.title = title;

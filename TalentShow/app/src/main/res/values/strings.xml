@@ -94,5 +94,6 @@
     <string name="wait_loading">Дождитесь окончания\n загрузки видео</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="semifinalists">Полуфиналисты</string>
 
 </resources>

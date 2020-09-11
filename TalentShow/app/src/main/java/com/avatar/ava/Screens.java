@@ -17,6 +17,7 @@ import com.avatar.ava.presentation.main.fragments.profile.ProfileFragment;
 import com.avatar.ava.presentation.main.fragments.profile.profileSettings.changePassword.ChangePasswordFragment;
 import com.avatar.ava.presentation.main.fragments.profile.profileSettings.ProfileSettingsFragment;
 import com.avatar.ava.presentation.main.fragments.profile.publicProfile.PublicProfileFragment;
+import com.avatar.ava.presentation.main.fragments.semifinalists.SemifinalistsFragment;
 import com.avatar.ava.presentation.signing.fragments.ConfirmMailFragment;
 import com.avatar.ava.presentation.signing.fragments.FragmentFileLoadJust;
 import com.avatar.ava.presentation.signing.fragments.OnBoarding1Fragment;
@@ -227,6 +228,13 @@ public class Screens {
         @Override
         public Fragment getFragment() {
             return new ResetPasswordFragment();
+        }
+    }
+
+    public static final class SemifinalistsScreen extends SupportAppScreen{
+        @Override
+        public Fragment getFragment() {
+            return new SemifinalistsFragment();
         }
     }
 }
