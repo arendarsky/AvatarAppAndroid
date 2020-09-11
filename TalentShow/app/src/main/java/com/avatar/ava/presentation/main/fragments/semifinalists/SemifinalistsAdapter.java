@@ -22,7 +22,7 @@ import static com.avatar.ava.DataModule.SERVER_NAME;
 public class SemifinalistsAdapter extends RecyclerView.Adapter<SemifinalistsAdapter.SemifinalistsViewHolder> {
 
     Context context;
-    ArrayList<ProfileSemifinalistsDTO> data;
+    ArrayList<ProfileSemifinalistsDTO> data = new ArrayList<>();
 
     public SemifinalistsAdapter(Context context) {
         super();
@@ -44,7 +44,18 @@ public class SemifinalistsAdapter extends RecyclerView.Adapter<SemifinalistsAdap
 
         holder.userName.setText(profileSemifinalistsDTO.getName());
         holder.userLikes.setText("" + profileSemifinalistsDTO.getLikes());
-        holder.bg.setVisibility(View.INVISIBLE);
+        if(!holder.isChoose())
+            holder.bg.setVisibility(View.INVISIBLE);
+
+        holder.userAva.setOnClickListener(v -> {
+            if(!holder.isChoose()){
+                holder.bg.setVisibility(View.VISIBLE);
+                holder.setChoose(true);
+            }else{
+                holder.bg.setVisibility(View.INVISIBLE);
+                holder.setChoose(false);
+            }
+        });
 
 
         if(profileSemifinalistsDTO.getPhoto() != null)
@@ -61,11 +72,14 @@ public class SemifinalistsAdapter extends RecyclerView.Adapter<SemifinalistsAdap
 
     @Override
     public int getItemCount() {
-        return data.size();
+        if(data != null)
+            return data.size();
+        return 0;
     }
 
     public void setItems(ArrayList<ProfileSemifinalistsDTO> data){
         this.data = data;
+        notifyDataSetChanged();
     }
 
     public class SemifinalistsViewHolder extends RecyclerView.ViewHolder{
@@ -73,6 +87,7 @@ public class SemifinalistsAdapter extends RecyclerView.Adapter<SemifinalistsAdap
         TextView userName;
         TextView userLikes;
         ImageView bg;
+        private boolean choose = false;
 
 
         public SemifinalistsViewHolder(@NonNull View itemView) {
@@ -81,6 +96,14 @@ public class SemifinalistsAdapter extends RecyclerView.Adapter<SemifinalistsAdap
             userName = (TextView) itemView.findViewById(R.id.rating_recycler_semifinalists_name_item);
             userLikes = (TextView) itemView.findViewById(R.id.rating_recycler_semifinalists_likes_item);
             bg = (ImageView) itemView.findViewById(R.id.rating_recycler_semifinalists_ava_item_bg);
+        }
+
+        public boolean isChoose() {
+            return choose;
+        }
+
+        public void setChoose(boolean choose) {
+            this.choose = choose;
         }
     }
 }

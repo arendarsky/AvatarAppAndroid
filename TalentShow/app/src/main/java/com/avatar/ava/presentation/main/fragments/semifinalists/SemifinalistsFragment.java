@@ -12,13 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
+import com.avatar.ava.domain.entities.ProfileSemifinalistsDTO;
 import com.avatar.ava.presentation.main.fragments.rating.RatingPresenter;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -68,6 +72,16 @@ public class SemifinalistsFragment extends MvpAppCompatFragment implements Semif
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL,false));
         recyclerView.setAdapter(adapter);
 
+        presenter.getSemifinalists();
+    }
 
+    @Override
+    public void setSemifinalists(ArrayList<ProfileSemifinalistsDTO> data) {
+        adapter.setItems(data);
+    }
+
+    @Override
+    public void showMessage(String text) {
+        Toast.makeText(appContext, text, Toast.LENGTH_LONG).show();
     }
 }

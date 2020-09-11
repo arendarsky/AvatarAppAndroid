@@ -8,7 +8,9 @@ import com.avatar.ava.domain.Interactor;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 @InjectViewState
 public class SemifinalistsPresenter extends MvpPresenter<SemifinalistsView> {
@@ -18,5 +20,19 @@ public class SemifinalistsPresenter extends MvpPresenter<SemifinalistsView> {
     @Inject
     SemifinalistsPresenter(Interactor interactor) {
         this.interactor = interactor;
+    }
+
+    void getSemifinalists(){
+        Disposable disposable = interactor.getSemifinalists()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(arrayList -> {
+                            //getViewState().hideProgressBar();
+                            getViewState().setSemifinalists(arrayList);
+                        },
+                        error -> {
+                            //getViewState().hideProgressBar();
+                            getViewState().showMessage("Не удалось загрузить рейтинг. Попробуйте позже");
+                        });
     }
 }
