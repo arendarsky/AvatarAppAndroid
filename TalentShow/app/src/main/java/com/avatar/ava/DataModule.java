@@ -5,11 +5,13 @@ import android.text.TextUtils;
 import com.avatar.ava.data.AuthRepository;
 import com.avatar.ava.data.ProfileRepository;
 import com.avatar.ava.data.RatingRepository;
+import com.avatar.ava.data.SemifinalistsRepository;
 import com.avatar.ava.data.SharedPreferencesRepository;
 import com.avatar.ava.data.VideoRepository;
 import com.avatar.ava.domain.repository.IAuthRepository;
 import com.avatar.ava.domain.repository.IProfileRepository;
 import com.avatar.ava.domain.repository.IRatingRepository;
+import com.avatar.ava.domain.repository.ISemifinalistsRepository;
 import com.avatar.ava.domain.repository.ISharedPreferencesRepository;
 import com.avatar.ava.domain.repository.IVideoRepository;
 
@@ -90,6 +92,7 @@ public class DataModule extends Module{
         bind(IRatingRepository.class).to(RatingRepository.class).singletonInScope();
         bind(IProfileRepository.class).to(ProfileRepository.class).singletonInScope();
         bind(ISharedPreferencesRepository.class).to(SharedPreferencesRepository.class).singletonInScope();
+        bind(ISemifinalistsRepository.class).to(SemifinalistsRepository.class).singletonInScope();
 
     }
 }
