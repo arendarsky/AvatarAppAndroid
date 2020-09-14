@@ -35,4 +35,14 @@ public class SemifinalistsPresenter extends MvpPresenter<SemifinalistsView> {
                             getViewState().showMessage("Не удалось загрузить рейтинг. Попробуйте позже");
                         });
     }
+
+    void getProfile(int id){
+        Disposable disposable = interactor.getPublicProfile(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(person -> {
+                            getViewState().setDataProfile(person);
+                        },
+                        error -> getViewState().showMessage("Упс. Произошла ошибка, попробуйте позже"));
+    }
 }
