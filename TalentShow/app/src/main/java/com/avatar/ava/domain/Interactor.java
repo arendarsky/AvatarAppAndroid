@@ -2,6 +2,7 @@ package com.avatar.ava.domain;
 
 import android.net.Uri;
 
+import com.avatar.ava.domain.entities.BattleDTO;
 import com.avatar.ava.domain.entities.NotificationsDTO;
 import com.avatar.ava.domain.entities.PersonDTO;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
@@ -11,6 +12,7 @@ import com.avatar.ava.domain.entities.PublicProfileDTO;
 import com.avatar.ava.domain.repository.IAuthRepository;
 import com.avatar.ava.domain.repository.IProfileRepository;
 import com.avatar.ava.domain.repository.IRatingRepository;
+import com.avatar.ava.domain.repository.ISemifinalistsRepository;
 import com.avatar.ava.domain.repository.ISharedPreferencesRepository;
 import com.avatar.ava.domain.repository.IVideoRepository;
 
@@ -30,15 +32,29 @@ public class Interactor {
     private IRatingRepository ratingRepository;
     private IProfileRepository profileRepository;
     private ISharedPreferencesRepository preferencesRepository;
+    private ISemifinalistsRepository semifinalistsRepository;
 
     @Inject
     public Interactor(IAuthRepository authRepository, IVideoRepository videoRepository, ISharedPreferencesRepository preferencesRepository,
-                      IRatingRepository ratingRepository, IProfileRepository profileRepository){
+                      IRatingRepository ratingRepository, IProfileRepository profileRepository, ISemifinalistsRepository semifinalistsRepository){
         this.authRepository = authRepository;
         this.videoRepository = videoRepository;
         this.preferencesRepository = preferencesRepository;
         this.ratingRepository = ratingRepository;
         this.profileRepository = profileRepository;
+        this.semifinalistsRepository = semifinalistsRepository;
+    }
+
+    public Completable vote(String battleId, String semifinalistId){
+        return semifinalistsRepository.vote(battleId, semifinalistId);
+    }
+
+    public Completable cancelVote(String battleId, String semifinalistId){
+        return semifinalistsRepository.cancelVote(battleId, semifinalistId);
+    }
+
+    public Single<ArrayList<BattleDTO>> getBattles(){
+        return semifinalistsRepository.getBattles();
     }
 
     public Completable updateProfile(String name, String description, String instagramLogin){

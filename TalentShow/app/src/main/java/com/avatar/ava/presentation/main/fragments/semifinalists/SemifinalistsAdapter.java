@@ -1,6 +1,7 @@
 package com.avatar.ava.presentation.main.fragments.semifinalists;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.avatar.ava.R;
+import com.avatar.ava.domain.entities.BattleParticipant;
 import com.avatar.ava.domain.entities.ProfileSemifinalistsDTO;
 import com.avatar.ava.presentation.main.fragments.RecyclerClickListener;
 import com.avatar.ava.presentation.main.fragments.rating.RatingSemifinalistsAdapter;
@@ -24,8 +26,10 @@ import static com.avatar.ava.DataModule.SERVER_NAME;
 public class SemifinalistsAdapter extends RecyclerView.Adapter<SemifinalistsAdapter.SemifinalistsViewHolder> {
 
     Context context;
-    ArrayList<ProfileSemifinalistsDTO> data = new ArrayList<>();
+    ArrayList<BattleParticipant> data = new ArrayList<>();
     private RecyclerClickListener clickListener;
+
+    public static int currCountVotes = 0;
 
     public SemifinalistsAdapter(Context context, RecyclerClickListener clickListener) {
         super();
@@ -42,14 +46,25 @@ public class SemifinalistsAdapter extends RecyclerView.Adapter<SemifinalistsAdap
                 .inflate(R.layout.rating_recycler_semifinalists_item, parent, false);
         SemifinalistsViewHolder viewHolder = new SemifinalistsViewHolder(view);
         viewHolder.layout.setOnClickListener(v1 -> {
-                    clickListener.itemClicked(v1, viewHolder.getAdapterPosition());
-                    if(!viewHolder.isChoose()){
-                        viewHolder.bg.setVisibility(View.VISIBLE);
-                        viewHolder.setChoose(true);
+                    if(currCountVotes < 2){
+                        if(!viewHolder.isChoose()){
+                            viewHolder.bg.setVisibility(View.VISIBLE);
+                            viewHolder.setChoose(true);
+                            currCountVotes += 1;
+                        }else{
+                            viewHolder.bg.setVisibility(View.INVISIBLE);
+                            viewHolder.setChoose(false);
+                            currCountVotes -= 1;
+                        }
                     }else{
-                        viewHolder.bg.setVisibility(View.INVISIBLE);
-                        viewHolder.setChoose(false);
+                        if(viewHolder.isChoose()){
+                            viewHolder.bg.setVisibility(View.INVISIBLE);
+                            viewHolder.setChoose(false);
+                            currCountVotes -= 1;
+                        }
                     }
+                    Log.d("SALog", currCountVotes + "");
+                    clickListener.itemClicked(v1, viewHolder.getAdapterPosition());
                 });
         return viewHolder;
     }
@@ -58,10 +73,10 @@ public class SemifinalistsAdapter extends RecyclerView.Adapter<SemifinalistsAdap
 
     @Override
     public void onBindViewHolder(@NonNull SemifinalistsViewHolder holder, int position) {
-        ProfileSemifinalistsDTO profileSemifinalistsDTO = data.get(position);
+        BattleParticipant battleParticipant = data.get(position);
 
-        holder.userName.setText(profileSemifinalistsDTO.getName());
-        holder.userLikes.setText("" + profileSemifinalistsDTO.getLikes());
+        holder.userName.setText(battleParticipant.getName());
+        //holder.userLikes.setText("" + battleParticipant.getSemifinalist().getVotesNumber());
         if(!holder.isChoose())
             holder.bg.setVisibility(View.INVISIBLE);
 
@@ -76,9 +91,9 @@ public class SemifinalistsAdapter extends RecyclerView.Adapter<SemifinalistsAdap
         });*/
 
 
-        if(profileSemifinalistsDTO.getPhoto() != null)
+        if(battleParticipant.getProfilePhoto() != null)
             Glide.with(holder.itemView.getContext())
-                    .load(SERVER_NAME + "/api/profile/photo/get/" + profileSemifinalistsDTO.getPhoto())
+                    .load(SERVER_NAME + "/api/profile/photo/get/" + battleParticipant.getProfilePhoto())
                     .circleCrop()
                     .into(holder.userAva);
         else
@@ -95,7 +110,7 @@ public class SemifinalistsAdapter extends RecyclerView.Adapter<SemifinalistsAdap
         return 0;
     }
 
-    public void setItems(ArrayList<ProfileSemifinalistsDTO> data){
+    public void setItems(ArrayList<BattleParticipant> data){
         this.data = data;
         notifyDataSetChanged();
     }

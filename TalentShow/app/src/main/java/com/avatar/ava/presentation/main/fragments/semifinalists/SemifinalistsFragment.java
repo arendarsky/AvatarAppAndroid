@@ -24,6 +24,8 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
+import com.avatar.ava.domain.entities.BattleDTO;
+import com.avatar.ava.domain.entities.BattleParticipant;
 import com.avatar.ava.domain.entities.ProfileSemifinalistsDTO;
 import com.avatar.ava.domain.entities.PublicProfileDTO;
 import com.avatar.ava.domain.entities.VideoDTO;
@@ -53,6 +55,7 @@ import butterknife.ButterKnife;
 import toothpick.Toothpick;
 
 import static com.avatar.ava.DataModule.SERVER_NAME;
+import static com.avatar.ava.presentation.main.fragments.semifinalists.SemifinalistsAdapter.currCountVotes;
 
 
 public class SemifinalistsFragment extends MvpAppCompatFragment implements SemifinalistsView {
@@ -96,7 +99,7 @@ public class SemifinalistsFragment extends MvpAppCompatFragment implements Semif
     private MediaSource mediaSource;
     private DataSource.Factory factory;
 
-    ArrayList<ProfileSemifinalistsDTO> data;
+    ArrayList<BattleParticipant> data;
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd : hh : mm");
 
@@ -119,7 +122,8 @@ public class SemifinalistsFragment extends MvpAppCompatFragment implements Semif
         adapter = new SemifinalistsAdapter(appContext, (v, position) -> {
             try {
                 Log.d("SFLog", "clicked");
-                likes.setText(data.get(position).getLikes() + "");
+                Log.d("SALog", "clicked " + currCountVotes);
+                //likes.setText(data.get(position). + "");
                 presenter.getProfile(data.get(position).getId());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -129,7 +133,8 @@ public class SemifinalistsFragment extends MvpAppCompatFragment implements Semif
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL,false));
         recyclerView.setAdapter(adapter);
 
-        presenter.getSemifinalists();
+        //presenter.getSemifinalists();
+        presenter.getBattles();
 
         player = new SimpleExoPlayer.Builder(appContext).build();
         factory = new DefaultDataSourceFactory(appContext,
@@ -178,7 +183,7 @@ public class SemifinalistsFragment extends MvpAppCompatFragment implements Semif
     }
 
     @Override
-    public void setSemifinalists(ArrayList<ProfileSemifinalistsDTO> data) {
+    public void setSemifinalists(ArrayList<BattleParticipant> data) {
         this.data = data;
         adapter.setItems(data);
     }
@@ -220,6 +225,15 @@ public class SemifinalistsFragment extends MvpAppCompatFragment implements Semif
         video.setPlayer(player);
         player.prepare(mediaSource);
         player.setPlayWhenReady(true);
+    }
+
+    @Override
+    public void setBattles(ArrayList<BattleDTO> battles) {
+        for(BattleDTO battleDTO: battles){
+            Log.d("SFLog", battleDTO.getEndDate());
+        }
+        this.data = (ArrayList<BattleParticipant>) battles.get(0).getBattleParticipants();
+        adapter.setItems(this.data);
     }
 
     @Override

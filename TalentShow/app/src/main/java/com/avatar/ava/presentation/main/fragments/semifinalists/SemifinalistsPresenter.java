@@ -22,7 +22,7 @@ public class SemifinalistsPresenter extends MvpPresenter<SemifinalistsView> {
         this.interactor = interactor;
     }
 
-    void getSemifinalists(){
+    /*void getSemifinalists(){
         Disposable disposable = interactor.getSemifinalists()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -34,7 +34,7 @@ public class SemifinalistsPresenter extends MvpPresenter<SemifinalistsView> {
                             //getViewState().hideProgressBar();
                             getViewState().showMessage("Не удалось загрузить рейтинг. Попробуйте позже");
                         });
-    }
+    }*/
 
     void getProfile(int id){
         Disposable disposable = interactor.getPublicProfile(id)
@@ -44,5 +44,50 @@ public class SemifinalistsPresenter extends MvpPresenter<SemifinalistsView> {
                             getViewState().setDataProfile(person);
                         },
                         error -> getViewState().showMessage("Упс. Произошла ошибка, попробуйте позже"));
+    }
+
+    void getBattles(){
+        Disposable disposable = interactor.getBattles()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(arrayList -> {
+                            //getViewState().hideProgressBar();
+                            //getViewState().setSemifinalists(arrayList);
+                            getViewState().setBattles(arrayList);
+                        },
+                        error -> {
+                            //getViewState().hideProgressBar();
+                            getViewState().showMessage("Не удалось загрузить рейтинг. Попробуйте позже");
+                        });
+    }
+
+    void vote(String battleId, String semifinalistId){
+        Disposable disposable = interactor.vote(battleId, semifinalistId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(()-> {
+                            //getViewState().hideProgressBar();
+                            //getViewState().setSemifinalists(arrayList);
+                            //getViewState().setBattles(arrayList);
+                        },
+                        error -> {
+                            //getViewState().hideProgressBar();
+                            getViewState().showMessage("Не удалось загрузить рейтинг. Попробуйте позже");
+                        });
+    }
+
+    void cancelVote(String battleId, String semifinalistId){
+        Disposable disposable = interactor.cancelVote(battleId, semifinalistId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(()-> {
+                            //getViewState().hideProgressBar();
+                            //getViewState().setSemifinalists(arrayList);
+                            //getViewState().setBattles(arrayList);
+                        },
+                        error -> {
+                            //getViewState().hideProgressBar();
+                            getViewState().showMessage("Не удалось загрузить рейтинг. Попробуйте позже");
+                        });
     }
 }
