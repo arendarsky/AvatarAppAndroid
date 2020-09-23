@@ -2,27 +2,27 @@ package com.avatar.ava.domain.entities;
 
 public class BattleVoteDTO {
 
-    private String battleId;
-    private String semifinalistId;
+    private int battleId;
+    private int semifinalistId;
 
-    public BattleVoteDTO(String battleId, String semifinalistId) {
+    public BattleVoteDTO(int battleId, int semifinalistId) {
         this.battleId = battleId;
         this.semifinalistId = semifinalistId;
     }
 
-    public String getBattleId() {
+    public int getBattleId() {
         return battleId;
     }
 
-    public void setBattleId(String battleId) {
+    public void setBattleId(int battleId) {
         this.battleId = battleId;
     }
 
-    public String getSemifinalistId() {
+    public int getSemifinalistId() {
         return semifinalistId;
     }
 
-    public void setSemifinalistId(String semifinalistId) {
+    public void setSemifinalistId(int semifinalistId) {
         this.semifinalistId = semifinalistId;
     }
 }

@@ -61,7 +61,7 @@ public class SemifinalistsPresenter extends MvpPresenter<SemifinalistsView> {
                         });
     }
 
-    void vote(String battleId, String semifinalistId){
+    void vote(int battleId, int semifinalistId){
         Disposable disposable = interactor.vote(battleId, semifinalistId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -69,6 +69,7 @@ public class SemifinalistsPresenter extends MvpPresenter<SemifinalistsView> {
                             //getViewState().hideProgressBar();
                             //getViewState().setSemifinalists(arrayList);
                             //getViewState().setBattles(arrayList);
+                            //getBattles();
                         },
                         error -> {
                             //getViewState().hideProgressBar();
@@ -76,7 +77,7 @@ public class SemifinalistsPresenter extends MvpPresenter<SemifinalistsView> {
                         });
     }
 
-    void cancelVote(String battleId, String semifinalistId){
+    void cancelVote(int battleId, int semifinalistId){
         Disposable disposable = interactor.cancelVote(battleId, semifinalistId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -84,6 +85,7 @@ public class SemifinalistsPresenter extends MvpPresenter<SemifinalistsView> {
                             //getViewState().hideProgressBar();
                             //getViewState().setSemifinalists(arrayList);
                             //getViewState().setBattles(arrayList);
+                            //getBattles();
                         },
                         error -> {
                             //getViewState().hideProgressBar();

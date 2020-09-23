@@ -45,11 +45,11 @@ public class Interactor {
         this.semifinalistsRepository = semifinalistsRepository;
     }
 
-    public Completable vote(String battleId, String semifinalistId){
+    public Completable vote(int battleId, int semifinalistId){
         return semifinalistsRepository.vote(battleId, semifinalistId);
     }
 
-    public Completable cancelVote(String battleId, String semifinalistId){
+    public Completable cancelVote(int battleId, int semifinalistId){
         return semifinalistsRepository.cancelVote(battleId, semifinalistId);
     }
 

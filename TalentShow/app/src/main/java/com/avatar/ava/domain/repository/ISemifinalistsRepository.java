@@ -12,6 +12,6 @@ import retrofit2.http.POST;
 
 public interface ISemifinalistsRepository {
     Single<ArrayList<BattleDTO>> getBattles();
-    Completable vote(String battleId, String semifinalistId);
-    Completable cancelVote(String battleId, String semifinalistId);
+    Completable vote(int battleId, int semifinalistId);
+    Completable cancelVote(int battleId, int semifinalistId);
 }

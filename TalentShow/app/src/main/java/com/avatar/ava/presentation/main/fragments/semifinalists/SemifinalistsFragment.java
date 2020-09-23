@@ -101,6 +101,8 @@ public class SemifinalistsFragment extends MvpAppCompatFragment implements Semif
 
     ArrayList<BattleParticipant> data;
 
+    private int currIdBattle = 0;
+
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd : hh : mm");
 
 
@@ -119,16 +121,24 @@ public class SemifinalistsFragment extends MvpAppCompatFragment implements Semif
         super.onViewCreated(view, savedInstanceState);
         Toothpick.inject(this, Toothpick.openScope(App.class));
 
-        adapter = new SemifinalistsAdapter(appContext, (v, position) -> {
+        adapter = new SemifinalistsAdapter(appContext,
+                (v, position) -> {
             try {
                 Log.d("SFLog", "clicked");
                 Log.d("SALog", "clicked " + currCountVotes);
+                Log.d("SALogUser", "info1 " + data.get(position).getSemifinalist().getIsLikedByUser());
+                presenter.vote(currIdBattle, data.get(position).getSemifinalist().getId());
+                Log.d("SALogUser", "info2 " + data.get(position).getSemifinalist().getIsLikedByUser());
                 //likes.setText(data.get(position). + "");
-                presenter.getProfile(data.get(position).getId());
             } catch (Exception e) {
                 e.printStackTrace();
-            }}
-            );
+            }},
+                (v, position) -> {
+                    presenter.cancelVote(currIdBattle, data.get(position).getSemifinalist().getId());
+                },
+                (v, position) -> {
+                    presenter.getProfile(data.get(position).getId());
+        });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL,false));
         recyclerView.setAdapter(adapter);
@@ -233,6 +243,7 @@ public class SemifinalistsFragment extends MvpAppCompatFragment implements Semif
             Log.d("SFLog", battleDTO.getEndDate());
         }
         this.data = (ArrayList<BattleParticipant>) battles.get(0).getBattleParticipants();
+        currIdBattle = battles.get(0).getId();
         adapter.setItems(this.data);
     }
 

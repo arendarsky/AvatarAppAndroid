@@ -31,12 +31,12 @@ public class SemifinalistsRepository implements ISemifinalistsRepository {
     }
 
     @Override
-    public Completable vote(String battleId, String semifinalistId) {
+    public Completable vote(int battleId, int semifinalistId) {
         return semifinalistsAPI.vote(preferencesRepository.getToken(), new BattleVoteDTO(battleId, semifinalistId));
     }
 
     @Override
-    public Completable cancelVote(String battleId, String semifinalistId) {
+    public Completable cancelVote(int battleId, int semifinalistId) {
         return semifinalistsAPI.cancelVote(preferencesRepository.getToken(), new BattleVoteDTO(battleId, semifinalistId));
     }
 }

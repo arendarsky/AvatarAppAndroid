@@ -27,14 +27,18 @@ public class SemifinalistsAdapter extends RecyclerView.Adapter<SemifinalistsAdap
 
     Context context;
     ArrayList<BattleParticipant> data = new ArrayList<>();
-    private RecyclerClickListener clickListener;
+    private RecyclerClickListener clickListenerVote;
+    private RecyclerClickListener clickListenerCancel;
+    private RecyclerClickListener clickListener2;
 
     public static int currCountVotes = 0;
 
-    public SemifinalistsAdapter(Context context, RecyclerClickListener clickListener) {
+    public SemifinalistsAdapter(Context context, RecyclerClickListener clickListenerVote, RecyclerClickListener clickListenerCancel, RecyclerClickListener clickListener2) {
         super();
         this.context = context;
-        this.clickListener = clickListener;
+        this.clickListenerVote = clickListenerVote;
+        this.clickListenerCancel = clickListenerCancel;
+        this.clickListener2 = clickListener2;
     }
 
 
@@ -51,20 +55,24 @@ public class SemifinalistsAdapter extends RecyclerView.Adapter<SemifinalistsAdap
                             viewHolder.bg.setVisibility(View.VISIBLE);
                             viewHolder.setChoose(true);
                             currCountVotes += 1;
+                            clickListenerVote.itemClicked(v1, viewHolder.getAdapterPosition());
                         }else{
                             viewHolder.bg.setVisibility(View.INVISIBLE);
                             viewHolder.setChoose(false);
                             currCountVotes -= 1;
+                            clickListenerCancel.itemClicked(v1, viewHolder.getAdapterPosition());
                         }
+
                     }else{
                         if(viewHolder.isChoose()){
                             viewHolder.bg.setVisibility(View.INVISIBLE);
                             viewHolder.setChoose(false);
                             currCountVotes -= 1;
+                            clickListenerCancel.itemClicked(v1, viewHolder.getAdapterPosition());
                         }
                     }
                     Log.d("SALog", currCountVotes + "");
-                    clickListener.itemClicked(v1, viewHolder.getAdapterPosition());
+                    clickListener2.itemClicked(v1, viewHolder.getAdapterPosition());
                 });
         return viewHolder;
     }
@@ -79,17 +87,7 @@ public class SemifinalistsAdapter extends RecyclerView.Adapter<SemifinalistsAdap
         //holder.userLikes.setText("" + battleParticipant.getSemifinalist().getVotesNumber());
         if(!holder.isChoose())
             holder.bg.setVisibility(View.INVISIBLE);
-
-        /*holder.userAva.setOnClickListener(v -> {
-            if(!holder.isChoose()){
-                holder.bg.setVisibility(View.VISIBLE);
-                holder.setChoose(true);
-            }else{
-                holder.bg.setVisibility(View.INVISIBLE);
-                holder.setChoose(false);
-            }
-        });*/
-
+        else holder.bg.setVisibility(View.VISIBLE);
 
         if(battleParticipant.getProfilePhoto() != null)
             Glide.with(holder.itemView.getContext())
