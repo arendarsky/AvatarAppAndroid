@@ -2,6 +2,7 @@ package com.avatar.ava.data.api;
 
 import com.avatar.ava.domain.entities.BattleDTO;
 import com.avatar.ava.domain.entities.BattleVoteDTO;
+import com.avatar.ava.domain.entities.BattleVoteResponse;
 
 import java.util.ArrayList;
 
@@ -19,8 +20,5 @@ public interface SemifinalistsAPI {
     Single<ArrayList<BattleDTO>> getBattles(@Header("Authorization") String token);
 
     @POST("/api/semifinal/vote")
-    Completable vote(@Header("Authorization") String token, @Body BattleVoteDTO battleVoteDTO);
-
-    @POST("/api/semifinal/vote/cancel")
-    Completable cancelVote(@Header("Authorization") String token, @Body BattleVoteDTO battleVoteDTO);
+    Single<BattleVoteResponse> vote(@Header("Authorization") String token, @Body BattleVoteDTO battleVoteDTO);
 }

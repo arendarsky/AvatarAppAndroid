@@ -92,8 +92,15 @@
     <string name="add_to_story">Добавить \nв историю</string>
     <string name="send_message">Отправить \nсообщение</string>
     <string name="wait_loading">Дождитесь окончания\n загрузки видео</string>
+    <string name="percentage_format">%1$s\%%</string>
+    <string name="winners_number_format">Выберите %1$s победителей</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="semifinalists">Полуфиналисты</string>
+    <string name="end_battle_day">дн.</string>
+    <string name="end_battle_hour">ч.</string>
+    <string name="end_battle_minutes">мин.</string>
+    <string name="repeat">Повторить</string>
+    <string name="error_message">Упс. Произошла ошибка, попробуйте позже</string>
 
 </resources>

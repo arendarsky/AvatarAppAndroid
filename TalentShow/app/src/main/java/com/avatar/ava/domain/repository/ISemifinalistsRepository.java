@@ -1,6 +1,7 @@
 package com.avatar.ava.domain.repository;
 
 import com.avatar.ava.domain.entities.BattleDTO;
+import com.avatar.ava.domain.entities.BattleVoteResponse;
 
 import java.util.ArrayList;
 
@@ -12,6 +13,5 @@ import retrofit2.http.POST;
 
 public interface ISemifinalistsRepository {
     Single<ArrayList<BattleDTO>> getBattles();
-    Completable vote(int battleId, int semifinalistId);
-    Completable cancelVote(int battleId, int semifinalistId);
+    Single<BattleVoteResponse> vote(int battleId, int semifinalistId);
 }

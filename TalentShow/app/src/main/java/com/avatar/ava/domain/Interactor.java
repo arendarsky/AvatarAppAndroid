@@ -3,6 +3,7 @@ package com.avatar.ava.domain;
 import android.net.Uri;
 
 import com.avatar.ava.domain.entities.BattleDTO;
+import com.avatar.ava.domain.entities.BattleVoteResponse;
 import com.avatar.ava.domain.entities.NotificationsDTO;
 import com.avatar.ava.domain.entities.PersonDTO;
 import com.avatar.ava.domain.entities.PersonRatingDTO;
@@ -45,12 +46,8 @@ public class Interactor {
         this.semifinalistsRepository = semifinalistsRepository;
     }
 
-    public Completable vote(int battleId, int semifinalistId){
+    public Single<BattleVoteResponse> vote(int battleId, int semifinalistId){
         return semifinalistsRepository.vote(battleId, semifinalistId);
-    }
-
-    public Completable cancelVote(int battleId, int semifinalistId){
-        return semifinalistsRepository.cancelVote(battleId, semifinalistId);
     }
 
     public Single<ArrayList<BattleDTO>> getBattles(){

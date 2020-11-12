@@ -11,7 +11,7 @@ public class Semifinalist {
     private Integer id;
     @SerializedName("videoName")
     @Expose
-    private Object videoName;
+    private String videoName;
     @SerializedName("votesNumber")
     @Expose
     private Integer votesNumber;
@@ -27,11 +27,11 @@ public class Semifinalist {
         this.id = id;
     }
 
-    public Object getVideoName() {
+    public String getVideoName() {
         return videoName;
     }
 
-    public void setVideoName(Object videoName) {
+    public void setVideoName(String videoName) {
         this.videoName = videoName;
     }
 

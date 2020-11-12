@@ -87,12 +87,12 @@ public class DataModule extends Module{
                         .client(httpClient.build())
                         .build());
 
-        bind(IAuthRepository.class).to(AuthRepository.class).singletonInScope();
-        bind(IVideoRepository.class).to(VideoRepository.class).singletonInScope();
-        bind(IRatingRepository.class).to(RatingRepository.class).singletonInScope();
-        bind(IProfileRepository.class).to(ProfileRepository.class).singletonInScope();
-        bind(ISharedPreferencesRepository.class).to(SharedPreferencesRepository.class).singletonInScope();
-        bind(ISemifinalistsRepository.class).to(SemifinalistsRepository.class).singletonInScope();
+        bind(IAuthRepository.class).to(AuthRepository.class).singleton();
+        bind(IVideoRepository.class).to(VideoRepository.class).singleton();
+        bind(IRatingRepository.class).to(RatingRepository.class).singleton();
+        bind(IProfileRepository.class).to(ProfileRepository.class).singleton();
+        bind(ISharedPreferencesRepository.class).to(SharedPreferencesRepository.class).singleton();
+        bind(ISemifinalistsRepository.class).to(SemifinalistsRepository.class).singleton();
 
     }
 }

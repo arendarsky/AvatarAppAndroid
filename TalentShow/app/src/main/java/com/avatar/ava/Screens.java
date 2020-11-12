@@ -2,14 +2,12 @@ package com.avatar.ava;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 
 import com.avatar.ava.presentation.main.MainScreenTitles;
 import com.avatar.ava.presentation.main.fragments.FragmentChooseBestMain;
 import com.avatar.ava.presentation.main.fragments.FragmentFileLoadMain;
-import com.avatar.ava.presentation.main.fragments.FullScreenVideoDialog;
 import com.avatar.ava.presentation.main.fragments.casting.CastingFragment;
 import com.avatar.ava.presentation.main.fragments.instruction.InstructionFragment;
 import com.avatar.ava.presentation.main.fragments.notifications.FragmentNotifications;
@@ -17,7 +15,7 @@ import com.avatar.ava.presentation.main.fragments.profile.ProfileFragment;
 import com.avatar.ava.presentation.main.fragments.profile.profileSettings.changePassword.ChangePasswordFragment;
 import com.avatar.ava.presentation.main.fragments.profile.profileSettings.ProfileSettingsFragment;
 import com.avatar.ava.presentation.main.fragments.profile.publicProfile.PublicProfileFragment;
-import com.avatar.ava.presentation.main.fragments.semifinalists.SemifinalistsFragment;
+import com.avatar.ava.presentation.main.fragments.battles.BattlesFragment;
 import com.avatar.ava.presentation.signing.fragments.ConfirmMailFragment;
 import com.avatar.ava.presentation.signing.fragments.FragmentFileLoadJust;
 import com.avatar.ava.presentation.signing.fragments.OnBoarding1Fragment;
@@ -30,7 +28,6 @@ import com.avatar.ava.presentation.signing.fragments.FragmentEnterFileLoad;
 import com.avatar.ava.presentation.main.fragments.rating.RatingFragment;
 import com.avatar.ava.presentation.signing.fragments.resetpassword.ResetPasswordFragment;
 
-import ru.terrakok.cicerone.Screen;
 import ru.terrakok.cicerone.android.support.SupportAppScreen;
 
 public class Screens {
@@ -231,10 +228,10 @@ public class Screens {
         }
     }
 
-    public static final class SemifinalistsScreen extends SupportAppScreen{
+    public static final class BattlesScreen extends SupportAppScreen{
         @Override
         public Fragment getFragment() {
-            return new SemifinalistsFragment();
+            return new BattlesFragment();
         }
     }
 }

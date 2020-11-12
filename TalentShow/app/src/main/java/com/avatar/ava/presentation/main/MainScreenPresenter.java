@@ -17,6 +17,7 @@ import com.avatar.ava.domain.Interactor;
 import com.avatar.ava.presentation.main.fragments.casting.CastingFragment;
 import com.avatar.ava.presentation.main.fragments.notifications.FragmentNotifications;
 import com.avatar.ava.presentation.main.fragments.rating.RatingFragment;
+import com.avatar.ava.presentation.main.fragments.battles.BattlesFragment;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
@@ -96,7 +97,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                 getViewState().changeTitle(MainScreenTitles.SEMIFINALISTS);
                 getViewState().showMenuPoints();
                 getViewState().showInfoIcon();
-                router.newRootScreen(new Screens.SemifinalistsScreen());
+                router.newRootScreen(new Screens.BattlesScreen());
                 return true;
         }
         return false;
@@ -162,6 +163,8 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
             previousStates.add(new PrevState(HIDE_BACK, MainScreenTitles.RATING, NOTHING));
         if (prevScreen instanceof FragmentNotifications)
             previousStates.add(new PrevState(HIDE_BACK, MainScreenTitles.NOTIFICATIONS, NOTHING));
+        if (prevScreen instanceof BattlesFragment)
+            previousStates.add(new PrevState(HIDE_BACK, MainScreenTitles.SEMIFINALISTS, NOTHING));
         router.navigateTo(new Screens.PublicProfileScreen(id));
     }
 

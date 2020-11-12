@@ -13,9 +13,12 @@ public class BattleDTO {
     @SerializedName("endDate")
     @Expose
     private String endDate;
-    @SerializedName("votesNumber")
+    @SerializedName("totalVotesNumber")
     @Expose
-    private Integer votesNumber;
+    private Integer totalVotesNumber;
+    @SerializedName("winnersNumber")
+    @Expose
+    private Integer winnerNumber;
     @SerializedName("battleParticipants")
     @Expose
     private List<BattleParticipant> battleParticipants = null;
@@ -36,12 +39,12 @@ public class BattleDTO {
         this.endDate = endDate;
     }
 
-    public Integer getVotesNumber() {
-        return votesNumber;
+    public Integer getTotalVotesNumber() {
+        return totalVotesNumber;
     }
 
-    public void setVotesNumber(Integer votesNumber) {
-        this.votesNumber = votesNumber;
+    public void setTotalVotesNumber(Integer votesNumber) {
+        this.totalVotesNumber = votesNumber;
     }
 
     public List<BattleParticipant> getBattleParticipants() {
@@ -52,4 +55,11 @@ public class BattleDTO {
         this.battleParticipants = battleParticipants;
     }
 
+    public Integer getWinnerNumber() {
+        return winnerNumber;
+    }
+
+    public void setWinnerNumber(Integer winnerNumber) {
+        this.winnerNumber = winnerNumber;
+    }
 }

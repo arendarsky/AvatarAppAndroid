@@ -1,16 +1,15 @@
 package com.avatar.ava.data;
 
-import com.avatar.ava.data.api.RatingAPI;
 import com.avatar.ava.data.api.SemifinalistsAPI;
 import com.avatar.ava.domain.entities.BattleDTO;
 import com.avatar.ava.domain.entities.BattleVoteDTO;
+import com.avatar.ava.domain.entities.BattleVoteResponse;
 import com.avatar.ava.domain.repository.ISemifinalistsRepository;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import io.reactivex.Completable;
 import io.reactivex.Single;
 import retrofit2.Retrofit;
 
@@ -31,12 +30,7 @@ public class SemifinalistsRepository implements ISemifinalistsRepository {
     }
 
     @Override
-    public Completable vote(int battleId, int semifinalistId) {
+    public Single<BattleVoteResponse> vote(int battleId, int semifinalistId) {
         return semifinalistsAPI.vote(preferencesRepository.getToken(), new BattleVoteDTO(battleId, semifinalistId));
-    }
-
-    @Override
-    public Completable cancelVote(int battleId, int semifinalistId) {
-        return semifinalistsAPI.cancelVote(preferencesRepository.getToken(), new BattleVoteDTO(battleId, semifinalistId));
     }
 }
