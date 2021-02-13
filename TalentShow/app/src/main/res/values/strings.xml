@@ -102,5 +102,5 @@
     <string name="end_battle_minutes">мин.</string>
     <string name="repeat">Повторить</string>
     <string name="error_message">Упс. Произошла ошибка, попробуйте позже</string>
-
+    <string name="empty" />
 </resources>
