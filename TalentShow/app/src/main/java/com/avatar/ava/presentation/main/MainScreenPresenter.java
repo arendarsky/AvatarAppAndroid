@@ -96,7 +96,6 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
             case R.id.nav_semifinalists:
                 getViewState().changeTitle(MainScreenTitles.SEMIFINALISTS);
                 getViewState().showMenuPoints();
-                getViewState().showInfoIcon();
                 router.newRootScreen(new Screens.BattlesScreen());
                 return true;
         }

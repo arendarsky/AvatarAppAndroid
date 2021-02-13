@@ -13,7 +13,7 @@ public enum MainScreenTitles {
     SETTINGS("Настройки"),
     CHANGE_PASSWORD("Изм. пароля"),
     CHANGE_PROFILE("Ред. профиля"),
-    SEMIFINALISTS("Полуфиналисты");
+    SEMIFINALISTS("Полуфинал");
 
 
     MainScreenTitles(String title) {
