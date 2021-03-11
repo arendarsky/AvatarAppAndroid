@@ -33,7 +33,7 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
 
-import static com.avatar.ava.DataModule.SERVER_NAME;
+import static com.avatar.ava.di.DataModule.SERVER_NAME;
 
 @Layout(R.layout.casting_card_view)
 public class CastingCard {

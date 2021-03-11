@@ -5,20 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.avatar.ava.App
 import com.avatar.ava.R
-import com.avatar.ava.presentation.main.MainScreenPostman
-import com.avatar.ava.presentation.main.fragments.battles.item.BattleItem
-import com.avatar.ava.presentation.main.fragments.battles.item.ParticipantItem
-import com.avatar.ava.presentation.main.fragments.battles.listener.RecyclerClickListener
-import kotlinx.android.synthetic.main.error_message.*
+import com.avatar.ava.presentation.main.fragments.battles.adapter.BattleTab
+import com.avatar.ava.presentation.main.fragments.battles.adapter.PagerAdapter
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_battles.*
 import toothpick.Toothpick
 import javax.inject.Inject
@@ -31,7 +25,7 @@ class BattlesFragment : MvpAppCompatFragment(), BattlesView {
     @InjectPresenter
     lateinit var battlesPresenter: BattlesPresenter
 
-    private lateinit var battlesAdapter: BattlesAdapter
+    private lateinit var pagerAdapter: PagerAdapter
 
     @ProvidePresenter
     fun getPresenter(): BattlesPresenter {
@@ -43,23 +37,6 @@ class BattlesFragment : MvpAppCompatFragment(), BattlesView {
         super.onAttach(context)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        battlesAdapter = BattlesAdapter(listener = object : RecyclerClickListener {
-            override fun voteClicked(battleId: Int, battleParticipant: ParticipantItem) {
-                battlesPresenter.vote(battleId, battleParticipant)
-            }
-
-            override fun selectClicked(battleId: Int, battleParticipant: ParticipantItem) {
-                battlesAdapter.selectParticipant(battleId, battleParticipant)
-            }
-
-            override fun detailClicked(battleParticipantId: Int) {
-                (activity as MainScreenPostman).openPublicProfile(battleParticipantId)
-            }
-        }, appContext)
-    }
-
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -69,47 +46,25 @@ class BattlesFragment : MvpAppCompatFragment(), BattlesView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        pagerAdapter = PagerAdapter(childFragmentManager)
+        pager.adapter = pagerAdapter
+        tabs.setupWithViewPager(pager)
+        tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(p0: TabLayout.Tab?) {}
+
+            override fun onTabUnselected(p0: TabLayout.Tab?) {}
+
+            override fun onTabReselected(p0: TabLayout.Tab?) {}
+
+        })
         super.onViewCreated(view, savedInstanceState)
-        val linearLayoutManager = LinearLayoutManager(activity)
-        val dividerItemDecoration = DividerItemDecoration(
-                recycler_battles.context,
-                linearLayoutManager.orientation
-        ).apply {
-            val divider = ContextCompat.getDrawable(appContext, R.drawable.recycler_view_divider)
-            divider?.let {
-                setDrawable(it)
-            }
-        }
-        recycler_battles.addItemDecoration(dividerItemDecoration)
-        recycler_battles.layoutManager = linearLayoutManager
-        recycler_battles.adapter = battlesAdapter
-
-        retry_loading_button.setOnClickListener {
-            battlesPresenter.loadBattles()
-        }
     }
 
-    override fun disableUI(text: String) {
-        recycler_battles.isVisible = false
-        error_message.isVisible = true
-        loading_error_text_view.text = text
+    override fun addFinalTab() {
+        pagerAdapter.addTab(BattleTab.FINALISTS)
     }
 
-    override fun enableUI() {
-        recycler_battles.isVisible = true
-        error_message.isVisible = false
-    }
-
-    override fun vote(battleId: Int, battleParticipant: ParticipantItem) {
-        battlesAdapter.vote(battleId, battleParticipant)
-    }
-
-    override fun setBattles(battles: List<BattleItem>) {
-        battlesAdapter.setBattles(battles)
-    }
-
-    override fun onPause() {
-        battlesAdapter.stopAudioPlayers()
-        super.onPause()
+    override fun addSemifinalTab() {
+        pagerAdapter.addTab(BattleTab.SEMIFINALISTS)
     }
 }

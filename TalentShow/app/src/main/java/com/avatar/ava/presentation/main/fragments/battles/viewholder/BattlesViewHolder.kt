@@ -9,8 +9,8 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.avatar.ava.DataModule
 import com.avatar.ava.R
+import com.avatar.ava.di.DataModule
 import com.avatar.ava.presentation.main.fragments.battles.semifinalists.SemifinalistsAdapter
 import com.avatar.ava.presentation.main.fragments.battles.item.BattleItem
 import com.avatar.ava.presentation.main.fragments.battles.item.ParticipantItem
@@ -22,11 +22,7 @@ import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
-import com.google.android.exoplayer2.util.Log
 import com.google.android.exoplayer2.util.Util
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
 
 class BattlesViewHolder(
         parent: ViewGroup,
@@ -56,11 +52,9 @@ class BattlesViewHolder(
 
     private val adapter: SemifinalistsAdapter = SemifinalistsAdapter(listener)
 
-    private val simpleDateFormat = SimpleDateFormat("dd : hh : mm")
-
     fun bind(item: BattleItem, player: SimpleExoPlayer?) {
         initParticipantsAdapter(item)
-        setBattleEndTime()
+        setBattleEndTime(item.endDate)
 
         setProfileData(item.selectedParticipant)
 
@@ -137,38 +131,17 @@ class BattlesViewHolder(
         adapter.setItems(battleItem)
     }
 
-    private fun setBattleEndTime() {
-        try {
-            Log.d("SFLog", "here")
-            val date1 = simpleDateFormat.parse("21 : 14 : 10")
-            val calendar = Calendar.getInstance()
-            val date2 = simpleDateFormat.parse(calendar[Calendar.DAY_OF_MONTH].toString() + " : " + calendar[Calendar.HOUR] + " : " + calendar[Calendar.MINUTE])
-            printDifference(date2, date1)
-        } catch (e: ParseException) {
-            Log.d("SFLog", "error")
-            e.printStackTrace()
-        }
-    }
+    private fun setBattleEndTime(secondsUntilEnd: Int) {
+        val days = secondsUntilEnd / 86400
+        val hours = (secondsUntilEnd - 86400 * days) / 3600
+        val minutes = (secondsUntilEnd - 86400 * days - 3600 * hours) / 60
 
-    private fun printDifference(startDate: Date, endDate: Date) {
-        //milliseconds
-        var different = endDate.time - startDate.time
-        Log.d("SFLOG", "startDate : $startDate")
-        Log.d("SFLOG", "endDate : $endDate")
-        Log.d("SFLOG", "different : $different")
-        val secondsInMilli: Long = 1000
-        val minutesInMilli = secondsInMilli * 60
-        val hoursInMilli = minutesInMilli * 60
-        val daysInMilli = hoursInMilli * 24
-        val elapsedDays = different / daysInMilli
-        different = different % daysInMilli
-        val elapsedHours = different / hoursInMilli
-        different = different % hoursInMilli
-        val elapsedMinutes = different / minutesInMilli
-        different = different % minutesInMilli
-        val elapsedSeconds = different / secondsInMilli
-        Log.d("SFLOG", "$elapsedDays $elapsedHours $elapsedMinutes $elapsedSeconds")
-        time.text = "$elapsedDays : $elapsedHours : $elapsedMinutes"
+        time.text = String.format(
+                itemView.context.getString(R.string.date_format),
+                days,
+                hours,
+                minutes
+        )
     }
 
     private fun initPlayer(videoName: String, player: SimpleExoPlayer?) {

@@ -41,7 +41,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-import static com.avatar.ava.DataModule.SERVER_NAME;
+import static com.avatar.ava.di.DataModule.SERVER_NAME;
 
 public class VideoRepository implements IVideoRepository {
 

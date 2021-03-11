@@ -3,14 +3,12 @@ package com.avatar.ava.presentation.main.fragments.profile;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.text.util.Linkify;
@@ -21,7 +19,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -35,7 +32,6 @@ import com.avatar.ava.App;
 import com.avatar.ava.R;
 import com.avatar.ava.domain.entities.ProfileDTO;
 import com.avatar.ava.domain.entities.VideoDTO;
-import com.avatar.ava.presentation.main.BottomSheetFragments.ProfileVideoBottomSheet;
 import com.avatar.ava.presentation.main.MainScreenActivity;
 import com.avatar.ava.presentation.main.MainScreenPostman;
 import com.avatar.ava.presentation.main.fragments.casting.CircleProgressBar;
@@ -53,7 +49,7 @@ import butterknife.OnClick;
 import toothpick.Toothpick;
 
 import static android.app.Activity.RESULT_OK;
-import static com.avatar.ava.DataModule.SERVER_NAME;
+import static com.avatar.ava.di.DataModule.SERVER_NAME;
 
 
 public class ProfileFragment extends MvpAppCompatFragment implements ProfileView {

@@ -63,7 +63,7 @@ import ru.terrakok.cicerone.NavigatorHolder;
 import ru.terrakok.cicerone.android.support.SupportAppNavigator;
 import toothpick.Toothpick;
 
-import static com.avatar.ava.DataModule.SERVER_NAME;
+import static com.avatar.ava.di.DataModule.SERVER_NAME;
 
 
 @SuppressWarnings("FieldCanBeLocal")
@@ -72,6 +72,9 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
 
     @BindView(R.id.bottom_nav_bar)
     BottomNavigationView bottomNavigationView;
+
+    @BindView(R.id.main_frame_top)
+    View actionBar;
 
     @BindView(R.id.main_frame_text1)
     TextView fragmentHeader;
@@ -320,6 +323,7 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
 
     @Override
     public void clearTopView() {
+        actionBar.setVisibility(View.VISIBLE);
         backButton.setVisibility(View.INVISIBLE);
         menuPoints.setVisibility(View.INVISIBLE);
         saveButton.setVisibility(View.INVISIBLE);
@@ -329,6 +333,11 @@ public class MainScreenActivity extends MvpAppCompatActivity implements MainScre
         exit.setVisibility(View.INVISIBLE);
         info.setVisibility(View.INVISIBLE);
         backProfileButton.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void hideActionBar() {
+        actionBar.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.main_frame_add)

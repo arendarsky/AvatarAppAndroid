@@ -7,8 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.avatar.ava.DataModule
 import com.avatar.ava.R
+import com.avatar.ava.di.DataModule
 import com.avatar.ava.presentation.main.fragments.battles.semifinalists.SemifinalistsAdapter.SemifinalistsViewHolder
 import com.avatar.ava.presentation.main.fragments.battles.item.BattleItem
 import com.avatar.ava.presentation.main.fragments.battles.item.ParticipantItem

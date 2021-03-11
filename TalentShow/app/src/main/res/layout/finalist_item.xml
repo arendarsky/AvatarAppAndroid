@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="76dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/finalist_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rating_recycler_semifinalists_layout"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+
+        <ImageView
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:id="@+id/rating_recycler_semifinalists_ava_item"
+            app:layout_constraintStart_toStartOf="@+id/rating_recycler_semifinalists_ava_item_bg"
+            app:layout_constraintTop_toTopOf="@+id/rating_recycler_semifinalists_ava_item_bg"
+            app:layout_constraintEnd_toEndOf="@+id/rating_recycler_semifinalists_ava_item_bg"
+            app:layout_constraintBottom_toBottomOf="@+id/rating_recycler_semifinalists_ava_item_bg"
+            />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/rating_recycler_semifinalists_ava_item_bg"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/gradient_icon_bg"
+            android:elevation="-1dp"
+            />
+
+        <TextView
+            android:id="@+id/rating_recycler_semifinalists_likes_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gradient_icon_bg"
+            android:textColor="@color/white"
+            android:gravity="end"
+            android:layout_marginEnd="5dp"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@+id/rating_recycler_semifinalists_ava_item_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/rating_recycler_semifinalists_name_item"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:maxLines="1"
+            android:gravity="center"
+            android:layout_marginTop="4dp"
+            app:layout_constraintTop_toBottomOf="@+id/rating_recycler_semifinalists_ava_item_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/rating_item_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:layout_marginStart="8dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="0dp"
+        android:paddingBottom="14dp"
+        android:paddingTop="8dp"
+        android:lineSpacingExtra="2sp"
+        android:maxLines="3"
+        tools:text="Это описание к видео, которое написал автор, чтобы было понятно, что он хочет сказать своим творчеством. Наверное, тут очень ограничен обхем текста."
+        android:textColor="@color/white"
+        app:layout_constraintTop_toTopOf="@+id/rating_recycler_semifinalists_layout"
+        app:layout_constraintBottom_toBottomOf="@+id/rating_recycler_semifinalists_layout"
+        app:layout_constraintStart_toEndOf="@+id/rating_recycler_semifinalists_layout"
+        app:layout_constraintEnd_toStartOf="@id/button_like"/>
+
+    <RelativeLayout
+        android:id="@+id/button_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:padding="8dp"
+        android:elevation="10dp">
+
+        <View
+            android:id="@+id/like"
+            android:layout_width="43dp"
+            android:layout_height="40dp"
+            android:background="@drawable/like"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/like_full"
+            android:layout_width="43dp"
+            android:layout_height="40dp"
+            android:background="@drawable/like_full"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

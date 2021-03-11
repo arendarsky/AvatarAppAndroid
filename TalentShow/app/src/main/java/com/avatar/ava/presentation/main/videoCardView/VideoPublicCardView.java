@@ -14,7 +14,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.avatar.ava.App;
 import com.avatar.ava.R;
 import com.avatar.ava.domain.entities.VideoDTO;
-import com.avatar.ava.presentation.main.MainScreenActivity;
 import com.avatar.ava.presentation.main.MainScreenPostman;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -25,7 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import toothpick.Toothpick;
 
-import static com.avatar.ava.DataModule.SERVER_NAME;
+import static com.avatar.ava.di.DataModule.SERVER_NAME;
 
 public class VideoPublicCardView extends ConstraintLayout {
 

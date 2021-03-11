@@ -1,4 +1,4 @@
-package com.avatar.ava;
+package com.avatar.ava.di;
 
 
 import android.content.Context;
@@ -11,9 +11,9 @@ import toothpick.config.Module;
 
 import static android.content.Context.MODE_PRIVATE;
 
-class PresentationModule extends Module {
+public class PresentationModule extends Module {
 
-    PresentationModule(Context appContext, FirebaseAnalytics mFirebaseAnalytics){
+    public PresentationModule(Context appContext, FirebaseAnalytics mFirebaseAnalytics){
 
         bind(FirebaseAnalytics.class).toInstance(mFirebaseAnalytics);
 

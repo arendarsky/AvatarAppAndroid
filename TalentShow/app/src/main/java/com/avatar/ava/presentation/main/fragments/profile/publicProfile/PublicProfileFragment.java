@@ -5,13 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -19,9 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -32,10 +27,8 @@ import com.avatar.ava.domain.entities.PublicProfileDTO;
 import com.avatar.ava.domain.entities.VideoDTO;
 import com.avatar.ava.presentation.main.MainScreenPostman;
 import com.avatar.ava.presentation.main.fragments.casting.CircleProgressBar;
-import com.avatar.ava.presentation.main.videoCardView.VideoCardView;
 import com.avatar.ava.presentation.main.videoCardView.VideoPublicCardView;
 import com.bumptech.glide.Glide;
-import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
@@ -47,7 +40,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import toothpick.Toothpick;
 
-import static com.avatar.ava.DataModule.SERVER_NAME;
+import static com.avatar.ava.di.DataModule.SERVER_NAME;
 
 public class PublicProfileFragment extends MvpAppCompatFragment implements PublicProfileView {
 

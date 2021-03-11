@@ -1,7 +1,9 @@
 
-package com.avatar.ava.domain.entities;
+package com.avatar.ava.domain.entities.semifinalists;
 
 import java.util.List;
+
+import com.avatar.ava.domain.entities.semifinalists.BattleParticipant;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -10,9 +12,9 @@ public class BattleDTO {
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("endDate")
+    @SerializedName("secondsUntilTheEnd")
     @Expose
-    private String endDate;
+    private Integer secondsUntilTheEnd;
     @SerializedName("totalVotesNumber")
     @Expose
     private Integer totalVotesNumber;
@@ -31,12 +33,12 @@ public class BattleDTO {
         this.id = id;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public Integer getSecondsUntilTheEnd() {
+        return secondsUntilTheEnd;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setSecondsUntilTheEnd(Integer endDate) {
+        this.secondsUntilTheEnd = endDate;
     }
 
     public Integer getTotalVotesNumber() {

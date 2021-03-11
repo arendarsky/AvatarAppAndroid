@@ -1,15 +1,13 @@
 package com.avatar.ava.data.api;
 
-import com.avatar.ava.domain.entities.BattleDTO;
-import com.avatar.ava.domain.entities.BattleVoteDTO;
-import com.avatar.ava.domain.entities.BattleVoteResponse;
+import com.avatar.ava.domain.entities.semifinalists.BattleDTO;
+import com.avatar.ava.domain.entities.semifinalists.BattleVoteDTO;
+import com.avatar.ava.domain.entities.semifinalists.BattleVoteResponse;
 
 import java.util.ArrayList;
 
-import io.reactivex.Completable;
 import io.reactivex.Single;
 import retrofit2.http.Body;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;

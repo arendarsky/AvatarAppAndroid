@@ -94,8 +94,7 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
                 router.newRootScreen(new Screens.ProfileScreen());
                 return true;
             case R.id.nav_semifinalists:
-                getViewState().changeTitle(MainScreenTitles.SEMIFINALISTS);
-                getViewState().showMenuPoints();
+                getViewState().hideActionBar();
                 router.newRootScreen(new Screens.BattlesScreen());
                 return true;
         }
@@ -222,7 +221,13 @@ public class MainScreenPresenter extends MvpPresenter<MainScreenView>{
     private void decodePrevState(PrevState prevState){
         getViewState().clearTopView();
         if (prevState.backButton) getViewState().showBackButton();
-        getViewState().changeTitle(prevState.title);
+
+        if (prevState.title == MainScreenTitles.SEMIFINALISTS) {
+            getViewState().hideActionBar();
+        } else {
+            getViewState().changeTitle(prevState.title);
+        }
+
         switch (prevState.code){
             case SAVE_BUTTON:
                 getViewState().showSaveButton();

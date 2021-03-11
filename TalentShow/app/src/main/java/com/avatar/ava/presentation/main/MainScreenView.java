@@ -24,4 +24,5 @@ public interface MainScreenView extends MvpView {
     void hideProgressBar();
     void hideProfileLoadingString();
     void showInfoIcon();
+    void hideActionBar();
 }

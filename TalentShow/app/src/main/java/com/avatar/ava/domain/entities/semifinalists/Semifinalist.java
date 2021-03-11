@@ -1,5 +1,5 @@
 
-package com.avatar.ava.domain.entities;
+package com.avatar.ava.domain.entities.semifinalists;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

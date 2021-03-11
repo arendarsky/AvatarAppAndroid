@@ -1,8 +1,6 @@
 package com.avatar.ava.presentation.main.fragments.rating;
 
 import android.content.Context;
-import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,22 +10,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.avatar.ava.BuildConfig;
 import com.avatar.ava.R;
-import com.avatar.ava.domain.entities.PersonRatingDTO;
 import com.avatar.ava.domain.entities.ProfileSemifinalistsDTO;
 import com.avatar.ava.presentation.main.fragments.RecyclerClickListener;
 import com.bumptech.glide.Glide;
-import com.google.android.exoplayer2.Player;
-import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.source.ProgressiveMediaSource;
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
-import com.google.android.exoplayer2.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.avatar.ava.DataModule.SERVER_NAME;
+import static com.avatar.ava.di.DataModule.SERVER_NAME;
 
 public class RatingSemifinalistsAdapter extends RecyclerView.Adapter<RatingSemifinalistsAdapter.SemiViewHolder> {
 

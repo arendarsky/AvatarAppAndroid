@@ -6,17 +6,10 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 import com.avatar.ava.presentation.main.fragments.battles.item.BattleItem
 import com.avatar.ava.presentation.main.fragments.battles.item.ParticipantItem
 
-
 interface BattlesView : MvpView {
     @StateStrategyType(SkipStrategy::class)
-    fun disableUI(text: String)
+    fun addFinalTab()
 
     @StateStrategyType(SkipStrategy::class)
-    fun enableUI()
-
-    @StateStrategyType(SkipStrategy::class)
-    fun vote(battleId: Int, battleParticipant: ParticipantItem)
-
-    @StateStrategyType(SkipStrategy::class)
-    fun setBattles(battles: List<BattleItem>)
+    fun addSemifinalTab()
 }

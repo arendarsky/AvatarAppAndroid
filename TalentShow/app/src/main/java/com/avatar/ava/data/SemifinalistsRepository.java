@@ -1,9 +1,9 @@
 package com.avatar.ava.data;
 
 import com.avatar.ava.data.api.SemifinalistsAPI;
-import com.avatar.ava.domain.entities.BattleDTO;
-import com.avatar.ava.domain.entities.BattleVoteDTO;
-import com.avatar.ava.domain.entities.BattleVoteResponse;
+import com.avatar.ava.domain.entities.semifinalists.BattleDTO;
+import com.avatar.ava.domain.entities.semifinalists.BattleVoteDTO;
+import com.avatar.ava.domain.entities.semifinalists.BattleVoteResponse;
 import com.avatar.ava.domain.repository.ISemifinalistsRepository;
 
 import java.util.ArrayList;

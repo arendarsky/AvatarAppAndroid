@@ -2,8 +2,8 @@ package com.avatar.ava.domain;
 
 import android.net.Uri;
 
-import com.avatar.ava.domain.entities.BattleDTO;
-import com.avatar.ava.domain.entities.BattleVoteResponse;
+import com.avatar.ava.domain.entities.semifinalists.BattleDTO;
+import com.avatar.ava.domain.entities.semifinalists.BattleVoteResponse;
 import com.avatar.ava.domain.entities.NotificationsDTO;
 import com.avatar.ava.domain.entities.PersonDTO;
 import com.avatar.ava.domain.entities.PersonRatingDTO;

@@ -3,6 +3,10 @@ package com.avatar.ava;
 import android.app.Application;
 
 import com.amplitude.api.Amplitude;
+import com.avatar.ava.di.DataModule;
+import com.avatar.ava.di.NavigationModule;
+import com.avatar.ava.di.PresentationModule;
+import com.avatar.ava.di.UseCaseModule;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import toothpick.Scope;
@@ -24,6 +28,7 @@ public class App extends Application {
         appScope.installModules(new PresentationModule(getApplicationContext(), mFirebaseAnalytics));
         appScope.installModules(new DataModule());
         appScope.installModules(new NavigationModule());
+        appScope.installModules(new UseCaseModule());
     }
 
 }

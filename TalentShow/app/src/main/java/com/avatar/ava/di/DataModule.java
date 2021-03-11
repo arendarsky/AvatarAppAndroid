@@ -1,14 +1,16 @@
-package com.avatar.ava;
+package com.avatar.ava.di;
 
 import android.text.TextUtils;
 
 import com.avatar.ava.data.AuthRepository;
+import com.avatar.ava.data.FinalistsRepository;
 import com.avatar.ava.data.ProfileRepository;
 import com.avatar.ava.data.RatingRepository;
 import com.avatar.ava.data.SemifinalistsRepository;
 import com.avatar.ava.data.SharedPreferencesRepository;
 import com.avatar.ava.data.VideoRepository;
 import com.avatar.ava.domain.repository.IAuthRepository;
+import com.avatar.ava.domain.repository.IFinalistsRepository;
 import com.avatar.ava.domain.repository.IProfileRepository;
 import com.avatar.ava.domain.repository.IRatingRepository;
 import com.avatar.ava.domain.repository.ISemifinalistsRepository;
@@ -32,7 +34,7 @@ public class DataModule extends Module{
     public final static String SERVER_NAME = "https://xce-factor.ru";
 //    public final static String SERVER_NAME = "https://avatarapp.yambr.ru";
 //    public final static String SERVER_NAME = "https://avatarappapi.azurewebsites.net";
-    DataModule(){
+    public DataModule(){
 
         final String CONNECT_TIMEOUT = "CONNECT_TIMEOUT";
         final String READ_TIMEOUT = "READ_TIMEOUT";
@@ -93,6 +95,6 @@ public class DataModule extends Module{
         bind(IProfileRepository.class).to(ProfileRepository.class).singleton();
         bind(ISharedPreferencesRepository.class).to(SharedPreferencesRepository.class).singleton();
         bind(ISemifinalistsRepository.class).to(SemifinalistsRepository.class).singleton();
-
+        bind(IFinalistsRepository.class).to(FinalistsRepository.class).singleton();
     }
 }
